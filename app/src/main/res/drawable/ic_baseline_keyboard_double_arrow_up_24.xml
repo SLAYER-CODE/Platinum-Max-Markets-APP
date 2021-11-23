@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:enterFadeDuration="@android:integer/config_shortAnimTime"
+    android:exitFadeDuration="@android:integer/config_shortAnimTime" android:oneshot="false" >
+    <item android:duration="800" >
+        <vector
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:width="312dp"
+            android:height="402dp"
+            android:viewportWidth="24"
+            android:viewportHeight="24">
+            <group
+                android:name="rotationGroup"
+                android:pivotX="0.0"
+                android:pivotY="100.0">
+                <path
+                    android:fillColor="#0008FF00"
+                    android:pathData="M6,17.59l1.41,1.41l4.59,-4.58l4.59,4.58l1.41,-1.41l-6,-6z"
+                    android:strokeWidth="5" />
+                <path
+                    android:fillColor="@color/purple_200"
+                    android:pathData="M6,11l1.41,1.41l4.59,-4.58l4.59,4.58l1.41,-1.41l-6,-6z" />
+            </group>
+        </vector>
+
+    </item>
+
+
+    <item android:duration="1000">
+        <vector xmlns:android="http://schemas.android.com/apk/res/android"
+            android:width="342dp"
+            android:height="302dp"
+            android:viewportWidth="24.7"
+            android:viewportHeight="24.699">
+            <group
+                android:name="rotationGroup"
+                android:pivotX="0.0"
+                android:pivotY="-100.0">
+            <path
+                android:fillColor="@color/green"
+                android:pathData="M6,17.59l1.41,1.41l4.59,-4.58l4.59,4.58l1.41,-1.41l-6,-6z"
+                android:strokeWidth="20" />
+            <path
+                android:fillColor="#4808821C"
+                android:pathData="M6,11l1.41,1.41l4.59,-4.58l4.59,4.58l1.41,-1.41l-6,-6z" />
+            </group>
+        </vector>
+    </item>
+</animation-list>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item >
+
+        <layer-list>
+
+            <item android:left="37dp" android:height="50dp" android:right="37dp" android:id="@+id/lineanumerouno"  android:gravity="center" >
+                <shape android:shape="rectangle">
+                    <gradient
+                        android:angle="270"
+                        android:centerX="60%"
+                        android:centerColor="@color/zxing_transparent"
+                        android:startColor="#1915D100"
+                        android:endColor="#CD62F805"
+                        android:type="linear">
+                    </gradient>
+                    <corners android:radius="50dp"></corners>
+                </shape>
+            </item>
+            <item>
+                <layer-list>
+                    <item  android:gravity="left" android:width="73dp" android:height="73dp" >
+                        <shape android:shape="oval">
+                            <solid  android:color="#000000">
+                            </solid>
+                            <gradient
+                                android:centerX="50%"
+                                android:gradientRadius="40dp"
+                                android:centerColor="@color/green"
+                                android:startColor="#000"
+                                android:endColor="@color/zxing_transparent"
+                                android:type="radial">
+                            </gradient>
+                            <corners android:radius="100dp">
+
+                            </corners>
+                        </shape>
+
+                    </item>
+                    <item android:gravity="right" android:width="73dp" android:height="73dp" >
+                        <shape android:shape="oval">
+                            <corners android:radius="100dp">
+                            </corners>
+                            <solid  android:color="#000000">
+                            </solid>
+                            <gradient
+                                android:centerX="50%"
+                                android:gradientRadius="40dp"
+                                android:centerColor="@color/green"
+                                android:startColor="#000"
+                                android:endColor="@color/zxing_transparent"
+                                android:type="radial">
+                            </gradient>
+                        </shape>
+                    </item>
+                </layer-list>
+            </item>
+        </layer-list>
+
+    </item>
+
+</selector>

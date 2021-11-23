@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector android:dither="true" xmlns:android="http://schemas.android.com/apk/res/android">
+    <item >
+        <layer-list >
+
+            <item android:gravity="center" android:width="320dp" android:height="50dp">
+                <shape  android:shape="rectangle">
+                    <gradient
+                        android:gradientRadius="20dp"
+                        android:angle="90"
+                        android:centerY="50%"
+                        android:centerX="50%"
+                        android:centerColor="#8F08FF00"
+                        android:startColor="#0000FF1A"
+                        android:endColor="#0500FF1A"
+                        android:type="linear"/>
+                </shape>
+            </item>
+            <item android:id="@+id/lineanumerouno" android:gravity="center" android:width="320dp" android:height="50dp">
+                <shape android:shape="line">
+
+                    <stroke  android:dashWidth="30dp" android:dashGap="10dp"
+                        android:width="2dp" android:color="#9F00FF7B">
+                    </stroke>
+                    <gradient
+                        android:angle="90"
+                        android:centerX="40%"
+                        android:centerColor="@color/zxing_transparent"
+                        android:startColor="#C103F1F1"
+                        android:endColor="@color/zxing_transparent"
+                        android:type="linear">
+                    </gradient>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetLeft="6dp"
+    android:insetRight="6dp">
+
+    <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+
+
+        <item android:bottom="8dp" android:gravity="center" android:left="8dp" android:right="8dp" android:top="8dp" android:width="115dp" android:height="115dp">
+            <shape android:shape="rectangle" >
+                <!--                    <corners android:radius="50dp" />-->
+
+                <solid android:color="#9FE2F3F0"/>
+                <gradient
+                    android:angle="180"
+                    android:centerX="60%"
+                    android:centerColor="@color/black"
+                    android:startColor="#CBF3D8"
+                    android:endColor="@color/black"
+                    android:type="linear"
+                    />
+                <stroke
+                    android:width="3.5dp"
+                    android:color="#ABF6BB"
+                    />
+            </shape>
+        </item>
+
+
+        <item android:left="5dp" android:right="5dp" android:bottom="5dp" android:top="5dp" android:gravity="center" android:width="115dp" android:height="115dp">
+
+            <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+                <solid android:color="#660090BB" />
+                <padding android:left="10dp" android:right="10dp" android:top="10dp" android:bottom="10dp"/>
+                <stroke android:width="10dp" android:color="#8F6CF86C"/>
+
+
+            </shape>
+
+
+        </item>
+
+
+        <item android:drawable="@drawable/ic_baseline_camera_alt_24" android:width="100dp" android:height="100dp" android:gravity="center">
+
+        </item>
+
+    </layer-list>
+</inset>

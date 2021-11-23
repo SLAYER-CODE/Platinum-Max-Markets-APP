@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/FirstFragment">
+<!--    Primer Framgneo-->
+    <fragment
+        android:id="@+id/FirstFragment"
+        android:name="com.example.finalproductos.FirstFragment"
+        tools:layout="@layout/fragment_first">
+
+        <action
+            android:id="@+id/action_FirstFragment_to_SecondFragment"
+            app:destination="@id/SecondFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_agregateProducts3"
+            app:destination="@id/agregateProducts3" />
+        <action
+            android:id="@+id/action_FirstFragment_to_detallesProducto"
+            app:destination="@id/detallesProducto"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+
+
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right" />
+    </fragment>
+<!--    android:label="@string/second_fragment_label"-->
+    <fragment
+        android:id="@+id/SecondFragment"
+        android:name="com.example.finalproductos.SecondFragment"
+        tools:layout="@layout/fragment_second">
+
+        <action
+            android:id="@+id/action_SecondFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+
+    <!--        android:label="{title}({state})"-->
+    <!--        <argument-->
+    <!--            android:name="state"-->
+    <!--            app:argType="string" />-->
+    <!--        <argument-->
+    <!--            android:name="title"-->
+    <!--            app:argType="string" />-->
+    <argument
+        android:name="title"
+        app:argType="string" />
+    <fragment
+        android:id="@+id/agregateProducts3"
+        android:name="com.example.finalproductos.AgregateProducts"
+        tools:layout="@layout/fragment_agregate_products"
+        >
+
+        <action
+            android:id="@+id/action_agregateProducts3_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+<!--    android:label="Producto"-->
+<!--    Segundo Fragmento de trancicions para los detalles de los producto-->
+    <fragment
+        android:id="@+id/detallesProducto"
+        android:name="com.example.finalproductos.DetallesProducto"
+        tools:layout="@layout/fragment_detalles_producto" >
+        <action
+            android:id="@+id/action_detallesProducto_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+</navigation>

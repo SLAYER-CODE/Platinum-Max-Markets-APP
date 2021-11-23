@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item  android:duration="300">
+        <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+            <item android:top="10dp" android:right="10dp" android:left="10dp" android:bottom="10dp">
+                <shape android:shape="rectangle">
+                    <corners android:radius="90dp">
+                    </corners>
+                    <size android:width="100dp" android:height="100dp">
+                    </size>
+                    <padding
+                        android:left="0dp"
+                        android:top="0dp"
+                        android:right="0dp"
+                        android:bottom="0dp"
+                        />
+                    <gradient
+                        android:angle="180"
+                        android:centerX="50%"
+                        android:startColor="#8600EB1E"
+                        android:centerColor="@color/zxing_transparent"
+                        android:endColor="#8600EB1E"
+                        android:gradientRadius="@integer/material_motion_duration_long_1"
+                        android:type="sweep"
+                        />
+                </shape>
+            </item>
+            <item android:top="20dp" android:right="20dp" android:left="20dp" android:bottom="20dp">
+
+                <shape android:shape="rectangle">
+
+                    <corners android:radius="90dp">
+                    </corners>
+                    <stroke android:width="4dp" android:color="@color/green">
+                    </stroke>
+                    <size android:width="100dp" android:height="100dp">
+                    </size>
+                    <solid android:color="#3B2CFF00">
+                    </solid>
+
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <item android:duration="300">
+        <shape android:shape="rectangle">
+            <corners android:radius="90dp">
+            </corners>
+            <solid android:color="#3E6EFB50"/>
+            <stroke android:width="1dp" android:color="@color/green">
+            </stroke>
+            <size android:width="100dp" android:height="100dp">
+            </size>
+        </shape>
+
+    </item>
+
+
+
+</animation-list>
