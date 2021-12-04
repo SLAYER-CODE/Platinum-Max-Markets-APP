@@ -209,11 +209,12 @@ class FirstFragment : Fragment() {
             itemfinal=final
             println(currentPage.toString()+"Se ejecuta una vez"+final)
             if(!itemfinal) {
-                val progressAnimatorCero =
-                    ObjectAnimator.ofInt(binding.PBbarList, "progress", 100, 0).setDuration(800)
-                val progressAnimator =
-                    ObjectAnimator.ofInt(binding.PBbarList, "progress", 0, 100).setDuration(800)
-                progressAnimator.start()
+//                val progressAnimatorCero =
+//                    ObjectAnimator.ofInt(baseActivity.returnbinding().PBbarList, "progress", 100, 0).setDuration(800)
+//                val progressAnimator =
+//                    ObjectAnimator.ofInt(baseActivity.returnbinding().PBbarList, "progress", 0, 100).setDuration(800)
+//                progressAnimator.start()
+                baseActivity.returnbinding().PBbarList.visibility=View.VISIBLE
 
 
 //            println(listaProductos)
@@ -239,7 +240,8 @@ class FirstFragment : Fragment() {
 //                    adapter.addNewListCurrent(it)
 //                })
 
-                progressAnimatorCero.start()
+                baseActivity.returnbinding().PBbarList.visibility=View.GONE
+//                progressAnimatorCero.start()
             }
         }
 

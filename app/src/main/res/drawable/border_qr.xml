@@ -5,7 +5,7 @@
             <item android:width="320dp" android:height="320dp">
                 <shape>
                     <stroke
-                        android:width="9dp" android:color="#88FF0000" android:dashGap="60dp"  android:dashWidth="180dp">
+                        android:width="5dp" android:color="#88FF0000" android:dashGap="55dp"  android:dashWidth="150dp">
                     </stroke>
 
                     <solid android:color="@color/zxing_transparent">

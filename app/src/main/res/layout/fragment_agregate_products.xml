@@ -306,6 +306,7 @@
                                 android:layout_width="305dp"
                                 android:layout_height="120dp"
                                 android:background="@drawable/line_qr_scan"
+                                android:visibility="visible"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 tools:layout_editor_absoluteY="40dp" />
@@ -320,6 +321,7 @@
                                 android:layout_marginBottom="40dp"
                                 android:background="@drawable/border_qr"
                                 android:foregroundGravity="center"
+                                android:visibility="visible"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"

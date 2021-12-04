@@ -65,9 +65,12 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Rational
+import androidx.camera.core.impl.CameraConfig
 import androidx.core.net.toUri
+import androidx.core.view.doOnPreDraw
 import androidx.navigation.NavOptions
 import com.google.android.material.snackbar.Snackbar
+import com.google.common.util.concurrent.ListenableFuture
 import kotlinx.android.synthetic.main.fragment_first.*
 import java.io.ByteArrayOutputStream
 
@@ -126,6 +129,7 @@ class AgregateProducts : Fragment() {
     //    Variables de inicialisacion para el fragmento obteniendo el contexto de la base de la activdad
     private var param1: String? = null
     private var param2: String? = null
+    private var parametro: String? = null;
     private var _binding: FragmentAgregateProductsBinding? = null
     private val binding get() = _binding!!
     protected lateinit var baseActivity: MainActivity
@@ -146,6 +150,7 @@ class AgregateProducts : Fragment() {
     private var imageCap: ImageCapture? = null
     private var cameraExecutor: ExecutorService = Executors.newSingleThreadExecutor()
     private var CamStatus:CameraTypes = CameraTypes.NULL;
+    private var CamClick:CameraTypes = CameraTypes.NULL;
 
 //    Funciones para la selecion multiple de las imagenes
     private lateinit var imagenUri:Uri;
@@ -206,10 +211,20 @@ class AgregateProducts : Fragment() {
         AnimationUpCamera.repeatMode=ObjectAnimator.REVERSE
         AnimationUpCamera.duration=800
 
-
         AnimationUpIntercalate = binding.despliegeCamera.background as AnimationDrawable
         AnimationUpIntercalate.setEnterFadeDuration(1000)
         AnimationUpIntercalate.setExitFadeDuration(1000)
+
+
+        Log.i("CameraStateRegistry",cameraExecutor.isShutdown.toString())
+        if (CamStatus == CameraTypes.CAMERA) {
+            binding.LayoutCamera.visibility=View.VISIBLE
+            openCamera()
+        } else if (CamStatus == CameraTypes.SCANER) {
+            binding.LayoutCamera.visibility = View.VISIBLE
+            openCameraScanner(view)
+        }
+
 //        Obtiene la instacia de la actividad para la base de datos
         val daoNew = AppDatabase.getDataBase(baseActivity);
 //        Estas Funciones obtiene la distancia del campo de la camara para obtener sus vectores y calcular el movimiento de la camara
@@ -227,6 +242,9 @@ class AgregateProducts : Fragment() {
         binding.TENombre.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
                 //Despues de que precione una tecla
+                if(s.toString() != ""){
+                    activity?.setTitle(s.toString() + " (Borrador N° $parametro)")
+                }
             }
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -235,7 +253,6 @@ class AgregateProducts : Fragment() {
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 //Cuando preciona la tecla para la ejecucion de los datos
-                activity?.setTitle(s.toString() + " (Borrador)")
             }
         })
 
@@ -325,6 +342,7 @@ class AgregateProducts : Fragment() {
         binding.SVAPNew.isSmoothScrollingEnabled = false
 
         binding.despliegeCamera.setOnClickListener {
+//            baseActivity.returnbinding().PBbarList.visibility=View.VISIBLE
             CamStatus = CameraTypes.NULL
             if (toogleCamera) {
                 AnimationUpCamera.start()
@@ -335,14 +353,16 @@ class AgregateProducts : Fragment() {
                         binding.SVAPNew,
                         "scrollY",
                         binding.SVAPNew.scrollY,
-                        binding.SVAPNew.height
-                    ).setDuration(500)
+                        binding.SVAPNew.height-HeigthIncrement-(binding.SVAPNew.height-binding.SVAPNew.scrollY)
+                    ).setDuration(300)
                 objectAnimator.setAutoCancel(true)
+
                 binding.LayoutCamera.post(Runnable {
                     binding.LayoutCamera.visibility = View.GONE
+                    objectAnimator.start()
+                    AnimationUpIntercalate.stop()
+                    AnimationUpCamera.pause()
                 })
-                AnimationUpIntercalate.stop()
-                AnimationUpCamera.pause()
 
 //                Animacion de recorrido en la camara
                 val lp = LinearLayout.LayoutParams(
@@ -357,55 +377,9 @@ class AgregateProducts : Fragment() {
             }
         }
 
-
-
-
-
-
+//      Start camera ESCANNER()
         binding.BEscaner.setOnClickListener {
-            TransitionManager.beginDelayedTransition(binding.SVAPNew, autoTransition)
-            binding.BcaptureImage.visibility = View.GONE
-            val animation = AnimationUtils.loadAnimation(
-                baseActivity,
-                com.example.finalproductos.R.anim.animation_lineqr
-            )
-            binding.Vqrline.startAnimation(animation)
-            binding.constraintqr.visibility = View.VISIBLE
-            if (!toogleCamera) {
-                baseActivity.runOnUiThread {
-                    val objectAnimator =
-                        ObjectAnimator.ofInt(
-                            binding.SVAPNew,
-                            "scrollY",
-                            binding.SVAPNew.scrollY,
-                            binding.SVAPNew.scrollY + HeigthIncrement
-                        ).setDuration(400)
-                    objectAnimator.setAutoCancel(true)
-//                    objectAnimator.startDelay = 1000
-
-                    objectAnimator.start()
-                    binding.LayoutCamera.post(Runnable {
-                        binding.LayoutCamera.visibility = View.VISIBLE
-                    })
-                }
-//                val lp = LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
-//                binding.recycleviewid.layoutParams=lp
-                toogleCamera = true
-                startCameraEscaner(view)
-            } else {
-                if (CamStatus == CameraTypes.CAMERA) {
-
-                    val lp = LinearLayout.LayoutParams(
-                        recycleviewWidth,
-                        LinearLayout.LayoutParams.MATCH_PARENT
-                    )
-                    binding.RVCaptureImages.layoutParams = lp
-                    binding.BCaptura.isEnabled = true
-                    startCameraEscaner(view)
-                }
-            }
-            binding.linearConstraitButton.requestLayout()
-            CamStatus = CameraTypes.SCANER
+            openCameraScanner(view)
         }
 //        startCamera()
         binding.BCaptura.setOnClickListener {
@@ -440,30 +414,105 @@ class AgregateProducts : Fragment() {
                     }
                 })
         }
+        view.doOnPreDraw {
+            startPostponedEnterTransition()
+        }
         super.onViewCreated(view, savedInstanceState)
     }
+    private fun openCameraScanner(view: View){
+        CamClick=CameraTypes.SCANER
+        PermisosCamera=true
+        if(allPermisionGranted()){
 
-    private fun openCamera() {
-        if (allPermisionGranted()) {
+
             TransitionManager.beginDelayedTransition(binding.SVAPNew, autoTransition)
-            binding.BcaptureImage.visibility = View.VISIBLE
-            binding.constraintqr.visibility = View.INVISIBLE
-            if (!toogleCamera || CamStatus == CameraTypes.CAMERA) {
-                if(!toogleCamera) {
+
+            binding.BcaptureImage.visibility = View.GONE
+            val animation = AnimationUtils.loadAnimation(
+                baseActivity,
+                R.anim.animation_lineqr
+            )
+            binding.Vqrline.startAnimation(animation)
+            binding.constraintqr.visibility = View.VISIBLE
+
+
+            if (!toogleCamera || CamStatus == CameraTypes.SCANER) {
+                if(!toogleCamera){
+
+                    binding.LayoutCamera.post(Runnable {
+                        binding.LayoutCamera.visibility = View.VISIBLE
+                    })
                     val DesplazeAnimation =
                         ObjectAnimator.ofInt(
                             binding.SVAPNew,
                             "scrollY",
                             binding.SVAPNew.scrollY,
-                            binding.SVAPNew.height + HeigthIncrement
-                        ).setDuration(500)
+                            binding.SVAPNew.height + HeigthIncrement - 600
+                        ).setDuration(300)
                     DesplazeAnimation.setAutoCancel(true)
-                    DesplazeAnimation.startDelay = 250
+                    DesplazeAnimation.start()
+
+                    toogleCamera=true
+
+
+                }
+
+//                val lp = LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
+//                binding.recycleviewid.layoutParams=lp
+            }
+
+            if (CamStatus == CameraTypes.CAMERA) {
+                val lp = LinearLayout.LayoutParams(
+                    recycleviewWidth,
+                    LinearLayout.LayoutParams.MATCH_PARENT
+                )
+                binding.RVCaptureImages.layoutParams = lp
+                binding.BCaptura.isEnabled = true
+            }
+
+            if(AnimationUpCamera.isPaused){
+                AnimationUpCamera.resume()
+            }else {
+                if(!AnimationUpCamera.isRunning){
+                    AnimationUpCamera.start()
+                }
+            }
+            if(!AnimationUpIntercalate.isRunning)
+            {
+                AnimationUpIntercalate.start()
+            }
+
+            CamStatus = CameraTypes.SCANER
+            contextFragment.runCatching {
+                startCameraEscaner(view)
+            }
+            binding.linearConstraitButton.requestLayout()
+        }
+    }
+
+    private fun openCamera() {
+        PermisosCamera=true;
+        CamClick=CameraTypes.CAMERA
+        if (allPermisionGranted()) {
+            TransitionManager.beginDelayedTransition(binding.SVAPNew, autoTransition)
+            binding.BcaptureImage.visibility = View.VISIBLE
+            if (!toogleCamera || CamStatus == CameraTypes.CAMERA) {
+                if(!toogleCamera) {
+                    binding.constraintqr.visibility = View.INVISIBLE
+                    binding.LayoutCamera.post(Runnable {
+                        binding.LayoutCamera.visibility = View.VISIBLE
+                    })
+                    val DesplazeAnimation =
+                        ObjectAnimator.ofInt(
+                            binding.SVAPNew,
+                            "scrollY",
+                            binding.SVAPNew.scrollY,
+                            binding.SVAPNew.height + HeigthIncrement - 600
+                        ).setDuration(300)
+                    DesplazeAnimation.setAutoCancel(true)
                     DesplazeAnimation.start()
                 }
-                binding.LayoutCamera.post(Runnable {
-                    binding.LayoutCamera.visibility = View.VISIBLE
-                })
+
                 val lp = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.MATCH_PARENT
@@ -475,21 +524,17 @@ class AgregateProducts : Fragment() {
                 contextFragment.runCatching {
                     startCamera()
                 }
-                if(AnimationUpCamera.isPaused){
-                    AnimationUpCamera.resume()
-                }else {
-                    AnimationUpCamera.start()
-                }
-                AnimationUpIntercalate.start()
+
             } else {
                 if (CamStatus == CameraTypes.SCANER) {
+                    binding.constraintqr.visibility = View.INVISIBLE
                     val lp = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT
                     )
                     binding.RVCaptureImages.layoutParams = lp
                     contextFragment.runCatching {
-                        cameraProvider.unbindAll()
+//                        cameraProvider.unbindAll()
                         startCamera()
                     }
                 } else {
@@ -498,9 +543,19 @@ class AgregateProducts : Fragment() {
                     Log.i(LOGFRAGMENT,"Tipo de la camara es {$CamStatus}")
                 }
             }
+            if(AnimationUpCamera.isPaused){
+                AnimationUpCamera.resume()
+            }else {
+                AnimationUpCamera.start()
+            }
+            if(!AnimationUpIntercalate.isRunning)
+            {
+                AnimationUpIntercalate.start()
+            }
             binding.linearConstraitButton.requestLayout()
             CamStatus = CameraTypes.CAMERA
         }
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -526,12 +581,19 @@ class AgregateProducts : Fragment() {
         inflater.inflate(R.menu.menu_main, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+//        val animation= TransitionInflater.from(context).inflateTransition(
+//            android.R.transition.move
+//        )
+//        sharedElementEnterTransition=animation
 
         Log.i(LOGFRAGMENT,"Se Ejecuta OnCreate [*]")
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+            parametro=it.getString("titlenumber")
+
         }
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true);
@@ -542,7 +604,7 @@ class AgregateProducts : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentAgregateProductsBinding.inflate(inflater, container, false)
-        activity?.setTitle("Agregar Producto")
+        activity?.setTitle("Agregar Producto [$parametro]")
         return binding.root
     }
 
@@ -667,18 +729,21 @@ class AgregateProducts : Fragment() {
 
         Log.i(LOGFRAGMENT,"Se Guardo la instancia onSaveInstanceState [*]")
     }
+    private lateinit var cameraProviderFuture:ListenableFuture<ProcessCameraProvider>;
+
+    private var cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+
 
     private fun startCamera() {
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(baseActivity)
+        cameraProviderFuture=ProcessCameraProvider.getInstance(baseActivity)
         cameraProviderFuture.addListener({
             cameraProvider = cameraProviderFuture.get()
+
             val preview = Preview.Builder().build().also { mPreview ->
                 mPreview.setSurfaceProvider(
                     binding.PVCmain.surfaceProvider
                 )
             }
-            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-
             try {
                 cameraProvider.unbindAll()
                 imageCapture = ImageCapture.Builder()
@@ -692,68 +757,78 @@ class AgregateProducts : Fragment() {
                     imageCapture
                 )
 
+//                Esto obtiene la camara que necesitamos para obtener los datos
+
                 MyCamera.cameraControl.cancelFocusAndMetering()
+
                 focusControllerCamera(MyCamera)
             } catch (e: Exception) {
                 Log.e(LOGFRAGMENT, "Error al asignar la camara", e)
             }
-        }, ContextCompat.getMainExecutor(contextFragment))
+        }, ContextCompat.getMainExecutor(baseActivity))
     }
-
     private fun startCameraEscaner(MyView:View) {
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(baseActivity)
+        cameraProviderFuture=ProcessCameraProvider.getInstance(baseActivity)
         cameraProviderFuture.addListener({
             cameraProvider = cameraProviderFuture.get()
-            val preview = Preview.Builder().apply {
-                setTargetResolution(Size(binding.PVCmain.width, binding.PVCmain.height))
-            }.build().also { mPreview ->
+
+//            val preview = Preview.Builder().apply {
+//                setTargetResolution(Size(binding.PVCmain.width, binding.PVCmain.height))
+//            }.build().also { mPreview ->
+//                mPreview.setSurfaceProvider(
+//                    binding.PVCmain.surfaceProvider
+//                )
+//            }
+
+
+            val preview = Preview.Builder().build().also { mPreview ->
                 mPreview.setSurfaceProvider(
-
                     binding.PVCmain.surfaceProvider
-
                 )
             }
 //            preview.targetRotation=ROTATION_0
-
-            val imageAnalysis = ImageAnalysis.Builder()
-                .setTargetResolution(Size(binding.PVCmain.width, binding.PVCmain.height))
+            Log.i(LOGFRAGMENT,"El dato es"+binding.PVCmain.width.toString())
+                val imageAnalysis = ImageAnalysis.Builder()
+                    .setTargetResolution(Size(HeigthIncrement, HeigthIncrement))
 //            val imageAnalysis = ImageAnalysis.Builder()
-                .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                .build()
-                .also {
-                    it.setAnalyzer(cameraExecutor, QrCodeAnalyzer { qrResult ->
-                        binding.PVCmain.post {
+                    .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                    .build()
+                    .also {
+                        it.setAnalyzer(cameraExecutor, QrCodeAnalyzer { qrResult ->
+                            binding.PVCmain.post {
 //                            Log.d("QRCodeAnalyzer", "Barcode scanned: ${qrResult.text}")
 //                            Toast.makeText(
 //                                activity,
 //                                "Codigo es ${qrResult.text}",
 //                                Toast.LENGTH_SHORT
 //                            ).show()
-                            messageSnackBar(MyView,"Coideog es ${qrResult.text}",Color.YELLOW)
-                            binding.TEQR.setText(qrResult.text)
-                            cameraProvider.unbindAll()
+                                cameraProvider.unbindAll()
+                                messageSnackBar(MyView, "El codigo es ${qrResult.text}", Color.YELLOW)
+                                binding.TEQR.setText(qrResult.text)
 //                            cameraProvider.unbindAll()
-                        }
-                    })
-                }
-            binding.PVCmain.implementationMode = PreviewView.ImplementationMode.COMPATIBLE
+                            }
+                        })
+                    }
+
 //            preview.targetRotation= ROTATION_9
 
             try {
-                val cameraSelector = CameraSelector.Builder()
-                    .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-                    .build()
+
                 cameraProvider.unbindAll()
                 val MyCamera =
-                    cameraProvider.bindToLifecycle(baseActivity, cameraSelector, preview, imageAnalysis)
+                    cameraProvider.bindToLifecycle(baseActivity, cameraSelector, preview,imageAnalysis)
+//                cameraProvider.bindToLifecycle(baseActivity,cameraSelector,preview,imageAnalysis)
                 MyCamera.cameraControl.cancelFocusAndMetering()
+
                 focusControllerCamera(MyCamera)
 
             } catch (e: Exception) {
                 Log.e(LOGFRAGMENT, "Error al intentar Asignar la camara de Escaneo",e)
             }
-        }, ContextCompat.getMainExecutor(context))
+        }, ContextCompat.getMainExecutor(baseActivity))
     }
+
+
 
     private fun allPermisionGranted():Boolean {
         val dat = Constrains.REQUIERED_PERMISSIONS.all {
@@ -777,6 +852,7 @@ class AgregateProducts : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        Log.i(LOGFRAGMENT,"Codigo iniciado")
         if (requestCode == REQUEST_CODE_PICKER && resultCode == Activity.RESULT_OK && data != null) {
             val images =
                 ImagePicker.getImages(data) as ArrayList
@@ -823,22 +899,40 @@ class AgregateProducts : Fragment() {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
-
+    private var PermisosCamera:Boolean=false;
     override fun onResume() {
-        if (CamStatus == CameraTypes.CAMERA) {
-            binding.LayoutCamera.visibility=View.VISIBLE
-            openCamera()
-        } else if (CamStatus == CameraTypes.SCANER) {
-            binding.LayoutCamera.visibility=View.VISIBLE
-            startCameraEscaner(View(contextFragment))
-        }
+        Log.i(LOGFRAGMENT,"Resumiendo la actividad")
 
+        if(PermisosCamera) {
+            if (Constrains.REQUIERED_PERMISSIONS.all {
+                    ContextCompat.checkSelfPermission(
+                        baseActivity, it
+                    ) == PackageManager.PERMISSION_GRANTED
+                }) {
+                    if(CamClick==CameraTypes.SCANER){
+                        openCameraScanner(view as View)
+                    }
+                    if(CamClick==CameraTypes.CAMERA){
+                        openCamera()
+                    }
+                Log.i(LOGFRAGMENT, "Permisos de camera")
+            }else{
+                messageSnackBar(view as View,"Se necesita acceso a la camara...",Color.RED)
+            }
+            PermisosCamera=false
+        }
 
         super.onResume()
     }
 
     override fun onPause() {
+        Log.i("CameraStateRegistry","Pauseando la acitividad")
+        Log.i("CameraStateRegistry",cameraExecutor.isTerminated.toString())
+//        cameraExecutor.shutdown()
         Log.i(LOGFRAGMENT,"Se pause onPause [*]")
+        if (CamStatus != CameraTypes.NULL) {
+            cameraProvider.unbindAll()
+        }
         super.onPause()
     }
 
@@ -849,6 +943,7 @@ class AgregateProducts : Fragment() {
 
     override fun onDestroy() {
         Log.i(LOGFRAGMENT,"Se destruyo el fragmento onDestroy [*]")
+        baseActivity.datasize-=1
         for (file: File in context?.cacheDir?.listFiles()!!) {
 //            println(file.path.toString())
 //            println(file.name)
@@ -860,7 +955,9 @@ class AgregateProducts : Fragment() {
             }
         }
         if (CamStatus != CameraTypes.NULL) {
-            cameraProvider.unbindAll()
+            Log.i("CameraStateRegistry","Se cerro la camara al destruir la vista [*]")
+//            cameraProvider.shutdown()
+//            cameraProvider.unbindAll()
         }
         super.onDestroy()
     }
@@ -873,7 +970,8 @@ class AgregateProducts : Fragment() {
 //         for (file:File in context?.cacheDir?.listFiles()!!){
 //             file.delete()
 //         }
-        cameraProvider.unbindAll()
+//        cameraProvider.unbindAll()
+        
         _binding = null
     }
 
@@ -888,7 +986,6 @@ class AgregateProducts : Fragment() {
         anim.duration = 1000
         v.startAnimation(anim)
     }
-
     fun getSpringAnimation(
         view: View,
         springAnimationType: FloatPropertyCompat<View>,

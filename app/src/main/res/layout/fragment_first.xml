@@ -74,15 +74,15 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/LVMylist"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:layoutAnimation="@anim/item_animation_layout_into"
             android:layout_width="351dp"
             android:layout_height="590dp"
             android:layout_alignParentTop="true"
             android:layout_marginTop="1dp"
             android:background="@drawable/border_recycleview_camera"
+            android:layoutAnimation="@anim/item_animation_layout_into"
             android:paddingTop="10dp"
             android:paddingBottom="15dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -91,22 +91,6 @@
         </androidx.recyclerview.widget.RecyclerView>
 
     </RelativeLayout>
-
-    <ProgressBar
-        android:id="@+id/PBbarList"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="0dp"
-        android:layout_height="10dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="8dp"
-        android:background="#000000"
-        android:backgroundTint="#000000"
-        android:progress="0"
-        android:progressBackgroundTint="#00FF19"
-        app:layout_constraintEnd_toEndOf="@+id/relativeLayout"
-        app:layout_constraintStart_toStartOf="@+id/relativeLayout"
-        app:layout_constraintTop_toTopOf="@+id/relativeLayout" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"

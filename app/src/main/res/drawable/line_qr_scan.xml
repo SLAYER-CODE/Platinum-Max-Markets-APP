@@ -3,14 +3,14 @@
     <item >
         <layer-list >
 
-            <item android:gravity="center" android:width="320dp" android:height="50dp">
+            <item android:gravity="center" android:width="320dp" android:height="40dp">
                 <shape  android:shape="rectangle">
                     <gradient
-                        android:gradientRadius="20dp"
+                        android:gradientRadius="10dp"
                         android:angle="90"
                         android:centerY="50%"
                         android:centerX="50%"
-                        android:centerColor="#8F08FF00"
+                        android:centerColor="#6D08FF00"
                         android:startColor="#0000FF1A"
                         android:endColor="#0500FF1A"
                         android:type="linear"/>

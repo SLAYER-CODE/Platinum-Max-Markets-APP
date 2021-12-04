@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private var datasize:Int=0;
+    var datasize:Int=0;
     lateinit var navController: NavController
 //    private lateinit var database: AppDatabase;
 
@@ -135,17 +135,18 @@ private val ORDERED_DENSITY_DP_N: IntArray? = intArrayOf(
 
         val navBuilder = NavOptions.Builder()
 
-        navBuilder.setEnterAnim(R.anim.slide_top).setExitAnim(R.anim.wait_anim)
-            .setPopEnterAnim(R.anim.wait_anim).setPopExitAnim(R.anim.slide_bottom)
+//        navBuilder.setEnterAnim(R.anim.slide_top).setExitAnim(R.anim.wait_anim).setPopEnterAnim(R.anim.wait_anim).setPopExitAnim(R.anim.slide_bottom)
 
 
+        navBuilder.setEnterAnim(android.R.anim.fade_in).setExitAnim(android.R.anim.fade_out).setPopExitAnim(android.R.anim.fade_out)
 
 
         binding.fab.setOnClickListener {
 //            findNavController(0).navigate(R.id.action_agregateProducts3_to_FirstFragment)
             datasize+=1
-//            val bundle = bundleOf("title" to datasize.toString())
-            navController.navigate(R.id.agregateProducts3,null,navBuilder.build())
+
+            val bundle = bundleOf("titlenumber" to datasize.toString())
+            navController.navigate(R.id.agregateProducts3,bundle,navBuilder.build())
 
 //            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
 //            Snackbar.make(view, "Funciona El boton", Snackbar.LENGTH_LONG)
@@ -165,7 +166,6 @@ private val ORDERED_DENSITY_DP_N: IntArray? = intArrayOf(
         }
 
     }
-
 
     override fun attachBaseContext(baseContext: Context) {
         var newContext: Context? = baseContext

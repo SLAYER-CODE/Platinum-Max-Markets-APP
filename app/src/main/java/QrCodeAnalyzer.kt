@@ -20,13 +20,14 @@ private fun ByteBuffer.toByteArray(): ByteArray {
     return data
 }
 
+
 class QrCodeAnalyzer(
 //    private val onEan: (result:Result)->Unit):ImageAnalysis.Analyzer{
 //    }
 
     private val  onQrCodesDetected: (qrCode: Result) -> Unit
-) : ImageAnalysis.Analyzer {
-
+) : ImageAnalysis.Analyzer
+{
     private val yuvFormats = mutableListOf(YUV_420_888)
 
     init {
@@ -36,6 +37,7 @@ class QrCodeAnalyzer(
     }
     companion object{
         val reader = MultiFormatReader()
+
     }
 
 //    private val reader = MultiFormatReader().apply {
@@ -194,7 +196,7 @@ fun rotateYUV420Degree90(
 //            result.addResultPoints(arrayOf(resPoint))
 
             onQrCodesDetected(result)
-        } catch (e: NotFoundException) {
+        } catch (e: NotFoundException ) {
             e.printStackTrace()
         }
         image.close()
