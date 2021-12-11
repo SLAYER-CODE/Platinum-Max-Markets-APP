@@ -1,6 +1,9 @@
 package com.example.finalproductos
 
 import Adapters.ImageAdapter
+import CallBacks.DragAndDropListenerActions
+import CallBacks.MyItemTouchHelperCallback
+import CallBacks.TouchDropListenerAction
 import Data.AppDatabase
 import Data.ImagenesNew
 import Data.Producto
@@ -34,6 +37,7 @@ import android.view.animation.ScaleAnimation
 import android.app.Activity
 import android.content.ClipData
 import android.content.pm.PackageManager
+import android.graphics.*
 import android.graphics.drawable.AnimationDrawable
 import android.text.Editable
 import android.text.TextWatcher
@@ -44,7 +48,6 @@ import android.view.*
 import android.view.Surface.*
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.view.PreviewView
 
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -59,20 +62,33 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
-import android.graphics.Bitmap
-import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Rational
-import androidx.camera.core.impl.CameraConfig
+import androidx.camera.core.Camera
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.net.toUri
 import androidx.core.view.doOnPreDraw
 import androidx.navigation.NavOptions
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.common.util.concurrent.ListenableFuture
+import interfaces.CallBackItemTouch
 import kotlinx.android.synthetic.main.fragment_first.*
+import kotlinx.android.synthetic.main.image_new_new.view.*
+import kotlinx.android.synthetic.main.item_client_list.view.*
+import kotlinx.android.synthetic.main.item_client_vent.*
+import kotlinx.coroutines.processNextEventInCurrentThread
 import java.io.ByteArrayOutputStream
+import kotlin.math.abs
+import kotlin.math.absoluteValue
+import android.graphics.PorterDuff
+
+import android.graphics.PorterDuffColorFilter
+import androidx.core.view.isGone
+import android.os.Environment
+import java.nio.file.attribute.PosixFileAttributeView
 
 
 inline fun View.afterMeasure(crossinline block: () -> Unit) {
@@ -125,7 +141,8 @@ class ResizeAnimation(
 }
 
 private lateinit var AnimationUpCamera:ValueAnimator;
-class AgregateProducts : Fragment() {
+
+class AgregateProducts : Fragment() , CallBackItemTouch {
     //    Variables de inicialisacion para el fragmento obteniendo el contexto de la base de la activdad
     private var param1: String? = null
     private var param2: String? = null
@@ -142,7 +159,7 @@ class AgregateProducts : Fragment() {
     var SELECT_FILE_IMAGE_CODE:Int=101
 
     //    Adaptardor para la lista del adaptador de las imagenes
-    val adapter = ImageAdapter(listOf<Uri>())
+    val adapter = ImageAdapter(mutableListOf())
 
     //    Variables de inicialisacion para la camara y sus movimientos respectivos
     private lateinit var cameraProvider: ProcessCameraProvider;
@@ -164,6 +181,12 @@ class AgregateProducts : Fragment() {
     private var autoTransition: TransitionSet =  AutoTransition().setDuration(250);
     private  var HeigthIncrement: Int = 0;
     private var recycleviewWidth:Int = 0;
+
+
+    //Distancias para la elimiancion guardado y muestra
+    private var RefDeleteViewImage:Int = 1;
+    private var RefMediumDistanceImage:Int = 1;
+    private lateinit var offsetViewBounds:Rect;
     private lateinit var AnimationUpIntercalate:AnimationDrawable;
     fun clearItems() {
         binding.TEQR.setText("")
@@ -256,6 +279,7 @@ class AgregateProducts : Fragment() {
             }
         })
 
+
         binding.BAgregate.setOnClickListener {
 
             val _name: String = binding.TENombre.text.toString()
@@ -334,10 +358,20 @@ class AgregateProducts : Fragment() {
         }
 
 
+        binding.DeleteDrag.setOnDragListener(DragAndDropListenerActions(baseActivity));
+        binding.SaveDrag.setOnDragListener(DragAndDropListenerActions(baseActivity));
+
+        binding.DeleteDrag.setOnTouchListener(TouchDropListenerAction())
+        binding.SaveDrag.setOnTouchListener(TouchDropListenerAction())
+
+
 //        Bindig para el recyclerview de las imagenes
         binding.RVCaptureImages.layoutManager =
             LinearLayoutManager(baseActivity, LinearLayoutManager.HORIZONTAL, false)
         binding.RVCaptureImages.adapter = adapter
+        var RVCallback:ItemTouchHelper.Callback = MyItemTouchHelperCallback(this);
+        var RVTouchHelper:ItemTouchHelper = ItemTouchHelper(RVCallback);
+        RVTouchHelper.attachToRecyclerView(binding.RVCaptureImages);
 
         binding.SVAPNew.isSmoothScrollingEnabled = false
 
@@ -373,6 +407,7 @@ class AgregateProducts : Fragment() {
                 binding.RVCaptureImages.layoutParams = lp
                 binding.linearConstraitButton.requestLayout()
                 binding.BCaptura.isEnabled = true
+
                 toogleCamera = false
             }
         }
@@ -409,6 +444,7 @@ class AgregateProducts : Fragment() {
                         baseActivity.runOnUiThread {
 
                             adapter.addImage(outputFileResults.savedUri.toString())
+                            binding.RVCaptureImages.scrollToPosition(0);
 //                                cameraProvider.unbindAll()
                         }
                     }
@@ -417,13 +453,194 @@ class AgregateProducts : Fragment() {
         view.doOnPreDraw {
             startPostponedEnterTransition()
         }
+
         super.onViewCreated(view, savedInstanceState)
     }
+
+    override fun itemTouchMode(oldPosition: Int, newPosition: Int) {
+        position=newPosition
+        adapter.MyImage.add(oldPosition,adapter.MyImage.removeAt(newPosition))
+        adapter.notifyItemMoved(oldPosition,newPosition);
+
+//        super.itemTouchMode(oldPosition, newPosition)
+    }
+
+    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int) {
+
+}
+
+    override fun onDrop(eliminated: Boolean, position: Int) {
+        if(eliminated){
+            adapter.removeImagen(position)
+        }
+
+    }
+    private lateinit var viewHold:View;
+    private var position:Int=0;
+    override fun prepareViews(views: Boolean, viewholds: RecyclerView.ViewHolder?) {
+        if(viewholds!=null) {
+            viewHold=viewholds.itemView.viewParent
+            position=viewholds.absoluteAdapterPosition
+            offsetViewBounds = Rect()
+            binding.DeleteDrag.getDrawingRect(offsetViewBounds);
+            binding.linearConstraitButton.offsetDescendantRectToMyCoords(
+                binding.DeleteDrag,
+                offsetViewBounds
+            )
+            binding.SaveDrag.getDrawingRect(offsetViewItemTwo)
+            binding.linearConstraitButton.offsetDescendantRectToMyCoords(
+                binding.SaveDrag,
+                offsetViewItemTwo
+            )
+            viewHold.getDrawingRect(offsetViewItem)
+            binding.linearConstraitButton.offsetDescendantRectToMyCoords(viewHold, offsetViewItem)
+        }
+        val transtion =  AutoTransition().setDuration(350);
+        TransitionManager.beginDelayedTransition(binding.linearConstraitButton, transtion)
+        if(views) {
+            val lp = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+            )
+            binding.DeletAndSaveParent.layoutParams=lp
+        }else{
+            val lp = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                0
+            )
+            binding.DeletAndSaveParent.layoutParams=lp
+        }
+        binding.DeletAndSaveParent.requestLayout()
+    }
+
+    private var offsetViewItem:Rect=Rect()
+    private var offsetViewItemTwo=Rect()
+
+    override fun isItemSelected(posX: Float, posY: Float): Int{
+        println("Segundo $posX")
+        println("Segundo $posY")
+        var pwd = 0
+        if(!toogleCamera){
+            pwd+=330
+        }
+        var MMDImagenY = posX+(viewHold.width/2)
+        var TABCalc=(offsetViewBounds.top-50)<=((offsetViewItem.top+posY)+(viewHold.width/2)) && (offsetViewBounds.bottom+100)>=((offsetViewItem.top+posY)+(viewHold.width/2))
+        if(TABCalc && offsetViewBounds.left-pwd <= MMDImagenY && offsetViewBounds.right-pwd>=MMDImagenY) {
+        val Final:Uri=adapter.MyImage.get(position)
+        //back que del item que se elimina para que pueda ser cancelado
+        val indexDelete:Int =position;
+        //removimiento el item del reciclerview
+        adapter.removeImagen(indexDelete)
+        var RestoreSnackbar : Snackbar = Snackbar.make(requireView(),".../"+Final.path,Snackbar.LENGTH_LONG)
+        RestoreSnackbar.setAction("Cancelar",View.OnClickListener {
+            adapter.restoreItem(Final,indexDelete);
+        })
+        RestoreSnackbar.setActionTextColor(Color.RED)
+        val snackbarView = RestoreSnackbar.view
+        snackbarView.setBackgroundColor(Color.BLACK)
+        val textView =
+            snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
+        textView.setTextColor(Color.RED)
+        textView.textSize = 17f
+        RestoreSnackbar.show()
+            return 1;
+        }
+        if(TABCalc && offsetViewItemTwo.left-pwd <= MMDImagenY && offsetViewItemTwo.right-pwd>=MMDImagenY){
+            val filepath = Environment.getExternalStorageDirectory().absolutePath
+            val externalPath:String="/MhImagenes/"+adapter.MyImage[position].lastPathSegment
+
+            return 0;
+        }
+
+        return -1;
+    }
+    override fun CalculateArea(posX: Float, posY: Float){
+        RefMediumDistanceImage=offsetViewBounds.top
+        var diferencia=(RefMediumDistanceImage-(posY+offsetViewItem.top))
+        var dato = (diferencia*32)/(RefMediumDistanceImage-offsetViewItem.top)
+        var scale=dato * 0.031f
+        if(scale>0.35 && scale<1.40) {
+            viewHold.scaleX = scale
+            viewHold.scaleY = scale
+        }
+
+//        println("POST $posY")
+//        println(posY)
+//        println(dato)
+//        println("xdddddddddd")
+//        println(viewHold.width)
+//        println(posY)
+//        println(HeigthIncrement)
+//        println("$posX $posY $HeigthIncrement ${offsetViewBounds.top}")
+//        println(offsetViewItem.top)
+//        println(offsetViewItem.bottom)
+//        println(offsetViewItem.left)
+//        println(offsetViewItem.right)
+//        println(posX+ abs(posX-offsetViewItem.left))
+//        println(offsetViewBounds.left)
+
+        var pwd = 0
+        if(!toogleCamera){
+            pwd+=330
+        }
+        var MMDImagenY = posX+(viewHold.width/2)
+        var TABCalc=(offsetViewBounds.top-50)<=((offsetViewItem.top+posY)+(viewHold.width/2)) && (offsetViewBounds.bottom+100)>=((offsetViewItem.top+posY)+(viewHold.width/2))
+        val ColorSave = Color.rgb(72,134,255)
+        val ColorDelete =Color.rgb(171,0,0)
+        if(TABCalc && offsetViewBounds.left-pwd <= MMDImagenY && offsetViewBounds.right-pwd>=MMDImagenY) {
+            binding.DeleteDrag.setTextColor(Color.RED)
+            binding.DeleteDrag.setShadowLayer(40f, -6f, 0f, Color.RED)
+            binding.DeleteDrag.compoundDrawables[2].colorFilter= PorterDuffColorFilter(Color.RED, PorterDuff.Mode.SRC_IN)
+            binding.DeleteDrag.compoundDrawables[2].bounds=Rect(0,0,100,100)
+        }
+        else{
+            binding.DeleteDrag.compoundDrawables[2].bounds=Rect(0,0,70,70)
+            binding.DeleteDrag.compoundDrawables[2].colorFilter= PorterDuffColorFilter(ColorDelete, PorterDuff.Mode.SRC_IN)
+            binding.DeleteDrag.setTextColor(ColorDelete)
+        }
+        if(TABCalc && offsetViewItemTwo.left-pwd <= MMDImagenY && offsetViewItemTwo.right-pwd>=MMDImagenY){
+            binding.SaveDrag.setTextColor(Color.CYAN)
+            binding.SaveDrag.setShadowLayer(40f, -6f, 0f, Color.CYAN)
+            binding.SaveDrag.compoundDrawables[0].colorFilter= PorterDuffColorFilter(Color.CYAN, PorterDuff.Mode.SRC_IN)
+            binding.SaveDrag.compoundDrawables[0].bounds=Rect(0,0,100,100)
+        }
+        else{
+            binding.SaveDrag.compoundDrawables[0].bounds=Rect(0,0,70,70)
+            binding.SaveDrag.compoundDrawables[0].colorFilter= PorterDuffColorFilter(ColorSave, PorterDuff.Mode.SRC_IN)
+            binding.SaveDrag.setTextColor(ColorSave)
+        }
+    }
+
+
+
+
+//    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int) {
+//        val Final:Uri=adapter.MyImage.get(viewHolder.absoluteAdapterPosition)
+//        //back que del item que se elimina para que pueda ser cancelado
+//        val indexDelete:Int =viewHolder.absoluteAdapterPosition;
+//        //removimiento el item del reciclerview
+//        adapter.removeImagen(indexDelete)
+//        var RestoreSnackbar : Snackbar = Snackbar.make(requireView(),"..."+Final.path?.substring(0,-10),Snackbar.LENGTH_LONG)
+//        RestoreSnackbar.setAction("CANCELAR",View.OnClickListener {
+//            adapter.restoreItem(Final,indexDelete);
+//        })
+//        RestoreSnackbar.setActionTextColor(Color.RED)
+//        val snackbarView = RestoreSnackbar.view
+//        snackbarView.setBackgroundColor(Color.BLACK)
+//        val textView =
+//            snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
+//        textView.setTextColor(Color.RED)
+//        textView.textSize = 17f
+//        RestoreSnackbar.show()
+//        super.onSwiped(viewHolder, position)
+//    }
+
+
+
     private fun openCameraScanner(view: View){
         CamClick=CameraTypes.SCANER
         PermisosCamera=true
         if(allPermisionGranted()){
-
 
             TransitionManager.beginDelayedTransition(binding.SVAPNew, autoTransition)
 
@@ -466,7 +683,9 @@ class AgregateProducts : Fragment() {
                     recycleviewWidth,
                     LinearLayout.LayoutParams.MATCH_PARENT
                 )
+
                 binding.RVCaptureImages.layoutParams = lp
+
                 binding.BCaptura.isEnabled = true
             }
 
@@ -509,8 +728,10 @@ class AgregateProducts : Fragment() {
                             binding.SVAPNew.scrollY,
                             binding.SVAPNew.height + HeigthIncrement - 600
                         ).setDuration(300)
+
                     DesplazeAnimation.setAutoCancel(true)
                     DesplazeAnimation.start()
+
                 }
 
                 val lp = LinearLayout.LayoutParams(
@@ -862,6 +1083,7 @@ class AgregateProducts : Fragment() {
             val pwd = dato.toMutableList()
             images.forEach { image ->
                 adapter.addImage(image.path)
+                binding.RVCaptureImages.scrollToPosition(0);
             }
             dato = pwd.toList()
         }
@@ -971,7 +1193,7 @@ class AgregateProducts : Fragment() {
 //             file.delete()
 //         }
 //        cameraProvider.unbindAll()
-        
+
         _binding = null
     }
 

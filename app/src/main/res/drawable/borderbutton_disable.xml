@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <inset xmlns:android="http://schemas.android.com/apk/res/android"
-    android:insetLeft="6dp"
     android:insetRight="6dp">
-
     <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-
+        <item android:gravity="right">
+            <layer-list>
         <item>
             <shape android:shape="rectangle">
                 <corners android:radius="35dp"/>
@@ -49,6 +48,7 @@
 
 
         </item>
-
+            </layer-list>
+        </item>
     </layer-list>
 </inset>

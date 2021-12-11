@@ -32,6 +32,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:animateLayoutChanges="false"
+                android:clipChildren="true"
                 android:foregroundGravity="bottom"
                 android:gravity="bottom"
                 android:orientation="vertical"
@@ -252,7 +253,10 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center|top"
                     android:layout_marginTop="30dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
                     android:descendantFocusability="blocksDescendants"
+                    android:elevation="10dp"
                     android:foregroundGravity="center"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -263,9 +267,11 @@
                         android:layout_height="400dp"
                         android:layout_gravity="bottom|center"
                         android:animateLayoutChanges="true"
+                        android:clipChildren="false"
+                        android:clipToPadding="false"
                         android:descendantFocusability="blocksDescendants"
                         android:foregroundGravity="top"
-                        android:layoutDirection="locale"
+                        android:layoutDirection="inherit"
                         android:visibility="gone">
 
 
@@ -295,6 +301,7 @@
                             android:id="@+id/constraintqr"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:elevation="10dp"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -332,8 +339,8 @@
                             android:id="@+id/despliegeCamera"
                             android:layout_width="82dp"
                             android:layout_height="80dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="25dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="30dp"
                             android:width="200dp"
                             android:height="200dp"
                             android:background="@drawable/ic_baseline_keyboard_double_arrow_up_24"
@@ -351,8 +358,8 @@
                             android:id="@+id/BcaptureImage"
                             android:layout_width="88dp"
                             android:layout_height="88dp"
-                            android:layout_marginEnd="34dp"
-                            android:layout_marginBottom="16dp"
+                            android:layout_marginEnd="30dp"
+                            android:layout_marginBottom="5dp"
                             android:background="@drawable/button_caputre"
                             app:layout_constraintBottom_toBottomOf="@+id/PVCmain"
                             app:layout_constraintEnd_toEndOf="parent" />
@@ -371,34 +378,44 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="150sp"
                         android:layout_marginTop="10dp"
+                        android:layout_weight="2"
+                        android:clipChildren="false"
+                        android:clipToPadding="false"
+                        android:elevation="3dp"
                         android:gravity="left"
                         android:orientation="horizontal">
 
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/BCaptura"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2"
-                            android:background="@drawable/button_states"
-                            android:gravity="center"
-                            android:visibility="visible"
-                            app:layout_constraintDimensionRatio="1:1"
-                            app:layout_constraintWidth_percent="0.5"
-                            tools:ignore="SpeakableTextPresentCheck"
+                        <View
 
-                            />
+                            android:id="@+id/BCaptura"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:layout_weight="1"
+                            android:background="@drawable/button_states"
+                            android:clickable="true"
+                            android:clipToOutline="true"
+                            android:drawingCacheQuality="low"
+                            android:foregroundGravity="left"
+                            android:gravity="left"
+                            android:visibility="visible"
+                            tools:ignore="SpeakableTextPresentCheck" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/RVCaptureImages"
+
                             android:layout_width="1.6in"
                             android:layout_height="1in"
                             android:layout_gravity="center"
+                            android:layout_weight="0"
                             android:background="@drawable/border_recycleview_camera"
+                            android:clipChildren="false"
+                            android:clipToPadding="false"
+                            android:elevation="15dp"
                             android:foregroundGravity="center_vertical|center"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp">
@@ -406,26 +423,67 @@
                         </androidx.recyclerview.widget.RecyclerView>
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:id="@+id/DeletAndSaveParent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:clipChildren="true"
+                        android:clipToPadding="false"
+                        android:elevation="2dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/SaveDrag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:drawableLeft="@drawable/ic_baseline_drive_file_move_24"
+                            android:gravity="center"
+                            android:text="Guardar"
+                            android:textColor="#4886FF"
+                            android:textSize="24dp" />
+
+                        <TextView
+                            android:id="@+id/DeleteDrag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="30dp"
+                            android:layout_weight="1"
+                            android:drawableRight="@drawable/ic_delete"
+                            android:drawableTint="#AB0000"
+                            android:gravity="center"
+                            android:text="Eliminar"
+                            android:textColor="#AB0000"
+                            android:textSize="24dp" />
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/BAgregateFile"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="#051D0B"
+                        android:drawableRight="@drawable/ic_baseline_drive_folder_upload_24"
+                        android:gravity="center"
+                        android:paddingRight="20dp"
+                        android:shadowColor="#00FF2A"
+                        android:shadowDx="10"
+                        android:shadowDy="10"
+                        android:shadowRadius="10"
+                        android:text="Agregar Imagen desde el Almacenamiento"
+                        android:textAllCaps="false"
+                        android:textColor="#00FF21"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+
                 </LinearLayout>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/BAgregateFile"
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#051D0B"
-                    android:drawableRight="@drawable/ic_baseline_drive_folder_upload_24"
-                    android:gravity="center"
-                    android:paddingRight="20dp"
-                    android:shadowColor="#00FF2A"
-                    android:shadowDx="10"
-                    android:shadowDy="10"
-                    android:shadowRadius="10"
-                    android:text="Agregar Imagen desde el Almacenamiento"
-                    android:textAllCaps="false"
-                    android:textColor="#00FF21"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/BAgregate"

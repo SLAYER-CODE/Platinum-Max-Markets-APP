@@ -3,7 +3,7 @@
     android:insetLeft="6dp"
     android:insetRight="6dp">
 
-    <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <layer-list  xmlns:android="http://schemas.android.com/apk/res/android">
 
 
         <item>
@@ -14,7 +14,7 @@
         </item>
 
 
-        <item android:bottom="8dp" android:gravity="center" android:left="8dp" android:right="8dp" android:top="8dp" android:width="115dp" android:height="115dp">
+        <item  android:bottom="8dp" android:gravity="center" android:left="8dp" android:right="8dp" android:top="8dp" android:width="115dp" android:height="115dp">
             <shape android:shape="rectangle" >
                 <!--                    <corners android:radius="50dp" />-->
 

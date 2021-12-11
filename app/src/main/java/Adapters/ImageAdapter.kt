@@ -1,54 +1,84 @@
 package Adapters
 
-import android.content.Context
+import CallBacks.ItemTouchHelperViewHolder
+import CallBacks.TouchDropListenerAction
+import android.content.ClipData
+import android.content.ClipDescription
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproductos.R
 import kotlinx.android.synthetic.main.image_new_new.view.*
-import android.graphics.BitmapFactory
 
-import android.graphics.Bitmap
 import android.net.Uri
+import android.widget.FrameLayout
+import android.widget.RelativeLayout
 
 
-class ImageAdapter (var MyImage:List<Uri>):
+class ImageAdapter (var MyImage:MutableList<Uri>):
     RecyclerView.Adapter<ImageAdapter.ImageHolder>() {
     fun addImage(path:String)
     {
-        val dato =MyImage.toMutableList()
-        dato.add(0,Uri.parse(path))
-        MyImage=dato.toList()
-        notifyItemChanged(0)
+        MyImage.add(0, Uri.parse(path))
+        notifyItemInserted(0)
     }
     fun addImage(path:Uri)
     {
-        val dato =MyImage.toMutableList()
-        dato.add(0,path)
-        MyImage=dato.toList()
-        notifyItemChanged(0)
+        MyImage.add(0,path)
+        notifyItemInserted(0)
     }
 
-    class ImageHolder(val view: View):RecyclerView.ViewHolder(view){
-        fun render(superImage:String){
+    fun addImage(position:Int,path: Uri){
 
-//            val bmp = BitmapFactory.decodeByteArray(superImage, 0, superImage.size)
-//            val bmp = assetsToBitmap("purpleFlower.png")
-//            view.ImagenOrder.setImageBitmap(bmp)
+    }
 
-              view.ImagenOrder.setImageURI(Uri.parse(superImage))
+    fun restoreItem(path:String,position:Int){
+        MyImage.add(position, Uri.parse(path))
+        notifyItemInserted(position)
+    }
+
+    fun restoreItem(path:Uri,position:Int){
+        MyImage.add(position,path)
+        notifyItemInserted(position)
+    }
+
+    fun removeImagen(position:Int){
+        MyImage.removeAt(position)
+        notifyItemRemoved(position)
+        return
+    }
+
+    class ImageHolder:RecyclerView.ViewHolder, ItemTouchHelperViewHolder {
+        var viewF:RelativeLayout;
+        var viewB:RelativeLayout;
+        var viewParent:FrameLayout;
+        var view:View;
+        constructor(itemView: View) : super(itemView){
+            viewF=itemView.relativeDos
+            viewB=itemView.relativeUno
+            viewParent=itemView.viewParent
+            view=itemView
         }
+
         fun render(superImage: Uri){
             view.ImagenOrder.setImageURI(superImage)
+
+//            view.setOnTouchListener(TouchDropListenerAction())
+        }
+
+        override fun onItemSelected() {
+//            println("Funcion")
+        }
+
+        override fun onItemClear() {
+//            println("Carlos")
         }
 
     }
     public fun clearimagen(){
-        val dato = MyImage.toMutableList()
         val size = MyImage.size;
-        dato.clear()
-        MyImage=dato.toList();
+        MyImage.clear()
         notifyItemRangeRemoved(0,size)
     }
 
