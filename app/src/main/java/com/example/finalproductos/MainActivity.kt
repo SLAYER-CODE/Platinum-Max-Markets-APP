@@ -119,6 +119,7 @@ private val ORDERED_DENSITY_DP_N: IntArray? = intArrayOf(
             func()
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

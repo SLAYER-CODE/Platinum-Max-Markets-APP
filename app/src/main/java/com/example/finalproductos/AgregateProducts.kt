@@ -89,6 +89,18 @@ import android.graphics.PorterDuffColorFilter
 import androidx.core.view.isGone
 import android.os.Environment
 import java.nio.file.attribute.PosixFileAttributeView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+
+import android.R.string.no
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.DrawableContainer
+import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
+import android.widget.Toast
+
+import android.widget.SeekBar
+
+import android.widget.SeekBar.OnSeekBarChangeListener
+import androidx.core.view.isVisible
 
 
 inline fun View.afterMeasure(crossinline block: () -> Unit) {
@@ -156,7 +168,7 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
     var name: String? = null;
     val REQUEST_CODE_PICKER: Int = 201
     var imagePath: String? = null;
-    var SELECT_FILE_IMAGE_CODE:Int=101
+    var SELECT_FILE_IMAGE_CODE: Int = 101
 
     //    Adaptardor para la lista del adaptador de las imagenes
     val adapter = ImageAdapter(mutableListOf())
@@ -166,28 +178,28 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
     private lateinit var imageCapture: ImageCapture;
     private var imageCap: ImageCapture? = null
     private var cameraExecutor: ExecutorService = Executors.newSingleThreadExecutor()
-    private var CamStatus:CameraTypes = CameraTypes.NULL;
-    private var CamClick:CameraTypes = CameraTypes.NULL;
+    private var CamStatus: CameraTypes = CameraTypes.NULL;
+    private var CamClick: CameraTypes = CameraTypes.NULL;
 
-//    Funciones para la selecion multiple de las imagenes
-    private lateinit var imagenUri:Uri;
+    //    Funciones para la selecion multiple de las imagenes
+    private lateinit var imagenUri: Uri;
 
     private var toogleCamera: Boolean = false;
     //    Animaciones procesan solo al ejectuar el codigo
 //    private lateinit var AnimationUpCamera:ValueAnimator;
     //    Esta funcion limpi toda la pantalla incluido las imagenes de la lista
 
-//    Mas funciones Globales para la camara y sus movimientos
-    private var autoTransition: TransitionSet =  AutoTransition().setDuration(250);
-    private  var HeigthIncrement: Int = 0;
-    private var recycleviewWidth:Int = 0;
+    //    Mas funciones Globales para la camara y sus movimientos
+    private var autoTransition: TransitionSet = AutoTransition().setDuration(250);
+    private var HeigthIncrement: Int = 0;
+    private var recycleviewWidth: Int = -1;
 
 
     //Distancias para la elimiancion guardado y muestra
-    private var RefDeleteViewImage:Int = 1;
-    private var RefMediumDistanceImage:Int = 1;
-    private lateinit var offsetViewBounds:Rect;
-    private lateinit var AnimationUpIntercalate:AnimationDrawable;
+    private var RefDeleteViewImage: Int = 1;
+    private var RefMediumDistanceImage: Int = 1;
+    private lateinit var offsetViewBounds: Rect;
+    private lateinit var AnimationUpIntercalate: AnimationDrawable;
     fun clearItems() {
         binding.TEQR.setText("")
         binding.TENombre.setText("")
@@ -207,18 +219,21 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
             view, text,
             Snackbar.LENGTH_LONG
         ).setAction("Action", null)
+
         snackbar.setActionTextColor(color)
         val snackbarView = snackbar.view
+
         snackbarView.setBackgroundColor(Color.BLACK)
         val textView =
             snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
         textView.setTextColor(color)
         textView.textSize = 17f
+        (snackbar.view).layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
         snackbar.show()
     }
 
     override fun onStart() {
-        Log.i(LOGFRAGMENT,"Se Inicio onStart [*]")
+        Log.i(LOGFRAGMENT, "Se Inicio onStart [*]")
         (activity as MainActivity).functionFabRefresh(::clearItems);
         (activity as MainActivity).returnbinding().refreshFab.setImageResource(R.drawable.ic_baseline_clear_all_24)
 
@@ -227,21 +242,21 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        Log.i(LOGFRAGMENT,"La camara es $toogleCamera")
+        Log.i(LOGFRAGMENT, "La camara es $toogleCamera")
 
-        AnimationUpCamera=ObjectAnimator.ofFloat(binding.despliegeCamera, "translationY", -80f)
-        AnimationUpCamera.repeatCount=ObjectAnimator.INFINITE
-        AnimationUpCamera.repeatMode=ObjectAnimator.REVERSE
-        AnimationUpCamera.duration=800
+        AnimationUpCamera = ObjectAnimator.ofFloat(binding.despliegeCamera, "translationY", -80f)
+        AnimationUpCamera.repeatCount = ObjectAnimator.INFINITE
+        AnimationUpCamera.repeatMode = ObjectAnimator.REVERSE
+        AnimationUpCamera.duration = 800
 
         AnimationUpIntercalate = binding.despliegeCamera.background as AnimationDrawable
         AnimationUpIntercalate.setEnterFadeDuration(1000)
         AnimationUpIntercalate.setExitFadeDuration(1000)
 
 
-        Log.i("CameraStateRegistry",cameraExecutor.isShutdown.toString())
+        Log.i("CameraStateRegistry", cameraExecutor.isShutdown.toString())
         if (CamStatus == CameraTypes.CAMERA) {
-            binding.LayoutCamera.visibility=View.VISIBLE
+            binding.LayoutCamera.visibility = View.VISIBLE
             openCamera()
         } else if (CamStatus == CameraTypes.SCANER) {
             binding.LayoutCamera.visibility = View.VISIBLE
@@ -260,7 +275,9 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
 
 //        Estas son las bases para el incremento de la camara segun la perspectiva del telefono
         HeigthIncrement = binding.LayoutCamera.layoutParams.height
-        recycleviewWidth = binding.RVCaptureImages.layoutParams.width
+        if (recycleviewWidth == -1){
+            recycleviewWidth = binding.RVCaptureImages.layoutParams.width
+        }
 
         binding.TENombre.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
@@ -364,10 +381,33 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
         binding.DeleteDrag.setOnTouchListener(TouchDropListenerAction())
         binding.SaveDrag.setOnTouchListener(TouchDropListenerAction())
 
+        binding.SBzoom.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                // TODO Auto-generated method stub
+            }
 
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                // TODO Auto-generated method stub
+                if(fromUser) {
+                    MyCamera.cameraControl.setZoomRatio(progress.toFloat()/100f)
+                }
+            }
+        })
 //        Bindig para el recyclerview de las imagenes
         binding.RVCaptureImages.layoutManager =
             LinearLayoutManager(baseActivity, LinearLayoutManager.HORIZONTAL, false)
+
+
+        adapter.registerAdapterDataObserver(object : AdapterDataObserver() {
+            override fun onChanged() {
+                println("CARLOSS")
+            }
+        })
+
         binding.RVCaptureImages.adapter = adapter
         var RVCallback:ItemTouchHelper.Callback = MyItemTouchHelperCallback(this);
         var RVTouchHelper:ItemTouchHelper = ItemTouchHelper(RVCallback);
@@ -381,7 +421,6 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
             if (toogleCamera) {
                 AnimationUpCamera.start()
                 //Animacion de recorido del la camara layout
-                TransitionManager.beginDelayedTransition(binding.SVAPNew, autoTransition)
                 val objectAnimator =
                     ObjectAnimator.ofInt(
                         binding.SVAPNew,
@@ -399,26 +438,37 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
                 })
 
 //                Animacion de recorrido en la camara
-                val lp = LinearLayout.LayoutParams(
-                    recycleviewWidth,
-                    LinearLayout.LayoutParams.MATCH_PARENT
-                )
 
-                binding.RVCaptureImages.layoutParams = lp
+
                 binding.linearConstraitButton.requestLayout()
                 binding.BCaptura.isEnabled = true
-
                 toogleCamera = false
+                comprobateItem()
+                TransitionManager.beginDelayedTransition(binding.SVAPNew, autoTransition)
+
             }
         }
 
 //      Start camera ESCANNER()
         binding.BEscaner.setOnClickListener {
-            openCameraScanner(view)
+            if(CamStatus==CameraTypes.SCANER){
+                binding.LayoutCamera.visibility=View.GONE
+                toogleCamera=false
+                CamStatus = CameraTypes.NULL
+                binding.BEscaner.setBackgroundResource(R.drawable.ic_baseline_document_scanner_24)
+
+            }else {
+                binding.BEscaner.setBackgroundResource(R.drawable.ic_baseline_close_24)
+                openCameraScanner(view)
+            }
         }
 //        startCamera()
         binding.BCaptura.setOnClickListener {
             openCamera()
+        }
+        binding.BRscanner.setOnClickListener {
+            binding.BRscanner.visibility=View.INVISIBLE
+            openCameraScanner(view);
         }
 
         var contadorImagen = 1
@@ -445,6 +495,7 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
 
                             adapter.addImage(outputFileResults.savedUri.toString())
                             binding.RVCaptureImages.scrollToPosition(0);
+                            comprobateItem()
 //                                cameraProvider.unbindAll()
                         }
                     }
@@ -457,11 +508,61 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
         super.onViewCreated(view, savedInstanceState)
     }
 
+    fun comprobateItem(){
+        var Value:Boolean=adapter.MyImage.size==0
+        var lp:LinearLayout.LayoutParams= binding.TNotItems.layoutParams as LinearLayout.LayoutParams
+        var lprV:LinearLayout.LayoutParams
+        if(toogleCamera && CamStatus==CameraTypes.CAMERA){
+
+
+            if(Value){
+
+                lprV = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT, 0f
+                )
+
+            }else{
+                lprV = LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.MATCH_PARENT, 0f
+                )
+                lp = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT,0f
+                )
+            }
+        }else{
+            if(Value){
+                lprV = LinearLayout.LayoutParams(
+                    recycleviewWidth,
+                    LinearLayout.LayoutParams.MATCH_PARENT, 0f
+                )
+                lp = LinearLayout.LayoutParams(
+                    recycleviewWidth,
+                    LinearLayout.LayoutParams.MATCH_PARENT,2.2f
+                )
+            }else{
+                lprV = LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.MATCH_PARENT, 0f
+                )
+                lp = LinearLayout.LayoutParams(
+                    recycleviewWidth,
+                    LinearLayout.LayoutParams.MATCH_PARENT,0f
+                )
+            }
+        }
+        binding.TNotItems.layoutParams=lprV
+        binding.RVCaptureImages.layoutParams=lp
+
+    }
+
     override fun itemTouchMode(oldPosition: Int, newPosition: Int) {
         position=newPosition
         adapter.MyImage.add(oldPosition,adapter.MyImage.removeAt(newPosition))
         adapter.notifyItemMoved(oldPosition,newPosition);
-
+        comprobateItem()
 //        super.itemTouchMode(oldPosition, newPosition)
     }
 
@@ -496,21 +597,27 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
             binding.linearConstraitButton.offsetDescendantRectToMyCoords(viewHold, offsetViewItem)
         }
         val transtion =  AutoTransition().setDuration(350);
-        TransitionManager.beginDelayedTransition(binding.linearConstraitButton, transtion)
         if(views) {
             val lp = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT
             )
             binding.DeletAndSaveParent.layoutParams=lp
+            binding.LEandI.layoutParams=lp
         }else{
             val lp = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 0
             )
             binding.DeletAndSaveParent.layoutParams=lp
+            val lpDat = LinearLayout.LayoutParams(
+                0,
+                0
+            )
+            binding.LEandI.layoutParams=lpDat
         }
-        binding.DeletAndSaveParent.requestLayout()
+        TransitionManager.beginDelayedTransition(binding.linearConstraitButton, transtion)
+//        binding.DeletAndSaveParent.requestLayout()
     }
 
     private var offsetViewItem:Rect=Rect()
@@ -543,6 +650,7 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
         textView.setTextColor(Color.RED)
         textView.textSize = 17f
         RestoreSnackbar.show()
+            comprobateItem()
             return 1;
         }
         if(TABCalc && offsetViewItemTwo.left-pwd <= MMDImagenY && offsetViewItemTwo.right-pwd>=MMDImagenY){
@@ -638,11 +746,10 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
 
 
     private fun openCameraScanner(view: View){
+        binding.despliegeCamera.visibility=View.GONE
         CamClick=CameraTypes.SCANER
         PermisosCamera=true
         if(allPermisionGranted()){
-
-            TransitionManager.beginDelayedTransition(binding.SVAPNew, autoTransition)
 
             binding.BcaptureImage.visibility = View.GONE
             val animation = AnimationUtils.loadAnimation(
@@ -652,20 +759,22 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
             binding.Vqrline.startAnimation(animation)
             binding.constraintqr.visibility = View.VISIBLE
 
-
             if (!toogleCamera || CamStatus == CameraTypes.SCANER) {
+
                 if(!toogleCamera){
 
                     binding.LayoutCamera.post(Runnable {
                         binding.LayoutCamera.visibility = View.VISIBLE
                     })
+
                     val DesplazeAnimation =
                         ObjectAnimator.ofInt(
                             binding.SVAPNew,
                             "scrollY",
                             binding.SVAPNew.scrollY,
                             binding.SVAPNew.height + HeigthIncrement - 600
-                        ).setDuration(300)
+                        ).setDuration(250)
+
                     DesplazeAnimation.setAutoCancel(true)
                     DesplazeAnimation.start()
 
@@ -685,7 +794,7 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
                 )
 
                 binding.RVCaptureImages.layoutParams = lp
-
+                binding.TNotItems.layoutParams=lp
                 binding.BCaptura.isEnabled = true
             }
 
@@ -705,19 +814,25 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
             contextFragment.runCatching {
                 startCameraEscaner(view)
             }
-            binding.linearConstraitButton.requestLayout()
+//            binding.linearConstraitButton.requestLayout()
         }
+        comprobateItem()
+        TransitionManager.beginDelayedTransition(binding.SVAPNew, autoTransition)
+
     }
 
     private fun openCamera() {
+        binding.despliegeCamera.visibility=View.VISIBLE
+
         PermisosCamera=true;
         CamClick=CameraTypes.CAMERA
+
         if (allPermisionGranted()) {
-            TransitionManager.beginDelayedTransition(binding.SVAPNew, autoTransition)
+
             binding.BcaptureImage.visibility = View.VISIBLE
             if (!toogleCamera || CamStatus == CameraTypes.CAMERA) {
                 if(!toogleCamera) {
-                    binding.constraintqr.visibility = View.INVISIBLE
+                    binding.constraintqr.visibility = View.GONE
                     binding.LayoutCamera.post(Runnable {
                         binding.LayoutCamera.visibility = View.VISIBLE
                     })
@@ -734,13 +849,13 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
 
                 }
 
-                val lp = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT
-                )
-                binding.RVCaptureImages.layoutParams = lp
+//                val lp = LinearLayout.LayoutParams(
+//                    LinearLayout.LayoutParams.MATCH_PARENT,
+//                    LinearLayout.LayoutParams.MATCH_PARENT
+//                )
+//                binding.RVCaptureImages.layoutParams = lp
+//                binding.TNotItems.layoutParams=lp
 
-                binding.BCaptura.isEnabled = false
                 toogleCamera = true
                 contextFragment.runCatching {
                     startCamera()
@@ -749,11 +864,15 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
             } else {
                 if (CamStatus == CameraTypes.SCANER) {
                     binding.constraintqr.visibility = View.INVISIBLE
+                    binding.BRscanner.visibility=View.INVISIBLE
+                    binding.BEscaner.setBackgroundResource(R.drawable.ic_baseline_document_scanner_24)
                     val lp = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT
                     )
                     binding.RVCaptureImages.layoutParams = lp
+                    binding.TNotItems.layoutParams=lp
+
                     contextFragment.runCatching {
 //                        cameraProvider.unbindAll()
                         startCamera()
@@ -773,10 +892,14 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
             {
                 AnimationUpIntercalate.start()
             }
-            binding.linearConstraitButton.requestLayout()
+            binding.BCaptura.isEnabled=false
+//            println("SSSSSSSSSSSSSSSSSSSSS")
             CamStatus = CameraTypes.CAMERA
         }
+        comprobateItem()
+        TransitionManager.beginDelayedTransition(binding.SVAPNew, autoTransition)
 
+//                binding.SVAPNew.requestLayout()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -838,11 +961,15 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
         this.contextFragment = context
     }
 
-    private fun focusControllerCamera(MyCamera: Camera) {
+
+    private fun focusControllerCamera() {
+        binding.SBzoom.max= (MyCamera.cameraInfo.zoomState.value?.maxZoomRatio!! * 100).toInt()
+        binding.SBzoom.progress=(MyCamera.cameraInfo.zoomState.value?.zoomRatio!! * 100).toInt()
+        binding.SBzoom.min= (MyCamera.cameraInfo.zoomState.value?.minZoomRatio!! * 100).toInt()
         val listener = object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
             override fun onScale(detector: ScaleGestureDetector): Boolean {
                 // Get the camera's current zoom ratio
-                val currentZoomRatio = MyCamera.cameraInfo.zoomState.value?.zoomRatio ?: 200F
+                val currentZoomRatio = MyCamera.cameraInfo.zoomState.value?.zoomRatio!!
 
                 // Get the pinch gesture's scaling factor
                 val delta = detector.scaleFactor
@@ -850,7 +977,7 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
                 // Update the camera's zoom ratio. This is an asynchronous operation that returns
                 // a ListenableFuture, allowing you to listen to when the operation completes.
                 MyCamera.cameraControl.setZoomRatio(currentZoomRatio * delta)
-
+                binding.SBzoom.progress = (currentZoomRatio*100).toInt()
                 // Return true, as the event was handled
                 return true
             }
@@ -870,32 +997,54 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
         binding.PVCmain.afterMeasure {
             val newpressanimation: AnimationDrawable =
                 binding.punteroFocus.background as AnimationDrawable
-            newpressanimation.setEnterFadeDuration(100)
-            newpressanimation.setExitFadeDuration(1000)
-            binding.PVCmain.setOnTouchListener { _, event ->
-                scaleGestureDetector.onTouchEvent(event)
-                return@setOnTouchListener when (event.action) {
-                    MotionEvent.ACTION_DOWN -> {
-                        Log.i(LOGFRAGMENT,"${event.x}   ${event.y} ${event.rawX} ${event.rawY}")
-                        val relativeParams =
-                            binding.punteroFocus.layoutParams as ConstraintLayout.LayoutParams
-                        relativeParams.setMargins(
-                            event.x.toInt() - (binding.punteroFocus.height / 2),
-                            event.y.toInt() - (binding.punteroFocus.width / 2),
-                            0,
-                            0
-                        )
-                        binding.punteroFocus.layoutParams = relativeParams
 
-                        newpressanimation.start()
-                        binding.punteroFocus.visibility = View.VISIBLE
-                        //                                val trancicion  =
-                        binding.punteroFocus.postDelayed(Runnable {
-                            binding.punteroFocus.setVisibility(
-                                View.INVISIBLE
-                            )
+            newpressanimation.setEnterFadeDuration(0)
+            newpressanimation.setExitFadeDuration(500)
+
+            binding.PVCmain.setOnTouchListener {_:View, event ->
+                 scaleGestureDetector.onTouchEvent(event)
+
+                when (event.action) {
+
+
+                    MotionEvent.ACTION_MOVE->{
+                        binding.punteroFocus.visibility=View.INVISIBLE
+                        true;
+                    }
+                    MotionEvent.ACTION_POINTER_UP->{
+                        println("SSS")
+                        true
+                    }
+                    MotionEvent.ACTION_DOWN -> {
+//                        println(event.x)
+//                        println(event.y)
+//                        println(binding.punteroFocus.x)
+
+                        binding.punteroFocus.x=event.x-(binding.punteroFocus.height / 2)
+                        binding.punteroFocus.y=event.y-(binding.punteroFocus.width / 2)
+//                        Log.i(LOGFRAGMENT,"${event.x}   ${event.y} ${event.rawX} ${event.rawY}")
+//
+//                        val relativeParams =
+//                            binding.punteroFocus.layoutParams as ConstraintLayout.LayoutParams
+//                        relativeParams.setMargins(
+//                            event.x.toInt() - (binding.punteroFocus.height / 2),
+//                            event.y.toInt() - (binding.punteroFocus.width / 2),
+//                            0,
+//                            0
+//                        )
+
+
+//                        binding.punteroFocus.layoutParams = relativeParams
+                        if(newpressanimation.isRunning){
                             newpressanimation.stop()
-                        }, 600)
+                        }
+                        binding.punteroFocus.visibility = View.VISIBLE
+//                        newpressanimation.start()
+
+//                        newpressanimation.stop()
+
+                        //                                val trancicion  =
+
 
 //                                binding.punteroFocus.animate().alpha(1F).setDuration(3000).setListener(object :AnimatorListenerAdapter(){
 //                                    override fun onAnimationStart(animation: Animator?) {
@@ -912,7 +1061,6 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
 //                                    }
 //                                })
 
-                        binding.punteroFocus.requestLayout()
                         true
                     }
                     MotionEvent.ACTION_UP -> {
@@ -922,26 +1070,42 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
                         )
                         val autoFocusPoint = factory.createPoint(event.x, event.y)
                         try {
+                            newpressanimation.start()
                             MyCamera.cameraControl.startFocusAndMetering(
                                 FocusMeteringAction.Builder(
                                     autoFocusPoint,
                                     FocusMeteringAction.FLAG_AF
                                 ).apply {
                                     //focus only when the user tap the preview
-
+                                    binding.punteroFocus.postDelayed(Runnable {
+                                        binding.punteroFocus.setVisibility(
+                                            View.INVISIBLE
+                                        )
+                                        newpressanimation.stop()
+                                    }, 500)
                                     disableAutoCancel()
                                 }.build()
                             )
 
+
                         } catch (e: CameraInfoUnavailableException) {
+                            newpressanimation.stop()
                             Log.d("ERROR", "cannot access camera", e)
                         }
                         true
                     }
-                    else -> false // Unhandled event.
+                    else -> {
+                        if(binding.punteroFocus.isVisible){
+                            binding.punteroFocus.visibility=View.INVISIBLE
+                        }
+                        binding.punteroFocus.requestLayout()
+                        false
+                    }// Unhandled event.
+
                 }
 
             }
+
         }
     }
 
@@ -971,7 +1135,7 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
                     .setTargetResolution(Size(binding.PVCmain.width, binding.PVCmain.height))
                     .build()
                 imageCapture.setCropAspectRatio(Rational(200, 200))
-                val MyCamera = cameraProvider.bindToLifecycle(
+                MyCamera = cameraProvider.bindToLifecycle(
                     baseActivity,
                     cameraSelector,
                     preview,
@@ -982,12 +1146,14 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
 
                 MyCamera.cameraControl.cancelFocusAndMetering()
 
-                focusControllerCamera(MyCamera)
+                focusControllerCamera()
             } catch (e: Exception) {
                 Log.e(LOGFRAGMENT, "Error al asignar la camara", e)
             }
         }, ContextCompat.getMainExecutor(baseActivity))
     }
+
+    private lateinit var MyCamera:Camera;
     private fun startCameraEscaner(MyView:View) {
         cameraProviderFuture=ProcessCameraProvider.getInstance(baseActivity)
         cameraProviderFuture.addListener({
@@ -1009,7 +1175,8 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
             }
 //            preview.targetRotation=ROTATION_0
             Log.i(LOGFRAGMENT,"El dato es"+binding.PVCmain.width.toString())
-                val imageAnalysis = ImageAnalysis.Builder()
+
+            val imageAnalysis = ImageAnalysis.Builder()
                     .setTargetResolution(Size(HeigthIncrement, HeigthIncrement))
 //            val imageAnalysis = ImageAnalysis.Builder()
                     .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
@@ -1024,8 +1191,11 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
 //                                Toast.LENGTH_SHORT
 //                            ).show()
                                 cameraProvider.unbindAll()
+
                                 messageSnackBar(MyView, "El codigo es ${qrResult.text}", Color.YELLOW)
                                 binding.TEQR.setText(qrResult.text)
+                                binding.Vqrline.clearAnimation()
+                                binding.BRscanner.visibility=View.VISIBLE
 //                            cameraProvider.unbindAll()
                             }
                         })
@@ -1036,12 +1206,13 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
             try {
 
                 cameraProvider.unbindAll()
-                val MyCamera =
+                MyCamera =
                     cameraProvider.bindToLifecycle(baseActivity, cameraSelector, preview,imageAnalysis)
+
 //                cameraProvider.bindToLifecycle(baseActivity,cameraSelector,preview,imageAnalysis)
                 MyCamera.cameraControl.cancelFocusAndMetering()
 
-                focusControllerCamera(MyCamera)
+                focusControllerCamera()
 
             } catch (e: Exception) {
                 Log.e(LOGFRAGMENT, "Error al intentar Asignar la camara de Escaneo",e)
@@ -1084,6 +1255,7 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
             images.forEach { image ->
                 adapter.addImage(image.path)
                 binding.RVCaptureImages.scrollToPosition(0);
+                comprobateItem()
             }
             dato = pwd.toList()
         }

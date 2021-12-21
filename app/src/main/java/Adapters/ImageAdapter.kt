@@ -82,6 +82,8 @@ class ImageAdapter (var MyImage:MutableList<Uri>):
         notifyItemRangeRemoved(0,size)
     }
 
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return ImageHolder(layoutInflater.inflate(R.layout.image_new_new,parent,false))
