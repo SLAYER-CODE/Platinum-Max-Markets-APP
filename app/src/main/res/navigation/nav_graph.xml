@@ -7,8 +7,8 @@
 <!--    Primer Framgneo-->
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.example.finalproductos.FirstFragment"
-        tools:layout="@layout/fragment_first">
+        android:name="com.example.finalproductos.ui.fragment.ShowProducts"
+        tools:layout="@layout/fragment_show_products">
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
@@ -29,8 +29,8 @@
 <!--    android:label="@string/second_fragment_label"-->
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.example.finalproductos.SecondFragment"
-        tools:layout="@layout/fragment_second">
+        android:name="com.example.finalproductos.ui.fragment.TestFragment"
+        tools:layout="@layout/fragment_test">
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
@@ -62,7 +62,7 @@
     <fragment
         android:id="@+id/detallesProducto"
         android:name="com.example.finalproductos.DetallesProducto"
-        tools:layout="@layout/fragment_detalles_producto" >
+        tools:layout="@layout/fragment_detalles_products" >
         <action
             android:id="@+id/action_detallesProducto_to_FirstFragment"
             app:destination="@id/FirstFragment" />
