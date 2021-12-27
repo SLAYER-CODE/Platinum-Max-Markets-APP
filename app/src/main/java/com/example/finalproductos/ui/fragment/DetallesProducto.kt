@@ -8,11 +8,13 @@ import Data.Producto
 import android.content.Context
 import android.os.Bundle
 import android.transition.TransitionInflater
+import android.util.LayoutDirection
 import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -43,24 +45,29 @@ class DetallesProducto : Fragment() {
     private val binding get() = _binding!!
     private var editable:Boolean=false;
     private lateinit var adapter: DetallesAdapterImagen
-    var uid = 0
+    private var uid:Int=-1;
+    private var animation:Int = 0;
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true);
 
-        val animation=TransitionInflater.from(context).inflateTransition(
-            android.R.transition.move
-        )
-        sharedElementReturnTransition=animation
-        sharedElementEnterTransition=animation
+
 
         arguments?.let {
             uid=it.getInt("uid");
+            animation=it.getInt("animation")
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
+            if(animation==1) {
+                val animation = TransitionInflater.from(context).inflateTransition(
+                    android.R.transition.move
+                )
+                sharedElementReturnTransition = animation
+                sharedElementEnterTransition = animation
+            }
 
     }
 //
@@ -226,11 +233,10 @@ class DetallesProducto : Fragment() {
             binding.TTStock.setText(producto.stockC.toString())
             binding.TTStockU.setText(producto.stockU.toString())
             binding.TTQR.setText(producto.qr.toString())
-            binding.RVimages.layoutManager=
-                LinearLayoutManager(baseActivity, LinearLayoutManager.HORIZONTAL,false)
+
             baseActivity.runOnUiThread {
-                if(!it.imageN.isEmpty()) {
-                    adapter = DetallesAdapterImagen(baseActivity, it.imageN)
+                if(it.imageN.isNotEmpty()) {
+                    adapter = DetallesAdapterImagen(baseActivity, it.imageN.reversed())
                     binding.RVimages.adapter = adapter
                 }else{
                     binding.RVimages.visibility=View.GONE
@@ -250,10 +256,15 @@ class DetallesProducto : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentDetallesProductsBinding.inflate(inflater, container, false)
 
-        ((activity as MainActivity).hidefabrefresh())
         //        println(uid);
 //        return inflater.inflate(R.layout.fragment_detalles_producto, container, false)
         return binding.root
+    }
+
+    override fun onStart() {
+        ((activity as MainActivity).hidefabrefresh())
+        baseActivity.returnbinding().BIShowP.isVisible=false
+        super.onStart()
     }
 
     override fun onDestroyView() {

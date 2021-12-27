@@ -6,9 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="top"
-    android:animateLayoutChanges="true"
 
+    android:animateLayoutChanges="true"
     android:background="@color/black"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     android:foregroundGravity="bottom"
     tools:context=".AgregateProducts">
 
@@ -24,6 +26,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             android:foregroundGravity="top|bottom"
             android:importantForAutofill="no|yesExcludeDescendants">
 
@@ -32,12 +37,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:animateLayoutChanges="false"
+                android:clickable="true"
                 android:clipChildren="true"
+                android:focusable="auto"
+                android:focusableInTouchMode="true"
                 android:foregroundGravity="bottom"
                 android:gravity="bottom"
                 android:orientation="vertical"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
+                android:showDividers="middle"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -73,33 +82,88 @@
 
                 </LinearLayout>
 
-                <EditText
-                    android:id="@+id/TENombre"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="86dp"
-                    android:backgroundTint="#91FFEF"
-                    android:ems="10"
-                    android:hint="Nombre"
-                    android:inputType="text"
-                    android:shadowColor="#2AFF12"
-                    android:textColor="#33EDF3"
-                    android:textColorHighlight="#1EA825"
-                    android:textColorHint="#8EDDDB"
-                    android:textColorLink="#FF0101" />
+                    android:layout_height="match_parent"
+                    android:textColorHint="#40B642"
+                    app:helperText="Required"
+                    app:helperTextTextColor="@color/red"
+                    app:startIconDrawable="@drawable/ic_baseline_name_addproduct"
+                    app:startIconTint="@color/green">
 
-                <EditText
-                    android:id="@+id/TEPrecio"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/TENombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#D2032910"
+                        android:drawableTintMode="add"
+                        android:ems="10"
+                        android:hint="Nombre"
+                        android:inputType="textCapSentences"
+                        android:shadowColor="#000000"
+                        android:shadowDy="10"
+                        android:shadowRadius="7"
+                        android:textColor="#EB1818"
+                        android:textColorHighlight="#1EA825"
+                        android:textColorHint="#6303BDB8"
+                        android:textStyle="normal|bold"
+                        android:tooltipText="@string/dummy_content"
+                        app:helperTextEnabled="false" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="71dp"
-                    android:backgroundTint="#91FFEF"
-                    android:ems="10"
-                    android:hint="Precio C"
-                    android:inputType="numberDecimal"
-                    android:shadowColor="#2AFF12"
-                    android:textColor="#33EDF3"
-                    android:textColorHighlight="#1EA825"
-                    android:textColorHint="#8EDDDB"
-                    android:textColorLink="#FF0101" />
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColorHint="#40B642"
+                        app:helperText="Required"
+                        app:helperTextTextColor="@color/red"
+                        app:startIconDrawable="@drawable/ic_baseline_money_addproduct"
+                        app:startIconTint="@color/green">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/TEPrecio"
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#D2032910"
+                            android:drawableTintMode="add"
+                            android:ems="10"
+                            android:foregroundTint="#B62323"
+                            android:hint="Precio"
+                            android:inputType="numberDecimal"
+                            android:shadowColor="#C8D8C6"
+                            android:textColor="#EB1818"
+                            android:textColorHighlight="#1EA825"
+                            android:textColorHint="#6303BDB8"
+                            android:textColorLink="#FF0101"
+                            android:textStyle="normal|bold"
+                            android:tooltipText="@string/dummy_content" />
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/TVpreciodisconut"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="50dp"
+                        android:background="@color/black"
+                        android:padding="1dp"
+                        android:text="Precio con descuento: 0"
+                        android:textColor="@color/green"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -131,90 +195,296 @@
 
                 </LinearLayout>
 
-                <EditText
-
-                    android:id="@+id/TEPrecioU"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:backgroundTint="#91FFEF"
-                    android:ems="10"
-                    android:hint="Precio U"
-                    android:inputType="numberDecimal"
-                    android:shadowColor="#2AFF12"
-                    android:textColor="#33EDF3"
-                    android:textColorHighlight="#1EA825"
-                    android:textColorHint="#8EDDDB"
-                    android:textColorLink="#FF0101" />
+                    android:layout_height="match_parent"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
 
-                <EditText
 
-                    android:id="@+id/TEMarca"
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:textColorHint="#40B642"
+                            app:helperText="Inserte el precio Origuinal"
+                            app:helperTextTextColor="@color/light_blue_600"
+                            app:startIconDrawable="@drawable/ic_baseline_price_add_product"
+                            app:startIconTint="@color/green">
+
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/TEPrecioU"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="#D2032910"
+                                android:drawableTintMode="add"
+                                android:ems="10"
+                                android:foregroundTint="#B62323"
+                                android:hint="Precio Neto"
+                                android:inputType="numberDecimal"
+                                android:shadowColor="#C8D8C6"
+                                android:textColor="#EB1818"
+                                android:textColorHighlight="#1EA825"
+                                android:textColorHint="#6303BDB8"
+                                android:textColorLink="#FF0101"
+                                android:textStyle="normal|bold"
+                                android:tooltipText="@string/dummy_content" />
+
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <TextView
+                            android:id="@+id/TVGanancia"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="45dp"
+                            android:layout_marginRight="5dp"
+                            android:gravity="right"
+                            android:lines="1"
+                            android:maxWidth="150dp"
+                            android:padding="1dp"
+                            android:text="Ganancia: 0"
+                            android:textColor="@color/green"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textColorHint="#40B642"
+                        app:helperText="Descuento del producto"
+                        app:helperTextTextColor="@color/light_blue_600"
+                        app:startIconDrawable="@drawable/ic_baseline_discount_addproduct"
+                        app:startIconTint="@color/green">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/TEDescuento"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#D2032910"
+                            android:drawableTintMode="add"
+                            android:ems="10"
+                            android:focusableInTouchMode="true"
+                            android:foregroundTint="#B62323"
+                            android:hint="Descuento"
+                            android:inputType="numberDecimal"
+                            android:shadowColor="#C8D8C6"
+                            android:text="0"
+                            android:textColor="#EB1818"
+                            android:textColorHighlight="#1EA825"
+                            android:textColorHint="#6303BDB8"
+                            android:textStyle="normal|bold"
+                            android:tooltipText="@string/dummy_content" />
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:backgroundTint="#91FFEF"
-                    android:ems="10"
-                    android:hint="Marca"
-                    android:inputType="text"
-                    android:shadowColor="#2AFF12"
-                    android:textColor="#33EDF3"
-                    android:textColorHighlight="#1EA825"
-                    android:textColorHint="#8EDDDB"
-                    android:textColorLink="#FF0101" />
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                <EditText
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:hint="Cantidad"
+                        android:textColorHint="#40B642"
 
-                    android:id="@+id/TECategoria"
+                        app:helperText="Productos disponibles"
+                        app:helperTextTextColor="@color/light_blue_A400"
+                        app:startIconDrawable="@drawable/ic_baseline_storage_addproduct"
+                        app:startIconTint="@color/green">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/TECantidad"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#D2032910"
+                            android:drawableTintMode="add"
+                            android:ems="10"
+                            android:foregroundTint="#B62323"
+                            android:inputType="number"
+                            android:shadowColor="#C8D8C6"
+                            android:text="0"
+                            android:textColor="#EB1818"
+                            android:textColorHighlight="#1EA825"
+                            android:textColorHint="#6303BDB8"
+                            android:textColorLink="#FF0101"
+                            android:textStyle="normal|bold"
+                            android:tooltipText="@string/dummy_content" />
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Spinner
+                        android:id="@+id/SPCantidad"
+                        style="@android:style/Widget.Holo.Spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0"
+                        android:backgroundTint="@color/green"
+                        android:ems="10"
+                        android:foregroundGravity="center"
+                        android:gravity="center"
+                        android:popupBackground="#9F005936"
+                        android:spinnerMode="dropdown" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:hint="Peso"
+                        android:textColorHint="#40B642"
+                        app:helperText="Inserte el peso del producto"
+                        app:helperTextTextColor="@color/light_blue_A400"
+                        app:startIconDrawable="@drawable/ic_baseline_format_peso_addproduct"
+                        app:startIconTint="@color/green">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/TECantidadU"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#D2032910"
+                            android:drawableTintMode="add"
+                            android:ems="10"
+                            android:foregroundTint="#B62323"
+                            android:inputType="numberDecimal"
+                            android:shadowColor="#C8D8C6"
+                            android:textColor="#EB1818"
+                            android:textColorHighlight="#1EA825"
+                            android:textColorHint="#6303BDB8"
+                            android:textColorLink="#FF0101"
+                            android:textStyle="normal|bold"
+                            android:tooltipText="@string/dummy_content">
+
+                        </com.google.android.material.textfield.TextInputEditText>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <Spinner
+                        android:id="@+id/SPpeso"
+
+                        style="@android:style/Widget.Holo.Spinner"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0"
+                        android:backgroundTint="@color/green"
+                        android:ems="10"
+                        android:foregroundGravity="center"
+                        android:gravity="center"
+
+
+                        android:popupBackground="#9F005936"
+                        android:spinnerMode="dropdown" />
+
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:backgroundTint="#91FFEF"
-                    android:ems="10"
-                    android:hint="Categoria"
-                    android:inputType="text"
-                    android:shadowColor="#2AFF12"
-                    android:textColor="#33EDF3"
-                    android:textColorHighlight="#1EA825"
-                    android:textColorHint="#8EDDDB"
-                    android:textColorLink="#FF0101" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="Detalles y caracteristicas"
+                    android:textAlignment="center"
+                    android:textColorHint="#40B642"
+                    app:helperTextTextColor="@color/red"
+                    app:startIconDrawable="@drawable/ic_baseline_recommend_addproducto"
+                    app:startIconTint="@color/green">
 
-                <EditText
-                    android:id="@+id/TECantidad"
-                    android:layout_width="match_parent"
-                    android:layout_height="77dp"
-                    android:backgroundTint="#91FFEF"
-                    android:ems="10"
-                    android:hint="Cantidad C:"
-                    android:inputType="number"
-                    android:shadowColor="#2AFF12"
-                    android:textColor="#33EDF3"
-                    android:textColorHighlight="#1EA825"
-                    android:textColorHint="#82D1C1" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/TECaracteristicas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#D2032910"
+                        android:drawableTintMode="add"
+                        android:ems="10"
+                        android:foregroundTint="#B62323"
+                        android:inputType="textMultiLine|textCapSentences"
+                        android:shadowColor="#C8D8C6"
+                        android:textColor="#EB1818"
+                        android:textColorHighlight="#1EA825"
+                        android:textColorHint="#6303BDB8"
+                        android:textColorLink="#FF0101"
+                        android:textStyle="normal|bold"
+                        android:tooltipText="@string/dummy_content" />
 
-                <EditText
-                    android:id="@+id/TECantidadU"
-                    android:layout_width="match_parent"
-                    android:layout_height="77dp"
-                    android:backgroundTint="#91FFEF"
-                    android:ems="10"
-                    android:hint="Cantidad U:"
-                    android:inputType="number"
-                    android:shadowColor="#2AFF12"
-                    android:textColor="#33EDF3"
-                    android:textColorHighlight="#1EA825"
-                    android:textColorHint="#82D1C1" />
 
-                <EditText
-                    android:id="@+id/TECaracteristicas"
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:backgroundTint="#91FFEF"
-                    android:ems="10"
-                    android:hint="Caracteristicas"
-                    android:inputType="textMultiLine"
-                    android:shadowColor="#2AFF12"
-                    android:textColor="#33EDF3"
-                    android:textColorHighlight="#1EA825"
-                    android:textColorHint="#8EDDDB"
-                    android:textColorLink="#FF0101" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="#D2032910"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="Categorias"
+                        android:textAlignment="center"
+                        android:textColorHint="#40B642"
+                        app:helperText="Inserte sus categorias "
+                        app:helperTextTextColor="@color/light_blue_A400"
+                        app:startIconDrawable="@drawable/ic_baseline_category_addproduct"
+                        app:startIconTint="@color/green">
+
+                        <com.android.ex.chips.RecipientEditTextView
+                            android:id="@+id/TECategoria"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:textColor="@color/green"></com.android.ex.chips.RecipientEditTextView>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="Marca"
+                        android:textColorHint="#40B642"
+                        app:helperText="Marca a la que pertenece"
+                        app:helperTextTextColor="@color/light_blue_A400"
+                        app:startIconDrawable="@drawable/ic_baseline_bookmark_addproduct"
+                        app:startIconTint="@color/green">
+
+                        <MultiAutoCompleteTextView
+                            android:id="@+id/TEMarca"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="left"
+                            android:padding="10dp"
+                            android:textColor="@color/green"
+                            android:textColorHint="@color/green"></MultiAutoCompleteTextView>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -224,27 +494,43 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/TEQR"
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
-                        android:layout_height="57dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:backgroundTint="#91FFEF"
-                        android:ems="10"
                         android:hint="QR"
-                        android:inputType="textMultiLine"
-                        android:shadowColor="#2AFF12"
-                        android:textColor="#33EDF3"
-                        android:textColorHighlight="#1EA825"
-                        android:textColorHint="#8EDDDB"
-                        android:textColorLink="#FF0101" />
+                        android:textColorHint="#40B642"
+                        app:helperTextTextColor="@color/red"
+                        app:startIconDrawable="@drawable/ic_baseline_qr_code_addproduct"
+                        app:startIconTint="@color/green">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/TEQR"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#D2032910"
+                            android:drawableTintMode="add"
+                            android:ems="10"
+                            android:foregroundTint="#B62323"
+                            android:inputType="numberDecimal"
+                            android:shadowColor="#C8D8C6"
+                            android:textColor="#EB1818"
+                            android:textColorHighlight="#1EA825"
+                            android:textColorHint="#6303BDB8"
+                            android:textColorLink="#FF0101"
+                            android:textStyle="normal|bold"
+                            android:tooltipText="@string/dummy_content" />
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <Button
                         android:id="@+id/BEscaner"
-                        android:layout_width="63dp"
+                        android:layout_width="56dp"
                         android:layout_height="56dp"
                         android:layout_marginRight="15dp"
-                        android:background="@drawable/ic_baseline_document_scanner_24" />
+                        android:background="@drawable/ic_baseline_qr_code_scanner_addproduct" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -310,6 +596,7 @@
                             android:layout_marginEnd="5dp"
                             android:layout_marginBottom="5dp"
                             android:background="@drawable/button_caputre"
+                            android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/PVCmain"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.94"
@@ -413,6 +700,7 @@
                             android:paddingTop="10dp"
                             android:scaleType="fitCenter"
                             android:textColor="#757575"
+                            android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
@@ -665,16 +953,25 @@
 
                 </LinearLayout>
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/BAgregate"
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="24dp"
                     android:background="@drawable/button_background"
+                    android:drawableLeft="@drawable/ic_baseline_dashboard_agregateproduct"
+                    android:drawableTint="@color/black"
+                    android:foregroundGravity="center"
                     android:gravity="center"
+                    android:paddingStart="17dp"
+                    android:shadowColor="@color/green"
+                    android:shadowDy="10"
+                    android:shadowRadius="20"
                     android:text="Agregar Producto"
-                    tools:ignore="TextContrastCheck" />
+                    android:textColor="@color/black"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 

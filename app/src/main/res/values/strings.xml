@@ -15,4 +15,19 @@
     <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="addproduct_discount">Precio con descuento:</string>
+    <string-array name="dlagsPeso">
+        <item>(Kilogramos)/1000 KG</item>
+        <item>(Hectogramos)/100 HG</item>
+        <item>(Decagramo)/10 DAG</item>
+        <item>(Gramos) G</item>
+        <item>(Decigramos)*10 DG</item>
+        <item>(Centigramos)*100 CG</item>
+        <item>(Miligramos)*1000 MG</item>
+    </string-array>
+    <string-array name="dlagsCantidad">
+        <item>Unidad</item>
+        <item>Paquete</item>
+        <item>Caja</item>
+    </string-array>
 </resources>

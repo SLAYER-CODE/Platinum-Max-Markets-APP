@@ -57,18 +57,17 @@
 <!--                    app:layout_constraintStart_toStartOf="parent"-->
 <!--                    app:layout_constraintTop_toTopOf="parent" />-->
 
-                <androidx.recyclerview.widget.RecyclerView
+                <androidx.viewpager.widget.ViewPager
+
                     android:id="@+id/RVimages"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="380dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/items_background"
                     android:foregroundGravity="center"
                     android:scrollbars="horizontal"
-                    android:verticalScrollbarPosition="defaultPosition"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" >
+                    android:verticalScrollbarPosition="defaultPosition">
 
-                </androidx.recyclerview.widget.RecyclerView>
+                </androidx.viewpager.widget.ViewPager>
 
 
                 <LinearLayout

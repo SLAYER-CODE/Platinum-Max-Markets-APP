@@ -1,5 +1,4 @@
 package com.example.finalproductos.ui.adapter
-
 import Data.listInventarioProductos
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -45,7 +44,9 @@ class ProductoAdapter (var MyImage:List<listInventarioProductos>):
             theimagen?.compress(Bitmap.CompressFormat.JPEG, 10,flujo);
             val newimage = flujo.toByteArray()
             val imagen = BitmapFactory.decodeByteArray(newimage,0,newimage.size)
+
             view.IVimagenItem.transitionName=(ProductoAndImage.uid.toString())
+
             view.IVimagenItem.setImageBitmap(imagen)
 //            view.setOnClickListener{
 //                val extras = FragmentNavigatorExtras(view.IVimagenItem to "image_big")
@@ -115,7 +116,9 @@ class ProductoAdapter (var MyImage:List<listInventarioProductos>):
 
         newnewList.addAll(MyImage.size,newlist)
         MyImage=newnewList.toList()
+        println(initPosition.toString()+"Se ejecuto Ka agregacion"+MyImage.size.toString())
         notifyItemRangeInserted(initPosition, MyImage.size)
+//        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {

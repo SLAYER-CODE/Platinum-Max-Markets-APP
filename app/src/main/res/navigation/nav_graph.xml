@@ -16,15 +16,15 @@
         <action
             android:id="@+id/action_FirstFragment_to_agregateProducts3"
             app:destination="@id/agregateProducts3" />
+
         <action
             android:id="@+id/action_FirstFragment_to_detallesProducto"
             app:destination="@id/detallesProducto"
             app:enterAnim="@anim/slide_left"
             app:exitAnim="@anim/wait_anim"
-
-
             app:popEnterAnim="@anim/wait_anim"
             app:popExitAnim="@anim/slide_right" />
+
     </fragment>
 <!--    android:label="@string/second_fragment_label"-->
     <fragment
@@ -61,8 +61,8 @@
 <!--    Segundo Fragmento de trancicions para los detalles de los producto-->
     <fragment
         android:id="@+id/detallesProducto"
-        android:name="com.example.finalproductos.DetallesProducto"
-        tools:layout="@layout/fragment_detalles_products" >
+        android:name="com.example.finalproductos.ui.fragment.DetallesProducto"
+        tools:layout="@layout/fragment_detalles_products">
         <action
             android:id="@+id/action_detallesProducto_to_FirstFragment"
             app:destination="@id/FirstFragment" />

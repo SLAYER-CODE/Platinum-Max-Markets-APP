@@ -6,6 +6,7 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="356dp"
         android:layout_height="160dp"
         android:layout_marginStart="10dp"
@@ -23,16 +24,17 @@
         <ImageView
             android:id="@+id/IVimagenItem"
             android:layout_width="match_parent"
-            android:transitionName="image_small"
             android:layout_height="match_parent"
             android:layout_marginRight="5dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:transitionName="image_small" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/contetdetails_main_border">
+            android:background="@drawable/contetdetails_main_border"
+            android:padding="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -44,44 +46,99 @@
                 tools:layout_editor_absoluteX="114dp">
 
                 <TextView
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:singleLine="true"
-                    android:scrollHorizontally="true"
-                    android:ellipsize="marquee"
-                    android:marqueeRepeatLimit ="marquee_forever"
                     android:id="@+id/TNombre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:foregroundGravity="center"
                     android:gravity="center|left"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
                     android:shadowColor="#ED5EFF53"
                     android:shadowDx="3"
                     android:shadowDy="3"
                     android:shadowRadius="25"
+                    android:singleLine="true"
                     android:text="TextView"
                     android:textColor="#08FF00"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    tools:text="Nombre" />
 
                 <LinearLayout
-                    android:layout_width="116dp"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:divider="?android:attr/fastScrollThumbDrawable"
+                    android:orientation="horizontal"
+                    android:showDividers="middle">
 
                     <TextView
                         android:id="@+id/TEPrecio"
-                        android:layout_width="127dp"
-                        android:layout_height="match_parent"
-                        android:gravity="left"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:text="TextView"
                         android:textColor="#00FF2A"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        tools:text="Precio" />
+
+                    <TextView
+                        android:id="@+id/TEPrecioU"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="TextView"
+                        android:textColor="#00FF2A"
+                        android:textSize="15sp"
+                        tools:text="Precio U" />
 
                 </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <TextView
+                    android:id="@+id/TEDetalles"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:gravity="left"
+                    android:text="TextView"
+                    android:textColor="#00FF2A"
+                    android:textSize="15sp"
+                    tools:text="Detalles" />
 
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        style="@android:style/Widget.Material.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="3dp"
+        android:numStars="6"
+        android:progress="50"
+        android:progressBackgroundTint="#6A003701"
+        android:progressBackgroundTintMode="src_atop"
+        android:progressTint="#FCFFDD00"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.14"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

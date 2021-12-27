@@ -1,9 +1,9 @@
-package com.example.finalproductos.Util.listener
+package com.example.finalproductos.util.listener
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class InfiniteScrollListener(
+class infiniteScrollListener(
     val func: (finalitem:Boolean) -> (Unit),
     val layoutManager: LinearLayoutManager, val final:Int, val itemfinalfinal:Boolean) : RecyclerView.OnScrollListener() {
 
@@ -44,7 +44,7 @@ class InfiniteScrollListener(
 
             if(layoutManager.findLastCompletelyVisibleItemPosition()==totalItemCount-1 && !finalitem){
                 if(final!=totalItemCount) {
-                    if(final<=(totalItemCount+6)){
+                    if(final<=(totalItemCount)){
                         func(true)
                     }else{
                         func(false)

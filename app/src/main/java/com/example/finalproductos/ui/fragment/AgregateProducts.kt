@@ -1,9 +1,9 @@
 package com.example.finalproductos
 
 import com.example.finalproductos.ui.adapter.ImageAdapter
-import com.example.finalproductos.Util.listener.DragAndDropListenerActions
+import com.example.finalproductos.util.listener.DragAndDropListenerActions
 import com.example.finalproductos.model.helper.MyItemTouchHelperCallback
-import com.example.finalproductos.Util.listener.TouchDropListenerAction
+import com.example.finalproductos.util.listener.TouchDropListenerAction
 import com.example.finalproductos.io.db.AppDatabase
 import Data.ImagenesNew
 import Data.Producto
@@ -14,9 +14,6 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.animation.AnimationUtils
 import com.example.finalproductos.databinding.FragmentAgregateProductsBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 
@@ -66,6 +63,7 @@ import android.graphics.PorterDuff
 
 import android.graphics.PorterDuffColorFilter
 import android.os.Environment
+import android.preference.EditTextPreference
 
 import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 
@@ -73,12 +71,30 @@ import android.widget.SeekBar
 
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.core.view.isVisible
+import com.example.finalproductos.util.ConNet
+
+import com.example.finalproductos.util.ConnectToPost
+
 import com.example.finalproductos.model.QrCodeAnalyzer
 import com.example.finalproductos.model.objects.Constants.Images.REQUEST_CODE_PICKER
 import com.example.finalproductos.model.objects.Constants.Images.SELECT_FILE_IMAGE_CODE
 import com.example.finalproductos.model.objects.Constrains
 import com.example.finalproductos.model.types.CameraTypes
 import com.example.finalproductos.ui.MainActivity
+import com.example.finalproductos.util.hideKeyboardFrom
+import com.google.android.material.navigation.NavigationBarView
+import kotlinx.coroutines.*
+import java.lang.Runnable
+import android.widget.AdapterView
+import androidx.core.widget.addTextChangedListener
+import com.example.finalproductos.util.listener.recyclerItemClickListener
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+import kotlinx.android.synthetic.main.fragment_agregate_products.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatEditText
+import androidx.lifecycle.lifecycleScope
+
 
 // TODO: Argumento que sirve para nombre como registro de este archivo
 private const val LOGFRAGMENT:String="AddProducto"
@@ -93,8 +109,9 @@ private const val ARG_PARAM2 = "param2"
  * Use the [AgregateProducts.newInstance] factory method to
  * create an instance of this fragment.
  */
+class AgregateProducts : Fragment()  , CallBackItemTouch
+{
 
-class AgregateProducts : Fragment() , CallBackItemTouch {
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -115,6 +132,7 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
             }
     }
 
+
     //    Variables de inicialisacion para el fragmento obteniendo el contexto de la base de la activdad
     private var param1: String? = null
     private var param2: String? = null
@@ -133,6 +151,7 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
     private lateinit var MyCamera:Camera;
     private var PermisosCamera:Boolean=false;
 
+    private lateinit var imageAnalisis:ImageAnalysis;
 
     //    Codigos para el escaneo de QR
     var name: String? = null;
@@ -148,7 +167,7 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
     private lateinit var cameraProvider: ProcessCameraProvider;
     private lateinit var imageCapture: ImageCapture;
     private var imageCap: ImageCapture? = null
-    private var cameraExecutor: ExecutorService = Executors.newSingleThreadExecutor()
+    private var cameraExecutor: ExecutorService = Executors.newSingleThreadScheduledExecutor()
     private var CamStatus: CameraTypes = CameraTypes.NULL;
     private var CamClick: CameraTypes = CameraTypes.NULL;
 
@@ -175,7 +194,7 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
     private var RefMediumDistanceImage: Int = 1;
     private lateinit var offsetViewBounds: Rect;
     private lateinit var AnimationUpIntercalate: AnimationDrawable;
-
+    private var Corutine:Job? = null;
 
     fun messageSnackBar(view: View, text: String, color: Int) {
         val snackbar = Snackbar.make(
@@ -198,15 +217,14 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
     override fun onStart() {
         Log.i(LOGFRAGMENT, "Se Inicio onStart [*]")
         (activity as MainActivity).functionFabRefresh(::clearItems);
+        baseActivity.returnbinding().BIShowP.isVisible=false
         (activity as MainActivity).returnbinding().refreshFab.setImageResource(R.drawable.ic_baseline_clear_all_24)
-
         super.onStart()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         Log.i(LOGFRAGMENT, "La camara es $toogleCamera")
-
         AnimationUpCamera = ObjectAnimator.ofFloat(binding.despliegeCamera, "translationY", -80f)
         AnimationUpCamera.repeatCount = ObjectAnimator.INFINITE
         AnimationUpCamera.repeatMode = ObjectAnimator.REVERSE
@@ -218,13 +236,16 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
 
 
         Log.i("CameraStateRegistry", cameraExecutor.isShutdown.toString())
-        if (CamStatus == CameraTypes.CAMERA) {
-            binding.LayoutCamera.visibility = View.VISIBLE
-            openCamera()
-        } else if (CamStatus == CameraTypes.SCANER) {
-            binding.LayoutCamera.visibility = View.VISIBLE
-            openCameraScanner(view)
-        }
+//        if (CamStatus == CameraTypes.CAMERA) {
+//            binding.LayoutCamera.visibility = View.VISIBLE
+//            openCamera()
+//        } else if (CamStatus == CameraTypes.SCANER) {
+//            print("Si esta funcionando "+ Corutine.isActive)
+//            binding.LayoutCamera.visibility = View.VISIBLE
+//            if(!Corutine.isActive){
+//                openCameraScanner(view)
+//            }
+//        }
 
 //        Obtiene la instacia de la actividad para la base de datos
         val daoNew = AppDatabase.getDataBase(baseActivity);
@@ -241,21 +262,95 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
         if (recycleviewWidth == -1){
             recycleviewWidth = binding.RVCaptureImages.layoutParams.width
         }
+        imageAnalisis=ImageAnalysis.Builder().setTargetResolution(Size(HeigthIncrement, HeigthIncrement))
+            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+            .build()
 
-        binding.TENombre.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable) {
-                //Despues de que precione una tecla
-                if(s.toString() != ""){
-                    activity?.setTitle(s.toString() + " (Borrador N° $parametro)")
+        val FocusEditListener =   View.OnFocusChangeListener { p0, p1 ->
+            if(!p1){
+                hideKeyboardFrom(requireContext(),view)
+            }
+        }
+
+
+//        binding.TEDescuento.onFocusChangeListener = FocusEditListener
+//        binding.TENombre.onFocusChangeListener = FocusEditListener
+//        binding.TEPrecio.onFocusChangeListener = FocusEditListener
+//        binding.TEPrecioU.onFocusChangeListener = FocusEditListener
+//        binding.TECantidad.onFocusChangeListener = FocusEditListener
+//        binding.TECantidadU.onFocusChangeListener = FocusEditListener
+//        binding.TECaracteristicas.onFocusChangeListener = FocusEditListener
+//        binding.TECategoria.onFocusChangeListener = FocusEditListener
+//        binding.TECategoria.onFocusChangeListener = FocusEditListener
+//        binding.TEQR.onFocusChangeListener = FocusEditListener
+
+
+
+
+
+
+        binding.TEDescuento.addTextChangedListener(object :TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+                var descuento = 0f
+                var precio=0f;
+                if(s!=null&& s.isNotEmpty()) {
+                    descuento = s.toString().toFloat()
                 }
+
+                if(binding.TEPrecio.text!=null&&binding.TEPrecio.text!!.isNotEmpty()){
+                    precio = binding.TEPrecio.text.toString().toFloat()
+                }
+                binding.TVpreciodisconut.text = (precio-descuento).toString()
             }
 
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                //Antes de que efectue la tecla
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+        }
+        )
+
+
+        binding.TEPrecio.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+//                var TPrecio=binding.TEPrecioU.text
+//                if(TPrecio==null||TPrecio.isEmpty()||TPrecio.toString()==""||TPrecio.toString()=="0"){
+                    binding.TEPrecioU.setText(s.toString())
+//                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                var descuento = 0f
+                var precio=0f;
+                if(s!=null&& s.isNotEmpty()) {
+                    precio = s.toString().toFloat()
+                }
+                if(binding.TEDescuento.text!=null&&binding.TEDescuento.text!!.isNotEmpty()){
+                    descuento = binding.TEDescuento.text.toString().toFloat()
+                }
+                binding.TVpreciodisconut.text = (precio-descuento).toString()
+            }
+        })
+
+        binding.TENombre.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 //Cuando preciona la tecla para la ejecucion de los datos
+                if(s.toString() != ""){
+                    activity?.setTitle(s.toString() + " (Borrador N° $parametro)")
+                }else{
+                    activity?.setTitle("Agregar Producto [$parametro]")
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
             }
         })
 
@@ -303,29 +398,43 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
                     qr
                 )
 //                Funcion que permite guardar las imagenes dentro del cache para luego ser importadas a la base de datos
-                CoroutineScope(Dispatchers.IO).launch {
-                    pwd = daoNew.productosData().insertAll(producto)
-                    if (adapter.MyImage.isNotEmpty()) {
-                        for (path: Uri in adapter.MyImage) {
+                 lifecycleScope.launch {
+                     val resultKeys = withContext(Dispatchers.IO) {
+                         try {
+                             pwd = daoNew.productosData().insertAll(producto)
+                             if (adapter.MyImage.isNotEmpty()) {
+                                 for (path: Uri in adapter.MyImage) {
 //                            La imagen se rota por que cuando se carga dentro de un URI ESTA TIENE LOS DATOS EXIF
 //                            PERO CUANDO SE CARGA COMO MATRIS DE BYTES ENTONCES PIERDE TODA LA INFORMACION DE EXIF
 //                            Con esta funcion podemos crear el reguistro para la imagen del producto
-                            val imagen = MediaStore.Images.Media.getBitmap(baseActivity.contentResolver,path)
+                                     val imagen = MediaStore.Images.Media.getBitmap(
+                                         baseActivity.contentResolver,
+                                         path
+                                     )
 //                            println(path.path)
-                            val orientedBitmap: Bitmap = ExifUtil.rotateBitmap(path.path!!, imagen)
+                                     val orientedBitmap: Bitmap =
+                                         ExifUtil.rotateBitmap(path.path!!, imagen)
 //                            val inputData = baseActivity.contentResolver.openInputStream(path)?.readBytes()
-                            val flujo = ByteArrayOutputStream()
-                            orientedBitmap.compress(Bitmap.CompressFormat.WEBP, 50, flujo)
-                            val imageInByte: ByteArray = flujo.toByteArray()
-                            val imagenSave = ImagenesNew(Date(), pwd.toInt(),imageInByte)
-                            CoroutineScope(Dispatchers.IO).launch {
-                                daoNew.productosData().insertAllImages(imagenSave)
-                                imagen.recycle()
-                            }
-                            messageSnackBar(view,text = "Se agrego '${name}'",Color.GREEN)
-                        }
+                                     val flujo = ByteArrayOutputStream()
+                                     orientedBitmap.compress(Bitmap.CompressFormat.WEBP, 50, flujo)
+                                     val imageInByte: ByteArray = flujo.toByteArray()
+                                     val imagenSave = ImagenesNew(Date(), pwd.toInt(), imageInByte)
+                                     CoroutineScope(Dispatchers.IO).launch {
+                                         daoNew.productosData().insertAllImages(imagenSave)
+                                         imagen.recycle()
+                                     }
+                                 }
+                             }
+                            true
+                         }catch (ex:Exception){
+                             false
+                         }
+                     }
+                    if(resultKeys) {
+                        messageSnackBar(view, text = "Agregado '${name}'", Color.GREEN)
                     }
                 }
+
             }
         }
 
@@ -344,6 +453,39 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
         binding.DeleteDrag.setOnTouchListener(TouchDropListenerAction())
         binding.SaveDrag.setOnTouchListener(TouchDropListenerAction())
 
+
+        var adapterSPeso = ArrayAdapter<String>(requireContext(),R.layout.item_spiner_peso,resources.getStringArray(R.array.dlagsPeso))
+        binding.SPpeso.adapter=adapterSPeso
+
+        var adapterSCantidad = ArrayAdapter<String>(requireContext(),R.layout.item_spiner_peso,resources.getStringArray(R.array.dlagsCantidad))
+        binding.SPCantidad.adapter=adapterSCantidad
+
+        binding.SPCantidad.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parentView: AdapterView<*>?,
+                selectedItemView: View?,
+                position: Int,
+                id: Long
+            ) {
+                when (position){
+                    0->{
+                        binding.SPpeso.setSelection(5)
+                    }
+                    1->{
+                        binding.SPpeso.setSelection(3)
+                    }
+                    2->{
+                        binding.SPpeso.setSelection(0)
+                    }
+                }
+            }
+
+            override fun onNothingSelected(parentView: AdapterView<*>?) {
+                // your code here
+            }
+        })
+
+        binding.SPCantidad.setSelection(1)
         binding.SBzoom.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 // TODO Auto-generated method stub
@@ -378,9 +520,57 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
 
         binding.SVAPNew.isSmoothScrollingEnabled = false
 
+        binding.BRscanner.setOnClickListener {
+
+            val animation = AnimationUtils.loadAnimation(
+                baseActivity,
+                R.anim.animation_lineqr
+            )
+
+            binding.Vqrline.startAnimation(animation)
+            binding.BRscanner.visibility=View.INVISIBLE
+            if(Corutine!=null) {
+                Corutine!!.cancel()
+                Corutine=null;
+            }
+
+            imageAnalisis.setAnalyzer(cameraExecutor,QrCodeAnalyzer{qrResult->
+                imageAnalisis.clearAnalyzer()
+                binding.PVCmain.post {
+                    println("Se ejecuto!!")
+//                                cameraProvider.unbindAll()
+//                                startCamera()
+//                            Log.d("QRCodeAnalyzer", "Barcode scanned: ${qrResult.text}")
+//                            Toast.makeText(
+//                                activity,
+//                                "Codigo es ${qrResult.text}",
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+
+                    messageSnackBar(
+                        view,
+                        "El codigo es ${qrResult.text}",
+                        Color.YELLOW
+                    )
+                    binding.TEQR.setText(qrResult.text)
+                    binding.Vqrline.clearAnimation()
+                    binding.BRscanner.visibility = View.VISIBLE
+                    Corutine = GlobalScope.launch(Dispatchers.Main) {
+                        val resultKeys = withContext(Dispatchers.IO) {
+                            ConnectToPost.ConnectAndGet(qrResult.text)
+                        }
+                        println(resultKeys)
+                    }
+                }
+            })
+
+            println("SE SETEO")
+        }
+
         binding.despliegeCamera.setOnClickListener {
 //            baseActivity.returnbinding().PBbarList.visibility=View.VISIBLE
             CamStatus = CameraTypes.NULL
+            CamClick = CameraTypes.NULL
             if (toogleCamera) {
                 AnimationUpCamera.start()
                 //Animacion de recorido del la camara layout
@@ -414,25 +604,26 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
 
 //      Start camera ESCANNER()
         binding.BEscaner.setOnClickListener {
+
             if(CamStatus==CameraTypes.SCANER){
                 binding.LayoutCamera.visibility=View.GONE
                 toogleCamera=false
                 CamStatus = CameraTypes.NULL
-                binding.BEscaner.setBackgroundResource(R.drawable.ic_baseline_document_scanner_24)
+                binding.BEscaner.setBackgroundResource(R.drawable.ic_baseline_qr_code_scanner_addproduct)
 
             }else {
                 binding.BEscaner.setBackgroundResource(R.drawable.ic_baseline_close_24)
-                openCameraScanner(view)
+                openCameraScanner(view,true)
             }
         }
 //        startCamera()
         binding.BCaptura.setOnClickListener {
             openCamera()
         }
-        binding.BRscanner.setOnClickListener {
-            binding.BRscanner.visibility=View.INVISIBLE
-            openCameraScanner(view);
-        }
+//        binding.BRscanner.setOnClickListener {
+//            binding.BRscanner.visibility=View.INVISIBLE
+//            openCameraScanner(view);
+//        }
 
         var contadorImagen = 1
         binding.BcaptureImage.setOnClickListener {
@@ -707,7 +898,7 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         Log.d(LOGFRAGMENT,"Se apreto Agregar producto")
         return  when(item.itemId){
-            R.id.MBitemSettings->{
+            R.id.MBSettings->{
                 baseActivity.runOnUiThread {
                     Log.d(LOGFRAGMENT,"Se apreto Agregar producto")
                     val navBuilder = NavOptions.Builder()
@@ -741,6 +932,7 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
             parametro=it.getString("titlenumber")
 
         }
+//        Corutine= null;
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true);
     }
@@ -800,10 +992,13 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
                 }
             }
         }
+        comprobateItem()
         return
     }
     override fun onResume() {
         Log.i(LOGFRAGMENT,"Resumiendo la actividad")
+        println(PermisosCamera)
+        println(CamClick)
 
         if(PermisosCamera) {
             if (Constrains.REQUIERED_PERMISSIONS.all {
@@ -812,16 +1007,32 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
                     ) == PackageManager.PERMISSION_GRANTED
                 }) {
                     if(CamClick==CameraTypes.SCANER){
-                        openCameraScanner(view as View)
+                        binding.LayoutCamera.visibility = View.VISIBLE
+                        binding.BEscaner.setBackgroundResource(R.drawable.ic_baseline_close_24)
+
+//                        startCameraEscaner(view as View)
+                        if(null==Corutine) {
+                            openCameraScanner(view as View,true)
+//                            binding.constraintqr.visibility=View.VISIBLE
+//                            binding.BRscanner.visibility = View.VISIBLE
+                        }else{
+                            openCameraScanner(view as View,false)
+                            binding.Vqrline.clearAnimation()
+                            binding.BRscanner.visibility = View.VISIBLE
+                            imageAnalisis.clearAnalyzer()
+                        }
+//                        startCameraEscaner(view as View)
+
                     }
                     if(CamClick==CameraTypes.CAMERA){
+                        binding.LayoutCamera.visibility = View.VISIBLE
                         openCamera()
                     }
                 Log.i(LOGFRAGMENT, "Permisos de camera")
             }else{
                 messageSnackBar(view as View,"Se necesita acceso a la camara...",Color.RED)
             }
-            PermisosCamera=false
+//            PermisosCamera=true
         }
 
         super.onResume()
@@ -844,8 +1055,13 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
     }
 
     override fun onDestroy() {
+
         Log.i(LOGFRAGMENT,"Se destruyo el fragmento onDestroy [*]")
         baseActivity.datasize-=1
+
+        Corutine?.cancel()
+//        println(Corutine)
+
         for (file: File in context?.cacheDir?.listFiles()!!) {
 //            println(file.path.toString())
 //            println(file.name)
@@ -856,6 +1072,12 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
                 file.delete()
             }
         }
+//        if(Corutine!=null){
+//            if(Corutine!!.isActive){
+//                println("Esta activo")
+//                Corutine!!.cancel("Se Cancelo")
+//            }
+//        }
         if (CamStatus != CameraTypes.NULL) {
             Log.i("CameraStateRegistry","Se cerro la camara al destruir la vista [*]")
 //            cameraProvider.shutdown()
@@ -1023,7 +1245,7 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
 
         }
     }
-    private fun openCameraScanner(view: View){
+    private fun openCameraScanner(view: View,analizer:Boolean){
         binding.despliegeCamera.visibility=View.GONE
         CamClick=CameraTypes.SCANER
         PermisosCamera=true
@@ -1090,13 +1312,13 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
 
             CamStatus = CameraTypes.SCANER
             contextFragment.runCatching {
-                startCameraEscaner(view)
+                startCameraEscaner(view,analizer)
             }
 //            binding.linearConstraitButton.requestLayout()
         }
         comprobateItem()
+        hideKeyboardFrom(contextFragment,view)
         TransitionManager.beginDelayedTransition(binding.SVAPNew, autoTransition)
-
     }
 
     private fun openCamera() {
@@ -1143,7 +1365,7 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
                 if (CamStatus == CameraTypes.SCANER) {
                     binding.constraintqr.visibility = View.INVISIBLE
                     binding.BRscanner.visibility=View.INVISIBLE
-                    binding.BEscaner.setBackgroundResource(R.drawable.ic_baseline_document_scanner_24)
+                    binding.BEscaner.setBackgroundResource(R.drawable.ic_baseline_qr_code_scanner_addproduct)
                     val lp = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.MATCH_PARENT
@@ -1175,9 +1397,11 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
             CamStatus = CameraTypes.CAMERA
         }
         comprobateItem()
+        hideKeyboardFrom(contextFragment,view as View)
         TransitionManager.beginDelayedTransition(binding.SVAPNew, autoTransition)
 
 //                binding.SVAPNew.requestLayout()
+
     }
 
     private fun startCamera() {
@@ -1215,7 +1439,7 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
     }
 
 
-    private fun startCameraEscaner(MyView:View) {
+    private fun startCameraEscaner(MyView:View,analizer: Boolean) {
         cameraProviderFuture=ProcessCameraProvider.getInstance(baseActivity)
         cameraProviderFuture.addListener({
             cameraProvider = cameraProviderFuture.get()
@@ -1236,34 +1460,53 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
             }
 //            preview.targetRotation=ROTATION_0
             Log.i(LOGFRAGMENT,"El dato es"+binding.PVCmain.width.toString())
+            if(analizer) {
+                imageAnalisis
+                    .apply {
+                        setAnalyzer(cameraExecutor, QrCodeAnalyzer { qrResult ->
 
-            val imageAnalysis = ImageAnalysis.Builder()
-                .setTargetResolution(Size(HeigthIncrement, HeigthIncrement))
-//            val imageAnalysis = ImageAnalysis.Builder()
-                .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                .build()
-                .also {
-                    it.setAnalyzer(cameraExecutor, QrCodeAnalyzer { qrResult ->
-                        binding.PVCmain.post {
+                            clearAnalyzer()
+                            binding.PVCmain.post {
+                                println("Se ejecuto!!")
+//                                cameraProvider.unbindAll()
+//                                startCamera()
 //                            Log.d("QRCodeAnalyzer", "Barcode scanned: ${qrResult.text}")
 //                            Toast.makeText(
 //                                activity,
 //                                "Codigo es ${qrResult.text}",
 //                                Toast.LENGTH_SHORT
 //                            ).show()
-                            cameraProvider.unbindAll()
 
-                            messageSnackBar(MyView, "El codigo es ${qrResult.text}", Color.YELLOW)
-                            binding.TEQR.setText(qrResult.text)
-                            binding.Vqrline.clearAnimation()
-                            binding.BRscanner.visibility=View.VISIBLE
+                                messageSnackBar(
+                                    MyView,
+                                    "El codigo es ${qrResult.text}",
+                                    Color.YELLOW
+                                )
+                                binding.TEQR.setText(qrResult.text)
+                                binding.Vqrline.clearAnimation()
+                                binding.BRscanner.visibility = View.VISIBLE
+
 //                            cameraProvider.unbindAll()
-                        }
+                                if(ConNet.ComprobationInternet(baseActivity)) {
+                                    baseActivity.returnbinding().PBbarList.visibility=View.VISIBLE
+                                    Corutine = GlobalScope.launch(Dispatchers.Main) {
+                                        val resultKeys = withContext(Dispatchers.IO) {
+                                            ConnectToPost.ConnectAndGet(qrResult.text)
+                                        }
+                                        println(resultKeys)
+                                    }
 
+                                }else{
+                                    Toast.makeText(contextFragment,"Sin internet!!",Toast.LENGTH_SHORT).show();
+                                }
+//                                primero.cancel();
+                            }
 
-                    })
+                        })
 
-                }
+                    }
+            }
+
 
 //            preview.targetRotation= ROTATION_9
 
@@ -1271,13 +1514,12 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
 
                 cameraProvider.unbindAll()
                 MyCamera =
-                    cameraProvider.bindToLifecycle(baseActivity, cameraSelector, preview,imageAnalysis)
+                    cameraProvider.bindToLifecycle(viewLifecycleOwner, cameraSelector, preview,imageAnalisis)
 
 //                cameraProvider.bindToLifecycle(baseActivity,cameraSelector,preview,imageAnalysis)
                 MyCamera.cameraControl.cancelFocusAndMetering()
 
                 focusControllerCamera()
-
             } catch (e: Exception) {
                 Log.e(LOGFRAGMENT, "Error al intentar Asignar la camara de Escaneo",e)
             }
@@ -1313,11 +1555,13 @@ class AgregateProducts : Fragment() , CallBackItemTouch {
         binding.TECaracteristicas.setText("")
         binding.TECategoria.setText("")
         binding.TEMarca.setText("")
-        binding.TEPrecio.setText("")
+        binding.TEPrecio?.setText("")
         binding.TEPrecioU.setText("")
         adapter.clearimagen()
-
+        comprobateItem()
     }
+
+
 }
 
 

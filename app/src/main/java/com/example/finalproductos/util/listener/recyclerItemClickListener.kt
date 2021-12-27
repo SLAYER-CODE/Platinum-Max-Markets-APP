@@ -1,9 +1,8 @@
-package com.example.finalproductos.Util.listener
-
+package com.example.finalproductos.util.listener
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
-public class RecyclerItemClickListener(
+class recyclerItemClickListener(
     private val mRecycler: RecyclerView,
     private val clickListener: ((position: Int, view: View) -> Unit)? = null,
     private val longClickListener: ((position: Int, view: View) -> Unit)? = null

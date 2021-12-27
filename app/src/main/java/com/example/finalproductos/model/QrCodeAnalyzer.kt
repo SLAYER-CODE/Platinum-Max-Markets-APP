@@ -172,6 +172,7 @@ class QrCodeAnalyzer(
 //            result.addResultPoints(arrayOf(resPoint))
 
             onQrCodesDetected(result)
+
         } catch (e: NotFoundException ) {
             e.printStackTrace()
         }

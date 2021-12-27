@@ -18,16 +18,29 @@ import com.example.finalproductos.databinding.FragmentShowProductsBinding
 import com.example.finalproductos.ui.MainActivity
 import android.graphics.Color
 import androidx.core.view.doOnPreDraw
+import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.example.finalproductos.R
-import com.example.finalproductos.Util.listener.InfiniteScrollListener
-import com.example.finalproductos.Util.listener.RecyclerItemClickListener
 import com.example.finalproductos.io.db.AppDatabase
 import com.example.finalproductos.model.objects.Constants
+import com.example.finalproductos.util.listener.infiniteScrollListener
+import com.example.finalproductos.util.listener.recyclerItemClickListener
 import kotlinx.android.synthetic.main.item_producto.view.*
+import kotlinx.android.synthetic.main.item_producto.view.IVimagenItem
+import kotlinx.android.synthetic.main.item_producto_reverse.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 
+@JvmOverloads
+fun RecyclerView.affectOnItemClicks(onClick: ((position: Int, view: View) -> Unit)? = null, onLongClick: ((position: Int, view: View) -> Unit)? = null) {
+    println("SE APRETO CADA ITEM")
+    this.addOnChildAttachStateChangeListener(recyclerItemClickListener(this, onClick, onLongClick))
+}
 
 class ShowProducts : Fragment() {
 
@@ -37,18 +50,23 @@ class ShowProducts : Fragment() {
     private var listaClientes = emptyList<ClientList>()
     private lateinit var baseActivity: MainActivity
     private lateinit var contextFragment: Context
-    var adapter: ProductoAdapter = ProductoAdapter(listOf());
+    var adaptador: ProductoAdapter = ProductoAdapter(listOf());
     var currentPage:Int=6
     var itemfinal:Boolean=false;
     var clientcount:Int=1;
+    lateinit var daoNew:AppDatabase
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        daoNew = AppDatabase.getDataBase(baseActivity)
+
+        super.onCreate(savedInstanceState)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentShowProductsBinding.inflate(inflater, container, false)
-
         return binding.root
 
     }
@@ -73,76 +91,78 @@ class ShowProducts : Fragment() {
     override fun onStart() {
         super.onStart()
         (baseActivity as MainActivity).functionFabRefresh(::refreshList)
+        baseActivity.returnbinding().BIShowP.isVisible=true
         (activity as MainActivity).returnbinding().refreshFab.setImageResource(R.drawable.ic_baseline_autorenew_24)
     }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        postponeEnterTransition()
-        val  daoNew = AppDatabase.getDataBase(baseActivity);
-
-//        Con esta funcion se llama cuando el scroll es movido y carga los datos de la funcion loadData con los parametros que tenemos mas antes.
-
-        binding.LVMylist.apply {
-            daoNew.productosData().getByInventarioProductos(currentPage, 0)
-                .observe(viewLifecycleOwner, Observer {
-                    listaProductos = it
-                    adapter = ProductoAdapter(listaProductos);
-                    binding.LVMylist.adapter = adapter
-                    view.doOnPreDraw {
-                        startPostponedEnterTransition()
-                    }
-                })
-
-        }
-
-
-        fun loadData(final:Boolean) {
+    fun loadData(final:Boolean) {
 
 //            Animaciones para la carga de datos usando la barra de carga que se encuentra arriba del recicleview
-            itemfinal=final
-            println(currentPage.toString()+"Se ejecuta una vez"+final)
-            if(!itemfinal) {
+        itemfinal=final
+        println(currentPage.toString()+"Se ejecuta una vez"+final)
+        if(!itemfinal) {
 //                val progressAnimatorCero =
 //                    ObjectAnimator.ofInt(baseActivity.returnbinding().PBbarList, "progress", 100, 0).setDuration(800)
 //                val progressAnimator =
 //                    ObjectAnimator.ofInt(baseActivity.returnbinding().PBbarList, "progress", 0, 100).setDuration(800)
 //                progressAnimator.start()
-                baseActivity.returnbinding().PBbarList.visibility=View.VISIBLE
-
-
+//            baseActivity.returnbinding().PBbarList.visibility=View.VISIBLE
 //            println(listaProductos)
-                daoNew.productosData().getByInventarioProductos(
-                    Constants.ListExtract.LIMIT,
-                    currentPage
-                ).observe(
-                    viewLifecycleOwner, Observer {
-                        listaProductos += it
-                        adapter.addNewListCurrent(it)
-                    }
-                )
-                currentPage += Constants.ListExtract.OFFSET
 
-//            println("Suma" + currentPage)
-//                Executors.newSingleThreadExecutor().execute {
-//
-//            }
-
+            daoNew.productosData().getByInventarioProductos(
+                Constants.ListExtract.LIMIT,
+                currentPage
+            ).observe(
+                viewLifecycleOwner, Observer {
+                    listaProductos += it
+                    adaptador.addNewListCurrent(it)
+                }
+            )
+            currentPage += Constants.ListExtract.OFFSET
 //            daoNew.productosData().getAllInventarioTime(Constants.LIMIT,currentPage*Constants.OFFSET).observe(
 //                baseActivity, Observer {
 //                    listaProductos+=it
 //                    adapter.addNewListCurrent(it)
 //                })
 
-                baseActivity.returnbinding().PBbarList.visibility=View.GONE
+//            baseActivity.returnbinding().PBbarList.visibility=View.GONE
+//                startPostponedEnterTransition()
 //                progressAnimatorCero.start()
-            }
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        postponeEnterTransition()
+        println(currentPage.toString()+"Se ejecuta una vez")
+//        loadData(false)
+//        binding.LVMylist.adapter=adaptador
+
+        daoNew.productosData().getByInventarioProductos(currentPage, 0)
+            .observe(viewLifecycleOwner, Observer {
+                listaProductos = it
+                adaptador=ProductoAdapter(listaProductos)
+                binding.LVMylist.adapter = adaptador
+                view.doOnPreDraw {
+                    startPostponedEnterTransition()
+                }
+            })
+
+//        Con esta funcion se llama cuando el scroll es movido y carga los datos de la funcion loadData con los parametros que tenemos mas antes.
+        val adapterClient= ClientAdapter(mutableListOf<ClientList>())
+        binding.addclientitems.layoutManager=LinearLayoutManager(baseActivity,LinearLayoutManager.HORIZONTAL,false)
+        binding.addclientitems.adapter=adapterClient
+
+        adapterClient.addClient(createAleatorieList())
+        adapterClient.addClient(createAleatorieList())
+
+
+
 
         daoNew.productosData().getCount().observe(viewLifecycleOwner,onChanged = {
             activity?.setTitle(if(it==0)"Inicio" else ("${it} Productos en Total"))
             val gridLayoutManager = GridLayoutManager(baseActivity, 1)
             gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
             binding.LVMylist.layoutManager=gridLayoutManager
-            binding.LVMylist.addOnScrollListener(InfiniteScrollListener(::loadData,gridLayoutManager,it,itemfinal))
+            binding.LVMylist.addOnScrollListener(infiniteScrollListener(::loadData,gridLayoutManager,it,itemfinal))
         })
 
 //        Executors.newSingleThreadExecutor().execute {
@@ -167,16 +187,24 @@ class ShowProducts : Fragment() {
 //            println(binding.LVMylist.computeScroll())
 //            println(position)
         binding.LVMylist.affectOnItemClicks(onLongClick = { position, view: View ->
+            if (findNavController().currentDestination?.id == R.id.FirstFragment) {
             val bundle = Bundle()
             bundle.putInt("uid", listaProductos[position].uid)
+            var animation = 0
+            var extras:FragmentNavigator.Extras= FragmentNavigatorExtras()
+            if(view.IVimagenItem != null){
+                animation=1
+                extras = FragmentNavigatorExtras(view.IVimagenItem to "transtionexit")
+            }
+            bundle.putInt("animation",animation)
 //            findNavController().navigate(R.id.action_FirstFragment_to_detallesProducto,bundle)
-            val extras = FragmentNavigatorExtras(view.IVimagenItem to "transtionexit")
-            findNavController().navigate(
-                R.id.action_FirstFragment_to_detallesProducto,
-                bundle,
-                null,
-                extras
-            )
+                findNavController().navigate(
+                    R.id.action_FirstFragment_to_detallesProducto,
+                    bundle,
+                    null,
+                    extras
+                )
+            }
         })
 
 //        binding.ButtonAddClient.setOnClickListener(){
@@ -189,12 +217,7 @@ class ShowProducts : Fragment() {
 //            )
 //        }
 
-        val adapterClient= ClientAdapter(mutableListOf<ClientList>())
-        binding.addclientitems.layoutManager=LinearLayoutManager(baseActivity,LinearLayoutManager.HORIZONTAL,false)
-        binding.addclientitems.adapter=adapterClient
 
-        adapterClient.addClient(createAleatorieList())
-        adapterClient.addClient(createAleatorieList())
 
 //        binding.buttonFirst.setOnClickListener {
 //            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
@@ -225,18 +248,13 @@ class ShowProducts : Fragment() {
 //        }
 
 //        println("SE CREO NUEVAMENTE EL FRAGMENTO")
-
         super.onViewCreated(view, savedInstanceState)
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
 //        println("Se destruyo la vista")
         _binding = null
     }
-}
-
-@JvmOverloads
-fun RecyclerView.affectOnItemClicks(onClick: ((position: Int, view: View) -> Unit)? = null, onLongClick: ((position: Int, view: View) -> Unit)? = null) {
-    this.addOnChildAttachStateChangeListener(RecyclerItemClickListener(this, onClick, onLongClick))
 }

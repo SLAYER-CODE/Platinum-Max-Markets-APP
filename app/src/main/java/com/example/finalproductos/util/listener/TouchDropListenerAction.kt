@@ -1,4 +1,4 @@
-package com.example.finalproductos.Util.listener
+package com.example.finalproductos.util.listener
 
 import android.view.MotionEvent
 

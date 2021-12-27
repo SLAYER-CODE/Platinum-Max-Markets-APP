@@ -6,81 +6,47 @@
     android:layout_height="match_parent"
     android:background="#020202"
     tools:context=".ui.fragment.ShowProducts">
-    
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="362dp"
-        android:layout_height="57dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <SearchView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="left"
-            android:layout_weight="1"
-            android:background="@drawable/button_background"
-            android:foregroundGravity="center"
-            android:gravity="center" />
-
-        <Switch
-            android:id="@+id/switch1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:layout_weight="1"
-            android:background="@drawable/button_background"
-            android:foregroundGravity="center"
-            android:gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="Disponibles"
-            android:textColor="#2FAF3F"
-            android:textSize="16sp" />
-    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
-        android:layout_width="357dp"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+        app:layout_constraintTop_toTopOf="parent">
 
-<!--        <androidx.appcompat.widget.AppCompatButton-->
-<!--            android:id="@+id/button_first"-->
-<!--            android:layout_width="133dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:layout_marginStart="68dp"-->
-<!--            android:layout_marginEnd="154dp"-->
-<!--            android:layout_marginBottom="24dp"-->
-<!--            android:background="#9C08FF00"-->
-<!--            android:text="Selecionar"-->
-<!--            android:textColor="#000000"-->
-<!--            android:textColorHint="#18FF00"-->
-<!--            android:textSize="16sp"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent" />-->
+        <!--        <androidx.appcompat.widget.AppCompatButton-->
+        <!--            android:id="@+id/button_first"-->
+        <!--            android:layout_width="133dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_alignParentStart="true"-->
+        <!--            android:layout_alignParentEnd="true"-->
+        <!--            android:layout_alignParentBottom="true"-->
+        <!--            android:layout_marginStart="68dp"-->
+        <!--            android:layout_marginEnd="154dp"-->
+        <!--            android:layout_marginBottom="24dp"-->
+        <!--            android:background="#9C08FF00"-->
+        <!--            android:text="Selecionar"-->
+        <!--            android:textColor="#000000"-->
+        <!--            android:textColorHint="#18FF00"-->
+        <!--            android:textSize="16sp"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent" />-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/LVMylist"
-            android:layout_width="351dp"
-            android:layout_height="590dp"
+            android:layout_width="match_parent"
+            android:layout_height="550dp"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="-2dp"
+            android:layout_marginBottom="2dp"
             android:background="@drawable/border_recycleview_camera"
+            android:clipToPadding="false"
             android:layoutAnimation="@anim/item_animation_layout_into"
-            android:paddingTop="10dp"
-            android:paddingBottom="15dp"
+            android:paddingTop="?attr/actionBarSize"
+            android:paddingBottom="77dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -90,6 +56,28 @@
         </androidx.recyclerview.widget.RecyclerView>
 
     </RelativeLayout>
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/linearLayout3"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="57dp"-->
+<!--        android:layout_marginStart="5dp"-->
+<!--        android:layout_marginTop="?attr/actionBarSize"-->
+<!--        android:layout_marginEnd="5dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--        <androidx.appcompat.widget.SearchView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_gravity="left"-->
+<!--            android:layout_weight="1"-->
+<!--            android:background="@drawable/button_background"-->
+<!--            android:foregroundGravity="center"-->
+<!--            android:gravity="center" />-->
+
+<!--    </LinearLayout>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"

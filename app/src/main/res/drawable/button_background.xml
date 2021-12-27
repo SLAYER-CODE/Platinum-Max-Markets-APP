@@ -9,7 +9,7 @@
                         android:angle="0"
                         android:centerX="70%"
                         android:startColor="#804CFF5E"
-                        android:centerColor="#8004485C"
+                        android:centerColor="#80002935"
                         android:endColor="#8000FF40"
                         android:type="linear"
                         />
@@ -21,9 +21,9 @@
                     <gradient
                         android:angle="90"
                         android:centerX="30%"
-                        android:centerColor="@color/zxing_transparent"
-                        android:startColor="#8053EF42"
-                        android:endColor="@color/zxing_transparent"
+                        android:centerColor="#80185D10"
+                        android:startColor="#2F11A801"
+                        android:endColor="#8053EF42"
                         android:type="linear"
                         />
                     <size
@@ -44,7 +44,7 @@
                         android:centerX="70%"
                         android:centerColor="@color/zxing_transparent"
                         android:startColor="@color/zxing_transparent"
-                        android:endColor="#8095FA08"
+                        android:endColor="#8034FA08"
                         android:type="linear"
                         />
                     <size

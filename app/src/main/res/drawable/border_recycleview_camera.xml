@@ -30,10 +30,6 @@
             </item>
             <item  android:id="@+id/lineanumerouno" android:gravity="center"  android:height="50dp">
                 <shape android:shape="line" >
-                    <stroke android:dashWidth="25dp"  android:dashGap="10dp"
-                        android:width="2dp" android:color="#9F00FF7B">
-                    </stroke>
-
                     <gradient
                         android:gradientRadius="20dp"
                         android:angle="90"
