@@ -10,7 +10,7 @@
     </style>
 
     <style name="MySpiner">
-        <item name="android:background">@color/backgroud_addproduct</item>
+        <item name="background">@color/backgroud_addproduct</item>
         <item name="android:dropDownSelector">@drawable/button_states</item>
         <item name="android:gravity">start|center_vertical</item>
         <item name="android:dropDownVerticalOffset">0dip</item>
