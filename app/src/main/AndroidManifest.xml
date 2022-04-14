@@ -11,6 +11,7 @@
 
     <application
         android:allowBackup="true"
+        android:name=".ActivityMainApp"
         android:windowSoftInputMode="adjustResize"
         android:icon="@mipmap/finalico_new_new_foreground"
         android:label="@string/app_name"
@@ -21,10 +22,10 @@
         >
 
         <activity
-            android:name=".ui.SplashScreen"
+            android:name=".ui.View.activity.SplashScreen"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:theme="@style/SplashTheme"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,11 +34,11 @@
         </activity>
 
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.View.activity.MainActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
             android:exported="true"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/Theme.FinalProductos.NoActionBar">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -47,7 +48,7 @@
         </activity>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
     </application>
 

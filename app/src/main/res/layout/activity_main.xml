@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@color/zxing_transparent"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.View.activity.MainActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -23,7 +23,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                app:titleTextColor="@color/red"
+                app:titleTextColor="@color/md_red_500"
                 android:layout_height="?attr/actionBarSize"
                 android:background="#99001C19"
                 app:popupTheme="@style/Theme.Productos.PopupOverlay" >
@@ -44,8 +44,8 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="left"
                         android:layout_weight="2"
-                        android:foregroundTint="@color/green"
-                        android:backgroundTint="@color/green"
+                        android:foregroundTint="@color/md_green_400"
+                        android:backgroundTint="@color/md_green_400"
                         android:foregroundGravity="right"
                         android:gravity="left" />
 

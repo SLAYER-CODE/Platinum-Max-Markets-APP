@@ -20,7 +20,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
         <ImageView
             android:id="@+id/IVimagenItem"
             android:layout_width="match_parent"
@@ -28,6 +31,24 @@
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:transitionName="image_small" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="@android:style/Widget.Material.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="3dp"
+                android:numStars="6"
+                android:progress="50"
+                android:progressBackgroundTint="#6A003701"
+                android:progressBackgroundTintMode="src_atop"
+                android:progressTint="#FCFFDD00"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -122,23 +143,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
-
-    <RatingBar
-        android:id="@+id/ratingBar"
-        style="@android:style/Widget.Material.RatingBar.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="3dp"
-        android:numStars="6"
-        android:progress="50"
-        android:progressBackgroundTint="#6A003701"
-        android:progressBackgroundTintMode="src_atop"
-        android:progressTint="#FCFFDD00"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.14"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

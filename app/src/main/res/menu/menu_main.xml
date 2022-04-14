@@ -1,9 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
-    tools:context="com.example.finalproductos.ui.MainActivity">
-
+    tools:context="com.example.finalproductos.ui.View.activity.MainActivity">
 
     <item
         android:id="@+id/ItAll"
@@ -35,6 +33,16 @@
         android:checkable="true"
         />
     <item android:title="Precio Minimo"
+        app:showAsAction="never"
+        android:checkable="true"
+        android:orderInCategory="5">
+    </item>
+    <item android:title="En la nube"
+        app:showAsAction="never"
+        android:checkable="true"
+        android:orderInCategory="5">
+    </item>
+     <item android:title="Local Storage"
         app:showAsAction="never"
         android:checkable="true"
         android:orderInCategory="5">

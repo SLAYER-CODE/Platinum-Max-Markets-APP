@@ -16,6 +16,7 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="addproduct_discount">Precio con descuento:</string>
+    <string name="Input_PrecieInserte">Inserte el precio Origuinal</string>
     <string-array name="dlagsPeso">
         <item>(Kilogramos)/1000 KG</item>
         <item>(Hectogramos)/100 HG</item>

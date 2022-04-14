@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../.gradle/caches/transforms-3/4d0dc72ab3d1328c0c935d09b79c7641/transformed/jetified-android-chips-1.3.0/res/layout/copy_chip_dialog_layout.xml" value="0.26851851851851855" />
         <entry key="..\:/Users/ADMIN/.gradle/caches/transforms-3/5829cacaeee36f5033498623b792f4d1/transformed/appcompat-1.3.1/res/layout/support_simple_spinner_dropdown_item.xml" value="0.22" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/FinalProductos/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3758974358974359" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/FinalProductos/app/src/main/res/drawable/FinalIco_foreground.xml" value="0.2046875" />
@@ -113,11 +114,39 @@
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/MH/FinalProductos/app/src/main/res/layout/item_spiner_peso.xml" value="0.3458333333333333" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/MH/FinalProductos/app/src/main/res/menu/menu_detalles.xml" value="0.28744588744588745" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/MH/FinalProductos/app/src/main/res/menu/menu_main.xml" value="0.28744588744588745" />
+        <entry key="app/src/main/res/drawable/backgroud_focus.xml" value="0.174" />
+        <entry key="app/src/main/res/drawable/background_splash.xml" value="0.186" />
+        <entry key="app/src/main/res/drawable/border_client_insert.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/border_client_list.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/borderbutton_disable.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/borderbutton_enable.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/borderitemclient.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/button_caputre.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/button_presed.xml" value="0.174" />
+        <entry key="app/src/main/res/drawable/finalico_new_foreground.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/ic_baseline_clear_all_24.xml" value="0.174" />
+        <entry key="app/src/main/res/drawable/ic_baseline_keyboard_double_arrow_up_24.xml" value="0.1435" />
+        <entry key="app/src/main/res/drawable/pulse_camera.xml" value="0.1435" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2557291666666667" />
+        <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.2557291666666667" />
+        <entry key="app/src/main/res/layout/content_main.xml" value="0.2557291666666667" />
         <entry key="app/src/main/res/layout/fragment_agregate_products.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_camera.xml" value="0.3567708333333333" />
+        <entry key="app/src/main/res/layout/fragment_detalles_products.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/fragment_show_products.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/fragment_test.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/image_new_add.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/item_client_list.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/item_client_vent.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/item_producto.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_producto_reverse.xml" value="0.23333333333333334" />
+        <entry key="app/src/main/res/layout/item_spiner_peso.xml" value="0.2" />
+        <entry key="app/src/main/res/menu/menu_detalles.xml" value="0.2" />
+        <entry key="app/src/main/res/menu/menu_main.xml" value="0.25" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_16_PREVIEW" project-jdk-name="16" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

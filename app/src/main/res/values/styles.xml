@@ -1,16 +1,16 @@
 <resources>
 
     <style name="Widget.Theme.FinalProductos.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
-        <item name="android:background">@color/black_overlay</item>
+        <item name="android:background">@color/md_grey_700</item>
     </style>
 
     <style name="Widget.Theme.FinalProductos.ButtonBar.Fullscreen" parent="">
-        <item name="android:background">@color/black_overlay</item>
+        <item name="android:background">@color/md_grey_600</item>
         <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
 
     <style name="MySpiner">
-        <item name="background">@color/backgroud_addproduct</item>
+        <item name="background">@color/md_grey_400</item>
         <item name="android:dropDownSelector">@drawable/button_states</item>
         <item name="android:gravity">start|center_vertical</item>
         <item name="android:dropDownVerticalOffset">0dip</item>

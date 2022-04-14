@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#020202"
-    tools:context=".ui.fragment.ShowProducts">
+    tools:context=".ui.View.fragment.ShowProducts">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"

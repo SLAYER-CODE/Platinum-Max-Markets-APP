@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="top"
+    android:animateLayoutChanges="true"
+    android:background="@color/md_black_1000"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:foregroundGravity="bottom"
+    tools:context=".ui.View.fragment.CameraFragment">
+
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/LayoutCamera0"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_gravity="bottom|center"
+        android:animateLayoutChanges="true"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:descendantFocusability="blocksDescendants"
+        android:foregroundGravity="top"
+        android:layoutDirection="inherit">
+
+        <View
+            android:id="@+id/punteroFocus0"
+            android:layout_width="200px"
+            android:layout_height="200px"
+            android:animateLayoutChanges="true"
+            android:background="@drawable/pulse_camera"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </View>
+
+        <androidx.camera.view.PreviewView
+            android:id="@+id/PVCmain0"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:animateLayoutChanges="true"
+            android:background="#0038FF00"
+            android:toDegrees="90"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:scaleType="fillCenter">
+
+        </androidx.camera.view.PreviewView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/BcaptureImage0"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/button_caputre"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/PVCmain0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.94"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/PVCmain0"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <FrameLayout
+            android:id="@+id/frameLayout0"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textInputLayout0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.42"
+            app:layout_constraintStart_toEndOf="@+id/despliegeCamera0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+            <SeekBar
+                android:id="@+id/SBzoom0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:pointerIcon="zoom_in"
+                android:progressTint="#1DFD0D" />
+
+        </FrameLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintqr0"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="10dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/BRscanner0"
+                android:layout_width="320dp"
+                android:layout_height="320dp"
+                android:layout_marginTop="43dp"
+                android:layout_marginBottom="43dp"
+                android:background="@drawable/reset_drawable_scanner"
+                android:shadowColor="#C93D3A3A"
+                android:shadowDy="10"
+                android:shadowRadius="10"
+                android:text="Preciona para escanear nuevamente"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </androidx.appcompat.widget.AppCompatButton>
+
+            <View
+                android:id="@+id/borderqrxml0"
+                android:layout_width="320dp"
+                android:layout_height="320dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="40dp"
+                android:background="@drawable/border_qr"
+                android:foregroundGravity="center"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/Vqrline0"
+                android:layout_width="305dp"
+                android:layout_height="120dp"
+                android:background="@drawable/line_qr_scan"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="40dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/despliegeCamera0"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            android:layout_marginTop="2dp"
+            android:width="100dp"
+            android:height="100dp"
+            android:background="@drawable/ic_baseline_keyboard_double_arrow_up_24"
+            android:backgroundTintMode="multiply"
+            android:elevation="2dp"
+            android:hapticFeedbackEnabled="false"
+            android:paddingTop="10dp"
+            android:scaleType="fitCenter"
+            android:textColor="#757575"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.07999998"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <LinearLayout
+            android:layout_width="140dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="90dp"
+            android:layout_marginBottom="1dp"
+            android:foregroundGravity="left"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/BcaptureImage0"
+            app:layout_constraintHorizontal_bias="0.12"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/despliegeCamera0"
+            app:layout_constraintVertical_bias="1.0">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/BFlash0"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_baseline_flash_on_24"
+                android:gravity="center" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/BLinterna0"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_linterna"
+                android:gravity="center" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/BCalidad0"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_baseline_hd_24"
+                android:gravity="center" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/BObjectIA0"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_baseline_data_object_24"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout0"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:foregroundGravity="center"
+            android:gravity="center"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/LEandI0"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/backgroud_focus"
+                android:dividerPadding="10dp"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textView40"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:foregroundGravity="fill_horizontal|fill"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:shadowColor="#1E1E1E"
+                    android:shadowDy="10"
+                    android:shadowRadius="10"
+                    android:text="Editar Imagen"
+                    android:textColor="#929292"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView0"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:foregroundGravity="fill_horizontal|fill"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:shadowColor="#1E1E1E"
+                    android:shadowDy="10"
+                    android:shadowRadius="10"
+                    android:text="Usar Inteligencia Artificial"
+                    android:textColor="#929292"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

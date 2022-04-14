@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.DetallesProducto"
+    tools:context=".ui.View.fragment.DetallesProducto"
 
     >
 
@@ -349,12 +349,12 @@
                         android:layout_height="56dp"
                         android:width="200dp"
                         android:background="@drawable/button_background"
-                        android:backgroundTint="@color/black"
+                        android:backgroundTint="@color/md_black_1000"
                         android:enabled="false"
                         android:gravity="center_horizontal|center_vertical"
                         android:text=""
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/black"
+                        android:textColor="@color/md_white_1000"
+                        android:textColorHint="@color/md_black_1000"
                         android:textSize="16sp"
                         tools:ignore="SpeakableTextPresentCheck" />
 

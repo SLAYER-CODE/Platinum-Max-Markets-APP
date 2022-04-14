@@ -8,7 +8,7 @@
     android:layout_gravity="top"
 
     android:animateLayoutChanges="true"
-    android:background="@color/black"
+    android:background="@color/md_black_1000"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:foregroundGravity="bottom"
@@ -86,11 +86,11 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textColorHint="#40B642"
+                    android:textColorHint="@color/md_green_500"
                     app:helperText="Required"
-                    app:helperTextTextColor="@color/red"
+                    app:helperTextTextColor="@color/md_red_500"
                     app:startIconDrawable="@drawable/ic_baseline_name_addproduct"
-                    app:startIconTint="@color/green">
+                    app:startIconTint="@color/md_light_green_A700">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/TENombre"
@@ -104,9 +104,9 @@
                         android:shadowColor="#000000"
                         android:shadowDy="10"
                         android:shadowRadius="7"
-                        android:textColor="#EB1818"
-                        android:textColorHighlight="#1EA825"
-                        android:textColorHint="#6303BDB8"
+                        android:textColor="@color/md_red_500"
+                        android:textColorHighlight="@color/md_green_800"
+                        android:textColorHint="@color/textHintColor"
                         android:textStyle="normal|bold"
                         android:tooltipText="@string/dummy_content"
                         app:helperTextEnabled="false" />
@@ -122,11 +122,11 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:textColorHint="#40B642"
+                        android:textColorHint="@color/md_green_500"
                         app:helperText="Required"
-                        app:helperTextTextColor="@color/red"
+                        app:helperTextTextColor="@color/md_red_500"
                         app:startIconDrawable="@drawable/ic_baseline_money_addproduct"
-                        app:startIconTint="@color/green">
+                        app:startIconTint="@color/md_light_green_A700">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/TEPrecio"
@@ -136,14 +136,14 @@
                             android:background="#D2032910"
                             android:drawableTintMode="add"
                             android:ems="10"
-                            android:foregroundTint="#B62323"
+                            android:foregroundTint="@color/md_red_800"
                             android:hint="Precio"
                             android:inputType="numberDecimal"
                             android:shadowColor="#C8D8C6"
-                            android:textColor="#EB1818"
-                            android:textColorHighlight="#1EA825"
-                            android:textColorHint="#6303BDB8"
-                            android:textColorLink="#FF0101"
+                            android:textColor="@color/md_red_500"
+                            android:textColorHighlight="@color/md_green_A700"
+                            android:textColorHint="@color/textHintColor"
+                            android:textColorLink="@color/md_red_700"
                             android:textStyle="normal|bold"
                             android:tooltipText="@string/dummy_content" />
 
@@ -157,10 +157,9 @@
                         android:layout_alignParentTop="true"
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="50dp"
-                        android:background="@color/black"
                         android:padding="1dp"
                         android:text="Precio con descuento: 0"
-                        android:textColor="@color/green"
+                        android:textColor="@color/md_green_A700"
                         android:textStyle="bold" />
 
                 </RelativeLayout>
@@ -213,11 +212,11 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:orientation="horizontal"
-                            android:textColorHint="#40B642"
-                            app:helperText="Inserte el precio Origuinal"
-                            app:helperTextTextColor="@color/light_blue_600"
+                            android:textColorHint="@color/md_green_500"
+                            app:helperText="@string/Input_PrecieInserte"
+                            app:helperTextTextColor="@color/md_blue_A200"
                             app:startIconDrawable="@drawable/ic_baseline_price_add_product"
-                            app:startIconTint="@color/green">
+                            app:startIconTint="@color/md_light_green_A200">
 
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -227,7 +226,7 @@
                                 android:background="#D2032910"
                                 android:drawableTintMode="add"
                                 android:ems="10"
-                                android:foregroundTint="#B62323"
+                                android:foregroundTint="@color/md_red_800"
                                 android:hint="Precio Neto"
                                 android:inputType="numberDecimal"
                                 android:shadowColor="#C8D8C6"
@@ -254,7 +253,7 @@
                             android:maxWidth="150dp"
                             android:padding="1dp"
                             android:text="Ganancia: 0"
-                            android:textColor="@color/green"
+                            android:textColor="@color/md_green_A400"
                             android:textStyle="bold" />
                     </RelativeLayout>
 
@@ -265,9 +264,9 @@
                         android:layout_weight="1"
                         android:textColorHint="#40B642"
                         app:helperText="Descuento del producto"
-                        app:helperTextTextColor="@color/light_blue_600"
+                        app:helperTextTextColor="@color/md_light_blue_600"
                         app:startIconDrawable="@drawable/ic_baseline_discount_addproduct"
-                        app:startIconTint="@color/green">
+                        app:startIconTint="@color/md_green_A400">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/TEDescuento"
@@ -277,7 +276,7 @@
                             android:drawableTintMode="add"
                             android:ems="10"
                             android:focusableInTouchMode="true"
-                            android:foregroundTint="#B62323"
+                            android:foregroundTint="@color/md_red_800"
                             android:hint="Descuento"
                             android:inputType="numberDecimal"
                             android:shadowColor="#C8D8C6"
@@ -307,9 +306,9 @@
                         android:textColorHint="#40B642"
 
                         app:helperText="Productos disponibles"
-                        app:helperTextTextColor="@color/light_blue_A400"
+                        app:helperTextTextColor="@color/md_light_blue_600"
                         app:startIconDrawable="@drawable/ic_baseline_storage_addproduct"
-                        app:startIconTint="@color/green">
+                        app:startIconTint="@color/md_green_A400">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/TECantidad"
@@ -318,7 +317,7 @@
                             android:background="#D2032910"
                             android:drawableTintMode="add"
                             android:ems="10"
-                            android:foregroundTint="#B62323"
+                            android:foregroundTint="@color/md_red_800"
                             android:inputType="number"
                             android:shadowColor="#C8D8C6"
                             android:text="0"
@@ -339,7 +338,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="0"
-                        android:backgroundTint="@color/green"
+                        android:backgroundTint="@color/md_green_A400"
                         android:ems="10"
                         android:foregroundGravity="center"
                         android:gravity="center"
@@ -354,9 +353,9 @@
                         android:hint="Peso"
                         android:textColorHint="#40B642"
                         app:helperText="Inserte el peso del producto"
-                        app:helperTextTextColor="@color/light_blue_A400"
+                        app:helperTextTextColor="@color/md_light_blue_600"
                         app:startIconDrawable="@drawable/ic_baseline_format_peso_addproduct"
-                        app:startIconTint="@color/green">
+                        app:startIconTint="@color/md_green_A400">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/TECantidadU"
@@ -365,7 +364,7 @@
                             android:background="#D2032910"
                             android:drawableTintMode="add"
                             android:ems="10"
-                            android:foregroundTint="#B62323"
+                            android:foregroundTint="@color/md_red_800"
                             android:inputType="numberDecimal"
                             android:shadowColor="#C8D8C6"
                             android:textColor="#EB1818"
@@ -387,7 +386,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="0"
-                        android:backgroundTint="@color/green"
+                        android:backgroundTint="@color/md_green_A400"
                         android:ems="10"
                         android:foregroundGravity="center"
                         android:gravity="center"
@@ -406,9 +405,9 @@
                     android:hint="Detalles y caracteristicas"
                     android:textAlignment="center"
                     android:textColorHint="#40B642"
-                    app:helperTextTextColor="@color/red"
+                    app:helperTextTextColor="@color/md_red_800"
                     app:startIconDrawable="@drawable/ic_baseline_recommend_addproducto"
-                    app:startIconTint="@color/green">
+                    app:startIconTint="@color/md_green_A400">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/TECaracteristicas"
@@ -417,7 +416,7 @@
                         android:background="#D2032910"
                         android:drawableTintMode="add"
                         android:ems="10"
-                        android:foregroundTint="#B62323"
+                        android:foregroundTint="@color/md_red_800"
                         android:inputType="textMultiLine|textCapSentences"
                         android:shadowColor="#C8D8C6"
                         android:textColor="#EB1818"
@@ -446,9 +445,9 @@
                         android:textAlignment="center"
                         android:textColorHint="#40B642"
                         app:helperText="Inserte sus categorias "
-                        app:helperTextTextColor="@color/light_blue_A400"
+                        app:helperTextTextColor="@color/md_light_blue_600"
                         app:startIconDrawable="@drawable/ic_baseline_category_addproduct"
-                        app:startIconTint="@color/green">
+                        app:startIconTint="@color/md_green_A400">
 
                         <com.android.ex.chips.RecipientEditTextView
                             android:id="@+id/TECategoria"
@@ -456,7 +455,9 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:padding="10dp"
-                            android:textColor="@color/green"></com.android.ex.chips.RecipientEditTextView>
+                            android:textColor="@color/md_green_A400">
+
+                        </com.android.ex.chips.RecipientEditTextView>
                     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -468,9 +469,9 @@
                         android:hint="Marca"
                         android:textColorHint="#40B642"
                         app:helperText="Marca a la que pertenece"
-                        app:helperTextTextColor="@color/light_blue_A400"
+                        app:helperTextTextColor="@color/md_light_blue_600"
                         app:startIconDrawable="@drawable/ic_baseline_bookmark_addproduct"
-                        app:startIconTint="@color/green">
+                        app:startIconTint="@color/md_green_A400">
 
                         <MultiAutoCompleteTextView
                             android:id="@+id/TEMarca"
@@ -479,8 +480,8 @@
                             android:layout_weight="1"
                             android:gravity="left"
                             android:padding="10dp"
-                            android:textColor="@color/green"
-                            android:textColorHint="@color/green"></MultiAutoCompleteTextView>
+                            android:textColor="@color/md_green_A400"
+                            android:textColorHint="@color/md_green_A400"></MultiAutoCompleteTextView>
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
@@ -501,9 +502,9 @@
                         android:layout_weight="1"
                         android:hint="QR"
                         android:textColorHint="#40B642"
-                        app:helperTextTextColor="@color/red"
+                        app:helperTextTextColor="@color/md_red_A200"
                         app:startIconDrawable="@drawable/ic_baseline_qr_code_addproduct"
-                        app:startIconTint="@color/green">
+                        app:startIconTint="@color/md_green_A400">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/TEQR"
@@ -512,7 +513,7 @@
                             android:background="#D2032910"
                             android:drawableTintMode="add"
                             android:ems="10"
-                            android:foregroundTint="#B62323"
+                            android:foregroundTint="@color/md_red_800"
                             android:inputType="numberDecimal"
                             android:shadowColor="#C8D8C6"
                             android:textColor="#EB1818"
@@ -546,6 +547,18 @@
                     android:foregroundGravity="center"
                     android:gravity="center"
                     android:orientation="vertical">
+
+                    <fragment
+                        android:id="@+id/FragmentCamera"
+                        android:name="androidx.navigation.fragment.NavHostFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:navGraph="@navigation/nav_camera_functions">
+                    </fragment>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/LayoutCamera"
@@ -961,15 +974,15 @@
                     android:layout_marginTop="24dp"
                     android:background="@drawable/button_background"
                     android:drawableLeft="@drawable/ic_baseline_dashboard_agregateproduct"
-                    android:drawableTint="@color/black"
+                    android:drawableTint="@color/md_black_1000"
                     android:foregroundGravity="center"
                     android:gravity="center"
                     android:paddingStart="17dp"
-                    android:shadowColor="@color/green"
+                    android:shadowColor="@color/md_green_A400"
                     android:shadowDy="10"
                     android:shadowRadius="20"
                     android:text="Agregar Producto"
-                    android:textColor="@color/black"
+                    android:textColor="@color/md_black_1000"
                     android:textSize="15dp"
                     android:textStyle="bold" />
 

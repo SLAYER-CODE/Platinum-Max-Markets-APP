@@ -22,7 +22,7 @@
                 <shape android:shape="rectangle">
                     <corners android:radius="90dp">
                     </corners>
-                    <stroke android:width="4dp" android:color="@color/green">
+                    <stroke android:width="4dp" android:color="@color/md_green_A400">
                     </stroke>
                     <size android:width="100dp" android:height="100dp">
                     </size>
@@ -39,7 +39,7 @@
             <corners android:radius="90dp">
             </corners>
             <solid android:color="#3E6EFB50"/>
-            <stroke android:width="1dp" android:color="@color/green">
+            <stroke android:width="1dp" android:color="@color/md_green_A400">
             </stroke>
             <size android:width="100dp" android:height="100dp">
             </size>

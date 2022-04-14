@@ -26,7 +26,7 @@
                             <gradient
                                 android:centerX="50%"
                                 android:gradientRadius="40dp"
-                                android:centerColor="@color/green"
+                                android:centerColor="@color/md_light_green_A700"
                                 android:startColor="#000"
                                 android:endColor="@color/zxing_transparent"
                                 android:type="radial">
@@ -46,7 +46,7 @@
                             <gradient
                                 android:centerX="50%"
                                 android:gradientRadius="40dp"
-                                android:centerColor="@color/green"
+                                android:centerColor="@color/md_light_green_A700"
                                 android:startColor="#000"
                                 android:endColor="@color/zxing_transparent"
                                 android:type="radial">
