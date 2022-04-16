@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="top"
+    android:id="@+id/FragmentParentView"
     android:animateLayoutChanges="true"
     android:background="@color/md_black_1000"
     android:clipChildren="false"
@@ -22,6 +23,8 @@
         android:animateLayoutChanges="true"
         android:clipChildren="false"
         android:clipToPadding="false"
+        android:visibility="gone"
+        tools:visibility="visible"
         android:descendantFocusability="blocksDescendants"
         android:foregroundGravity="top"
         android:layoutDirection="inherit">
@@ -62,7 +65,6 @@
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/button_caputre"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/PVCmain"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.94"
@@ -166,7 +168,6 @@
             android:paddingTop="10dp"
             android:scaleType="fitCenter"
             android:textColor="#757575"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -224,69 +225,6 @@
                 android:gravity="center" />
 
         </LinearLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:foregroundGravity="center"
-            android:gravity="center"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <LinearLayout
-                android:id="@+id/LEandI"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:background="@drawable/backgroud_focus"
-                android:dividerPadding="10dp"
-                android:orientation="horizontal"
-                android:weightSum="2"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:foregroundGravity="fill_horizontal|fill"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:shadowColor="#1E1E1E"
-                    android:shadowDy="10"
-                    android:shadowRadius="10"
-                    android:text="Editar Imagen"
-                    android:textColor="#929292"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:foregroundGravity="fill_horizontal|fill"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:shadowColor="#1E1E1E"
-                    android:shadowDy="10"
-                    android:shadowRadius="10"
-                    android:text="Usar Inteligencia Artificial"
-                    android:textColor="#929292"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-        </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
