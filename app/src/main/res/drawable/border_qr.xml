@@ -2,14 +2,11 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item >
         <layer-list>
-            <item android:width="320dp" android:height="320dp">
-                <shape>
-                    <stroke
-                        android:width="5dp" android:color="#88FF0000" android:dashGap="55dp"  android:dashWidth="150dp">
-                    </stroke>
+            <item android:gravity="center">
+                <shape android:layout_width="match_parent" android:layout_height="match_parent">
+                    <stroke android:width="5dp" android:color="@color/md_red_A200" android:dashWidth="150dp" android:dashGap="50dp"></stroke>
 
-                    <solid android:color="@color/zxing_transparent">
-                    </solid>
+                    <solid android:color="@color/zxing_transparent"></solid>
                 </shape>
             </item>
 

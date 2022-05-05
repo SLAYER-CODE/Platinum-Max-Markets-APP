@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_login"
+    app:startDestination="@id/loginFragment">
+
+
+    <!--    android:label="@string/second_fragment_label"-->
+
+    <!--        android:label="{title}({state})"-->
+    <!--        <argument-->
+    <!--            android:name="state"-->
+    <!--            app:argType="string" />-->
+    <!--        <argument-->
+    <!--            android:name="title"-->
+    <!--            app:argType="string" />-->
+    <argument
+        android:name="title"
+        app:argType="string" />
+    <!--    android:label="Producto"-->
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.Register"
+        tools:layout="@layout/fragment_register"/>
+
+
+
+</navigation>

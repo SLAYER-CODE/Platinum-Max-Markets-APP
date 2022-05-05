@@ -1,7 +1,67 @@
 <resources>
-    <string name="app_name">Productos</string>
+    <!--    Proveedores-->
+    <string name="app_id">10005006310-dcsd6e73cgg04hutg88b2h2hdfichgfd.apps.googleusercontent.com</string>
+    <string name="facebook_app_id">3032761643672289</string>
+    <string name="fb_login_protocol_scheme">fb3032761643672289</string>
+    <!--FinDeProveedores-->
+    <string name="contry">Contry</string>
+    <string name="apodo">Apodo</string>
+    <string name="nombre">Name</string>
+
+    <string name="passwordRepet">Password Repet</string>
+    <string name="prompt_telefono">Phone Number</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Contraseña incorrecta must be >5 characters</string>
+    <string name="invalid_passwordRepet">Repite la contraseña para ingresar</string>
+
+    <string name="login_failed">"Login failed"</string>
+    <string name="title_activity_init_precentation">InitPrecentation</string>
+    <string name="title_activity_main_cliente">MainCliente</string>
+    <!--Fin Inicio de session-->
+
+
+    <string name="app_name">Fon Desk Helper</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home(Root)</string>
+    <string name="menu_CallFinalUser">Client</string>
+    <string name="menu_estadisticas">Analitics</string>
+    <string name="menu_empresasub">Empleados</string>
+    <string name="menu_notificactions">Notifications</string>
+
+    <!-- Del usuario -->
+    <string name="titleUser">Usuario Test</string>
+    <string name="menu_products">Home(User)</string>
+    <string name="menu_location">Locations</string>
+    <string name="menu_orders">Orders</string>
+    <string name="menu_favorites">Favorites</string>
+    <string name="menu_pagos">Payments</string>
+
+
+    <!--    Fin de DrawersString-->
+
+    <!--    Presentaciones String-->
+    <string name="presenation_one">Texto de presenatcion numero 2</string>
+    <string name="presenation_two">Texto de presenatcion numero 2</string>
+    <string name="presenation_tree">Texto de presenatcion numero 2</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
+
+
     <!-- Strings used for fragments for navigation -->
+
+
     <string name="first_fragment_label">Inicio</string>
     <string name="second_fragment_label">Editar Producto</string>
     <string name="tre_activity_label">Agregar Producto</string>

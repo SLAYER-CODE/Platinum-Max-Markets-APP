@@ -37,12 +37,9 @@
         <item name="fullscreenTextColor">@color/md_light_blue_600</item>
     </style>
 
-    <style name="SplashTheme" parent="Theme.Design.NoActionBar">
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowBackground" >@drawable/background_splash</item>
-        <item name="colorPrimary">@color/md_black_1000</item>
-        <item name="colorPrimaryDark">@color/md_black_1000</item>
-        <item name="colorAccent">@color/md_black_1000</item>
-        <item name="android:statusBarColor">@color/md_black_1000</item>
+    <style name="SplashThemeDos" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
+
+
 </resources>

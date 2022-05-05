@@ -3,9 +3,9 @@
     android:fillAfter="false">
 
     <translate
-        android:fromYDelta="0%p"
-        android:toYDelta="70%p"
-        android:duration="800"
+        android:fromYDelta="-35%p"
+        android:toYDelta="35%p"
+        android:duration="850"
         android:repeatCount="infinite"
         android:repeatMode="reverse"
         />

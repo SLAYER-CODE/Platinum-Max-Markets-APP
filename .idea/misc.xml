@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../layout/custom_preview.xml" value="0.28888888888888886" />
+        <entry key="../../../.gradle/caches/transforms-3/04ea4af2f7fb68a563d5b5ee72cd4a17/transformed/jetified-android-chips-1.3.1/res/layout/copy_chip_dialog_layout.xml" value="0.20185185185185187" />
+        <entry key="../../../.gradle/caches/transforms-3/2293b8711eb1f41441ecbcb0ceebf707/transformed/jetified-android-chips-1.3.1/res/layout/copy_chip_dialog_layout.xml" value="0.2869791666666667" />
         <entry key="../../../.gradle/caches/transforms-3/4d0dc72ab3d1328c0c935d09b79c7641/transformed/jetified-android-chips-1.3.0/res/layout/copy_chip_dialog_layout.xml" value="0.26851851851851855" />
         <entry key="..\:/Users/ADMIN/.gradle/caches/transforms-3/5829cacaeee36f5033498623b792f4d1/transformed/appcompat-1.3.1/res/layout/support_simple_spinner_dropdown_item.xml" value="0.22" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/FinalProductos/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3758974358974359" />
@@ -115,34 +118,88 @@
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/MH/FinalProductos/app/src/main/res/menu/menu_detalles.xml" value="0.28744588744588745" />
         <entry key="..\:/Users/ADMIN/AndroidStudioProjects/MH/FinalProductos/app/src/main/res/menu/menu_main.xml" value="0.28744588744588745" />
         <entry key="app/src/main/res/drawable/backgroud_focus.xml" value="0.174" />
+        <entry key="app/src/main/res/drawable/background_navdrawable.xml" value="0.1925" />
         <entry key="app/src/main/res/drawable/background_splash.xml" value="0.186" />
         <entry key="app/src/main/res/drawable/border_client_insert.xml" value="0.1555" />
         <entry key="app/src/main/res/drawable/border_client_list.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/border_presentation.xml" value="0.1825" />
+        <entry key="app/src/main/res/drawable/border_qr.xml" value="0.1195" />
+        <entry key="app/src/main/res/drawable/border_recycleview_camera.xml" value="0.1825" />
         <entry key="app/src/main/res/drawable/borderbutton_disable.xml" value="0.1555" />
         <entry key="app/src/main/res/drawable/borderbutton_enable.xml" value="0.1555" />
         <entry key="app/src/main/res/drawable/borderitemclient.xml" value="0.1555" />
         <entry key="app/src/main/res/drawable/button_caputre.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/button_next_green.xml" value="0.1825" />
         <entry key="app/src/main/res/drawable/button_presed.xml" value="0.174" />
+        <entry key="app/src/main/res/drawable/button_states.xml" value="0.1775" />
+        <entry key="app/src/main/res/drawable/contetdetails_main_border.xml" value="0.109" />
+        <entry key="app/src/main/res/drawable/drawable_select_navigation.xml" value="0.109" />
+        <entry key="app/src/main/res/drawable/empty_tall_divider.xml" value="0.1875" />
+        <entry key="app/src/main/res/drawable/facebook_ico_drawable.xml" value="0.1305" />
         <entry key="app/src/main/res/drawable/finalico_new_foreground.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/google_ico_drawable.xml" value="0.1305" />
+        <entry key="app/src/main/res/drawable/ic_baseline_assignment_ind_24.xml" value="0.1315" />
+        <entry key="app/src/main/res/drawable/ic_baseline_camera_24.xml" value="0.205" />
+        <entry key="app/src/main/res/drawable/ic_baseline_camera_alt_24.xml" value="0.1775" />
+        <entry key="app/src/main/res/drawable/ic_baseline_camera_enhance_24.xml" value="0.205" />
         <entry key="app/src/main/res/drawable/ic_baseline_clear_all_24.xml" value="0.174" />
+        <entry key="app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.1285" />
+        <entry key="app/src/main/res/drawable/ic_baseline_data_object_24.xml" value="0.1875" />
+        <entry key="app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.1875" />
+        <entry key="app/src/main/res/drawable/ic_baseline_flash_off_24.xml" value="0.1875" />
+        <entry key="app/src/main/res/drawable/ic_baseline_flash_on_24.xml" value="0.1875" />
+        <entry key="app/src/main/res/drawable/ic_baseline_hd_24.xml" value="0.1875" />
+        <entry key="app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.1315" />
         <entry key="app/src/main/res/drawable/ic_baseline_keyboard_double_arrow_up_24.xml" value="0.1435" />
+        <entry key="app/src/main/res/drawable/ic_baseline_qr_code_scanner_addproduct.xml" value="0.1775" />
+        <entry key="app/src/main/res/drawable/ic_linterna.xml" value="0.1875" />
+        <entry key="app/src/main/res/drawable/ico_laucher_foreground.xml" value="0.109" />
+        <entry key="app/src/main/res/drawable/items_background.xml" value="0.1925" />
         <entry key="app/src/main/res/drawable/pulse_camera.xml" value="0.1435" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2557291666666667" />
+        <entry key="app/src/main/res/drawable/side_nav_bar.xml" value="0.186" />
+        <entry key="app/src/main/res/layout-land/activity_init_precentation.xml" value="0.13958333333333334" />
+        <entry key="app/src/main/res/layout-land/activity_main.xml" value="0.18" />
+        <entry key="app/src/main/res/layout-land/activity_main_drawer.xml" value="0.2" />
+        <entry key="app/src/main/res/layout-land/app_bar_main.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/layout-land/content_login_main.xml" value="0.20729166666666668" />
+        <entry key="app/src/main/res/layout-land/content_main.xml" value="0.18177083333333333" />
+        <entry key="app/src/main/res/layout-land/content_presentation_main.xml" value="0.13958333333333334" />
+        <entry key="app/src/main/res/layout-land/fragment_agregate_products.xml" value="0.2557291666666667" />
+        <entry key="app/src/main/res/layout/activity_init_precentation.xml" value="0.34923076923076923" />
+        <entry key="app/src/main/res/layout/activity_login_main.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2391304347826087" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.2557291666666667" />
+        <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/content_login_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.2557291666666667" />
-        <entry key="app/src/main/res/layout/fragment_agregate_products.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/fragment_camera.xml" value="0.3567708333333333" />
-        <entry key="app/src/main/res/layout/fragment_detalles_products.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/content_presentation_main.xml" value="0.24814814814814815" />
+        <entry key="app/src/main/res/layout/fragment_agregate_products.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_camera.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_camera_qr.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_clients_root_fragment.xml" value="0.29025641025641025" />
+        <entry key="app/src/main/res/layout/fragment_detalles_products.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_dos_precentacion.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_register.xml" value="0.32407407407407407" />
         <entry key="app/src/main/res/layout/fragment_show_products.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_test.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/fragment_tres_presentacion.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_uno_precentacion.xml" value="0.2" />
         <entry key="app/src/main/res/layout/image_new_add.xml" value="0.2" />
         <entry key="app/src/main/res/layout/item_client_list.xml" value="0.2" />
         <entry key="app/src/main/res/layout/item_client_vent.xml" value="0.2" />
         <entry key="app/src/main/res/layout/item_producto.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_producto_reverse.xml" value="0.23333333333333334" />
         <entry key="app/src/main/res/layout/item_spiner_peso.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.34923076923076923" />
+        <entry key="app/src/main/res/layout/notifications_fragment.xml" value="0.29025641025641025" />
+        <entry key="app/src/main/res/layout/register_login.xml" value="0.34923076923076923" />
+        <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.5" />
         <entry key="app/src/main/res/menu/menu_detalles.xml" value="0.2" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.25" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/finalico_new.xml" value="0.132" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/finalico_new_new.xml" value="0.1255" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1255" />
       </map>
     </option>
   </component>
@@ -155,7 +212,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.2" />
+        <option name="scale" value="0.32407407407407407" />
       </ProjectState>
     </option>
   </component>

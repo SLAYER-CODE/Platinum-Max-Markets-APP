@@ -1,0 +1,95 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Categories {
+    category_id: ID!
+    category_name: String!
+}
+
+type ListWish {
+    user_id: Users!
+    wish_id: ID!
+    wish_products_id: [Products!]!
+}
+
+type Mutation {
+    createSessions(myval: UsersInput!): Users!
+    createproduct(myval: ProductsInput!): Products!
+}
+
+type Phone {
+    country_code: String!
+    phone_id: ID
+    phone_number: String
+}
+
+type Products {
+    brand: String!
+    category_products: [Categories!]!
+    description: String!
+    old_price: Float
+    price: Float!
+    product_id: ID!
+    product_name: String!
+    quantity: Int!
+    user: Users!
+}
+
+type Query {
+    Categories: [Categories!]!
+    Products: [Products!]!
+    Sessiones: [Users!]!
+    comprobationUser(token: String!): Boolean!
+    ping: String!
+}
+
+type ShoppingCart {
+    shoppingCardt_id: ID!
+}
+
+type Users {
+    birthday: DateTime!
+    email: String!
+    lastToken: String!
+    phone_id: Phone
+    photo: String!
+    random_code: Int
+    shoppingCardt_id: ShoppingCart
+    uid: String!
+    userProducts: [Products!]!
+    user_id: ID!
+    username: String
+    wish_id: ListWish
+}
+
+"The javascript `Date` as string. Type represents date and time as the ISO Date string."
+scalar DateTime
+
+input CategoriesInput {
+    category_name: String!
+    id: Float
+}
+
+input ProductsInput {
+    brand: String!
+    category_products: [CategoriesInput!]!
+    description: String
+    old_price: Float!
+    price: Float!
+    product_name: String!
+    quantity: Float!
+}
+
+input UsersInput {
+    birthday: DateTime!
+    email: String!
+    photo: String
+    random_code: Float
+    uid: String!
+    user_id: Float
+    username: String
+}

@@ -12,5 +12,5 @@ dependencyResolutionManagement {
 }
 
 
-rootProject.name = "FinalProductos"
+rootProject.name = "FromDeskHelper"
 include ':app'

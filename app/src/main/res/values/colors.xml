@@ -342,6 +342,7 @@
     <color name="md_green_500_25">#404caf50</color>
     <color name="md_green_500_50">#804caf50</color>
     <color name="md_green_500_75">#c04caf50</color>
+    <color name="md_green_500_75_overlay">#7C008705</color>
     <!--light greens-->
     <array name="light_greens">
         <item>@color/md_light_green_500</item>

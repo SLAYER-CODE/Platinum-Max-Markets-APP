@@ -1,10 +1,33 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="32dp"
-    android:height="32dp"
-    android:viewportWidth="24"
-    android:viewportHeight="24"
-    android:tint="?attr/colorControlNormal">
-  <path
-      android:fillColor="@android:color/white"
-      android:pathData="M7,2v11h3v9l7,-12h-4l4,-8z"/>
-</vector>
+<?xml version="1.0" encoding="utf-8"?>
+<selector  xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_checked="true">
+
+        <layer-list>
+
+            <item android:bottom="2dp" android:top="2dp" android:left="2dp" android:right="2dp">
+                <vector   xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:width="32dp"
+                    android:height="32dp"
+                    android:viewportWidth="24"
+                    android:viewportHeight="24"
+                    android:tint="@color/md_green_A700">
+
+                    <path
+                        android:fillColor="@android:color/white"
+                        android:pathData="M7,2v11h3v9l7,-12h-4l4,-8z"/>
+                </vector>
+            </item>
+        </layer-list>
+    </item>
+
+    <item android:state_checked="false">
+    <layer-list>
+
+        <item android:bottom="2dp" android:top="2dp" android:left="2dp" android:right="2dp" android:drawable="@drawable/ic_baseline_flash_off_24">
+        </item>
+
+    </layer-list>
+  </item>
+
+</selector>

@@ -1,0 +1,45 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="GraphQLDuplicateArgument" enabled="true" level="ERROR" enabled_by_default="true">
+      <scope name="All Changed Files" level="ERROR" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="GraphQLDuplicateDirective" enabled="true" level="ERROR" enabled_by_default="true">
+      <scope name="All Changed Files" level="ERROR" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="GraphQLEmptyType" enabled="true" level="ERROR" enabled_by_default="true">
+      <scope name="All Changed Files" level="ERROR" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="GraphQLIllegalDirectiveArgument" enabled="true" level="ERROR" enabled_by_default="true">
+      <scope name="All Changed Files" level="ERROR" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="GraphQLIllegalName" enabled="true" level="ERROR" enabled_by_default="true">
+      <scope name="All Changed Files" level="ERROR" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="GraphQLInterfaceImplementation" enabled="true" level="ERROR" enabled_by_default="true">
+      <scope name="All Changed Files" level="ERROR" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="GraphQLInvalidDirectiveLocation" enabled="true" level="ERROR" enabled_by_default="true">
+      <scope name="All Changed Files" level="ERROR" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="GraphQLMemberRedefinition" enabled="true" level="ERROR" enabled_by_default="true">
+      <scope name="All Changed Files" level="ERROR" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="GraphQLMissingType" enabled="true" level="ERROR" enabled_by_default="true">
+      <scope name="All Changed Files" level="ERROR" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="GraphQLSchemaValidation" enabled="true" level="ERROR" enabled_by_default="true">
+      <scope name="All Changed Files" level="ERROR" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="GraphQLTypeRedefinition" enabled="true" level="ERROR" enabled_by_default="true">
+      <scope name="All Changed Files" level="ERROR" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="GraphQLUnexpectedType" enabled="true" level="ERROR" enabled_by_default="true">
+      <scope name="All Changed Files" level="ERROR" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="GraphQLUnresolvedReference" enabled="true" level="ERROR" enabled_by_default="true">
+      <scope name="All Changed Files" level="ERROR" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="IllegalIdentifier" enabled="false" level="ERROR" enabled_by_default="false" />
+  </profile>
+</component>

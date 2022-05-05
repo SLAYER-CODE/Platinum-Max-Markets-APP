@@ -19,7 +19,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="13dp"
-        android:fillViewport="false">
+        android:overScrollMode="never"
+        android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/newConstraintLayout"
@@ -495,12 +496,6 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <Button
-                        android:id="@+id/TestingButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0"
-                        android:text="Testing" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -533,7 +528,7 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/BEscaner"
                         android:layout_width="56dp"
                         android:layout_height="56dp"
@@ -546,7 +541,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center|top"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="5dp"
                     android:clipChildren="false"
                     android:clipToPadding="false"
                     android:descendantFocusability="blocksDescendants"
@@ -555,89 +550,90 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-
-                    <com.google.android.material.textfield.TextInputLayout
+                    <LinearLayout
                         android:id="@+id/textInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:foregroundGravity="center"
                         android:gravity="center"
-                        android:paddingTop="15dp"
-                        android:paddingBottom="15dp"
+                        android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
-                    <FrameLayout
-                        android:id="@+id/FragmentCamera"
-                        android:name="androidx.navigation.fragment.NavHostFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:navGraph="@navigation/nav_camera_functions">
-                    </FrameLayout>
 
-                    <LinearLayout
-                        android:id="@+id/LEandI"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:background="@drawable/backgroud_focus"
-                        android:dividerPadding="10dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                            <FrameLayout
 
-                        <TextView
-                            android:id="@+id/textView4"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:foregroundGravity="fill_horizontal|fill"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:shadowColor="#1E1E1E"
-                            android:shadowDy="10"
-                            android:shadowRadius="10"
-                            android:text="Editar Imagen"
-                            android:textColor="#929292"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
+                                android:id="@+id/FragmentCamera"
+                                android:layout_width="match_parent"
+                                tools:layout_width="400dp"
 
-                        <TextView
-                            android:id="@+id/textView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:foregroundGravity="fill_horizontal|fill"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:shadowColor="#1E1E1E"
-                            android:shadowDy="10"
-                            android:shadowRadius="10"
-                            android:text="Usar Inteligencia Artificial"
-                            android:textColor="#929292"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
+                                android:layout_height="wrap_content"
+                                app:layout_constraintWidth_max="360dp"
+                                app:layout_constraintHeight_max="360dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                            </FrameLayout>
+
+                        <LinearLayout
+                            android:id="@+id/LEandI"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:background="@drawable/backgroud_focus"
+                            android:dividerPadding="10dp"
+                            android:orientation="horizontal"
+                            android:weightSum="2"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:id="@+id/textView4"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:foregroundGravity="fill_horizontal|fill"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:shadowColor="#1E1E1E"
+                                android:shadowDy="10"
+                                android:shadowRadius="10"
+                                android:text="Editar Imagen"
+                                android:textColor="#929292"
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:foregroundGravity="fill_horizontal|fill"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:shadowColor="#1E1E1E"
+                                android:shadowDy="10"
+                                android:shadowRadius="10"
+                                android:text="Usar Inteligencia Artificial"
+                                android:textColor="#929292"
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
                     </LinearLayout>
-                    </com.google.android.material.textfield.TextInputLayout>
 
 
                     <LinearLayout
                         android:id="@+id/LLShow"
                         android:layout_width="match_parent"
                         android:layout_height="150sp"
-                        android:layout_gravity="left"
                         android:layout_marginTop="10dp"
-                        android:layout_weight="2"
                         android:clipChildren="false"
                         android:clipToPadding="false"
                         android:elevation="3dp"
@@ -645,57 +641,71 @@
                         android:measureWithLargestChild="true"
                         android:orientation="horizontal">
 
-                        <View
-                            android:id="@+id/BCaptura"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:layout_weight="2"
-                            android:background="@drawable/button_states"
-                            android:clickable="true"
-                            android:clipToOutline="true"
-                            android:elevation="16dp"
-                            android:foregroundGravity="left"
-                            android:gravity="left"
-                            android:hyphenationFrequency="full"
-                            android:minWidth="124dp"
-                            android:visibility="visible"
-                            tools:ignore="SpeakableTextPresentCheck" />
-
-                        <TextView
-                            android:id="@+id/TNotItems"
-                            android:layout_width="1.6in"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0"
-                            android:background="#8A050101"
-                            android:gravity="center"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="20dp"
-                            android:paddingBottom="20dp"
-                            android:shadowColor="#4DFF1A"
-                            android:shadowDy="10"
-                            android:shadowRadius="20"
-                            android:text="Tome una imagen para su producto"
-                            android:textColor="#2DEF0A"
-                            android:textSize="25sp"
-                            android:textStyle="bold" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/RVCaptureImages"
-                            android:layout_width="1.6in"
-                            android:layout_height="wrap_content"
+                        <LinearLayout
+                            android:id="@+id/CapturaLayout"
+                            android:layout_width="115dp"
+                            android:layout_height="115dp"
                             android:layout_gravity="center"
-                            android:layout_weight="2.2"
-                            android:background="@drawable/border_recycleview_camera"
-                            android:clipChildren="false"
-                            android:clipToPadding="false"
-                            android:elevation="15dp"
-                            android:fitsSystemWindows="false"
-                            android:foregroundGravity="center_vertical|center"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp">
+                            android:layout_weight="0"
+                            android:clipChildren="true"
+                            android:clipToPadding="true"
+                            android:orientation="horizontal">
 
-                        </androidx.recyclerview.widget.RecyclerView>
+                            <View
+                                android:id="@+id/BCaptura"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/button_states"
+                                android:clickable="true"
+                                tools:ignore="SpeakableTextPresentCheck" />
+
+                        </LinearLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:clipChildren="false"
+                            android:clipToPadding="false">
+
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/RVCaptureImages"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/border_recycleview_camera"
+                                android:clipChildren="false"
+                                android:clipToPadding="false"
+                                android:foregroundGravity="center_vertical|center"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                app:layout_constrainedHeight="true"
+                                app:layout_constraintBottom_toBottomOf="@+id/TNotItems"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"></androidx.recyclerview.widget.RecyclerView>
+
+                            <TextView
+                                android:id="@+id/TNotItems"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:background="@color/md_black_1000"
+                                android:gravity="center"
+                                android:paddingRight="10dp"
+                                android:shadowColor="#4DFF1A"
+                                android:shadowDy="10"
+                                android:shadowRadius="20"
+                                android:text="Tome una imagen para su producto"
+                                android:textColor="@color/md_green_A700"
+                                android:textSize="25sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
                     </LinearLayout>
 
                     <LinearLayout
@@ -762,16 +772,18 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/BAgregate"
-                    android:layout_width="220dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginLeft="75dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="75dp"
                     android:background="@drawable/button_background"
                     android:drawableLeft="@drawable/ic_baseline_dashboard_agregateproduct"
                     android:drawableTint="@color/md_black_1000"
                     android:foregroundGravity="center"
                     android:gravity="center"
-                    android:paddingStart="17dp"
+                    android:paddingStart="10dp"
                     android:shadowColor="@color/md_green_A400"
                     android:shadowDy="10"
                     android:shadowRadius="20"

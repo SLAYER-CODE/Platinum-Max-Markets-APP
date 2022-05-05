@@ -4,31 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_overlay"
+    android:background="@color/md_black_1000"
     android:theme="@style/ThemeOverlay.FinalProductos.FullscreenContainer"
     tools:context=".ui.View.activity.SplashScreen" >
+
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:backgroundTint="#3A9D37"
         android:foregroundGravity="center">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="430dp"
-            android:layout_height="861dp"
-            android:layout_marginEnd="324dp"
-            android:layout_marginBottom="756dp"
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/viewAnimator"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:src="@mipmap/logoanimate"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/background_splash"
-            android:contentDescription="Imagen de Prueva" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/PBSS"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="77dp"
+            android:layout_height="76dp"
+            android:layout_marginBottom="172dp"
+            android:indeterminate="true"
+            android:indeterminateTint="#02FF05"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewAnimator" />
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/TEInformation"
+            android:textColor="@color/md_red_A200"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="Cargando..."
+            app:layout_constraintBottom_toBottomOf="@+id/PBSS"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/PBSS" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

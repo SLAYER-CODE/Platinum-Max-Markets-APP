@@ -1,93 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@color/zxing_transparent"
-    tools:context=".ui.View.activity.MainActivity">
-    <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/zxing_transparent"
-            android:theme="@style/Theme.Productos.AppBarOverlay"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+    tools:openDrawer="start">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                app:titleTextColor="@color/md_red_500"
-                android:layout_height="?attr/actionBarSize"
-                android:background="#99001C19"
-                app:popupTheme="@style/Theme.Productos.PopupOverlay" >
+    <include
+        android:id="@+id/app_bar_main"
+        layout="@layout/app_bar_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-                <LinearLayout
-                    android:id="@+id/BIShowP"
-                    android:visibility="visible"
-                    android:layout_gravity="right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
-
-                    <androidx.appcompat.widget.SearchView
-                        android:id="@+id/SVProducts"
-                        android:layout_width="match_parent"
-                        app:searchIcon="@drawable/ic_baseline_image_search_showproduct"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="left"
-                        android:layout_weight="2"
-                        android:foregroundTint="@color/md_green_400"
-                        android:backgroundTint="@color/md_green_400"
-                        android:foregroundGravity="right"
-                        android:gravity="left" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:layout_width="match_parent"
-                        android:minWidth="50dp"
-                        android:layout_gravity="center"
-
-                        android:layout_height="match_parent"
-                        android:background="@drawable/ic_baseline_qr_code_scanner_showproduct"
-                        >
-                    </androidx.appcompat.widget.AppCompatButton>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/black_overlay"
+        android:fitsSystemWindows="true"
+        app:itemIconTint="@drawable/drawable_select_navigation"
+        app:itemBackground="@drawable/background_navdrawable"
+        app:itemTextColor="@drawable/drawable_select_navigation"
+        app:headerLayout="@layout/nav_header_main"
+        app:subheaderColor="@color/md_green_A400"
+        app:menu="@menu/activity_main_drawer" />
 
 
-                </LinearLayout>
-            </androidx.appcompat.widget.Toolbar>
-
-            <ProgressBar
-                android:id="@+id/PBbarList"
-                style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:background="#000000"
-                android:hapticFeedbackEnabled="true"
-                android:indeterminate="true"
-                android:indeterminateOnly="true"
-                android:indeterminateTint="#11FF00"
-                android:indeterminateTintMode="src_atop"
-                android:progressBackgroundTint="#000000"
-                android:progressTint="#000000"
-                android:requiresFadingEdge="horizontal"
-                android:secondaryProgressTint="#000000"
-                android:soundEffectsEnabled="true"
-                android:visibility="gone" />
-        </com.google.android.material.appbar.AppBarLayout>
-
-
-        <include
-            android:id="@+id/include"
-            layout="@layout/content_main"
-            android:background="#BF2222" />
-</androidx.constraintlayout.widget.ConstraintLayout>
     <!--    <fragment-->
     <!--        android:id="@+id/nav_host_fragment"-->
     <!--        android:name="androidx.navigation.fragment.NavHostFragment"-->
@@ -95,32 +37,4 @@
     <!--        android:layout_height="match_parent"-->
     <!--        app:defaultNavHost="true"-->
     <!--        app:navGraph="@navigation/nav_agregate" />-->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/refreshFab"
-        android:layout_width="73dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|start"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/button_background"
-        android:backgroundTint="#C82CFF5A"
-        app:srcCompat="@drawable/ic_baseline_autorenew_24" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="73dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/button_background"
-        android:backgroundTint="#C82CFF5A"
-        app:srcCompat="@drawable/ic_baseline_add_shopping_cart_24" />
-    <!--    <fragment-->
-<!--        android:id="@+id/nav_host_fragment"-->
-<!--        android:name="androidx.navigation.fragment.NavHostFragment"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        app:defaultNavHost="true"-->
-<!--        app:navGraph="@navigation/nav_agregate" />-->
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

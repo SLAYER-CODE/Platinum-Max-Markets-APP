@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <layer-list>
+            <item>
+            <shape android:tint="@color/black_overlay" android:padding="10dp" android:shape="rectangle">
+
+                <corners android:bottomLeftRadius="5dp" android:bottomRightRadius="5dp" android:topLeftRadius="5dp" android:topRightRadius="5dp" />
+            </shape>
+
+            </item>
+            <item android:width="300dp" android:height="300dp" android:top="40dp" android:gravity="left|center_vertical" android:drawable="@mipmap/facebookicon"/>
+
+        </layer-list>
+    </item>
+</selector>

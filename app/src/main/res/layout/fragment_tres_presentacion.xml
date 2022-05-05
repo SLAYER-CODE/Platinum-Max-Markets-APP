@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/tree_presentation"
+    android:theme="@style/ThemeOverlay.finalproductos.FullscreenContainer"
+    tools:context=".ui.View.Presentations.TresPresentacionFragment">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="357dp"
+            android:layout_height="209dp"
+            android:background="@mipmap/presenation_empresamayor"
+            app:layout_constraintEnd_toEndOf="@+id/blurView"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <eightbitlab.com.blurview.BlurView
+            android:id="@+id/blurView"
+            android:layout_width="355dp"
+            android:layout_height="564dp"
+            android:background="@drawable/border_presentation"
+            android:padding="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.68">
+
+            <!--Any child View here, TabLayout for example. This View will NOT be blurred -->
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="306dp"
+                android:layout_height="353dp"
+                android:shadowColor="#BCFFFFFF"
+                android:shadowDx="10"
+                android:shadowDy="10"
+                android:shadowRadius="15"
+                android:text="@string/presenation_tree"
+                android:textColor="#FFFFFF"
+                android:textSize="40dp"
+                android:textStyle="bold|italic" />
+        </eightbitlab.com.blurview.BlurView>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/BNext"
+            android:layout_width="126dp"
+            android:layout_height="126dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="84dp"
+            android:background="@drawable/button_next_green"
+            android:text=" "
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

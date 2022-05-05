@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:id="@+id/GRUItems" android:checkableBehavior="single" >
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_baseline_home_24"
+            tools:checked="true"
+            android:title="@string/menu_home" />
+<!--        <item-->
+<!--            android:id="@+id/nav_gallery"-->
+<!--            android:icon="@drawable/ic_menu_gallery"-->
+<!--            android:title="@string/menu_gallery" />-->
+
+        <item
+            android:id="@+id/nav_calls"
+            android:icon="@drawable/ic_baseline_assignment_ind_24"
+            android:title="@string/menu_CallFinalUser" />
+
+        <item
+            android:id="@+id/nav_estadisticas"
+            android:icon="@drawable/ic_baseline_analytics_24"
+            android:title="@string/menu_estadisticas" />
+
+        <item
+            
+            android:id="@+id/nav_notifications"
+            android:icon="@drawable/ic_baseline_supervisor_account_24"
+            android:title="@string/menu_empresasub" />
+
+        <item
+            android:id="@+id/nav_empresa"
+            android:icon="@drawable/ic_baseline_notifications_24"
+            android:title="@string/menu_notificactions" />
+    </group>
+    <item android:title="@string/titleUser" >
+        <menu>
+        <group  android:id="@+id/GNUItems" android:menuCategory="secondary" android:checkableBehavior="single">
+            <item
+                android:id="@+id/IProductos"
+                android:icon="@drawable/ic_baseline_home_24"
+                android:title="@string/menu_products" />
+            <item
+                android:id="@+id/ILocation"
+                android:icon="@drawable/ic_baseline_location_searching_24"
+                android:title="@string/menu_location" />
+            <item
+                android:id="@+id/IOrders"
+                android:icon="@drawable/ic_baseline_shopping_cart_24"
+                android:title="@string/menu_orders" />
+            <item
+                android:id="@+id/IFavorites"
+                android:icon="@drawable/ic_baseline_favorite_24"
+                android:title="@string/menu_favorites" />
+            <item
+                android:id="@+id/IPagos"
+                android:icon="@drawable/ic_baseline_payment_24"
+                android:title="@string/menu_pagos" />
+        </group>
+        </menu>
+    </item>
+</menu>

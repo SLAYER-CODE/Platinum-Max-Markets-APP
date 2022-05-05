@@ -1,38 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LayoutCamera"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="top"
-    android:id="@+id/FragmentParentView"
+    android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:background="@color/md_black_1000"
-    android:clipChildren="false"
-    android:clipToPadding="false"
-    android:foregroundGravity="bottom"
-    tools:context=".ui.View.fragment.CameraFragment">
-
-
-    <!-- TODO: Update blank fragment layout -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/LayoutCamera"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_gravity="bottom|center"
-        android:animateLayoutChanges="true"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:visibility="gone"
-        tools:visibility="visible"
-        android:descendantFocusability="blocksDescendants"
-        android:foregroundGravity="top"
-        android:layoutDirection="inherit">
+    tools:background="@color/md_blue_A200"
+    tools:visibility="visible"
+    android:descendantFocusability="blocksDescendants"
+    android:foregroundGravity="center"
+    android:layout_gravity="center"
+    android:layoutDirection="inherit">
 
         <View
             android:id="@+id/punteroFocus"
-            android:layout_width="200px"
-            android:layout_height="200px"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:animateLayoutChanges="true"
             android:background="@drawable/pulse_camera"
             android:visibility="invisible"
@@ -41,20 +27,18 @@
 
         </View>
 
-        <androidx.camera.view.PreviewView
-            android:id="@+id/PVCmain"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:animateLayoutChanges="true"
-            android:background="#0038FF00"
-            android:toDegrees="90"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:scaleType="fillCenter">
+    <androidx.camera.view.PreviewView
+        android:id="@+id/PVCmain"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:background="#0038FF00"
+        android:toDegrees="90"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25">
 
         </androidx.camera.view.PreviewView>
 
@@ -78,7 +62,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.42"
             app:layout_constraintStart_toEndOf="@+id/despliegeCamera"
@@ -95,64 +78,6 @@
 
         </FrameLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintqr"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:elevation="10dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/BRscanner"
-                android:layout_width="320dp"
-                android:layout_height="320dp"
-                android:layout_marginTop="43dp"
-                android:layout_marginBottom="43dp"
-                android:background="@drawable/reset_drawable_scanner"
-                android:shadowColor="#C93D3A3A"
-                android:shadowDy="10"
-                android:shadowRadius="10"
-                android:text="Preciona para escanear nuevamente"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-            </androidx.appcompat.widget.AppCompatButton>
-
-            <View
-                android:id="@+id/borderqrxml"
-                android:layout_width="320dp"
-                android:layout_height="320dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginBottom="40dp"
-                android:background="@drawable/border_qr"
-                android:foregroundGravity="center"
-                android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <View
-                android:id="@+id/Vqrline"
-                android:layout_width="305dp"
-                android:layout_height="120dp"
-                android:background="@drawable/line_qr_scan"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteY="40dp" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/despliegeCamera"
@@ -176,55 +101,57 @@
             app:layout_constraintVertical_bias="0.07999998"
             tools:ignore="SpeakableTextPresentCheck" />
 
-        <LinearLayout
-            android:layout_width="140dp"
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="left"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ToggleButton
+            style="@style/toggleButton_lint"
+            android:id="@+id/BFlash"
+            android:layout_width="33dp"
             android:layout_height="32dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="90dp"
-            android:layout_marginBottom="1dp"
-            android:foregroundGravity="left"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/BcaptureImage"
-            app:layout_constraintHorizontal_bias="0.12"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/despliegeCamera"
-            app:layout_constraintVertical_bias="1.0">
+            android:layout_weight="1"
+            android:clickable="true"
+            android:checked="false"
+            android:background="@drawable/ic_baseline_flash_on_24"
+            android:gravity="center" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/BFlash"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_weight="1"
-                android:background="@drawable/ic_baseline_flash_on_24"
-                android:gravity="center" />
+        <ToggleButton
+            style="@style/toggleButton_lint"
+            android:id="@+id/BLinterna"
+            android:layout_width="33dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:checked="false"
+            android:background="@drawable/ic_linterna"
+            android:gravity="center" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/BLinterna"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_weight="1"
-                android:background="@drawable/ic_linterna"
-                android:gravity="center" />
+        <ToggleButton
+            style="@style/toggleButton"
+            android:id="@+id/BCalidad"
+            android:layout_width="33dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="@drawable/ic_baseline_hd_24"
+            android:gravity="center" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/BCalidad"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_weight="1"
-                android:background="@drawable/ic_baseline_hd_24"
-                android:gravity="center" />
+        <ToggleButton
+            style="@style/toggleButton_lint"
+            android:id="@+id/BObjectIA"
+            android:layout_width="33dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="@drawable/ic_baseline_data_object_24"
+            android:gravity="center" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/BObjectIA"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_weight="1"
-                android:background="@drawable/ic_baseline_data_object_24"
-                android:gravity="center" />
-
-        </LinearLayout>
-
+    </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-</FrameLayout>

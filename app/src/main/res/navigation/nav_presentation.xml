@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_precentation"
+    app:startDestination="@id/unoPresentacionFragment">
+
+    <fragment
+        android:id="@+id/unoPresentacionFragment"
+        android:name="com.example.fromdeskhelper.ui.View.Presentations.UnoPresentacionFragment"
+        tools:layout="@layout/fragment_uno_precentacion" >
+        <action
+            android:id="@+id/action_unoPresentacionFragment_to_dosPresentacionFragment"
+            app:destination="@id/dosPresentacionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/dosPresentacionFragment"
+        android:name="com.example.fromdeskhelper.ui.View.Presentations.DosPresentacionFragment"
+        tools:layout="@layout/fragment_dos_precentacion" >
+        <action
+            android:id="@+id/action_dosPresentacionFragment_to_tresPresentacionFragment"
+            app:destination="@id/tresPresentacionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/tresPresentacionFragment"
+        android:name="com.example.fromdeskhelper.ui.View.Presentations.TresPresentacionFragment"
+        tools:layout="@layout/fragment_tres_presentacion" />
+
+</navigation>

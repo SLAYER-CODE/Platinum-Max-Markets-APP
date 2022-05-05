@@ -3,51 +3,51 @@
     android:insetRight="6dp">
     <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <item android:gravity="right">
+        <item android:gravity="center">
             <layer-list>
-        <item>
-            <shape android:shape="rectangle">
-                <corners android:radius="35dp"/>
-            </shape>
+                <item>
+                    <shape android:shape="rectangle">
+                        <corners android:radius="35dp"/>
+                    </shape>
 
-        </item>
-
-
-        <item android:bottom="8dp" android:gravity="center" android:left="8dp" android:right="8dp" android:top="8dp" android:width="115dp" android:height="115dp">
-            <shape android:shape="rectangle" >
-                <!--                    <corners android:radius="50dp" />-->
-
-                <solid android:color="#7C00FFD9"/>
-                <gradient
-                    android:angle="180"
-                    android:centerX="60%"
-                    android:centerColor="@color/md_black_1000"
-                    android:startColor="#85009432"
-                    android:endColor="@color/md_black_1000"
-                    android:type="linear"
-                    />
-            </shape>
-        </item>
-
-        <item android:left="5dp" android:right="5dp" android:bottom="5dp" android:top="5dp" android:gravity="center" android:width="115dp" android:height="115dp">
-
-            <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-                <solid android:color="#660090BB" />
-                <padding android:left="10dp" android:right="10dp" android:top="10dp" android:bottom="10dp"/>
+                </item>
 
 
-                <stroke android:width="10dp" android:color="#A800BF46"/>
+                <item android:bottom="8dp" android:gravity="center" android:left="8dp" android:right="8dp" android:top="8dp" >
+                    <shape android:shape="rectangle" >
+                        <!--                    <corners android:radius="50dp" />-->
+
+                        <solid android:color="@color/md_green_50"/>
+                        <gradient
+                            android:angle="180"
+                            android:centerX="60%"
+                            android:type="linear"
+                            />
+                        <corners android:radius="10dp">
+
+                        </corners>
+                    </shape>
+                </item>
+
+                <item android:left="5dp" android:right="5dp" android:bottom="5dp" android:top="5dp" android:gravity="center">
+
+                    <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+                        <solid android:color="@color/md_black_1000" />
+                        <padding android:left="10dp" android:right="10dp" android:top="10dp" android:bottom="10dp"/>
+
+                        <corners android:radius="10dp">
+
+                        </corners>
+                        <stroke android:width="10dp" android:color="#6337FF00"/>
 
 
-            </shape>
+                    </shape>
 
 
-        </item>
+                </item>
 
-        <item android:drawable="@drawable/ic_baseline_camera_alt_24" android:width="100dp" android:height="100dp" android:gravity="center">
-
-
-        </item>
+                <item android:drawable="@drawable/ic_baseline_camera_alt_24" android:width="100dp" android:height="100dp" android:gravity="center">
+                </item>
             </layer-list>
         </item>
     </layer-list>

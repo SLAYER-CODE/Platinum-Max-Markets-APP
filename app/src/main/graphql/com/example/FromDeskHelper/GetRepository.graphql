@@ -1,0 +1,9 @@
+query Categorias {
+    categoria:Categories {
+            category_name
+            category_id
+    }
+}
+query ComprobateUser($token:String!){
+    comprabationUser:comprobationUser(token: $token)
+}

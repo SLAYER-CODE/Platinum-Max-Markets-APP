@@ -1,12 +1,28 @@
 <resources>
 
     <style name="Widget.Theme.FinalProductos.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
-        <item name="android:background">@color/md_grey_700</item>
+        <item name="android:background">@color/md_red_A200</item>
     </style>
 
     <style name="Widget.Theme.FinalProductos.ButtonBar.Fullscreen" parent="">
         <item name="android:background">@color/md_grey_600</item>
         <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
+    </style>
+
+    <style name="SplashTheme" parent="Theme.FinalProductos.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground" >@drawable/background_splash</item>
+        <!--        <item name="android:windowSplashScreenBackground">@color/md_black_1000</item>-->
+        <!--        <item name="android:windowSplashScreenIconBackgroundColor">@color/md_black_1000</item>-->
+        <item name="colorPrimary">@color/md_black_1000</item>
+        <item name="colorPrimaryDark">@color/md_black_1000</item>
+        <item name="colorAccent">@color/md_black_1000</item>
+        <item name="android:statusBarColor">@color/md_black_1000</item>
+    </style>
+
+    <style name="ThemeOverlay.finalproductos.FullscreenContainer" parent="Theme.Design.NoActionBar">
+        <item name="fullscreenBackgroundColor">@color/md_light_green_A200</item>
+        <item name="fullscreenTextColor">@color/md_light_green_A400</item>
     </style>
 
     <style name="MySpiner">
@@ -16,6 +32,29 @@
         <item name="android:dropDownVerticalOffset">0dip</item>
         <item name="android:dropDownHorizontalOffset">0dip</item>
         <item name="android:dropDownWidth">wrap_content</item>
+    </style>
+    <style name="Widget.Button.Toggle" parent="android:Widget">
+        <item name="android:disabledAlpha">?android:attr/disabledAlpha</item>
+    </style>
+
+    <style name="toggleButton"  parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:buttonStyleToggle">@style/Widget.Button.Toggle</item>
+        <item name="android:textOn"></item>
+        <item name="android:textOff"></item>
+    </style>
+    <style name="toggleButton_lint"  parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:buttonStyleToggle">@style/Widget.Button.Toggle</item>
+        <item name="android:textOn">On</item>
+        <item name="android:textOff">Off</item>
+        <item name="android:colorControlActivated">@color/md_green_A700</item>
+        <item name="android:textSize">10dp</item>
+        <item name="android:textColor">@color/md_green_A400</item>
+        <item name="android:shadowRadius">2</item>
+        <item name="android:shadowDx">3</item>
+        <item name="android:shadowDy">3</item>
+        <item name="android:shadowColor">@color/md_black_1000</item>
+        <item name="android:fontWeight">500</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>

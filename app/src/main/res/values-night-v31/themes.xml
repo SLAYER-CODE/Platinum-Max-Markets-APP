@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="SplashTheme" parent="Theme.FinalProductos.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@color/md_black_1000</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/md_black_1000</item>
+<!--        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/finalico_new</item>-->
+        <item name="android:windowSplashScreenAnimationDuration">300</item>
+        <item name="colorPrimary">@color/md_black_1000</item>
+        <item name="colorPrimaryDark">@color/md_black_1000</item>
+        <item name="colorAccent">@color/md_black_1000</item>
+        <item name="android:statusBarColor">@color/md_black_1000</item>
+    </style>
+</resources>
