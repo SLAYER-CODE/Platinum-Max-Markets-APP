@@ -9,8 +9,10 @@ import com.example.fromdeskhelper.R
 import kotlinx.android.synthetic.main.image_new_new.view.*
 
 import android.net.Uri
+import android.util.Log
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
+import okhttp3.internal.notify
 
 
 class ImageAdapter (var MyImage:MutableList<Uri>):
@@ -18,10 +20,11 @@ class ImageAdapter (var MyImage:MutableList<Uri>):
     fun addImage(path:String)
     {
         MyImage.add(0, Uri.parse(path))
-        notifyItemInserted(0)
+        notifyItemRangeInserted(0,1)
     }
     fun addImage(path:Uri)
     {
+        Log.i("VIEWMODELADDPRODUCT","SE LLAMO"+path.toString())
         MyImage.add(0,path)
         notifyItemInserted(0)
     }

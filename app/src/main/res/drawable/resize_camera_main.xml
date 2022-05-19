@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <layer-list>
+
+
+
+            <item android:width="100dp" android:gravity="left|bottom" android:height="100dp">
+                <shape>
+                    <solid>
+
+                    </solid>
+                    <stroke android:color="@color/md_green_A400" android:width="10dp">
+
+                    </stroke>
+                </shape>
+            </item>
+
+        </layer-list>
+    </item>
+</selector>

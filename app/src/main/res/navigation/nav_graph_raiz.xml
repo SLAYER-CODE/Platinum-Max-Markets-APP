@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph_raiz">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_raiz"
+    app:startDestination="@id/analiticRoot">
 
+    <fragment
+        android:id="@+id/analiticRoot"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.Root.AnaliticRoot"
+        tools:layout="@layout/fragment_analitic_root" />
+    <fragment
+        android:id="@+id/clientsRoot"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.Root.AnaliticRoot"
+        tools:layout="@layout/fragment_clients_root" />
+    <fragment
+        android:id="@+id/empleadosRoot"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.Root.AnaliticRoot"
+        tools:layout="@layout/fragment_empleados_root" />
+    <fragment
+        android:id="@+id/notificationsRoot"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.Root.AnaliticRoot"
+        tools:layout="@layout/fragment_notifications_users" />
 </navigation>

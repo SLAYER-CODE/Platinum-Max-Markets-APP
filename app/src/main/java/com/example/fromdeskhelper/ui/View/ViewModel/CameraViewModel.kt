@@ -12,19 +12,27 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.example.fromdeskhelper.data.PreferencesManager
 import com.example.fromdeskhelper.data.model.Types.CameraTypes
 import com.example.fromdeskhelper.domain.CameraUseCase
 import com.example.fromdeskhelper.domain.PermissionsUseCase
 import com.google.common.util.concurrent.ListenableFuture
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
 @HiltViewModel
-class CameraViewModel @Inject constructor(private val getCameraUseCase: CameraUseCase,private val Permissions:PermissionsUseCase):AndroidViewModel(
+class CameraViewModel @Inject constructor(
+    private val getCameraUseCase: CameraUseCase,
+    private val Permissions:PermissionsUseCase,
+):
+    AndroidViewModel(
     Application()
 ){
     //    Variables de inicialisacion para la camara y sus movimientos respectivos
@@ -59,12 +67,18 @@ class CameraViewModel @Inject constructor(private val getCameraUseCase: CameraUs
     private var cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
 
+    val CameraActivate:MutableLiveData<CameraTypes> = MutableLiveData();
+    val ScanerStatus:MutableLiveData<Boolean> = MutableLiveData();
+
 
     //Binding conexion para la vista
-    val CameraActivate: MutableLiveData<Boolean> = MutableLiveData();
     val CloseCamera: MutableLiveData<Boolean> = MutableLiveData();
     val CloseCameraChildren: MutableLiveData<Boolean> = MutableLiveData();
 
+    fun CamaraStatus(type: CameraTypes,focus:Boolean){
+        ScanerStatus.postValue(focus);
+        CameraActivate.postValue(type);
+    }
     val processCameraProvider:LiveData<ProcessCameraProvider>
         get() = getProcessCameraProvider
 
@@ -72,15 +86,7 @@ class CameraViewModel @Inject constructor(private val getCameraUseCase: CameraUs
         return Permissions.AllPermisionGrantedCamera(Activity);
     }
 
-    fun ActivateCamera(){
-        print("SE activo la camara")
-
-        CameraActivate.postValue(true);
-    }
-
-
-
-    fun closeCameraChildren(primero:Boolean){
+    fun CloseInFragment(primero:Boolean){
         CloseCameraChildren.postValue(primero)
     }
 
@@ -96,9 +102,7 @@ class CameraViewModel @Inject constructor(private val getCameraUseCase: CameraUs
             cameraProviderFuture.addListener(
                 {
                     try{
-
                         value=cameraProviderFuture.get()
-
                     }catch (exc :ExecutionException){
                         throw IllegalStateException("failed to retrieve camera process",exc)
                     }catch (exc:InterruptedException){

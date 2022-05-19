@@ -31,6 +31,7 @@ import com.example.fromdeskhelper.databinding.FragmentCameraBinding
 import com.example.fromdeskhelper.ui.View.ViewModel.AgregateProductViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.CameraViewModel
 import com.example.fromdeskhelper.ui.View.activity.MainActivity
+import com.example.fromdeskhelper.util.MessageSnackBar
 import com.example.fromdeskhelper.util.hideKeyboardFrom
 import com.google.android.material.snackbar.Snackbar
 import com.google.common.util.concurrent.ListenableFuture
@@ -97,7 +98,7 @@ class CameraFragment : Fragment() {
 
     //Instancias de View Model
     private val CameraView: CameraViewModel by viewModels(
-        ownerProducer = { requireParentFragment() }
+        ownerProducer = {  requireParentFragment() }
     )
     private val AgregateProductsState : AgregateProductViewModel by viewModels(
         ownerProducer = { requireParentFragment() }
@@ -118,10 +119,7 @@ class CameraFragment : Fragment() {
     }
 
     override fun onResume() {
-        Log.i(LOGFRAGMENT, "Resumiendo la actividad (MINIFRAGMENT)")
-        println(PermisosCamera)
-        println(CamClick)
-
+        Log.i(LOGFRAGMENT, "Resumiendo el ChildrenFragment "+PermisosCamera.toString())
         if (PermisosCamera) {
             if (Constrains.REQUIERED_PERMISSIONS.all {
                     ContextCompat.checkSelfPermission(
@@ -131,7 +129,7 @@ class CameraFragment : Fragment() {
 
                 if (CamClick == CameraTypes.CAMERA) {
                     binding.LayoutCamera.visibility = View.VISIBLE
-//                        startCamera(cameraProvider)
+                        startCamera(cameraProvider)
                 }
                 Log.i(LOGFRAGMENT, "Permisos de camera")
 
@@ -139,9 +137,10 @@ class CameraFragment : Fragment() {
                 if (CamClick == CameraTypes.CAMERA) {
                     binding.LayoutCamera.visibility = View.GONE
                 }
-                messageSnackBar(view as View, "Se necesita acceso a la camara...", Color.RED)
+                MessageSnackBar(view as View, "Se necesita acceso a la camara...", Color.RED)
+                CameraView.CloseInFragment(true)
+                CameraView.CamaraStatus(CameraTypes.NULL,false)
             }
-//            PermisosCamera=true
         }
         super.onResume()
     }
@@ -224,15 +223,15 @@ class CameraFragment : Fragment() {
 //
 //            binding.LayoutCamera.requestLayout()
 
-            CameraView.closeCameraChildren(true)
-            AgregateProductsState.CamaraStatus(CameraTypes.NULL,false)
+            CameraView.CloseInFragment(true)
+            CameraView.CamaraStatus(CameraTypes.NULL,false)
         }
 
 
         CameraView.CloseCameraChildren.observe(viewLifecycleOwner, Observer {
+//            Log.i("CARLOS","SE LLAMO AL MINIFRAGMENTO "+it.toString())
             if(it) {
-                Log.i("CARLOS", "SE ACTIVO")
-                Log.i("CARLOS", it.toString())
+                Log.i("CARLOS", "MINIFRAGMENTO"+it.toString())
                 CamStatus = CameraTypes.NULL
                 CamClick = CameraTypes.NULL
                 binding.LayoutCamera.visibility = View.GONE;
@@ -266,7 +265,7 @@ class CameraFragment : Fragment() {
 //                        Api de envio para el parent de la imagen Capturada()
 
 //                            baseActivity.runOnUiThread {
-                        AgregateProductsState.sendImageCapture(outputFileResults.savedUri.toString())
+                        AgregateProductsState.sendImageCapture(outputFileResults.savedUri)
 //                            adapter.addImage(outputFileResults.savedUri.toString())
 //                            binding.RVCaptureImages.scrollToPosition(0);
 //                            comprobateItem()
@@ -362,23 +361,23 @@ class CameraFragment : Fragment() {
         }
     }
 
-    fun messageSnackBar(view: View, text: String, color: Int) {
-        val snackbar = Snackbar.make(
-            view, text,
-            Snackbar.LENGTH_LONG
-        ).setAction("Action", null)
-
-        snackbar.setActionTextColor(color)
-        val snackbarView = snackbar.view
-
-        snackbarView.setBackgroundColor(Color.BLACK)
-        val textView =
-            snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
-        textView.setTextColor(color)
-        textView.textSize = 17f
-        (snackbar.view).layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-        snackbar.show()
-    }
+//    fun messageSnackBar(view: View, text: String, color: Int) {
+//        val snackbar = Snackbar.make(
+//            view, text,
+//            Snackbar.LENGTH_LONG
+//        ).setAction("Action", null)
+//
+//        snackbar.setActionTextColor(color)
+//        val snackbarView = snackbar.view
+//
+//        snackbarView.setBackgroundColor(Color.BLACK)
+//        val textView =
+//            snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
+//        textView.setTextColor(color)
+//        textView.textSize = 17f
+//        (snackbar.view).layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+//        snackbar.show()
+//    }
 
 
     private fun allPermisionGranted(): Boolean {

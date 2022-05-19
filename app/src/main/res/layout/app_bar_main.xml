@@ -13,10 +13,10 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/toolbarParent"
+            android:backgroundTintMode="src_in"
+            android:foregroundTintMode="screen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/zxing_transparent"
-            android:theme="@style/Theme.Productos.AppBarOverlay"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -26,6 +26,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="#99001C19"
+                android:title=""
+                app:title=""
                 app:popupTheme="@style/Theme.Productos.PopupOverlay"
                 app:titleTextColor="@color/md_red_500">
 
@@ -78,22 +80,109 @@
                 android:secondaryProgressTint="#000000"
                 android:soundEffectsEnabled="true"
                 android:visibility="gone" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:id="@+id/toolbarParentClient"
+            android:foregroundTintMode="screen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbarClient"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/md_blue_500_50"
+                android:title=""
+                app:title=""
+                app:popupTheme="@style/Theme.Productos.PopupOverlay"
+                app:titleTextColor="@color/md_red_500">
+                <TextView
+                    android:id="@+id/TitleClient"
+                    android:textColor="@color/md_white_1000"
+                    android:textSize="20dp"
+                    android:text=""
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                </TextView>
+                <LinearLayout
+                    android:id="@+id/BIShowPClient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <androidx.appcompat.widget.SearchView
+                        android:id="@+id/SVProductsClient"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="left"
+                        android:layout_weight="2"
+                        android:backgroundTint="@color/md_green_400"
+                        android:foregroundGravity="right"
+                        android:foregroundTint="@color/md_green_400"
+                        android:gravity="left"
+                        app:searchIcon="@drawable/ic_baseline_image_search_showproduct" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/BQRScannerClient"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_baseline_qr_code_scanner_showproduct"
+                        android:minWidth="50dp"></androidx.appcompat.widget.AppCompatButton>
+                </LinearLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+            <ProgressBar
+                android:id="@+id/PBbarListClient"
+                style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="#000000"
+                android:hapticFeedbackEnabled="true"
+                android:indeterminate="true"
+                android:indeterminateOnly="true"
+                android:indeterminateTint="#11FF00"
+                android:indeterminateTintMode="src_atop"
+                android:progressBackgroundTint="#000000"
+                android:progressTint="#000000"
+                android:requiresFadingEdge="horizontal"
+                android:secondaryProgressTint="#000000"
+                android:soundEffectsEnabled="true"
+                android:visibility="gone" />
+
         </com.google.android.material.appbar.AppBarLayout>
 
 
         <include
             android:id="@+id/include"
             layout="@layout/content_main"
-            android:background="#BF2222" />
+            android:background="#BF2222"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="61dp"
+            android:visibility="invisible"
+            android:minWidth="350dp"
+            android:minHeight="350dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/include"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <FrameLayout
@@ -107,9 +196,37 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_max="350dp"
                 tools:layout_height="350dp"
-                tools:layout_width="350dp">
-
+                tools:layout_width="350dp"
+                >
             </FrameLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/MoveCamera"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/moved_camera_main"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0">
+            </androidx.appcompat.widget.AppCompatButton>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/ResizeCamera"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/resize_camera_main"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0"></androidx.appcompat.widget.AppCompatButton>
+
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
     <!--    <fragment-->

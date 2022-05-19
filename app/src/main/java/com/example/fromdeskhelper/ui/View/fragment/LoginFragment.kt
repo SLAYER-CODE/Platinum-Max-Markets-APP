@@ -113,6 +113,7 @@ class LoginFragment : Fragment() {
             MessageSnackBar(view = view, "Se registro Correctamente", Color.GREEN)
             val intent = Intent(activity, MainActivity::class.java)
             startActivity(intent)
+            baseActivity.finish()
         })
 
 
@@ -439,6 +440,7 @@ class LoginFragment : Fragment() {
             loginViewModel.initFirebaseToken()
             var initLoginActiviti: Intent = Intent(baseActivity, MainActivity::class.java)
             startActivity(initLoginActiviti)
+            baseActivity.finish()
         }
         binding.loading.visibility = View.INVISIBLE
 //        Toast.makeText(context, "${email}", Toast.LENGTH_SHORT).show()

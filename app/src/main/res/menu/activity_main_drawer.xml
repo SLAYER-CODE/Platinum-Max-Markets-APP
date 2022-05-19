@@ -5,7 +5,7 @@
 
     <group android:id="@+id/GRUItems" android:checkableBehavior="single" >
         <item
-            android:id="@+id/nav_home"
+            android:id="@+id/FirstFragment"
             android:icon="@drawable/ic_baseline_home_24"
             tools:checked="true"
             android:title="@string/menu_home" />
@@ -15,47 +15,47 @@
 <!--            android:title="@string/menu_gallery" />-->
 
         <item
-            android:id="@+id/nav_calls"
+            android:id="@+id/clientsRoot"
             android:icon="@drawable/ic_baseline_assignment_ind_24"
             android:title="@string/menu_CallFinalUser" />
 
         <item
-            android:id="@+id/nav_estadisticas"
+            android:id="@+id/analiticRoot"
             android:icon="@drawable/ic_baseline_analytics_24"
             android:title="@string/menu_estadisticas" />
 
         <item
             
-            android:id="@+id/nav_notifications"
+            android:id="@+id/empleadosRoot"
             android:icon="@drawable/ic_baseline_supervisor_account_24"
             android:title="@string/menu_empresasub" />
 
         <item
-            android:id="@+id/nav_empresa"
+            android:id="@+id/notificationsRoot"
             android:icon="@drawable/ic_baseline_notifications_24"
             android:title="@string/menu_notificactions" />
     </group>
     <item android:title="@string/titleUser" >
         <menu>
-        <group  android:id="@+id/GNUItems" android:menuCategory="secondary" android:checkableBehavior="single">
+        <group  android:id="@+id/GNUItems" android:checkableBehavior="single">
             <item
-                android:id="@+id/IProductos"
+                android:id="@+id/showproductsClient"
                 android:icon="@drawable/ic_baseline_home_24"
                 android:title="@string/menu_products" />
             <item
-                android:id="@+id/ILocation"
+                android:id="@+id/locationClient"
                 android:icon="@drawable/ic_baseline_location_searching_24"
                 android:title="@string/menu_location" />
             <item
-                android:id="@+id/IOrders"
+                android:id="@+id/ordersClient"
                 android:icon="@drawable/ic_baseline_shopping_cart_24"
                 android:title="@string/menu_orders" />
             <item
-                android:id="@+id/IFavorites"
+                android:id="@+id/favoriteClient"
                 android:icon="@drawable/ic_baseline_favorite_24"
                 android:title="@string/menu_favorites" />
             <item
-                android:id="@+id/IPagos"
+                android:id="@+id/paymentsClient"
                 android:icon="@drawable/ic_baseline_payment_24"
                 android:title="@string/menu_pagos" />
         </group>

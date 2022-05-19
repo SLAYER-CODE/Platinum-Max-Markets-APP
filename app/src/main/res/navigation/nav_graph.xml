@@ -7,8 +7,8 @@
 <!--    Primer Framgneo-->
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.example.fromdeskhelper.ui.View.fragment.ShowProducts"
-        tools:layout="@layout/fragment_show_products">
+        android:name="com.example.fromdeskhelper.ui.View.fragment.ProductosShow"
+        tools:layout="@layout/fragment_productos_show">
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
@@ -44,9 +44,7 @@
     <!--        <argument-->
     <!--            android:name="title"-->
     <!--            app:argType="string" />-->
-    <argument
-        android:name="title"
-        app:argType="string" />
+
     <fragment
         android:id="@+id/agregateProducts3"
         android:name="com.example.fromdeskhelper.AgregateProducts"
@@ -67,4 +65,48 @@
             android:id="@+id/action_detallesProducto_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
+
+
+    <fragment
+        android:id="@+id/analiticRoot"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.Root.AnaliticRoot"
+        tools:layout="@layout/fragment_analitic_root" />
+    <fragment
+        android:id="@+id/clientsRoot"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.Root.ClientesRoot"
+        tools:layout="@layout/fragment_clients_root" />
+    <fragment
+        android:id="@+id/empleadosRoot"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.Root.EmpleadosRoot"
+        tools:layout="@layout/fragment_empleados_root" />
+    <fragment
+        android:id="@+id/notificationsRoot"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.Root.Notifications"
+        tools:layout="@layout/fragment_notifications_users"/>
+
+    <fragment
+        android:id="@+id/showproductsClient"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.Client.ShowMainClient"
+        tools:layout="@layout/fragment_show_main_client"/>
+
+    <fragment
+        android:id="@+id/locationClient"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.Client.LocationClientFragment"
+        tools:layout="@layout/fragment_location_client"/>
+
+    <fragment
+        android:id="@+id/ordersClient"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.Client.OrdersClientFragment"
+        tools:layout="@layout/fragment_orders_client"/>
+
+    <fragment
+        android:id="@+id/favoriteClient"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.Client.FavoriteClientFragment"
+        tools:layout="@layout/fragment_favorite_client"/>
+
+    <fragment
+        android:id="@+id/paymentsClient"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.Client.PaymentsClientFragment"
+        tools:layout="@layout/fragment_payments_client"/>
+
 </navigation>

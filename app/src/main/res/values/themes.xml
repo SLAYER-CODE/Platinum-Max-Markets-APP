@@ -9,9 +9,12 @@
         <item name="colorSecondary">@color/md_green_A400</item>
         <item name="colorSecondaryVariant">@color/md_green_500</item>
         <item name="colorOnSecondary">@color/md_black_1000</item>
+        <item name="android:windowBackground" >@color/md_green_200</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:itemBackground">@color/md_white_1000</item>
+        <item name="android:textColor">@color/md_black_1000</item>
     </style>
 
     <style name="Theme.FinalProductos.NoActionBar">

@@ -31,9 +31,12 @@ import com.example.fromdeskhelper.util.ConNet
 import com.example.fromdeskhelper.util.ConnectToPost
 import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.afterMeasure
+import com.example.fromdeskhelper.util.MessageSnackBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.common.util.concurrent.ListenableFuture
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import java.lang.IllegalStateException
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -49,6 +52,7 @@ private const val LOGFRAGMENT:String="CameraScanner"
  * Use the [CameraQrFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class CameraQrFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -69,14 +73,14 @@ class CameraQrFragment : Fragment() {
     private lateinit var MyCamera: Camera;
 
 
+
     private val AgregateProductsState : AgregateProductViewModel by viewModels(
-        ownerProducer = { requireActivity() }
+        ownerProducer = { try {  requireParentFragment()} catch (e:IllegalStateException) {requireActivity()} },
     );
 
     private val CameraView: CameraViewModel by viewModels(
-        ownerProducer =  {requireActivity()}
+        ownerProducer =  {  try { requireParentFragment()} catch (e:IllegalStateException) { requireActivity() }}
     )
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -116,20 +120,12 @@ class CameraQrFragment : Fragment() {
                         baseActivity, it
                     ) == PackageManager.PERMISSION_GRANTED
                 }) {
-
-                if(CamClick==CameraTypes.CAMERA){
-                    binding.LayoutCamera.visibility = View.VISIBLE
-                    startCameraEscaner(cameraProvider, true)
-                }
-                Log.i(LOGFRAGMENT, "Permisos de camera")
-
+                startCameraEscaner(cameraProvider, true)
             }else{
-                if(CamClick==CameraTypes.CAMERA){
-                    binding.LayoutCamera.visibility = View.GONE
-                }
-                messageSnackBar(view as View,"Se necesita acceso a la camara...",Color.RED)
+                MessageSnackBar(view as View,"Se necesita acceso a la camara...",Color.RED)
+                CameraView.CamaraStatus(CameraTypes.NULL, false)
+                CameraView.CloseCameraChildren.postValue(true)
             }
-//            PermisosCamera=true
         }
         super.onResume()
     }
@@ -177,7 +173,7 @@ class CameraQrFragment : Fragment() {
 //                                Toast.LENGTH_SHORT
 //                            ).show()
 
-                    messageSnackBar(
+                    MessageSnackBar(
                         view,
                         "El codigo es ${qrResult.text}",
                         Color.YELLOW
@@ -264,7 +260,7 @@ class CameraQrFragment : Fragment() {
 
                             clearAnalyzer()
                             binding.PVCmain.post {
-                                messageSnackBar(
+                                MessageSnackBar(
                                     view as View,
                                     "El codigo es ${qrResult.text}",
                                     Color.YELLOW
@@ -497,24 +493,6 @@ class CameraQrFragment : Fragment() {
             }
 
         }
-    }
-
-    fun messageSnackBar(view: View, text: String, color: Int) {
-        val snackbar = Snackbar.make(
-            view, text,
-            Snackbar.LENGTH_LONG
-        ).setAction("Action", null)
-
-        snackbar.setActionTextColor(color)
-        val snackbarView = snackbar.view
-
-        snackbarView.setBackgroundColor(Color.BLACK)
-        val textView =
-            snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
-        textView.setTextColor(color)
-        textView.textSize = 17f
-        (snackbar.view).layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-        snackbar.show()
     }
 
     companion object {

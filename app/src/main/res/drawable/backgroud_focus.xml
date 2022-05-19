@@ -20,13 +20,12 @@
             </item>
             <item android:left="10dp" android:right="10dp" android:bottom="15dp" android:top="15dp">
         <shape  android:shape="rectangle">
-            <stroke   android:dashWidth="35dp" android:dashGap="40dp" android:width="4dp" android:color="@color/ef_grey">
+            <stroke   android:dashWidth="75dp" android:dashGap="30dp" android:width="5dp" android:color="@color/ef_grey">
             </stroke>
             <corners android:radius="10dp">
             </corners>
         </shape>
             </item>
-
         </layer-list>
     </item>
 

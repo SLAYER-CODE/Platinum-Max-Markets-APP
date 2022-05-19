@@ -135,22 +135,26 @@ class SplashScreen : AppCompatActivity() {
         SplashModel();
         SplashModel.initLogin.observe(this, Observer {
             startActivity(Intent(baseContext,LoginActivity::class.java))
+            finish()
         })
         SplashModel.initLogOperator.observe(this, Observer {
            if(it) {
                binding.TEInformation.text = "Iniciando...";
                startActivity(Intent(baseContext,MainActivity::class.java))
+               finish()
            }else{
                binding.TEInformation.text = "Ubo un error";
                this.lifecycleScope.launch {
                    delay(2000)
                    startActivity(Intent(baseContext,LoginActivity::class.java))
+                   finish()
                }
            }
         })
 
         SplashModel.initPrecentation.observe(this, Observer {
             startActivity(Intent(baseContext,PresenatationActivity::class.java))
+            finish()
         })
 
         loginViewModel.registerresult.observe(this, Observer {

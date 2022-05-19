@@ -1,4 +1,14 @@
 <resources>
+    <!--    Texto de Nulidad de fragmentos-->
+    <string name="storage_clean">No hay productos registrados en tu dispositivo...</string>
+    <string name="server_clean">No hay Productos en el servidor de la empresa...</string>
+    <string name="local_clean">No existen productos en la base de datos local de la tienda...</string>
+
+    <!--    Texto de Nulidad de LISTAS CLIENTE-->
+    <string name="p2pproduct_clean">Encuentre un local cercano para conectarse...</string>
+    <string name="serverClient_clean">La lista del servidor esta vacia...</string>
+    <string name="asistent_clean">No se encontraron asistentes cercanos...</string>
+
     <!--    Proveedores-->
     <string name="app_id">10005006310-dcsd6e73cgg04hutg88b2h2hdfichgfd.apps.googleusercontent.com</string>
     <string name="facebook_app_id">3032761643672289</string>

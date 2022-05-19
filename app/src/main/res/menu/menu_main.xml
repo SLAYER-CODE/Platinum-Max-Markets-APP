@@ -17,7 +17,8 @@
         app:showAsAction="never"
         android:orderInCategory="2"
         android:checkable="true"
-        />
+        ></item>
+
     <item
         android:id="@+id/ItFotos"
         android:title="Con imagen"
@@ -46,6 +47,10 @@
         app:showAsAction="never"
         android:checkable="true"
         android:orderInCategory="5">
+
     </item>
+
     </group>
+
+
 </menu>

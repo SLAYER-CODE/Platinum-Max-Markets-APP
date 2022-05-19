@@ -7,11 +7,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class LoginServiceGraph @Inject constructor(private val grapql: ApolloClient) {
-
+class LoginServiceGraph @Inject constructor(
+    private val services:ServicesGraph) {
     suspend fun ComprobateLogin():ApolloResponse<CategoriasQuery.Data> {
         return withContext(Dispatchers.IO) {
-            grapql.query<CategoriasQuery.Data>(CategoriasQuery()).execute();
+            services.CategoriesGetService()
         }
     }
 }

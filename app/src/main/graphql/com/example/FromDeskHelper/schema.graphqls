@@ -5,6 +5,11 @@ schema {
     mutation: Mutation
 }
 
+type Brands {
+    brand_id: ID!
+    brand_name: String!
+}
+
 type Categories {
     category_id: ID!
     category_name: String!
@@ -18,7 +23,12 @@ type ListWish {
 
 type Mutation {
     createSessions(myval: UsersInput!): Users!
-    createproduct(myval: ProductsInput!): Products!
+    createproduct(
+        "Image Por defecto"
+        file: [Upload!],
+        myval: ProductsInput!
+    ): Products!
+    singleUpload(file: Upload!): Boolean!
 }
 
 type Phone {
@@ -27,19 +37,32 @@ type Phone {
     phone_number: String
 }
 
+type ProductImages {
+    image_description: String!
+    image_id: ID!
+    image_name: String!
+    product_relation: Products
+}
+
 type Products {
-    brand: String!
-    category_products: [Categories!]!
+    brands_products: [Brands!]
+    category_products: [Categories!]
     description: String!
+    image_realation: [ProductImages!]
     old_price: Float
-    price: Float!
+    price_cantidad: Float!
+    price_unity: Float
     product_id: ID!
     product_name: String!
-    quantity: Int!
-    user: Users!
+    qr: String!
+    quantity_cantidad: Int!
+    quantity_unity: Int!
+    update_product: DateTime!
+    user_relation: Users
 }
 
 type Query {
+    Brands: [Brands!]!
     Categories: [Categories!]!
     Products: [Products!]!
     Sessiones: [Users!]!
@@ -60,7 +83,7 @@ type Users {
     random_code: Int
     shoppingCardt_id: ShoppingCart
     uid: String!
-    userProducts: [Products!]!
+    userProducts: [Products!]
     user_id: ID!
     username: String
     wish_id: ListWish
@@ -69,19 +92,37 @@ type Users {
 "The javascript `Date` as string. Type represents date and time as the ISO Date string."
 scalar DateTime
 
+"The `Upload` scalar type represents a file upload."
+scalar Upload
+
+input BrandsInput {
+    brand_name: String!
+    id: Float
+}
+
 input CategoriesInput {
     category_name: String!
     id: Float
 }
 
+input ImageProductInput {
+    image_description: String
+    image_name: String!
+}
+
 input ProductsInput {
-    brand: String!
+    brands_products: [BrandsInput!]!
     category_products: [CategoriesInput!]!
     description: String
+    image_realation: [ImageProductInput!]!
     old_price: Float!
-    price: Float!
+    price_cantidad: Float!
+    price_unity: Float
     product_name: String!
-    quantity: Float!
+    qr: String
+    quantity_cantidad: Float
+    quantity_unity: Float
+    update_product: DateTime
 }
 
 input UsersInput {

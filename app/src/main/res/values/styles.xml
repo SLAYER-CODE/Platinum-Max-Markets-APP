@@ -19,7 +19,13 @@
         <item name="colorAccent">@color/md_black_1000</item>
         <item name="android:statusBarColor">@color/md_black_1000</item>
     </style>
-
+    <style name="Color1SwitchStyle">
+        <item name="colorControlActivated">@color/md_green_500</item>
+        <item name="android:textOff">Off</item>
+        <item name="android:textOn">On</item>
+        <item name="android:showText">true</item>
+        <item name="android:tint">@color/md_green_500</item>
+    </style>
     <style name="ThemeOverlay.finalproductos.FullscreenContainer" parent="Theme.Design.NoActionBar">
         <item name="fullscreenBackgroundColor">@color/md_light_green_A200</item>
         <item name="fullscreenTextColor">@color/md_light_green_A400</item>

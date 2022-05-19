@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fromdeskhelper.R
+import com.example.fromdeskhelper.ui.View.ViewModel.ShowMainViewModel
 import kotlinx.android.synthetic.main.item_producto.view.*
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
+import kotlin.random.Random
 
 //import com.example.productos.databinding.ItemProductoBinding
 
@@ -18,7 +20,7 @@ import java.io.ByteArrayOutputStream
 
 
 private var reverse:Boolean=false;
-class ProductoAdapter (var MyImage:List<listInventarioProductos>):
+class ProductoAdapter (var MyImage:List<listInventarioProductos>,var ViewModelCall:ShowMainViewModel?):
     RecyclerView.Adapter<ProductoAdapter.ImageHolder>() {
 
     inner class ImageHolder(val view: View): RecyclerView.ViewHolder(view){
@@ -44,10 +46,22 @@ class ProductoAdapter (var MyImage:List<listInventarioProductos>):
             theimagen?.compress(Bitmap.CompressFormat.JPEG, 10,flujo);
             val newimage = flujo.toByteArray()
             val imagen = BitmapFactory.decodeByteArray(newimage,0,newimage.size)
-
+            view.ratingBar.rating=((Random.nextFloat()*(view.ratingBar.numStars-1)))
             view.IVimagenItem.transitionName=(ProductoAndImage.uid.toString())
-
             view.IVimagenItem.setImageBitmap(imagen)
+            view.SaveStorage.setOnClickListener {
+                check(true)
+                ViewModelCall?.AddResponse(ProductoAndImage)
+            }
+            view.BSincronise.setOnClickListener {
+                check(true)
+
+            }
+            view.BSLocal.setOnClickListener {
+                check(true)
+
+            }
+
 //            view.setOnClickListener{
 //                val extras = FragmentNavigatorExtras(view.IVimagenItem to "image_big")
 //                println("Carlos!!")

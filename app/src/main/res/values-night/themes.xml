@@ -6,12 +6,24 @@
         <item name="colorPrimaryVariant">@color/md_black_1000</item>
         <item name="colorOnPrimary">@color/md_black_1000</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/md_grey_900</item>
-        <item name="colorSecondaryVariant">@color/md_grey_900</item>
+        <item name="colorSecondary">@color/md_black_1000</item>
+        <item name="colorSecondaryVariant">@color/md_black_1000</item>
         <item name="colorOnSecondary">@color/md_black_1000</item>
+        <item name="background">@color/md_black_1000</item>
+<!--        <item name="android:background">@color/md_black_1000</item>-->
+        <item name="backgroundColor">@color/md_black_1000 </item>
         <!-- Status bar color. -->
+        <item name="android:windowBackground" >@color/md_black_1000</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:itemBackground">@color/md_green_A200</item>
 
+        <item name="colorControlActivated">@color/md_green_500</item>
+        <!-- Inactive thumb color -->
+        <item name="colorSwitchThumbNormal">@color/md_grey_50</item>
+
+
+        <item name="colorControlNormal">#c5c5c5</item>
+        <item name="colorControlHighlight">@color/md_green_500</item>
         <!-- Customize your theme here. -->
     </style>
 
@@ -28,19 +40,21 @@
         <item name="android:actionBarStyle">
             @style/Widget.Theme.FinalProductos.ActionBar.Fullscreen
         </item>
+
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowBackground">@null</item>
     </style>
 
     <style name="ThemeOverlay.FinalProductos.FullscreenContainer" parent="Theme.FinalProductos.Fullscreen">
-        <item name="fullscreenBackgroundColor">@color/md_falcon_400</item>
+        <item name="fullscreenBackgroundColor">@color/md_black_1000</item>
         <item name="fullscreenTextColor">@color/md_white_1000</item>
 
     </style>
 
     <style name="SplashTheme" parent="Theme.FinalProductos.NoActionBar">
         <item name="android:windowFullscreen">true</item>
-        <item name="android:windowBackground" >@drawable/background_splash</item>
+        <item name="background">@color/md_black_1000</item>
+        <item name="android:windowBackground" >@color/md_black_1000</item>
         <item name="colorPrimary">@color/md_black_1000</item>
         <item name="colorPrimaryDark">@color/ef_black_alpha_50</item>
         <item name="colorAccent">@color/md_black_1000</item>

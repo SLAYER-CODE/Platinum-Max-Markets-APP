@@ -20,6 +20,7 @@ private val TAG = "PreferencesManager"
 enum class SortOrder { BY_NAME, BY_DATE }
 data class FilterPreferences(val sortOrder: SortOrder, val hideComplete: Boolean)
 data class FilterUserPreferences(val presentation:Boolean,val loginInit:Boolean)
+data class FilterCamera(val MoveX:Float,val MoveY:Float,val ScaleX:Float,val ScaleY:Float)
 
 @Singleton
 class PreferencesManager @Inject constructor(@ApplicationContext context: Context) {
@@ -41,6 +42,25 @@ class PreferencesManager @Inject constructor(@ApplicationContext context: Contex
             val hideCompleted = preferences[PreferencesKeys.HIDE_COMPLETED] ?: false
             FilterPreferences(sortedOrder, hideCompleted)
         }
+
+    val preferencesFlowCamera = datastore.data
+        .catch { exeption ->
+            if (exeption is IOException) {
+                Log.e(TAG, "Ubo un erro en las preferencias de Camera", exeption)
+                emit(emptyPreferences())
+            } else {
+                throw exeption
+            }
+
+        }
+        .map { preferences ->
+            val xmove = preferences[PreferencesCamera.CAMERA_MOVE_X] ?: -1f
+            val ymove = preferences[PreferencesCamera.CAMERA_MOVE_Y] ?: -1f
+            val xscale = preferences[PreferencesCamera.CAMERA_SCALE_X] ?: 1f
+            val yscale = preferences[PreferencesCamera.CAMERA_SCALE_Y] ?: 1f
+            FilterCamera(xmove,ymove,xscale,yscale)
+        }
+
     val preferencesUserFlow=datastore.data
         .catch { exeption ->
             if (exeption is IOException) {
@@ -56,11 +76,28 @@ class PreferencesManager @Inject constructor(@ApplicationContext context: Contex
                 preferences[PreferencesKeys.LOGIN_PRESENTATION]?:true,
                 preferences[PreferencesKeys.LOGIN_USER]?:false)
         }
+
     suspend fun changePresentation(presentation: Boolean) {
         datastore.edit { preferences ->
             preferences[PreferencesKeys.LOGIN_PRESENTATION] = presentation
         }
     }
+
+
+    suspend fun changeScalaCamera(x:Float,y:Float) {
+        datastore.edit { preferences ->
+            preferences[PreferencesCamera.CAMERA_SCALE_X] = x
+            preferences[PreferencesCamera.CAMERA_SCALE_Y] = y
+        }
+    }
+
+    suspend fun changeMoveCamera(x:Float,y:Float) {
+        datastore.edit { preferences ->
+            preferences[PreferencesCamera.CAMERA_MOVE_X] = x
+            preferences[PreferencesCamera.CAMERA_MOVE_Y] = y
+        }
+    }
+
     suspend fun updateSortOrder(hideComplete: Boolean) {
         datastore.edit { preferences ->
             preferences[PreferencesKeys.HIDE_COMPLETED] = hideComplete
@@ -74,5 +111,11 @@ class PreferencesManager @Inject constructor(@ApplicationContext context: Contex
         val LOGIN_PRESENTATION = preferencesKey<Boolean>("init_presentation")
         val SORT_ORDER = preferencesKey<String>("sort_order")
         val HIDE_COMPLETED = preferencesKey<Boolean>("hilde_completed")
+    }
+    private object PreferencesCamera{
+        val CAMERA_MOVE_X= preferencesKey<Float>("camera_move_x")
+        val CAMERA_MOVE_Y= preferencesKey<Float>("camera_move_y")
+        val CAMERA_SCALE_Y= preferencesKey<Float>("camera_scale_y")
+        val CAMERA_SCALE_X= preferencesKey<Float>("camera_scale_x")
     }
 }

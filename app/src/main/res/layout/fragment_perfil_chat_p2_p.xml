@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="?attr/actionBarSize"
+    tools:context=".ui.View.fragment.Client.NavSub.PerfilChatP2P">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/LVMylistChat"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/md_blue_500_25"
+            app:layout_constraintBottom_toTopOf="@+id/SendChat"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+        <LinearLayout
+            android:background="@color/md_blue_50"
+            android:orientation="horizontal"
+            android:id="@+id/SendChat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            >
+
+            <EditText
+                android:background="@color/md_blue_50"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </EditText>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/BSendMessage"
+                android:background="@color/md_blue_50"
+                android:layout_weight="0"
+                android:layout_width="wrap_content"
+                android:text="Send"
+                android:textColor="@color/md_black_1000"
+                android:layout_height="wrap_content">
+            </androidx.appcompat.widget.AppCompatButton>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

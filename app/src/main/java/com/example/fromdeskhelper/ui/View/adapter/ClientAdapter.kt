@@ -29,6 +29,10 @@ class ClientAdapter(var Clients:MutableList<ClientList>):RecyclerView.Adapter<Cl
         Clients.add(cliente)
         notifyDataSetChanged()
     }
+    fun addClientFrist(cliente: ClientList){
+        Clients.add(0,cliente)
+        notifyItemRangeInserted(0,1)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HolderClient {
         val layoutInflater = LayoutInflater.from(parent.context)

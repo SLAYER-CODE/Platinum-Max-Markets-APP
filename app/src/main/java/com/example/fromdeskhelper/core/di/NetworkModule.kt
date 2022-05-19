@@ -2,6 +2,9 @@ package com.example.fromdeskhelper.core.di
 import android.app.Activity
 import android.content.Context
 import android.net.wifi.WifiManager
+import android.net.wifi.p2p.WifiP2pManager
+import android.os.Looper
+import android.util.Log
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.network.okHttpCallFactory
 import com.apollographql.apollo3.network.okHttpClient
@@ -97,6 +100,22 @@ object NetworkModule {
     fun providerWifiManager(@ApplicationContext appContext: Context):WifiManager{
         return appContext?.applicationContext?.getSystemService(Context.WIFI_SERVICE) as WifiManager;
     }
+
+
+    @Singleton
+    @Provides
+    fun providerWifiP2PManager(@ApplicationContext appContext: Context):WifiP2pManager{
+        return appContext?.applicationContext?.getSystemService(Context.WIFI_P2P_SERVICE) as WifiP2pManager;
+    }
+
+
+    @Singleton
+    @Provides
+    fun providerWifiP2PChanel(@ApplicationContext appContext: Context,wifiP2pManager: WifiP2pManager):WifiP2pManager.Channel{
+        Log.i("MODULENETWORK","SE LLAMO A P2P")
+        return wifiP2pManager.initialize(appContext, Looper.getMainLooper(),null)
+    }
+
 
 
 

@@ -31,3 +31,16 @@ fun MessageSnackBar(view: View, text: String, color: Int) {
     (snackbar.view).layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
     snackbar.show()
 }
+
+//fun YourFragmentName.hideKeyboard() {
+//    view?.let { activity?.hideKeyboard(it) }
+//}
+//
+//fun YoActivityName.hideKeyboard() {
+//    hideKeyboard(currentFocus ?: View(this))
+//}
+
+fun Context.hideKeyboard(view: View) {
+    val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+}

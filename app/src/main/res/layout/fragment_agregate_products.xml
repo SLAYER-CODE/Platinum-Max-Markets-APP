@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!--<?xml version="1.0" encoding="utf-8"?>-->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,9 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="top"
-
     android:animateLayoutChanges="true"
-    android:background="@color/md_black_1000"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:foregroundGravity="bottom"
@@ -19,8 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="13dp"
-        android:overScrollMode="never"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:overScrollMode="never">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/newConstraintLayout"
@@ -37,6 +35,7 @@
                 android:id="@+id/llinearConstraint"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:animateLayoutChanges="false"
                 android:clickable="true"
                 android:clipChildren="true"
@@ -63,7 +62,7 @@
                         android:id="@+id/textView3"
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
-                        android:shadowColor="#00F345"
+                        android:shadowColor="@color/md_green_500_75_overlay"
                         android:shadowDx="10"
                         android:shadowDy="10"
                         android:shadowRadius="10"
@@ -85,6 +84,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    app:hintTextColor="@color/md_amber_200"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textColorHint="@color/md_green_500"
@@ -120,6 +120,7 @@
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputLayout
+                        app:hintTextColor="@color/md_amber_200"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -175,7 +176,7 @@
                         android:id="@+id/textView2"
                         android:layout_width="113dp"
                         android:layout_height="wrap_content"
-                        android:shadowColor="#00FF2A"
+                        android:shadowColor="@color/md_green_500_75_overlay"
                         android:shadowDx="10"
                         android:shadowDy="10"
                         android:shadowRadius="10"
@@ -209,6 +210,7 @@
 
                         <com.google.android.material.textfield.TextInputLayout
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            app:hintTextColor="@color/md_amber_200"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -259,6 +261,7 @@
                     </RelativeLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        app:hintTextColor="@color/md_amber_200"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -299,6 +302,7 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
+                        app:hintTextColor="@color/md_amber_200"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
@@ -347,6 +351,7 @@
                         android:spinnerMode="dropdown" />
 
                     <com.google.android.material.textfield.TextInputLayout
+                        app:hintTextColor="@color/md_amber_200"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -381,7 +386,6 @@
 
                     <Spinner
                         android:id="@+id/SPpeso"
-
                         style="@android:style/Widget.Holo.Spinner"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
@@ -391,14 +395,13 @@
                         android:ems="10"
                         android:foregroundGravity="center"
                         android:gravity="center"
-
-
                         android:popupBackground="#9F005936"
                         android:spinnerMode="dropdown" />
 
                 </LinearLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    app:hintTextColor="@color/md_amber_200"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -411,6 +414,7 @@
                     app:startIconTint="@color/md_green_A400">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        app:hintTextColor="@color/md_amber_200"
                         android:id="@+id/TECaracteristicas"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -430,62 +434,142 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <HorizontalScrollView
+                        android:id="@+id/chipGroup2HorizontalView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:scrollbars="none"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/chipGroup2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                        </com.google.android.material.chip.ChipGroup>
+                    </HorizontalScrollView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <LinearLayout
+                    android:divider="@color/md_black_1000"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:background="#D2032910"
+                    android:background="#6A032910"
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_marginRight="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:hint="Categorias"
                         android:textAlignment="center"
+                        android:foregroundTint="@color/md_white_1000"
                         android:textColorHint="#40B642"
+                        app:hintTextColor="@color/md_amber_200"
+                        app:hintAnimationEnabled="true"
                         app:helperText="Inserte sus categorias "
                         app:helperTextTextColor="@color/md_light_blue_600"
                         app:startIconDrawable="@drawable/ic_baseline_category_addproduct"
-                        app:startIconTint="@color/md_green_A400">
+                        app:startIconTint="@color/md_green_A400"
+                        >
 
-                        <com.android.ex.chips.RecipientEditTextView
+                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                             android:id="@+id/TECategoria"
+                            android:inputType="text"
+                            android:background="#D2032910"
+                            android:drawableTintMode="add"
+                            android:ems="10"
+                            android:foregroundTint="@color/md_red_800"
+                            android:shadowColor="#C8D8C6"
+                            android:textColor="#EB1818"
+                            android:textColorHighlight="#1EA825"
+                            android:textColorHint="#6303BDB8"
+                            android:textColorLink="#FF0101"
+                            android:textStyle="normal|bold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:textColor="@color/md_green_A400">
+                            android:layout_weight="1"
+                            android:gravity="left"
+                            android:padding="10dp"/>
 
-                        </com.android.ex.chips.RecipientEditTextView>
                     </com.google.android.material.textfield.TextInputLayout>
 
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:layout_marginLeft="5dp"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:hint="Marca"
+                        app:hintTextColor="@color/md_amber_200"
+
                         android:textColorHint="#40B642"
                         app:helperText="Marca a la que pertenece"
                         app:helperTextTextColor="@color/md_light_blue_600"
                         app:startIconDrawable="@drawable/ic_baseline_bookmark_addproduct"
                         app:startIconTint="@color/md_green_A400">
 
-                        <MultiAutoCompleteTextView
+                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                             android:id="@+id/TEMarca"
+                            android:inputType="text"
+                            android:background="#D2032910"
+                            android:drawableTintMode="add"
+                            android:ems="10"
+                            android:foregroundTint="@color/md_red_800"
+                            android:shadowColor="#C8D8C6"
+                            android:textColor="#EB1818"
+                            android:textColorHighlight="#1EA825"
+                            android:textColorHint="#6303BDB8"
+                            android:textColorLink="#FF0101"
+                            android:textStyle="normal|bold"
+                            android:tooltipText="@string/dummy_content"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="left"
-                            android:padding="10dp"
-                            android:textColor="@color/md_green_A400"
-                            android:textColorHint="@color/md_green_A400"></MultiAutoCompleteTextView>
-                    </com.google.android.material.textfield.TextInputLayout>
+                            android:padding="10dp">
 
+                        </androidx.appcompat.widget.AppCompatAutoCompleteTextView>
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <HorizontalScrollView
+                        android:id="@+id/ChipScrollMarcas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:scrollbars="none"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/ChipGroupMarca"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                        </com.google.android.material.chip.ChipGroup>
+                    </HorizontalScrollView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
                 <LinearLayout
@@ -498,6 +582,7 @@
 
 
                     <com.google.android.material.textfield.TextInputLayout
+                        app:hintTextColor="@color/md_amber_200"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -563,69 +648,111 @@
                         app:layout_constraintTop_toTopOf="parent">
 
 
-                            <FrameLayout
+                        <FrameLayout
 
-                                android:id="@+id/FragmentCamera"
-                                android:layout_width="match_parent"
-                                tools:layout_width="400dp"
+                            android:id="@+id/FragmentCamera"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
 
-                                android:layout_height="wrap_content"
-                                app:layout_constraintWidth_max="360dp"
-                                app:layout_constraintHeight_max="360dp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintLeft_toLeftOf="parent"
-                                app:layout_constraintRight_toRightOf="parent"
-                                app:layout_constraintTop_toTopOf="parent">
-
-                            </FrameLayout>
-
-                        <LinearLayout
-                            android:id="@+id/LEandI"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:background="@drawable/backgroud_focus"
-                            android:dividerPadding="10dp"
-                            android:orientation="horizontal"
-                            android:weightSum="2"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
+                            app:layout_constraintHeight_max="360dp"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintWidth_max="360dp"
+                            tools:layout_width="400dp">
 
-                            <TextView
-                                android:id="@+id/textView4"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:foregroundGravity="fill_horizontal|fill"
-                                android:gravity="center"
-                                android:padding="10dp"
-                                android:shadowColor="#1E1E1E"
-                                android:shadowDy="10"
-                                android:shadowRadius="10"
-                                android:text="Editar Imagen"
-                                android:textColor="#929292"
-                                android:textSize="24sp"
-                                android:textStyle="bold" />
+                        </FrameLayout>
 
-                            <TextView
-                                android:id="@+id/textView"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:foregroundGravity="fill_horizontal|fill"
-                                android:gravity="center"
-                                android:padding="10dp"
-                                android:shadowColor="#1E1E1E"
-                                android:shadowDy="10"
-                                android:shadowRadius="10"
-                                android:text="Usar Inteligencia Artificial"
-                                android:textColor="#929292"
-                                android:textSize="24sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/LEandI"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/backgroud_focus"
+                        android:dividerPadding="10dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:foregroundGravity="fill_horizontal|fill"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:shadowColor="#1E1E1E"
+                            android:shadowDy="10"
+                            android:shadowRadius="10"
+                            android:text="Editar Imagen"
+                            android:textColor="#929292"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:foregroundGravity="fill_horizontal|fill"
+                            android:gravity="center"
+                            android:padding="18dp"
+                            android:shadowColor="#1E1E1E"
+                            android:shadowDy="10"
+                            android:shadowRadius="10"
+                            android:text="Usar Inteligencia Artificial"
+                            android:textColor="#929292"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/DeletAndSaveParent"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:clipChildren="true"
+                        android:clipToPadding="false"
+                        android:elevation="2dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/SaveDrag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:drawableLeft="@drawable/ic_baseline_drive_file_move_24"
+                            android:gravity="center"
+                            android:text="Guardar"
+                            android:textColor="#4886FF"
+                            android:textSize="24dp" />
+
+                        <TextView
+                            android:id="@+id/DeleteDrag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="30dp"
+                            android:layout_weight="1"
+                            android:drawableRight="@drawable/ic_delete"
+                            android:drawableTint="#AB0000"
+                            android:gravity="center"
+                            android:text="Eliminar"
+                            android:textColor="#AB0000"
+                            android:textSize="24dp" />
                     </LinearLayout>
 
 
@@ -685,7 +812,9 @@
                                 app:layout_constraintBottom_toBottomOf="@+id/TNotItems"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"></androidx.recyclerview.widget.RecyclerView>
+                                app:layout_constraintTop_toTopOf="parent">
+
+                            </androidx.recyclerview.widget.RecyclerView>
 
                             <TextView
                                 android:id="@+id/TNotItems"
@@ -694,7 +823,7 @@
                                 android:background="@color/md_black_1000"
                                 android:gravity="center"
                                 android:paddingRight="10dp"
-                                android:shadowColor="#4DFF1A"
+                                android:shadowColor="#794DFF1A"
                                 android:shadowDy="10"
                                 android:shadowRadius="20"
                                 android:text="Tome una imagen para su producto"
@@ -708,45 +837,6 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/DeletAndSaveParent"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:clipChildren="true"
-                        android:clipToPadding="false"
-                        android:elevation="2dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/SaveDrag"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="30dp"
-                            android:layout_marginEnd="5dp"
-                            android:layout_weight="1"
-                            android:drawableLeft="@drawable/ic_baseline_drive_file_move_24"
-                            android:gravity="center"
-                            android:text="Guardar"
-                            android:textColor="#4886FF"
-                            android:textSize="24dp" />
-
-                        <TextView
-                            android:id="@+id/DeleteDrag"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginEnd="30dp"
-                            android:layout_weight="1"
-                            android:drawableRight="@drawable/ic_delete"
-                            android:drawableTint="#AB0000"
-                            android:gravity="center"
-                            android:text="Eliminar"
-                            android:textColor="#AB0000"
-                            android:textSize="24dp" />
-                    </LinearLayout>
-
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/BAgregateFile"
 
@@ -757,7 +847,7 @@
                         android:drawableRight="@drawable/ic_baseline_drive_folder_upload_24"
                         android:gravity="center"
                         android:paddingRight="20dp"
-                        android:shadowColor="#00FF2A"
+                        android:shadowColor="#001E05"
                         android:shadowDx="10"
                         android:shadowDy="10"
                         android:shadowRadius="10"
@@ -767,6 +857,41 @@
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:id="@+id/CSaveStorage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:checked="true"
+                            android:gravity="center"
+                            android:text="Storage" />
+
+                        <CheckBox
+                            android:id="@+id/CSaveServer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginRight="30dp"
+                            android:layout_weight="1"
+                            android:text="Server" />
+
+                        <CheckBox
+                            android:id="@+id/CSaveLocal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:text="Local" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </LinearLayout>
 
@@ -778,22 +903,22 @@
                     android:layout_marginLeft="75dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="75dp"
-                    android:background="@drawable/button_background"
+                    android:background="@color/md_green_500_75_overlay"
                     android:drawableLeft="@drawable/ic_baseline_dashboard_agregateproduct"
-                    android:drawableTint="@color/md_black_1000"
+                    android:drawableTint="@color/md_green_A400"
                     android:foregroundGravity="center"
                     android:gravity="center"
+                    android:padding="10dp"
                     android:paddingStart="10dp"
-                    android:shadowColor="@color/md_green_A400"
+                    android:shadowColor="@color/md_black_1000"
                     android:shadowDy="10"
                     android:shadowRadius="20"
                     android:text="Agregar Producto"
-                    android:textColor="@color/md_black_1000"
+                    android:textColor="@color/md_white_1000"
                     android:textSize="15dp"
                     android:textStyle="bold" />
 
             </LinearLayout>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

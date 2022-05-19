@@ -14,11 +14,13 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.databinding.FragmentDetallesProductsBinding
+import com.example.fromdeskhelper.ui.View.ViewModel.ShowMainViewModel
 import com.example.fromdeskhelper.ui.View.activity.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
@@ -34,7 +36,7 @@ class DetallesProducto : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var database: AppDatabase;
+//    private lateinit var database: AppDatabase;
     private lateinit var producto:Producto;
     private lateinit var imagenes:List<ImagenesNew>
     private lateinit var baseActivity: MainActivity
@@ -46,6 +48,7 @@ class DetallesProducto : Fragment() {
     private lateinit var adapter: DetallesAdapterImagen
     private var uid:Int=-1;
     private var animation:Int = 0;
+    private val MainModel : ShowMainViewModel by viewModels();
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -152,7 +155,8 @@ class DetallesProducto : Fragment() {
                                                 qr,
                                                 uid
                                             )
-                                            database.productosData().update(NewProducto);
+//                                            MainModel.productosData().update(NewProducto);
+                                            MainModel.updateProduct(NewProducto)
                                             baseActivity.runOnUiThread {
 
                                                 Toast.makeText(
@@ -182,7 +186,8 @@ class DetallesProducto : Fragment() {
                 productoLiveData.removeObservers(baseActivity)
                 CoroutineScope(Dispatchers.IO).launch {
 //                    println(database.productosData().getByImagenesId(producto.uid).toString())
-                    database.productosData().delete(producto)
+//                    MainModel.productosData().delete(producto)
+                    MainModel.deteProduct(producto)
 //                    println("SE ELIMINO")
 //                    println(database.productosData().getByImagenesId(producto.uid).toString())
                 }
@@ -207,15 +212,12 @@ class DetallesProducto : Fragment() {
     private  var formatter = SimpleDateFormat("dd|MM|yyyy - h:mm")
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         postponeEnterTransition()
-
-
         binding.TTNombre.isSelected=true
-        database= AppDatabase.getDataBase(baseActivity);
+//        database= AppDatabase.getDataBase(baseActivity);
 //        productoLiveData=database.productosData().get(uid)
-        productoLiveData=database.productosData().getInventarioId(uid)
-
+//        productoLiveData=database.productosData().getInventarioId(uid)
+        productoLiveData=MainModel.getProductId(uid)
 //        val daoNew = AppDatabase.getDataBase(baseActivity);
 //        daoNew.productosData().getTime(uid).observe(viewLifecycleOwner,{
 //        })

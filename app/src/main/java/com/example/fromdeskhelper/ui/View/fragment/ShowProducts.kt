@@ -18,16 +18,21 @@ import com.example.fromdeskhelper.databinding.FragmentShowProductsBinding
 import com.example.fromdeskhelper.ui.View.activity.MainActivity
 import android.graphics.Color
 import androidx.core.view.doOnPreDraw
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.data.db.AppDatabase
 import com.example.fromdeskhelper.data.model.objects.Constants
+import com.example.fromdeskhelper.ui.View.ViewModel.AgregateProductViewModel
+import com.example.fromdeskhelper.ui.View.ViewModel.ShowMainViewModel
 import com.example.fromdeskhelper.util.listener.infiniteScrollListener
 import com.example.fromdeskhelper.util.listener.recyclerItemClickListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_show_products.view.*
 import kotlinx.android.synthetic.main.item_producto.view.IVimagenItem
+import java.lang.IllegalStateException
 import java.util.*
 
 @JvmOverloads
@@ -46,15 +51,18 @@ class ShowProducts : Fragment() {
     private var listaClientes = emptyList<ClientList>()
     private lateinit var baseActivity: MainActivity
     private lateinit var contextFragment: Context
-    var adaptador: ProductoAdapter = ProductoAdapter(listOf());
+    var adaptador: ProductoAdapter = ProductoAdapter(listOf(),null);
     var currentPage:Int=6
     var itemfinal:Boolean=false;
     var clientcount:Int=1;
-    lateinit var daoNew:AppDatabase
+//    lateinit var daoNew:AppDatabase
+    private var contadorImagen = 0;
+    private val MainModel : ShowMainViewModel by viewModels(ownerProducer = {requireActivity()});
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        daoNew = AppDatabase.getDataBase(baseActivity)
+//        daoNew = AppDatabase.getDataBase(baseActivity)
         super.onCreate(savedInstanceState)
     }
     override fun onCreateView(
@@ -62,6 +70,7 @@ class ShowProducts : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentShowProductsBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
@@ -78,16 +87,8 @@ class ShowProducts : Fragment() {
         clientcount+=1
         return NewClient;
     }
-    fun refreshList(){
-        binding.LVMylist.startLayoutAnimation()
-    }
 
-    override fun onStart() {
-        super.onStart()
-        (baseActivity as MainActivity).functionFabRefresh(::refreshList)
-        baseActivity.returnbinding().appBarMain.BIShowP.visibility=View.VISIBLE
-        (activity as MainActivity).returnbinding().appBarMain.refreshFab.setImageResource(R.drawable.ic_baseline_autorenew_24)
-    }
+
 
 
     fun loadData(final:Boolean) {
@@ -104,7 +105,8 @@ class ShowProducts : Fragment() {
 //            baseActivity.returnbinding().PBbarList.visibility=View.VISIBLE
 //            println(listaProductos)
 
-            daoNew.productosData().getByInventarioProductos(
+
+            MainModel.AllProducts(
                 Constants.ListExtract.LIMIT,
                 currentPage
             ).observe(
@@ -126,37 +128,50 @@ class ShowProducts : Fragment() {
         }
     }
 
+    fun comprobateList(Size:Int){
+        if(Size==0) {
+            binding.TNotItems.visibility=View.VISIBLE
+        }else{
+            binding.TNotItems.visibility=View.INVISIBLE
+        }
+    }
+
+    override fun onResume() {
+        baseActivity.binding.appBarMain.refreshFab.setOnClickListener {
+            binding.LVMylist.startLayoutAnimation()
+        }
+        super.onResume()
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+
         postponeEnterTransition()
         println(currentPage.toString()+"Se ejecuta una vez")
 //        loadData(false)
 //        binding.LVMylist.adapter=adaptador
 
-        daoNew.productosData().getByInventarioProductos(currentPage, 0)
-            .observe(viewLifecycleOwner, Observer {
+
+        MainModel.AllProducts(currentPage, 0).observe(viewLifecycleOwner, Observer {
                 listaProductos = it
-                adaptador=ProductoAdapter(listaProductos)
+                adaptador=ProductoAdapter(listaProductos,MainModel)
                 binding.LVMylist.adapter = adaptador
                 view.doOnPreDraw {
                     startPostponedEnterTransition()
                 }
+                comprobateList(it.size)
             })
+
 
 //        Con esta funcion se llama cuando el scroll es movido y carga los datos de la funcion loadData con los parametros que tenemos mas antes.
         val adapterClient= ClientAdapter(mutableListOf<ClientList>())
         binding.addclientitems.layoutManager=LinearLayoutManager(baseActivity,LinearLayoutManager.HORIZONTAL,false)
         binding.addclientitems.adapter=adapterClient
+        binding.BAddclient.setOnClickListener {
+            adapterClient.addClientFrist(createAleatorieList())
+            binding.addclientitems.scrollToPosition(0);
+            binding.BAddclient.animate().rotation(60F * (contadorImagen++)).setDuration(400).start()
+        }
 
-        adapterClient.addClient(createAleatorieList())
-        adapterClient.addClient(createAleatorieList())
-
-        daoNew.productosData().getCount().observe(viewLifecycleOwner,onChanged = {
-            activity?.setTitle(if(it==0)"Inicio" else ("${it} Productos en Total"))
-            val gridLayoutManager = GridLayoutManager(baseActivity, 1)
-            gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
-            binding.LVMylist.layoutManager=gridLayoutManager
-            binding.LVMylist.addOnScrollListener(infiniteScrollListener(::loadData,gridLayoutManager,it,itemfinal))
-        })
 
 //        Executors.newSingleThreadExecutor().execute {
 //            listaProductos =  daoNew.productosData().getByInventarioProductos(Constants.LIMIT, 0)

@@ -5,8 +5,6 @@ package com.example.fromdeskhelper
 
 //import com.github.dhaval2404.imagepicker.ImagePicker
 
-import Data.ImagenesNew
-import Data.Producto
 import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.ClipData
@@ -17,14 +15,17 @@ import android.graphics.*
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.transition.*
 import android.util.Log
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.net.toUri
+import androidx.core.view.children
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.*
 import androidx.lifecycle.lifecycleScope
@@ -33,15 +34,17 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
+import com.android.ex.chips.BaseRecipientAdapter
 import com.esafirm.imagepicker.features.ImagePicker
-import com.example.fromdeskhelper.data.db.AppDatabase
-import com.example.fromdeskhelper.data.model.base.CallBackItemTouch
 import com.example.fromdeskhelper.data.model.Controller.imagenController
 import com.example.fromdeskhelper.data.model.Helper.MyItemTouchHelperCallback
+import com.example.fromdeskhelper.data.model.Types.CameraTypes
+import com.example.fromdeskhelper.data.model.base.CallBackItemTouch
 import com.example.fromdeskhelper.data.model.objects.Constants.Images.REQUEST_CODE_PICKER
 import com.example.fromdeskhelper.data.model.objects.Constants.Images.SELECT_FILE_IMAGE_CODE
-import com.example.fromdeskhelper.data.model.Types.CameraTypes
 import com.example.fromdeskhelper.databinding.FragmentAgregateProductsBinding
+import com.example.fromdeskhelper.type.BrandsInput
+import com.example.fromdeskhelper.type.CategoriesInput
 import com.example.fromdeskhelper.ui.View.ViewModel.AgregateProductViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.CameraViewModel
 import com.example.fromdeskhelper.ui.View.activity.MainActivity
@@ -49,13 +52,17 @@ import com.example.fromdeskhelper.ui.View.adapter.ImageAdapter
 import com.example.fromdeskhelper.ui.View.fragment.CameraFragment
 import com.example.fromdeskhelper.ui.View.fragment.CameraQrFragment
 import com.example.fromdeskhelper.util.MessageSnackBar
+import com.example.fromdeskhelper.util.hideKeyboard
+import com.example.fromdeskhelper.util.hideKeyboardFrom
 import com.example.fromdeskhelper.util.listener.DragAndDropListenerActions
 import com.example.fromdeskhelper.util.listener.TouchDropListenerAction
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.image_new_new.view.*
 import kotlinx.coroutines.*
-import java.io.ByteArrayOutputStream
+import kotlinx.coroutines.flow.collect
 import java.io.File
 import java.util.*
 
@@ -145,16 +152,35 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
 
     private val CameraView: CameraViewModel by viewModels()
     private val AgregateProductsState: AgregateProductViewModel by viewModels();
+
     private var CamClick: CameraTypes = CameraTypes.NULL;
     private var CamScannerStatus: Boolean = false;
+    private var CategoryAdapter: MutableList<String> = mutableListOf();
 
 
     override fun onStart() {
         Log.i(LOGFRAGMENT, "Se Inicio onStart [*]")
-        (activity as MainActivity).functionFabRefresh(::clearItems);
+//        (activity as MainActivity).functionFabRefresh(::clearItems);
+        baseActivity.binding.appBarMain.refreshFab.setOnClickListener {
+            clearItems()
+        }
         baseActivity.returnbinding().appBarMain.BIShowP.visibility = View.INVISIBLE
         (activity as MainActivity).returnbinding().appBarMain.refreshFab.setImageResource(R.drawable.ic_baseline_clear_all_24)
         super.onStart()
+    }
+
+    private fun addChipToGroup(person: String, chipGroup: ChipGroup, color: Int, Icon: Int) {
+        val chip = Chip(context)
+        chip.text = person
+        chip.chipIcon = ContextCompat.getDrawable(requireContext(), Icon)
+        chip.setChipBackgroundColorResource(color)
+        chip.isCloseIconEnabled = true
+
+        // necessary to get single selection working
+        chip.isClickable = true
+        chip.isCheckable = false
+        chipGroup.addView(chip as View)
+        chip.setOnCloseIconClickListener { chipGroup.removeView(chip as View) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -175,7 +201,10 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
 
 
 //        Obtiene la instacia de la actividad para la base de datos
-        val daoNew = AppDatabase.getDataBase(baseActivity);
+
+//        val daoNew = AppDatabase.getDataBase(baseActivity);
+
+
 //        Estas Funciones obtiene la distancia del campo de la camara para obtener sus vectores y calcular el movimiento de la camara
 //        val animation:Animation=AnimationUtils.loadAnimation(baseActivity,R.anim.slide_in_left)
 //        val linearMayor:Int = binding.llinearConstraint.layoutParams.height
@@ -235,25 +264,41 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
             binding.TEQR.setText(it);
         })
 
-        AgregateProductsState.data.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            Log.i("VIEWMODEL SELLAMO","Se llamo al adapter"+it.toString())
-//            adapter.clearimagen()
-            adapter = ImageAdapter(it)
-            binding.RVCaptureImages.adapter = adapter
-            comprobateItem()
-        })
+//        AgregateProductsState.data.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+//            Log.i("VIEWMODEL SELLAMO","Se llamo al adapter"+it.toString())
+////            adapter.clearimagen()
+//            adapter = ImageAdapter(it)
+//            binding.RVCaptureImages.adapter = adapter
+//            comprobateItem()
+//        })
+        lifecycleScope.launch {
+            AgregateProductsState.sharedFlow.collect { url ->
+                Log.i("VIEWMODELADDPRODUCT", "SE APLICO" + url.toString())
+                if (url != null) {
+                    runBlocking {
+                        adapter.addImage(url);
+                        binding.RVCaptureImages.scrollToPosition(0);
+                        comprobateItem()
+                    }
+
+                }
+            }
+        }
+        binding.RVCaptureImages.adapter = adapter
 
 
 
-        AgregateProductsState.RecivImageItem.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            Log.i("VIEWMODEL SELLAMO","Se inserto")
-            adapter.addImage(it);
-//            binding.RVCaptureImages.scrollToPosition(0);
-            comprobateItem()
-        })
+        AgregateProductsState.RecivImageItem.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer {
+                Log.i("VIEWMODELADDFRAGMENT", "Se inserto ")
+                adapter.addImage(it);
+                binding.RVCaptureImages.scrollToPosition(0);
+                comprobateItem()
+            })
 
 
-        AgregateProductsState.CameraActivate.observe(
+        CameraView.CameraActivate.observe(
             viewLifecycleOwner,
             androidx.lifecycle.Observer {
                 CamClick = it
@@ -268,13 +313,13 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
                     binding.CapturaLayout.visibility = View.GONE
                     binding.BEscaner.setBackgroundResource(R.drawable.ic_baseline_qr_code_scanner_addproduct)
                 } else if (it == CameraTypes.SCANER) {
+                    Log.i("CARLOS", "QC SCANNER")
                     binding.CapturaLayout.visibility = View.VISIBLE
                     binding.BEscaner.setBackgroundResource(R.drawable.ic_baseline_close_24)
-
-
                 }
             })
-        AgregateProductsState.ScanerStatus.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+
+        CameraView.ScanerStatus.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             Log.i("CARLOS", "QS" + CamScannerStatus.toString())
             Log.i("CARLOS", "QS" + it.toString())
             CamScannerStatus = it;
@@ -345,6 +390,86 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
             }
         })
 
+        AgregateProductsState.CategoriesGetApp()
+        val baseRecipientAdapter =
+            BaseRecipientAdapter(BaseRecipientAdapter.QUERY_TYPE_EMAIL, baseActivity)
+
+
+        binding.TECategoria.setOnItemClickListener { parent, arg1, position, arg3 ->
+            binding.TECategoria?.text = null
+            val selected = parent.getItemAtPosition(position) as String
+            addChipToGroup(
+                selected,
+                binding.chipGroup2!!,
+                R.color.md_green_500,
+                R.drawable.ic_baseline_spellcheck_24
+            )
+        }
+
+        binding.TECategoria.setOnKeyListener(object : View.OnKeyListener {
+            override fun onKey(v: View?, keyCode: Int, event: KeyEvent): Boolean {
+                // If the event is a key-down event on the "enter" button
+                if (event.action === KeyEvent.ACTION_DOWN &&
+                    keyCode == KeyEvent.KEYCODE_ENTER
+                ) {
+                    if (binding.TECategoria.text.toString() in CategoryAdapter) {
+                        addChipToGroup(
+                            binding.TECategoria.text.toString(), binding.chipGroup2!!,
+                            R.color.md_green_600, R.drawable.ic_baseline_recommend_addproducto
+                        )
+                    } else {
+                        addChipToGroup(
+                            binding.TECategoria.text.toString(),
+                            binding.chipGroup2!!,
+                            R.color.md_green_500_75_overlay,
+                            R.drawable.ic_baseline_close_24
+                        )
+                    }
+                    binding.TECategoria.setText("");
+                    return true
+                }
+                return false
+            }
+        })
+        binding.TEMarca.setOnKeyListener(object : View.OnKeyListener {
+            override fun onKey(v: View?, keyCode: Int, event: KeyEvent): Boolean {
+                // If the event is a key-down event on the "enter" button
+                if (event.action === KeyEvent.ACTION_DOWN &&
+                    keyCode == KeyEvent.KEYCODE_ENTER
+                ) {
+                    if (binding.TEMarca.text.toString() in CategoryAdapter) {
+                        addChipToGroup(
+                            binding.TEMarca.text.toString(), binding.ChipGroupMarca!!,
+                            R.color.md_green_600, R.drawable.ic_baseline_recommend_addproducto
+                        )
+                    } else {
+                        addChipToGroup(
+                            binding.TEMarca.text.toString(),
+                            binding.ChipGroupMarca!!,
+                            R.color.md_green_500_75_overlay,
+                            R.drawable.ic_baseline_close_24
+                        )
+                    }
+                    binding.TEMarca.setText("");
+                    return true
+                }
+                return false
+            }
+        })
+
+        AgregateProductsState.ListCategories.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer {
+                CategoryAdapter.clear()
+                for (x in it.categoria) {
+                    CategoryAdapter.add(x.category_name)
+                }
+                val adapterchip = ArrayAdapter<String>(
+                    baseActivity,
+                    android.R.layout.simple_dropdown_item_1line, CategoryAdapter
+                )
+                binding.TECategoria?.setAdapter<ArrayAdapter<String>>(adapterchip)
+            })
 
         binding.BAgregate.setOnClickListener {
 
@@ -356,78 +481,84 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
             val _categoria: String = binding.TECategoria.text.toString()
             val _stock: String = binding.TECantidad.text.toString()
             val _stockU: String = binding.TECantidadU.text.toString()
-            val _qr: String = ""
+            val _qr: String = binding.TEQR.text.toString()
 //            val _image:ByteArray= ByteArray(0)
 
-            val name = _name
-            val precio: Double? = _precio.toDoubleOrNull()
-            val precioU: Double = if (_precioU.isEmpty()) 0.0 else _precioU.toDouble()
-            val marca: String = _marca
-            val detalles: String = _detalles
-            val categoria: String = _categoria
-            val stock: Int = if (_stock.isEmpty()) 1 else _stock.toInt()
-            val stockU: Int = if (_stockU.isEmpty()) 0 else _stockU.toInt()
-            val qr: String = _qr
-
-//            val image:List<ImagenesNew> = listOf(ImagenesNew(_image,Date()))
-            val timeUpdate: Date = Date()
-            var producto: Producto
-            if (name.isEmpty() || precio == null) {
-                MessageSnackBar(view, "Se requiere el precio y el nombre del producto", Color.RED)
-            } else {
-                var pwd: Long
-                producto = Producto(
-                    timeUpdate,
-                    name,
-                    precio,
-                    precioU,
-                    marca,
-                    detalles,
-                    categoria,
-                    stock,
-                    stockU,
-                    qr
+            if(binding.CSaveStorage!!.isChecked) {
+                AgregateProductsState.AgregateItemStorage(
+                    _name,
+                    _precio,
+                    _precioU,
+                    _marca,
+                    _detalles,
+                    _categoria,
+                    _stock,
+                    _stockU,
+                    _qr,
+                    adapter.MyImage,
+                    baseActivity
                 )
-//                Funcion que permite guardar las imagenes dentro del cache para luego ser importadas a la base de datos
-                lifecycleScope.launch {
-                    val resultKeys = withContext(Dispatchers.IO) {
-                        try {
-                            pwd = daoNew.productosData().insertAll(producto)
-                            if (adapter.MyImage.isNotEmpty()) {
-                                for (path: Uri in adapter.MyImage) {
-//                            La imagen se rota por que cuando se carga dentro de un URI ESTA TIENE LOS DATOS EXIF
-//                            PERO CUANDO SE CARGA COMO MATRIS DE BYTES ENTONCES PIERDE TODA LA INFORMACION DE EXIF
-//                            Con esta funcion podemos crear el reguistro para la imagen del producto
-                                    val imagen = MediaStore.Images.Media.getBitmap(
-                                        baseActivity.contentResolver,
-                                        path
-                                    )
-//                            println(path.path)
-                                    val orientedBitmap: Bitmap =
-                                        ExifUtil.rotateBitmap(path.path!!, imagen)
-//                            val inputData = baseActivity.contentResolver.openInputStream(path)?.readBytes()
-                                    val flujo = ByteArrayOutputStream()
-                                    orientedBitmap.compress(Bitmap.CompressFormat.WEBP, 50, flujo)
-                                    val imageInByte: ByteArray = flujo.toByteArray()
-                                    val imagenSave = ImagenesNew(Date(), pwd.toInt(), imageInByte)
-                                    CoroutineScope(Dispatchers.IO).launch {
-                                        daoNew.productosData().insertAllImages(imagenSave)
-                                        imagen.recycle()
-                                    }
-                                }
-                            }
-                            true
-                        } catch (ex: Exception) {
-                            false
-                        }
-                    }
-                    if (resultKeys) {
-                        MessageSnackBar(view, text = "Agregado '${name}'", Color.GREEN)
-                    }
-                }
-
             }
+            if (binding.CSaveServer!!.isChecked){
+                var caTegorys= mutableListOf<CategoriesInput>()
+                var marCas = mutableListOf<BrandsInput>()
+
+                binding.chipGroup2.children.toList().forEach {
+                    caTegorys.add(CategoriesInput((it as Chip).text.toString()))
+                }
+                binding.ChipGroupMarca.children.toList().forEach {
+                    marCas.add(BrandsInput((it as Chip).text.toString()))
+                }
+                AgregateProductsState.AgregateServer(caTegorys,marCas,_name,
+                    _precio,
+                    _precioU,
+                    _marca,
+                    _detalles,
+                    _categoria,
+                    _stock,
+                    _stockU,
+                    _qr,adapter.MyImage,baseActivity)
+            }
+            if(binding.CSaveLocal!!.isChecked){
+                var caTegorys= mutableListOf<String>()
+                var marCas = mutableListOf<String>()
+
+                binding.chipGroup2.children.toList().forEach {
+                    caTegorys.add((it as Chip).text.toString())
+                }
+                binding.ChipGroupMarca.children.toList().forEach {
+                    marCas.add((it as Chip).text.toString())
+                }
+                AgregateProductsState.AgregateProductLocal(caTegorys,marCas,_name,
+                    _precio,
+                    _precioU,
+                    _marca,
+                    _detalles,
+                    _categoria,
+                    _stock,
+                    _stockU,
+                    _qr,adapter.MyImage,baseActivity)
+            }
+
         }
+        AgregateProductsState.AgregateState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            MessageSnackBar(view, text = "Agregado '${binding.TENombre.text}'", Color.GREEN)
+        })
+        binding.CSaveStorage?.setOnCheckedChangeListener { buttonView, isChecked ->
+
+        }
+        binding.CSaveLocal?.setOnCheckedChangeListener { buttonView, isChecked ->
+
+        }
+        binding.CSaveServer?.setOnCheckedChangeListener { buttonView, isChecked ->
+
+        }
+
+        AgregateProductsState.ButtonAgregateState.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer {
+                binding.BAgregate.isEnabled = it
+            })
 
         binding.BAgregateFile.setOnClickListener {
 //            Agregar imagen usando pikaso pero no funciona en dispositvos android como el que tengo yo android 10 crakeado
@@ -440,7 +571,6 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
 
         binding.DeleteDrag.setOnDragListener(DragAndDropListenerActions(baseActivity));
         binding.SaveDrag.setOnDragListener(DragAndDropListenerActions(baseActivity));
-
         binding.DeleteDrag.setOnTouchListener(TouchDropListenerAction())
         binding.SaveDrag.setOnTouchListener(TouchDropListenerAction())
 
@@ -507,6 +637,8 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
 
 //      Start camera ESCANNER()
         binding.BEscaner.setOnClickListener {
+            view?.let { activity?.hideKeyboard(it) }
+
             if (!CamScannerStatus) {
                 val ft: FragmentTransaction = childFragmentManager.beginTransaction()
 
@@ -525,7 +657,7 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
                         binding.SVAPNew.height + HeigthIncrement
                     ).setDuration(650)
 //            DesplazeAnimation.setAutoCancel(true)
-                CameraView.closeCameraChildren(false)
+                CameraView.CloseInFragment(false)
                 ft.replace(R.id.FragmentCamera, CameraQrFragment());
                 ft.commit()
                 if (baseActivity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -546,13 +678,11 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
                 }
 //                CameraView.ActivateCamera()
 //                CamClick=CameraTypes.SCANER
-                AgregateProductsState.CamaraStatus(CameraTypes.SCANER, true)
+                CameraView.CamaraStatus(CameraTypes.SCANER, true)
             } else {
-                Log.i("CARLOS", CamScannerStatus.toString())
-                AgregateProductsState.CamaraStatus(CameraTypes.NULL, false)
-                CameraView.closeCameraChildren(true)
-                Log.i("CARLOS", CamScannerStatus.toString())
-
+                Log.i("CARLOS", "SE LLAMO A CERRAR EL FRAGMENTO")
+                CameraView.CamaraStatus(CameraTypes.NULL, false)
+                CameraView.CloseInFragment(true)
 //                binding.CapturaLayout.visibility=View.VISIBLE
             }
         }
@@ -562,6 +692,7 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
         binding.BCaptura.setOnClickListener {
             //Children
 //            openCamera()
+            view?.let { activity?.hideKeyboard(it) }
             val ft: FragmentTransaction = childFragmentManager.beginTransaction()
 
             ft.setCustomAnimations(
@@ -579,7 +710,7 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
                     binding.SVAPNew.height + HeigthIncrement
                 ).setDuration(650)
 //            DesplazeAnimation.setAutoCancel(true)
-            CameraView.closeCameraChildren(false)
+            CameraView.CloseInFragment(false)
             ft.replace(R.id.FragmentCamera, CameraFragment());
             ft.setReorderingAllowed(true)
             ft.commit()
@@ -601,7 +732,7 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
             }
 //            CameraView.ActivateCamera()
             CamClick = CameraTypes.CAMERA
-            AgregateProductsState.CamaraStatus(CameraTypes.CAMERA, false)
+            CameraView.CamaraStatus(CameraTypes.CAMERA, false)
             //Sirve para animar la camara al abrir
 
         }
@@ -748,9 +879,10 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
 
     override fun CalculateArea(posX: Float, posY: Float) {
         RefMediumDistanceImage = offsetViewBounds.top
-        var diferencia = (RefMediumDistanceImage - (posY + offsetViewItem.top))
-        var dato = (diferencia * 32) / (RefMediumDistanceImage - offsetViewItem.top)
+        var diferencia = (RefMediumDistanceImage + (posY + offsetViewItem.bottom))
+        var dato = (diferencia * 32) / (RefMediumDistanceImage + offsetViewItem.bottom)
         var scale = dato * 0.031f
+
         if (scale > 0.35 && scale < 1.40) {
             viewHold.scaleX = scale
             viewHold.scaleY = scale
@@ -772,10 +904,6 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
 //        println(offsetViewBounds.left)
 
         var pwd = 0
-//        TIENE QUE IR AFUERA POR QUE ES PARTE DEL LISTVIEW
-//        if(!toogleCamera){
-//            pwd+=330
-//        }
         var MMDImagenY = posX + (viewHold.width / 2)
         var TABCalc =
             (offsetViewBounds.top - 50) <= ((offsetViewItem.top + posY) + (viewHold.width / 2)) && (offsetViewBounds.bottom + 100) >= ((offsetViewItem.top + posY) + (viewHold.width / 2))
