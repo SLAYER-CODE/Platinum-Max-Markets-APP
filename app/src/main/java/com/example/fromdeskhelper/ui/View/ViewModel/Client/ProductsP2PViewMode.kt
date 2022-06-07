@@ -43,7 +43,8 @@ class ProductsP2PViewMode @Inject constructor():
                 nombre = ItemZerialice[1],
                 precioU = ItemZerialice[3].toDouble(),
                 precioC = ItemZerialice[2].toDouble(),
-                imageBit = imagenBity
+                imageBit = imagenBity,
+                qr=null
             )
             Log.i("RECIVIENDO ARCHIVO", NewProduct.toString())
             if (!ComprobateList(NewProduct)) {

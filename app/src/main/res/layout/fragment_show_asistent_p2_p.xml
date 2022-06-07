@@ -40,14 +40,15 @@
         android:paddingTop="100dp"
         android:orientation="vertical">
         <View
+            style="@style/IconItems"
             android:layout_width="100dp"
             android:layout_height="200dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:backgroundTint="@color/md_blue_500_50"
             android:background="@drawable/ic_baseline_voice_over_off_24">
         </View>
         <TextView
+            style="@style/TextItemPrimero"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignTop="@+id/LVMylist"
@@ -61,7 +62,6 @@
             android:layout_weight="1"
             android:gravity="center|top"
             android:text="@string/asistent_clean"
-            android:textColor="@color/md_black_1000"
             android:textSize="20dp"
             android:textStyle="bold" />
     </LinearLayout>

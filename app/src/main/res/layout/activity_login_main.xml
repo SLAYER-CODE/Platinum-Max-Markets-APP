@@ -15,6 +15,7 @@
             android:background="#BF2222"
             tools:layout_editor_absoluteY="56dp" />
 
+
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,17 +27,23 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+            <eightbitlab.com.blurview.BlurView
+                android:id="@+id/ToolBarBlurLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/md_statusbar_translucent"
                 app:popupTheme="@style/Theme.Productos.PopupOverlay"
+                style="@style/ToolBarLogin"
                 app:titleMarginStart="0.8in">
 
             </androidx.appcompat.widget.Toolbar>
+            </eightbitlab.com.blurview.BlurView>
         </com.google.android.material.appbar.AppBarLayout>
+
 
 
 

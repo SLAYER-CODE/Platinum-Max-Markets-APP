@@ -28,11 +28,11 @@
         android:allowBackup="true"
         android:name="com.example.fromdeskhelper.ActivityMainApp"
         android:windowSoftInputMode="stateHidden|adjustResize"
-        android:icon="@mipmap/finalico_new_new_foreground"
+        android:icon="@mipmap/ic_launcher_logo_adaptive_fore"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/finalico_new_new_foreground"
+        android:roundIcon="@mipmap/ic_launcher_logo"
         android:supportsRtl="true"
-        android:theme="@style/SplashTheme">
+        android:theme="@style/Theme.FinalProductos.Fullscreen">
 
 
 <!--        <activity-->

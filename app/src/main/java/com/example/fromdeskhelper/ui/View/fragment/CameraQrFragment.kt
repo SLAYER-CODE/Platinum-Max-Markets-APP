@@ -163,7 +163,6 @@ class CameraQrFragment : Fragment() {
             imageAnalisis.setAnalyzer(cameraExecutor, QrCodeAnalyzer{ qrResult->
                 imageAnalisis.clearAnalyzer()
                 binding.PVCmain.post {
-                    println("Se ejecuto!!")
 //                                cameraProvider.unbindAll()
 //                                startCamera()
 //                            Log.d("QRCodeAnalyzer", "Barcode scanned: ${qrResult.text}")
@@ -182,7 +181,7 @@ class CameraQrFragment : Fragment() {
 //                    binding.TEQR.setText(qrResult.text)
 
                     AgregateProductsState.AgregateQR(qrResult.text)
-
+                    CameraView.AgregateQR(qrResult.text)
                     binding.Vqrline.clearAnimation()
                     binding.Vqrline.visibility=View.INVISIBLE;
 
@@ -266,13 +265,13 @@ class CameraQrFragment : Fragment() {
                                     Color.YELLOW
                                 )
                                 AgregateProductsState.AgregateQR(qrResult.text)
-
+                                CameraView.AgregateQR(qrResult.text)
                                 binding.Vqrline.clearAnimation()
                                 binding.Vqrline.visibility=View.INVISIBLE;
                                 binding.BRscanner.visibility = View.VISIBLE
 //                            cameraProvider.unbindAll()
                                 if(ConNet.ComprobationInternet(baseActivity)) {
-                                    baseActivity.returnbinding().appBarMain.PBbarList.visibility=View.VISIBLE
+                                    baseActivity.binding.appBarMain.PBbarList.visibility=View.VISIBLE
                                     Corutine = GlobalScope.launch(Dispatchers.Main) {
                                         val resultKeys = withContext(Dispatchers.IO) {
                                             ConnectToPost.ConnectAndGet(qrResult.text)

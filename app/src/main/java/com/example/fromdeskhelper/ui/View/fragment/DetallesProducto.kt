@@ -6,6 +6,7 @@ import Data.ImagenesNew
 import Data.InventarioProducts
 import Data.Producto
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.util.Log
@@ -22,6 +23,7 @@ import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.databinding.FragmentDetallesProductsBinding
 import com.example.fromdeskhelper.ui.View.ViewModel.ShowMainViewModel
 import com.example.fromdeskhelper.ui.View.activity.MainActivity
+import com.example.fromdeskhelper.util.MessageSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
@@ -54,8 +56,6 @@ class DetallesProducto : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true);
-
-
 
         arguments?.let {
             uid=it.getInt("uid");
@@ -157,24 +157,28 @@ class DetallesProducto : Fragment() {
                                             )
 //                                            MainModel.productosData().update(NewProducto);
                                             MainModel.updateProduct(NewProducto)
-                                            baseActivity.runOnUiThread {
-
-                                                Toast.makeText(
-                                                    activity,
-                                                    "Se actualizo correctamente!",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                            }
+//                                            baseActivity.runOnUiThread {
+                                                MessageSnackBar(view as View,"Se actualizo Correctamente",Color.GREEN)
+//
+//                                                Toast.makeText(
+//                                                    activity,
+//                                                    "Se actualizo correctamente!",
+//                                                    Toast.LENGTH_SHORT
+//                                                ).show()
+//                                            }
                                         }else{
-                                            baseActivity.runOnUiThread {
-                                                Toast.makeText(activity,"Tiene que rellenar Precio o nombre",Toast.LENGTH_SHORT).show()
-                                            }
+                                            MessageSnackBar(view as View,"Tiene que rellenar precio o nombre",Color.GREEN)
+//                                            baseActivity.runOnUiThread {
+//                                                Toast.makeText(activity,"Tiene que rellenar Precio o nombre",Toast.LENGTH_SHORT).show()
+//                                            }
                                         }
                                     }catch (Ex:Exception){
-                                        baseActivity.runOnUiThread {
-                                            Log.i("update",Ex.toString())
-                                            Toast.makeText(activity,"Intente Nuevamente",Toast.LENGTH_SHORT).show()
-                                        }
+                                        MessageSnackBar(view as View,"Intente Nuevamente",Color.GREEN)
+
+//                                        baseActivity.runOnUiThread {
+//                                            Log.i("update",Ex.toString())
+//                                            Toast.makeText(activity,"Intente Nuevamente",Toast.LENGTH_SHORT).show()
+//                                        }
                                     }
                                 }
                             }
@@ -212,7 +216,6 @@ class DetallesProducto : Fragment() {
     private  var formatter = SimpleDateFormat("dd|MM|yyyy - h:mm")
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        postponeEnterTransition()
         binding.TTNombre.isSelected=true
 //        database= AppDatabase.getDataBase(baseActivity);
 //        productoLiveData=database.productosData().get(uid)
@@ -221,7 +224,7 @@ class DetallesProducto : Fragment() {
 //        val daoNew = AppDatabase.getDataBase(baseActivity);
 //        daoNew.productosData().getTime(uid).observe(viewLifecycleOwner,{
 //        })
-
+        binding.TTNombre.transitionName="headertitle"
         productoLiveData.observe(viewLifecycleOwner, Observer {
             producto=it.producto
             activity?.setTitle("${formatter.format(producto.update)}")
@@ -237,7 +240,7 @@ class DetallesProducto : Fragment() {
 
             baseActivity.runOnUiThread {
                 if(it.imageN.isNotEmpty()) {
-                    adapter = DetallesAdapterImagen(baseActivity, it.imageN.reversed())
+                    adapter = DetallesAdapterImagen(baseActivity, it.imageN)
                     binding.RVimages.adapter = adapter
                 }else{
                     binding.RVimages.visibility=View.GONE
@@ -249,6 +252,7 @@ class DetallesProducto : Fragment() {
         })
 
         super.onViewCreated(view, savedInstanceState)
+        postponeEnterTransition()
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -263,15 +267,14 @@ class DetallesProducto : Fragment() {
     }
 
     override fun onStart() {
-        ((activity as MainActivity).hidefabrefresh())
-        baseActivity.returnbinding().appBarMain.BIShowP.visibility=View.GONE
+        baseActivity.binding.appBarMain.refreshFab.visibility=View.GONE
         super.onStart()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        ((activity as MainActivity).showfabrefresh())
-    }
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        ((activity as MainActivity).showfabrefresh())
+//    }
 
     companion object {
         /**

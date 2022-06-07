@@ -35,11 +35,12 @@
     <!--Fin Inicio de session-->
 
 
-    <string name="app_name">Fon Desk Helper</string>
+    <string name="app_name">MaxMarkets</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">Max Markets Platinum</string>
+    <string name="nav_header_subtitle">1edw333@gmail.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
@@ -61,9 +62,9 @@
     <!--    Fin de DrawersString-->
 
     <!--    Presentaciones String-->
-    <string name="presenation_one">Texto de presenatcion numero 2</string>
-    <string name="presenation_two">Texto de presenatcion numero 2</string>
-    <string name="presenation_tree">Texto de presenatcion numero 2</string>
+    <string name="presenation_one">Recolecte la información de tus clientes y los porductos una sola vez</string>
+    <string name="presenation_two">Identifique el Codigo del producto y obtenga la informacion necesaria</string>
+    <string name="presenation_tree">Mantegase en constante comunicación con los clientes</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="tab_text_3">Tab 3</string>

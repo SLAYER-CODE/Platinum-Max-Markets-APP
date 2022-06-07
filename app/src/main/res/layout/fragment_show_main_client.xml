@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout2"
+    android:id="@+id/MainClientRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="?attr/actionBarSize"
@@ -10,42 +10,40 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/PaggerIdClient"
-        android:background="@color/md_green_50"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/BarLayoutClient"></androidx.viewpager2.widget.ViewPager2>
+        app:layout_constraintTop_toTopOf="parent"></androidx.viewpager2.widget.ViewPager2>
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/BarLayoutClient"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:background="@color/md_blue_500_25"
         android:foregroundGravity="center"
         android:gravity="center"
-        android:theme="@style/Theme.Productos.AppBarOverlay"
-        app:layout_constraintTop_toBottomOf="@id/PaggerIdClient"
+        android:background="@color/md_cyan_500_25"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/TLMainCLient"
+        <eightbitlab.com.blurview.BlurView
+            android:id="@+id/blurTabLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/md_blue_500_50"
-            app:tabGravity="fill"
-            app:tabIconTint="@drawable/drawable_select_navigation"
-            app:tabIndicatorColor="@color/md_white_1000"
-            app:tabMaxWidth="0dp"
-            app:tabMode="fixed"
-            app:tabRippleColor="@color/md_green_A400"
-            app:tabSelectedTextColor="@color/md_green_A400"
-            app:tabTextColor="@color/md_black_1000" />
+            android:layout_height="match_parent">
 
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/TLMainCLient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/tabMainLayout"
+                app:tabGravity="fill"
+                app:tabIconTint="@drawable/drawable_select_navigation"
+                app:tabMaxWidth="0dp"
+                app:tabMode="fixed" />
+        </eightbitlab.com.blurview.BlurView>
     </com.google.android.material.appbar.AppBarLayout>
 
 

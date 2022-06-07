@@ -4,6 +4,7 @@ import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.ApolloResponse
 import com.apollographql.apollo3.api.DefaultUpload
 import com.apollographql.apollo3.api.Optional
+import com.apollographql.apollo3.exception.ApolloException
 import com.example.fromdeskhelper.AgregateProductMutation
 import com.example.fromdeskhelper.BrandsQuery
 import com.example.fromdeskhelper.CategoriasQuery
@@ -30,7 +31,8 @@ class ServicesGraph @Inject constructor(private val grapql: ApolloClient) {
 
     suspend fun GetProductsPreviewAll():ApolloResponse<ProductsPreviewQuery.Data>{
         return withContext(Dispatchers.IO){
-            grapql.query<ProductsPreviewQuery.Data>(ProductsPreviewQuery()).execute()
+            var res = grapql.query<ProductsPreviewQuery.Data>(ProductsPreviewQuery()).execute()
+            res
         }
     }
 

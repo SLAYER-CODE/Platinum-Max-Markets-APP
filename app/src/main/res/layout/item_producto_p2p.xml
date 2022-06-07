@@ -6,6 +6,7 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
+        style="@style/carView"
         android:outlineAmbientShadowColor="@color/md_black_1000"
         android:outlineSpotShadowColor="@color/md_black_1000"
         android:layout_marginLeft="10dp"
@@ -19,9 +20,7 @@
         android:paddingLeft="7dp"
         android:paddingRight="7dp"
         android:paddingBottom="7dp"
-        app:cardBackgroundColor="@color/md_white_1000"
         app:cardElevation="2dp"
-
         app:circularflow_radiusInDP="Sin radio"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,7 +37,7 @@
                 android:layout_weight="0">
 
                 <ImageView
-                    android:backgroundTint="@color/md_blue_500_75"
+                    style="@style/ButtonFloatLayout"
                     android:layout_margin="3dp"
                     android:background="@drawable/ic_baseline_price_add_product"
                     android:id="@+id/IVimagenItem"
@@ -93,6 +92,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
+                        style="@style/TextItemPrimero"
                         android:id="@+id/TNombre"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -107,8 +107,6 @@
                         android:shadowRadius="25"
                         android:singleLine="true"
                         android:textStyle="bold"
-                        android:text="TextView"
-                        android:textColor="#000000"
                         android:textSize="22sp"
                         android:maxWidth="300dp"
                         tools:text="Nombre del produto" />
@@ -121,24 +119,22 @@
                         android:showDividers="middle">
 
                         <TextView
+                            style="@style/TextItemPrimero"
                             android:id="@+id/TEPrecio"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Price"
-                            android:textColor="#191919"
                             android:textSize="15sp"
                             tools:text="20.2" />
 
                         <TextView
+                            style="@style/TextItemPrimero"
                             android:id="@+id/TEPrecioU"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="TextView"
-                            android:textColor="#191919"
                             android:textSize="15sp"
                             tools:text="12.50" />
                     </LinearLayout>

@@ -28,7 +28,6 @@ type Mutation {
         file: [Upload!],
         myval: ProductsInput!
     ): Products!
-    singleUpload(file: Upload!): Boolean!
 }
 
 type Phone {
@@ -65,6 +64,7 @@ type Query {
     Brands: [Brands!]!
     Categories: [Categories!]!
     Products: [Products!]!
+    ProductsCount: Int!
     Sessiones: [Users!]!
     comprobationUser(token: String!): Boolean!
     ping: String!

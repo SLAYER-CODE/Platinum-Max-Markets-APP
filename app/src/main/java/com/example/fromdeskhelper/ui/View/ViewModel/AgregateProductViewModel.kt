@@ -67,8 +67,8 @@ class AgregateProductViewModel @Inject constructor(
         viewModelScope.launch {
             _data.postValue(list)
         }
-
     }
+
 
 
     fun AgregateQR(String: String) {

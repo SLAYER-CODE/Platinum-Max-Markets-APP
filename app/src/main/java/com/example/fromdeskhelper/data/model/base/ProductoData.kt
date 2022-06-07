@@ -1,9 +1,6 @@
 package com.example.fromdeskhelper.data.model.base
 
-import Data.ImagenesNew
-import Data.InventarioProducts
-import Data.Producto
-import Data.listInventarioProductos
+import Data.*
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import java.util.*
@@ -30,7 +27,7 @@ interface ProductoData {
 
     @Transaction
     @Query("SELECT * FROM productos")
-    fun getAllInventarioA(): List<InventarioProducts>
+    fun getAllInventario(): List<InventarioProducts>
 
     @Transaction
     @Query("SELECT * FROM productos WHERE uid=:id")
@@ -40,12 +37,27 @@ interface ProductoData {
     fun getAllInventarioTime(limit:Int,offset:Int):LiveData<List<InventarioProducts>>
 
     @Transaction
-    @Query("SELECT productos.uid,productos.nombre,productos.precioC,productos.precioU,imagenes.imageBit   FROM productos LEFT JOIN imagenes  on imagenes.id_producto = productos.uid group by productos.uid ORDER BY `update` DESC LIMIT :limit OFFSET :offset  ")
+    @Query("SELECT productos.uid,productos.nombre,productos.precioC,productos.precioU,imagenes.imageBit,qr  FROM productos LEFT JOIN imagenes  on imagenes.id_producto = productos.uid group by productos.uid ORDER BY `update` DESC LIMIT :limit OFFSET :offset  ")
     fun getByInventarioProductos(limit:Int,offset:Int): LiveData<List<listInventarioProductos>>
+
+    @Transaction
+    @Query("SELECT productos.uid,productos.nombre,productos.precioC,productos.precioU,imagenes.imageBit,qr  FROM productos LEFT JOIN imagenes  on imagenes.id_producto = productos.uid group by productos.uid ORDER BY `update` ")
+    fun getByInventarioProductosAll(): LiveData<List<listInventarioProductos>>
+
+    @Transaction
+    @Query("SELECT client.number,client.uid,client.color  FROM client ORDER BY `fecha` ")
+    fun getClientList(): LiveData<List<ClientListGet>>
+
+
+
 
     @Transaction
     @Query("SELECT * FROM imagenes WHERE id_producto = :id")
     fun getByImagenesId(id: Int): List<ImagenesNew>
+
+
+    @Insert
+    fun insertClient(client:ClientList):Long
 
     @Insert
     fun insertAll(producto: Producto):Long
@@ -53,7 +65,6 @@ interface ProductoData {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllImages(vararg imagenNew: ImagenesNew)
-
 
     @Update
     fun update(producto: Producto)

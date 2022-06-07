@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-
+    style="@style/DrawableFond"
     tools:openDrawer="start">
 
     <include
@@ -15,20 +15,41 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
+    <!--<androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--    android:id="@+id/boss"-->
+    <!--    android:layout_width="wrap_content"-->
+    <!--    android:fitsSystemWindows="true"-->
+    <!--    android:layout_gravity="start"-->
+    <!--    android:layout_height="wrap_content">-->
+    <eightbitlab.com.blurview.BlurView
+        android:layout_gravity="left"
+        android:id="@+id/BlurVIewDrawable"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/black_overlay"
-        android:fitsSystemWindows="true"
-        app:itemIconTint="@drawable/drawable_select_navigation"
-        app:itemBackground="@drawable/background_navdrawable"
-        app:itemTextColor="@drawable/drawable_select_navigation"
-        app:headerLayout="@layout/nav_header_main"
-        app:subheaderColor="@color/md_green_A400"
-        app:menu="@menu/activity_main_drawer" />
+        android:layout_height="match_parent">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        <include layout="@layout/nav_header_main"/>
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_gravity="left"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scrollbarFadeDuration="0"
+            android:scrollbarSize="0dp"
+            android:background="@drawable/background_navdrawable"
+            app:itemBackground="@drawable/background_navdrawable"
+            app:itemTextColor="@drawable/drawable_select_navigation"
+            app:itemIconTint="@drawable/drawable_select_navigation"
+            app:menu="@menu/activity_main_drawer">
+
+        </com.google.android.material.navigation.NavigationView>
+        </LinearLayout>
+    </eightbitlab.com.blurview.BlurView>
+
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
 
     <!--    <fragment-->
     <!--        android:id="@+id/nav_host_fragment"-->

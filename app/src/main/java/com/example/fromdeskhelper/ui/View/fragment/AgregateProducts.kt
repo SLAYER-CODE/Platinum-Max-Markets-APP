@@ -164,8 +164,8 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
         baseActivity.binding.appBarMain.refreshFab.setOnClickListener {
             clearItems()
         }
-        baseActivity.returnbinding().appBarMain.BIShowP.visibility = View.INVISIBLE
-        (activity as MainActivity).returnbinding().appBarMain.refreshFab.setImageResource(R.drawable.ic_baseline_clear_all_24)
+        baseActivity.binding.appBarMain.BIShowP.visibility = View.INVISIBLE
+        baseActivity.binding.appBarMain.refreshFab.setImageResource(R.drawable.ic_baseline_clear_all_24)
         super.onStart()
     }
 
@@ -484,7 +484,7 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
             val _qr: String = binding.TEQR.text.toString()
 //            val _image:ByteArray= ByteArray(0)
 
-            if(binding.CSaveStorage!!.isChecked) {
+            if (binding.CSaveStorage!!.isChecked) {
                 AgregateProductsState.AgregateItemStorage(
                     _name,
                     _precio,
@@ -499,8 +499,8 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
                     baseActivity
                 )
             }
-            if (binding.CSaveServer!!.isChecked){
-                var caTegorys= mutableListOf<CategoriesInput>()
+            if (binding.CSaveServer!!.isChecked) {
+                var caTegorys = mutableListOf<CategoriesInput>()
                 var marCas = mutableListOf<BrandsInput>()
 
                 binding.chipGroup2.children.toList().forEach {
@@ -509,7 +509,8 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
                 binding.ChipGroupMarca.children.toList().forEach {
                     marCas.add(BrandsInput((it as Chip).text.toString()))
                 }
-                AgregateProductsState.AgregateServer(caTegorys,marCas,_name,
+                AgregateProductsState.AgregateServer(
+                    caTegorys, marCas, _name,
                     _precio,
                     _precioU,
                     _marca,
@@ -517,10 +518,11 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
                     _categoria,
                     _stock,
                     _stockU,
-                    _qr,adapter.MyImage,baseActivity)
+                    _qr, adapter.MyImage, baseActivity
+                )
             }
-            if(binding.CSaveLocal!!.isChecked){
-                var caTegorys= mutableListOf<String>()
+            if (binding.CSaveLocal!!.isChecked) {
+                var caTegorys = mutableListOf<String>()
                 var marCas = mutableListOf<String>()
 
                 binding.chipGroup2.children.toList().forEach {
@@ -529,7 +531,8 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
                 binding.ChipGroupMarca.children.toList().forEach {
                     marCas.add((it as Chip).text.toString())
                 }
-                AgregateProductsState.AgregateProductLocal(caTegorys,marCas,_name,
+                AgregateProductsState.AgregateProductLocal(
+                    caTegorys, marCas, _name,
                     _precio,
                     _precioU,
                     _marca,
@@ -537,13 +540,16 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
                     _categoria,
                     _stock,
                     _stockU,
-                    _qr,adapter.MyImage,baseActivity)
+                    _qr, adapter.MyImage, baseActivity
+                )
             }
 
         }
-        AgregateProductsState.AgregateState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            MessageSnackBar(view, text = "Agregado '${binding.TENombre.text}'", Color.GREEN)
-        })
+        AgregateProductsState.AgregateState.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer {
+                MessageSnackBar(view, text = "Agregado '${binding.TENombre.text}'", Color.GREEN)
+            })
         binding.CSaveStorage?.setOnCheckedChangeListener { buttonView, isChecked ->
 
         }
@@ -589,7 +595,7 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
         )
         binding.SPCantidad.adapter = adapterSCantidad
 
-        binding.SPCantidad.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+        binding.SPCantidad.onItemSelectedListener = (object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parentView: AdapterView<*>?,
                 selectedItemView: View?,
@@ -743,9 +749,9 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
 //        }
 
 
-        view.doOnPreDraw {
-            startPostponedEnterTransition()
-        }
+//        view.doOnPreDraw {
+//            startPostponedEnterTransition()
+//        }
 
         super.onViewCreated(view, savedInstanceState)
     }

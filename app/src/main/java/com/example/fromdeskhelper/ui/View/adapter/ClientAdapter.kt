@@ -1,6 +1,7 @@
 package com.example.fromdeskhelper.ui.View.adapter
 
 import Data.ClientList
+import Data.ClientListGet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +11,10 @@ import com.example.fromdeskhelper.R
 import kotlinx.android.synthetic.main.item_client_list.view.*
 
 
-class ClientAdapter(var Clients:MutableList<ClientList>):RecyclerView.Adapter<ClientAdapter.HolderClient>() {
+class ClientAdapter(var Clients:MutableList<ClientListGet>):RecyclerView.Adapter<ClientAdapter.HolderClient>() {
 
     inner class HolderClient(val view:View):RecyclerView.ViewHolder(view){
-        fun render(Cliente:ClientList){
+        fun render(Cliente:ClientListGet){
             val ViewDrawable=DrawableCompat.wrap(view.TVClientVent.background);
             DrawableCompat.setTint(ViewDrawable,Cliente.color)
 
@@ -22,16 +23,17 @@ class ClientAdapter(var Clients:MutableList<ClientList>):RecyclerView.Adapter<Cl
 //            NewDrawable.setStroke(3,Cliente.color)
 //            NewDrawable.setColor(Color.BLACK)
 //            view.TVClientVent.background=NewDrawable
-            view.TVClientVent.setText(Cliente.number.toString());
+            view.TVClientVent.setText(Cliente.uid.toString());
         }
     }
-    fun addClient(cliente:ClientList){
+    fun addClient(cliente:ClientListGet){
         Clients.add(cliente)
         notifyDataSetChanged()
     }
-    fun addClientFrist(cliente: ClientList){
+    fun addClientFrist(cliente: ClientListGet){
         Clients.add(0,cliente)
         notifyItemRangeInserted(0,1)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HolderClient {

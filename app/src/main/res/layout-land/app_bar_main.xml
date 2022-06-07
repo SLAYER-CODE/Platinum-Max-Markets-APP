@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:id="@+id/cordinatorRoot"
     tools:context=".ui.View.activity.MainActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,9 +21,9 @@
 
             <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/toolbarParent"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/zxing_transparent"
+                style="@style/BarLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -31,10 +32,10 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="#99001C19"
+                    android:title=""
+                    style="@style/BarActiveToolBar"
                     app:popupTheme="@style/Theme.Productos.PopupOverlay"
-                    app:titleTextColor="@color/md_red_500">
-
+                    app:title="">
                     <LinearLayout
                         android:id="@+id/BIShowP"
                         android:layout_width="wrap_content"
@@ -60,10 +61,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
-
+                            style="@style/ButonActionBar"
                             android:background="@drawable/ic_baseline_qr_code_scanner_showproduct"
                             android:minWidth="50dp"></androidx.appcompat.widget.AppCompatButton>
-
 
                     </LinearLayout>
                 </androidx.appcompat.widget.Toolbar>
@@ -88,7 +88,8 @@
             </com.google.android.material.appbar.AppBarLayout>
             <com.google.android.material.appbar.AppBarLayout
                 android:visibility="gone"
-                tools:visibility="visible"
+                tools:visibility="gone"
+
                 android:id="@+id/toolbarParentClient"
                 android:foregroundTintMode="screen"
                 android:layout_width="match_parent"
@@ -104,6 +105,7 @@
                     android:background="@color/md_blue_500_50"
                     android:title=""
                     app:title=""
+                    style="@style/BarActiveToolBar"
                     app:popupTheme="@style/Theme.Productos.PopupOverlay"
                     app:titleTextColor="@color/md_red_500">
                     <TextView
@@ -140,8 +142,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
+                            style="@style/ButonActionBar"
                             android:background="@drawable/ic_baseline_qr_code_scanner_showproduct"
                             android:minWidth="50dp"></androidx.appcompat.widget.AppCompatButton>
+
                     </LinearLayout>
                 </androidx.appcompat.widget.Toolbar>
 
@@ -247,8 +251,7 @@
         android:layout_gravity="bottom|start"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/button_background"
-        android:backgroundTint="#C82CFF5A"
+        style="@style/ButtonFloatLayout"
         app:srcCompat="@drawable/ic_baseline_autorenew_24" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -258,8 +261,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/button_background"
-        android:backgroundTint="#C82CFF5A"
+        style="@style/ButtonFloatLayout"
         app:srcCompat="@drawable/ic_baseline_add_shopping_cart_24" />
 
     <!--    <fragment-->

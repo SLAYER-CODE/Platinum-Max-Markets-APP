@@ -92,7 +92,6 @@ class QrCodeAnalyzer(
         // by default ImageReader uses YUV format unless changed.
 
         if (image.format !in yuvFormats) {
-            Log.e("QRCodeAnalyzer", "Expected YUV, now = ${image.format}")
             image.close()
             return
         }

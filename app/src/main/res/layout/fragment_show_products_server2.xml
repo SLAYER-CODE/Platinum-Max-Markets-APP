@@ -3,10 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.View.fragment.Client.ChildFragments.ShowProductsServerFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <androidx.recyclerview.widget.RecyclerView
+    <com.github.rubensousa.gravitysnaphelper.GravitySnapRecyclerView
+        app:snapGravity="top"
+        app:snapLastItem="true"
+        app:snapToPadding="true"
         android:id="@+id/LVMylist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,7 +25,7 @@
         android:paddingBottom="10dp"
         android:foregroundGravity="center_vertical|center">
 
-    </androidx.recyclerview.widget.RecyclerView>
+    </com.github.rubensousa.gravitysnaphelper.GravitySnapRecyclerView>
 
     <LinearLayout
         android:id="@+id/TNotItems"
@@ -39,14 +43,15 @@
         android:paddingTop="100dp"
         android:orientation="vertical">
         <View
+            style="@style/IconItems"
             android:layout_width="100dp"
             android:layout_height="200dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:backgroundTint="@color/md_blue_500_50"
             android:background="@drawable/ic_baseline_content_paste_off_24">
         </View>
         <TextView
+            style="@style/TextItemPrimero"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignTop="@+id/LVMylist"
@@ -60,7 +65,6 @@
             android:layout_weight="1"
             android:gravity="center|top"
             android:text="@string/serverClient_clean"
-            android:textColor="@color/md_black_1000"
             android:textSize="20dp"
             android:textStyle="bold" />
     </LinearLayout>

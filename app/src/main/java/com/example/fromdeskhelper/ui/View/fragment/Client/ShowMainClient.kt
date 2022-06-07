@@ -15,6 +15,8 @@ import com.example.fromdeskhelper.ui.View.adapter.ViewPagerMainAdapterClient
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import eightbitlab.com.blurview.BlurView
+import eightbitlab.com.blurview.RenderScriptBlur
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -66,6 +68,19 @@ class ShowMainClient : Fragment() {
         super.onStart()
     }
 
+    private fun blurbackground(view: BlurView) {
+        val radius = 5f
+        val decorView: View =  activity?.window!!.decorView
+//        val rootView = decorView.findViewById<View>(android.R.id.content) as ViewGroup
+        val windowBackground = decorView.background
+        view.setupWith(binding.PaggerIdClient)
+            .setFrameClearDrawable(windowBackground)
+            .setBlurAlgorithm(RenderScriptBlur(baseActivity))
+            .setBlurRadius(radius)
+//            .setBlurAutoUpdate(true)
+            .setHasFixedTransformationMatrix(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -104,7 +119,7 @@ class ShowMainClient : Fragment() {
                 }
             })
         tablayoutnavigator.attach()
-
+        blurbackground(binding.blurTabLayout)
         return binding.root
     }
 

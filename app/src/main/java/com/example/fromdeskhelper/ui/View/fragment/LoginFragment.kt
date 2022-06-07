@@ -26,6 +26,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.data.Privilegies
 import com.example.fromdeskhelper.data.Providers
@@ -47,6 +48,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.*
 import dagger.hilt.android.AndroidEntryPoint
+import eightbitlab.com.blurview.BlurView
+import eightbitlab.com.blurview.RenderScriptBlur
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -92,19 +95,37 @@ class LoginFragment : Fragment() {
     }
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
 //        loginViewModel()
         super.onCreate(savedInstanceState)
+    }
+
+    private fun blurbackground(view: BlurView?,float:Float) {
+        val radius = float
+        val decorView: View =  activity?.window!!.decorView
+        val rootView = binding.containerGrant as ViewGroup
+        val windowBackground = decorView.background
+        view?.setupWith(rootView)
+            ?.setFrameClearDrawable(windowBackground)
+            ?.setBlurAlgorithm(RenderScriptBlur(context))
+            ?.setBlurRadius(radius)
+            ?.setBlurAutoUpdate(true)
+            ?.setHasFixedTransformationMatrix(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //        loginViewModel = ViewModelProvider(this, LoginViewModelFactory()).get(LoginViewModel::class.java)
         activity?.setTitle("Inicia Session")
+
         val usernameEditText = binding.username
         val passwordEditText = binding.password
         val loadingProgressBar = binding.loading
 //        loadingProgressBar.visibility=View.INVISIBLE
+
+        blurbackground(binding.fondBackground,1f)
+        blurbackground(binding.fondEdit,0.5f)
 
 
 //        binding.connectWithFbButton.setFragment(this)
@@ -113,6 +134,7 @@ class LoginFragment : Fragment() {
             MessageSnackBar(view = view, "Se registro Correctamente", Color.GREEN)
             val intent = Intent(activity, MainActivity::class.java)
             startActivity(intent)
+            Animatoo.animateZoom(baseActivity);
             baseActivity.finish()
         })
 
@@ -440,6 +462,7 @@ class LoginFragment : Fragment() {
             loginViewModel.initFirebaseToken()
             var initLoginActiviti: Intent = Intent(baseActivity, MainActivity::class.java)
             startActivity(initLoginActiviti)
+            Animatoo.animateZoom(baseActivity);
             baseActivity.finish()
         }
         binding.loading.visibility = View.INVISIBLE

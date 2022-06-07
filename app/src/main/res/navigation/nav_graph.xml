@@ -20,10 +20,7 @@
         <action
             android:id="@+id/action_FirstFragment_to_detallesProducto"
             app:destination="@id/detallesProducto"
-            app:enterAnim="@anim/slide_left"
-            app:exitAnim="@anim/wait_anim"
-            app:popEnterAnim="@anim/wait_anim"
-            app:popExitAnim="@anim/slide_right" />
+            />
 
     </fragment>
 <!--    android:label="@string/second_fragment_label"-->

@@ -1,5 +1,6 @@
 package com.example.fromdeskhelper.domain
 
+import Data.ClientList
 import Data.ImagenesNew
 import Data.Producto
 import android.graphics.Bitmap
@@ -16,6 +17,7 @@ import java.util.*
 import javax.inject.Inject
 
 class CallsAddProductStorageUseCase @Inject constructor(private val ProductController: SavedProductController) {
+
 
     suspend fun SaveProductLocal(
         name: String,
@@ -85,4 +87,6 @@ class CallsAddProductStorageUseCase @Inject constructor(private val ProductContr
             }
         }
     }
+
+
 }

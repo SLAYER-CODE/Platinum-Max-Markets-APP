@@ -18,10 +18,14 @@ query ProductsPreview{
         description
         price_cantidad
         price_unity
+        qr
         image_realation {
             image_name
         }
     }
+}
+query CountProducts{
+    countproduct:ProductsCount
 }
 
 mutation AgregateProduct($myval:ProductsInput!,$file:[Upload!]! ){

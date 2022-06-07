@@ -77,31 +77,31 @@ class DosPresentacionFragment : Fragment() {
     ): View? {
 
         _binding = FragmentDosPrecentacionBinding.inflate(inflater, container, false)
-        blurbackground()
+//        blurbackground()
         fullscreenContentControls?.visibility = View.GONE
         hidePart2Runnable.run()
 
-        binding.BNext.setOnClickListener{
-            findNavController().navigate(com.example.fromdeskhelper.R.id.action_dosPresentacionFragment_to_tresPresentacionFragment)
-        }
+//        binding.BNext.setOnClickListener{
+//            findNavController().navigate(com.example.fromdeskhelper.R.id.action_dosPresentacionFragment_to_tresPresentacionFragment)
+//        }
 
         return binding.root
 
     }
 
 
-    private fun blurbackground() {
-        val radius = 5f
-        val decorView: View =  activity?.window!!.decorView
-        val rootView = decorView.findViewById<View>(R.id.content) as ViewGroup
-        val windowBackground = decorView.background
-        binding.blurView.setupWith(rootView)
-            .setFrameClearDrawable(windowBackground)
-            .setBlurAlgorithm(RenderScriptBlur(context))
-            .setBlurRadius(radius)
-            .setBlurAutoUpdate(true)
-            .setHasFixedTransformationMatrix(true)
-    }
+//    private fun blurbackground() {
+//        val radius = 5f
+//        val decorView: View =  activity?.window!!.decorView
+//        val rootView = decorView.findViewById<View>(R.id.content) as ViewGroup
+//        val windowBackground = decorView.background
+//        binding.blurView.setupWith(rootView)
+//            .setFrameClearDrawable(windowBackground)
+//            .setBlurAlgorithm(RenderScriptBlur(context))
+//            .setBlurRadius(radius)
+//            .setBlurAutoUpdate(true)
+//            .setHasFixedTransformationMatrix(true)
+//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

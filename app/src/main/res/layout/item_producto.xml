@@ -18,10 +18,10 @@
         android:progressTint="#FCFFDD00"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.62"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.060000002" />
+        app:layout_constraintVertical_bias="0.04000002" />
 
     <LinearLayout
         android:id="@+id/linearLayout4"
@@ -43,12 +43,14 @@
             android:layout_weight="0">
 
             <ImageView
+                style="@style/ButtonFloatLayout"
+                android:background="@drawable/ic_baseline_price_add_product"
                 android:id="@+id/IVimagenItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:minWidth="170dp"
-                android:transitionName="image_small"
+                android:transitionName="transtionexit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -81,6 +83,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0">
                 <ToggleButton
+                    android:textColor="@drawable/toogle_select_text"
                     style="@style/toggleButton_lint"
                     android:id="@+id/SaveStorage"
                     android:layout_width="match_parent"
@@ -92,6 +95,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
                 <ToggleButton
+                    android:textColor="@drawable/toogle_select_text"
                     style="@style/toggleButton_lint"
                     android:id="@+id/BSincronise"
                     android:layout_width="match_parent"
@@ -101,6 +105,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
                 <ToggleButton
+                    android:textColor="@drawable/toogle_select_text"
                     style="@style/toggleButton_lint"
                     android:id="@+id/BSLocal"
                     android:layout_width="match_parent"
@@ -115,9 +120,11 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:id="@+id/ItemBackground"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
+            style="@style/IconItems"
             android:background="@color/md_green_500_25"
             android:padding="5dp">
 
@@ -137,24 +144,23 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
+                    style="@style/TextItemPrimero"
                     android:id="@+id/TNombre"
+                    android:transitionName="text_header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:ellipsize="marquee"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:foregroundGravity="center"
                     android:gravity="center|left"
                     android:marqueeRepeatLimit="marquee_forever"
                     android:scrollHorizontally="true"
-                    android:shadowRadius="25"
                     android:singleLine="true"
                     android:text="TextView"
                     android:textStyle="bold"
-                    android:textColor="#08FF00"
                     android:textSize="25sp"
-                    tools:text="Nombre" />
+                    tools:text="Bonabones" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -164,36 +170,36 @@
                     android:showDividers="middle">
 
                     <TextView
+                        style="@style/TextItemPrimero"
                         android:id="@+id/TEPrecio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="TextView"
-                        android:textColor="#00FF2A"
                         android:textSize="15sp"
                         tools:text="Precio" />
 
                     <TextView
+                        style="@style/TextItemPrimero"
                         android:id="@+id/TEPrecioU"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="TextView"
-                        android:textColor="#00FF2A"
                         android:textSize="15sp"
                         tools:text="Precio U" />
                 </LinearLayout>
 
                 <TextView
+                    style="@style/TextItemPrimero"
                     android:id="@+id/TEDetalles"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
                     android:gravity="left"
                     android:text=""
-                    android:textColor="#00FF2A"
                     android:textSize="15sp"
                     tools:text="Detalles" />
 

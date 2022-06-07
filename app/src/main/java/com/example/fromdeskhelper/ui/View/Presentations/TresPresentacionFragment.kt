@@ -101,7 +101,7 @@ class TresPresentacionFragment : Fragment() {
     ): View? {
 
         _binding = FragmentTresPresentacionBinding.inflate(inflater, container, false)
-        blurbackground()
+//        blurbackground()
         fullscreenContentControls?.visibility = View.GONE
         hidePart2Runnable.run()
 
@@ -120,18 +120,18 @@ class TresPresentacionFragment : Fragment() {
 
     }
 
-    private fun blurbackground() {
-        val radius = 5f
-        val decorView: View =  activity?.window!!.decorView
-        val rootView = decorView.findViewById<View>(R.id.content) as ViewGroup
-        val windowBackground = decorView.background
-        binding.blurView.setupWith(rootView)
-            .setFrameClearDrawable(windowBackground)
-            .setBlurAlgorithm(RenderScriptBlur(context))
-            .setBlurRadius(radius)
-            .setBlurAutoUpdate(true)
-            .setHasFixedTransformationMatrix(true)
-    }
+//    private fun blurbackground() {
+//        val radius = 5f
+//        val decorView: View =  activity?.window!!.decorView
+//        val rootView = decorView.findViewById<View>(R.id.content) as ViewGroup
+//        val windowBackground = decorView.background
+//        binding.blurView.setupWith(rootView)
+//            .setFrameClearDrawable(windowBackground)
+//            .setBlurAlgorithm(RenderScriptBlur(context))
+//            .setBlurRadius(radius)
+//            .setBlurAutoUpdate(true)
+//            .setHasFixedTransformationMatrix(true)
+//    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

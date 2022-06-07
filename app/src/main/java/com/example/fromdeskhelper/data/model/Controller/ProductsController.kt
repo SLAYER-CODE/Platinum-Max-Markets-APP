@@ -14,10 +14,12 @@ import javax.inject.Inject
 class ProductsController @Inject constructor(
     private val DaoProduct: ProductoData
 ) {
-    fun GetProductsAll(offset:Int,limit:Int):LiveData<List<listInventarioProductos>>{
+    fun GetProductsAllOffset(offset:Int,limit:Int):LiveData<List<listInventarioProductos>>{
         return DaoProduct.getByInventarioProductos(offset,limit)
     }
-
+    fun GetProductsAll():LiveData<List<listInventarioProductos>>{
+        return DaoProduct.getByInventarioProductosAll()
+    }
     fun GetProductsAll(ID:Int):LiveData<InventarioProducts>{
         return DaoProduct.getInventarioId(ID)
     }

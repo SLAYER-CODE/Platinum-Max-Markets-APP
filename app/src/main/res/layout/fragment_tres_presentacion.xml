@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/tree_presentation"
+    android:id="@+id/sss"
     android:theme="@style/ThemeOverlay.finalproductos.FullscreenContainer"
     tools:context=".ui.View.Presentations.TresPresentacionFragment">
 
@@ -23,50 +23,52 @@
         <ImageView
             android:layout_width="357dp"
             android:layout_height="209dp"
-            android:background="@mipmap/presenation_empresamayor"
-            app:layout_constraintEnd_toEndOf="@+id/blurView"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <eightbitlab.com.blurview.BlurView
-            android:id="@+id/blurView"
-            android:layout_width="355dp"
-            android:layout_height="564dp"
-            android:background="@drawable/border_presentation"
-            android:padding="40dp"
+            android:background="@mipmap/terceroultimo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.68">
+            app:layout_constraintVertical_bias="0.421" />
 
-            <!--Any child View here, TabLayout for example. This View will NOT be blurred -->
+        <eightbitlab.com.blurview.BlurView
+            android:id="@+id/blurView3"
+            android:layout_width="235dp"
+            android:layout_height="234dp"
+            android:layout_margin="20dp"
+            android:background="@drawable/border_presentation"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.69"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.96">
 
             <TextView
-                android:id="@+id/textView"
-                android:layout_width="306dp"
-                android:layout_height="353dp"
-                android:shadowColor="#BCFFFFFF"
+                android:id="@+id/textViewUnoe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="25dp"
+                android:gravity="center"
                 android:shadowDx="10"
                 android:shadowDy="10"
-                android:shadowRadius="15"
+                android:shadowRadius="20"
                 android:text="@string/presenation_tree"
-                android:textColor="#FFFFFF"
-                android:textSize="40dp"
-                android:textStyle="bold|italic" />
+                android:textSize="20sp"
+                android:textStyle="bold|italic"
+                style="@style/textPresentation" />
         </eightbitlab.com.blurview.BlurView>
 
 
-        <androidx.appcompat.widget.AppCompatButton
+        <Button
+            android:backgroundTint="@color/md_blue_500_75"
             android:id="@+id/BNext"
             android:layout_width="126dp"
-            android:layout_height="126dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="84dp"
-            android:background="@drawable/button_next_green"
-            android:text=" "
+            android:layout_height="56dp"
+            android:layout_marginEnd="36dp"
+            android:layout_marginBottom="30dp"
+            android:text="Iniciar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

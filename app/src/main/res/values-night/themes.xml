@@ -59,5 +59,147 @@
         <item name="colorPrimaryDark">@color/ef_black_alpha_50</item>
         <item name="colorAccent">@color/md_black_1000</item>
         <item name="android:statusBarColor">@color/md_black_1000</item>
-    </style>a
+    </style>
+
+    <style name="EdiText">
+        <item name="android:textColorHint">@color/md_white_1000_50</item>
+    </style>
+    <style name="DrawNavigation" >
+        <item name="subheaderColor">@color/md_green_A400</item>
+    </style>
+
+    <style name="TabLayoutView" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:background">@color/md_black_1000</item>
+        <item name="tabSelectedTextColor">@color/md_green_A400</item>
+        <item name="tabIndicatorColor">@color/md_green_A400</item>
+        <item name="tabRippleColor">@color/md_green_A400</item>
+        <item name="tabTextColor">@color/md_white_1000</item>
+    </style>
+
+    <style name="BarLayout">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="titleTextColor">@color/md_red_500</item>
+    </style>
+
+
+    <style name="ButtonFloatLayout">
+        <item name="android:backgroundTint">@color/md_green_A700</item>
+    </style>
+
+
+
+    <style name="IconItems">
+        <item name="android:backgroundTint">@color/md_green_A700</item>
+    </style>
+
+    <style name="TextItemPrimero">
+        <item name="android:textColor">@color/md_green_A700</item>
+        <item name="android:shadowColor">@color/md_black_1000</item>
+        <item name="android:shadowDy">4</item>
+        <item name="android:shadowRadius">5</item>
+    </style>
+
+    <style name="ButonActionBar">
+        <item name="backgroundTint">@color/md_green_A700</item>
+        <item name="android:foregroundTint">@color/md_green_A700</item>
+    </style>
+
+    <style name="BarActiveToolBar">
+        <item name="android:background">@color/md_black_1000</item>
+        <item name="titleTextColor">@color/md_green_A400</item>
+    </style>
+
+
+    <style name="textPresentation">
+        <item name="android:textColor">@color/md_green_A700</item>
+        <item name="android:shadowColor">@color/md_green_800</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="ToolBarLogin">
+        <item name="titleTextColor">@color/md_green_A700</item>
+    </style>
+    <style name="DrawableFond">
+        <item name="android:background">@color/md_black_1000</item>
+    </style>
+
+    <style name="fontMainDrawable">
+        <item name="android:background">@color/md_black_1000</item>
+    </style>
+
+    <style name="tabMainLayout">
+        <item name="android:background">@color/md_green_500_25</item>
+        <item name="tabSelectedTextColor">@color/md_green_A400</item>
+        <item name="tabTextColor">@color/md_white_1000</item>
+    </style>
+
+    <style name="toggleButton_lint"  parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:buttonStyleToggle">@style/Widget.Button.Toggle</item>
+        <item name="android:textOn">On</item>
+        <item name="android:textOff">Off</item>
+        <item name="android:colorControlActivated">@color/md_green_A700</item>
+        <item name="android:textSize">10dp</item>
+        <item name="android:textColor">@color/md_green_A400</item>
+        <item name="android:shadowRadius">2</item>
+        <item name="android:shadowDx">3</item>
+        <item name="android:shadowDy">3</item>
+        <item name="android:shadowColor">@color/md_black_1000</item>
+        <item name="android:fontWeight">500</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="carView">
+        <item name="cardBackgroundColor">@color/md_green_500_75_overlay</item>
+    </style>
+
+    <style name="EditTextItem">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/md_white_1000</item>
+    </style>
+
+    <style name="AgregateFontDrawable">
+        <item name="android:background">@color/md_black_1000</item>
+    </style>
+    <style name="ButtonSettingsItems">
+        <item name="android:background">@color/md_red_500</item>
+        <item name="android:drawableTint">@color/md_green_A400</item>
+    </style>
+<!--    <style name="BotonAgregate">-->
+<!--        <imte name="android:background">@color/md_green_500_75_overlay</imte>-->
+<!--        <item name="android:textColor">@color/md_white_1000</item>-->
+<!--        <item name="android:shadowColor">#7900A6FF</item>-->
+<!--    </style>-->
+
+    <style name="ButtonItems">
+        <item name="android:drawableTint">@color/md_green_A400</item>
+        <item name="android:background">@color/md_green_500_75_overlay</item>
+        <item name="android:textColor">@color/md_green_A400</item>
+        <item name="android:shadowColor">@color/md_green_500_75_overlay</item>
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowDy">4</item>
+        <item name="android:shadowRadius">4</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">9dp</item>
+        <item name="android:layout_margin">6dp</item>
+    </style>
+
+    <style name="ItemSeparate">
+        <item name="android:background">@color/md_green_A400</item>
+        <item name="android:drawableTint">@color/md_green_A400</item>
+    </style>
+
+    <style name="TextInputLayoutComprate">
+        <item name="android:textColorHint">@color/md_green_A400</item>
+        <item name="helperTextTextColor">@color/md_light_green_A400</item>
+        <item name="hintTextColor">@color/md_amber_50</item>
+        <item name="startIconTint">@color/md_green_A400</item>
+    </style>
+
+    <style name="TextInputEditTextaComprate">
+        <item name="android:textSize">13dp</item>
+        <item name="android:background">@color/md_green_500_75_overlay</item>
+        <item name="android:textColor">@color/md_light_green_A400</item>
+        <item name="android:textColorHighlight">@color/md_cyan_400</item>
+        <item name="android:textColorHint">@color/md_amber_200</item>
+        <item name="startIconTint">@color/md_green_500</item>
+    </style>
 </resources>

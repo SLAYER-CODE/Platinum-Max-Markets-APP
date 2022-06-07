@@ -74,6 +74,7 @@ class CameraViewModel @Inject constructor(
     //Binding conexion para la vista
     val CloseCamera: MutableLiveData<Boolean> = MutableLiveData();
     val CloseCameraChildren: MutableLiveData<Boolean> = MutableLiveData();
+    val QRBindig: MutableLiveData<String> = MutableLiveData();
 
     fun CamaraStatus(type: CameraTypes,focus:Boolean){
         ScanerStatus.postValue(focus);
@@ -89,7 +90,9 @@ class CameraViewModel @Inject constructor(
     fun CloseInFragment(primero:Boolean){
         CloseCameraChildren.postValue(primero)
     }
-
+    fun AgregateQR(String: String) {
+        QRBindig.postValue(String)
+    }
     fun  CloseCameraInto(pwd:Boolean){
         CloseCamera.postValue(pwd);
     }

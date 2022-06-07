@@ -4,13 +4,17 @@ import Data.InventarioProducts
 import Data.Producto
 import Data.listInventarioProductos
 import android.app.Application
+import android.graphics.Bitmap
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.fromdeskhelper.ProductsPreviewQuery
 import com.example.fromdeskhelper.data.PreferencesManager
 import com.example.fromdeskhelper.data.model.Controller.ProductsController
 import com.example.fromdeskhelper.data.model.Controller.UtilsController
 import com.example.fromdeskhelper.domain.CallsAddProductStorageUseCase
 import com.example.fromdeskhelper.type.Products
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +29,8 @@ Application()
 ) {
     val ItemsRouterTransmited: MutableLiveData<MutableList<listInventarioProductos>> = MutableLiveData();
     public val Items:MutableList<listInventarioProductos> = mutableListOf()
+    val ImageReturn: MutableLiveData<String?> = MutableLiveData();
+
     fun ComprobateList(Products: listInventarioProductos):Boolean{
         for (x in Items){
             if(x.uid==Products.uid){
@@ -50,14 +56,26 @@ Application()
             return Items
     }
 
+    fun GetImageResource(){
+        viewModelScope.launch {
+            ImageReturn.postValue(FirebaseAuth.getInstance().currentUser?.photoUrl?.toString())
+        }
+    }
+
 
     fun GetCount():LiveData<Int>{
         return Utils.GetCountItems()
     }
-    fun AllProducts(offset:Int,limit:Int):LiveData<List<listInventarioProductos>>{
-        return Products.GetProductsAll(offset,limit)
+
+
+    fun AllProducts():LiveData<List<listInventarioProductos>>{
+        return Products.GetProductsAll()
     }
 
+
+    fun AllProductsLimits(max:Int,limit:Int):LiveData<List<listInventarioProductos>>{
+        return Products.GetProductsAllOffset(max,limit)
+    }
     fun getProductId(ID:Int):LiveData<InventarioProducts>{
         return Products.GetProductsAll(ID)
     }
@@ -73,5 +91,7 @@ Application()
             Products.UpdateProduct(product)
         }
     }
+
+
 
 }

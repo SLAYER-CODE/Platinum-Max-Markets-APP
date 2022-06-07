@@ -1,14 +1,153 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.FinalProductos" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/md_black_1000</item>
+        <item name="colorPrimaryVariant">@color/md_black_1000</item>
+        <item name="colorOnPrimary">@color/md_black_1000</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/md_black_1000</item>
+        <item name="colorSecondaryVariant">@color/md_black_1000</item>
+        <item name="colorOnSecondary">@color/md_black_1000</item>
+        <item name="background">@color/md_black_1000</item>
+        <!--        <item name="android:background">@color/md_black_1000</item>-->
+        <item name="backgroundColor">@color/md_black_1000 </item>
+        <!-- Status bar color. -->
+        <item name="android:windowBackground" >@color/md_black_1000</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:itemBackground">@color/md_green_A200</item>
+
+        <item name="colorControlActivated">@color/md_green_500</item>
+        <!-- Inactive thumb color -->
+        <item name="colorSwitchThumbNormal">@color/md_grey_50</item>
+
+
+        <item name="colorControlNormal">#c5c5c5</item>
+        <item name="colorControlHighlight">@color/md_green_500</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.FinalProductos.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Productos.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Productos.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Theme.FinalProductos.Fullscreen" parent="Theme.FinalProductos">
+        <item name="android:actionBarStyle">
+            @style/Widget.Theme.FinalProductos.ActionBar.Fullscreen
+        </item>
+
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
+
+    <style name="ThemeOverlay.FinalProductos.FullscreenContainer" parent="Theme.FinalProductos.Fullscreen">
+        <item name="fullscreenBackgroundColor">@color/md_black_1000</item>
+        <item name="fullscreenTextColor">@color/md_white_1000</item>
+
+    </style>
+
     <style name="SplashTheme" parent="Theme.FinalProductos.NoActionBar">
         <item name="android:windowFullscreen">true</item>
-        <item name="android:windowBackground">@color/md_black_1000</item>
-        <item name="android:windowSplashScreenIconBackgroundColor">@color/md_black_1000</item>
-<!--        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/finalico_new</item>-->
-        <item name="android:windowSplashScreenAnimationDuration">300</item>
+        <item name="background">@color/md_black_1000</item>
+        <item name="android:windowBackground" >@color/md_black_1000</item>
         <item name="colorPrimary">@color/md_black_1000</item>
-        <item name="colorPrimaryDark">@color/md_black_1000</item>
+        <item name="colorPrimaryDark">@color/ef_black_alpha_50</item>
         <item name="colorAccent">@color/md_black_1000</item>
         <item name="android:statusBarColor">@color/md_black_1000</item>
+    </style>
+
+    <style name="EdiText">
+        <item name="android:textColorHint">@color/md_white_1000_50</item>
+    </style>
+    <style name="DrawNavigation" >
+        <item name="subheaderColor">@color/md_green_A400</item>
+    </style>
+
+    <style name="TabLayoutView" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:background">@color/md_black_1000</item>
+        <item name="tabSelectedTextColor">@color/md_green_A400</item>
+        <item name="tabIndicatorColor">@color/md_green_A400</item>
+        <item name="tabRippleColor">@color/md_green_A400</item>
+        <item name="tabTextColor">@color/md_white_1000</item>
+    </style>
+
+    <style name="BarLayout">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="titleTextColor">@color/md_red_500</item>
+    </style>
+
+
+    <style name="ButtonFloatLayout">
+        <item name="android:backgroundTint">@color/md_green_A700</item>
+    </style>
+
+
+
+    <style name="IconItems">
+        <item name="android:backgroundTint">@color/md_green_A700</item>
+    </style>
+
+    <style name="TextItemPrimero">
+        <item name="android:textColor">@color/md_green_A700</item>
+        <item name="android:shadowColor">@color/md_black_1000</item>
+        <item name="android:shadowDy">4</item>
+        <item name="android:shadowRadius">5</item>
+    </style>
+
+    <style name="ButonActionBar">
+        <item name="backgroundTint">@color/md_green_A700</item>
+        <item name="android:foregroundTint">@color/md_green_A700</item>
+    </style>
+
+    <style name="BarActiveToolBar">
+        <item name="android:background">@color/md_black_1000</item>
+        <item name="titleTextColor">@color/md_green_A400</item>
+    </style>
+
+
+    <style name="textPresentation">
+        <item name="android:textColor">@color/md_green_A700</item>
+        <item name="android:shadowColor">@color/md_green_800</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="ToolBarLogin">
+        <item name="titleTextColor">@color/md_green_A700</item>
+    </style>
+    <style name="DrawableFond">
+        <item name="android:background">@color/md_black_1000</item>
+    </style>
+
+    <style name="fontMainDrawable">
+        <item name="android:background">@color/md_black_1000</item>
+    </style>
+
+    <style name="tabMainLayout">
+        <item name="android:background">@color/md_green_500_25</item>
+        <item name="tabSelectedTextColor">@color/md_green_A400</item>
+        <item name="tabTextColor">@color/md_white_1000</item>
+    </style>
+
+    <style name="toggleButton_lint"  parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:buttonStyleToggle">@style/Widget.Button.Toggle</item>
+        <item name="android:textOn">On</item>
+        <item name="android:textOff">Off</item>
+        <item name="android:colorControlActivated">@color/md_green_A700</item>
+        <item name="android:textSize">10dp</item>
+        <item name="android:textColor">@color/md_green_A400</item>
+        <item name="android:shadowRadius">2</item>
+        <item name="android:shadowDx">3</item>
+        <item name="android:shadowDy">3</item>
+        <item name="android:shadowColor">@color/md_black_1000</item>
+        <item name="android:fontWeight">500</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="carView">
+        <item name="cardBackgroundColor">@color/md_green_500_75_overlay</item>
     </style>
 </resources>

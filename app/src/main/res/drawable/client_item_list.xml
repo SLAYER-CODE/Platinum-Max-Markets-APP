@@ -3,18 +3,16 @@
 
     <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
         <item>
-           <shape android:shape="oval" android:dither="true" android:useLevel="true" >
-               <stroke android:width="10dp" android:dashGap="10dp" android:dashWidth="10dp">
-               </stroke>
-               <gradient android:type="radial"
-                   android:startColor="#A8FFFFFF"
-                   android:centerColor="#66FFFFFF"
-                   android:endColor="#28FFFFFF"
-                   android:gradientRadius="20dp">
-
-               </gradient>
-           </shape>
+            <shape
+                android:dither="true"
+                android:useLevel="true">
+                <gradient
+                    android:centerColor="#66FFFFFF"
+                    android:endColor="#28FFFFFF"
+                    android:gradientRadius="20dp"
+                    android:startColor="#A8FFFFFF"
+                    android:type="radial"></gradient>
+            </shape>
         </item>
-
     </layer-list>
 </inset>

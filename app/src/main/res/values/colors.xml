@@ -342,7 +342,7 @@
     <color name="md_green_500_25">#404caf50</color>
     <color name="md_green_500_50">#804caf50</color>
     <color name="md_green_500_75">#c04caf50</color>
-    <color name="md_green_500_75_overlay">#7C008705</color>
+    <color name="md_green_500_75_overlay">#3200BD07</color>
     <!--light greens-->
     <array name="light_greens">
         <item>@color/md_light_green_500</item>
@@ -602,6 +602,8 @@
     <color name="md_grey_500_50">#809e9e9e</color>
     <color name="md_grey_500_75">#c09e9e9e</color>
     <color name="md_white_1000">#ffffff</color>
+    <color name="md_white_1000_screen">#F6F6F6</color>
+    <color name="md_white_1000_screen_Fond">#E6FEFF</color>
     <color name="md_white_1000_10">#1affffff</color>
     <color name="md_white_1000_15">#22ffffff</color>
     <color name="md_white_1000_20">#33ffffff</color>

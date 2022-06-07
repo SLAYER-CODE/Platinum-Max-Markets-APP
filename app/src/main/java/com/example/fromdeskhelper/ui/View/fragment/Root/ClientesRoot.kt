@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.res.Configuration
 import android.graphics.Color
 import android.net.wifi.p2p.WifiP2pDevice
 import android.net.wifi.p2p.WifiP2pDeviceList
@@ -82,7 +83,7 @@ class ClientesRoot : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        wifiViewModel.onCreate()
+//        wifiViewModel.onCreate()
 //        Listener=wifiViewModel.WifiListenerPers();
         wifiViewModel.WifiModel.observe(viewLifecycleOwner, Observer { ResutWifi->
             Log.i("WIFIRES",ResutWifi.author)
@@ -106,6 +107,9 @@ class ClientesRoot : Fragment() {
             }else{
                 binding.settingsItem.visibility=View.GONE
             }
+        }
+        baseActivity.binding.appBarMain.refreshFab.setOnClickListener {
+            wifiViewModel.onCreate()
         }
 
         var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -179,12 +183,27 @@ class ClientesRoot : Fragment() {
 
         wifiViewModel.WifiActivateBroadcast.observe(viewLifecycleOwner, Observer {
             val ViewDrawable = DrawableCompat.wrap(binding.statusItem.background);
-            if(it){
-                DrawableCompat.setTint(ViewDrawable,Color.GREEN)
-                binding.statusItem.background=ViewDrawable
-            }else{
-                DrawableCompat.setTint(ViewDrawable,Color.RED)
-                binding.statusItem.background=ViewDrawable
+            val currentNightMode =
+                resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+            when (currentNightMode) {
+                Configuration.UI_MODE_NIGHT_YES -> {
+                    if (it) {
+                        DrawableCompat.setTint(ViewDrawable, Color.GREEN)
+                        binding.statusItem.background = ViewDrawable
+                    } else {
+                        DrawableCompat.setTint(ViewDrawable, Color.RED)
+                        binding.statusItem.background = ViewDrawable
+                    }
+                }
+                Configuration.UI_MODE_NIGHT_NO->{
+                    if (it) {
+                        DrawableCompat.setTint(ViewDrawable, Color.CYAN)
+                        binding.statusItem.background = ViewDrawable
+                    } else {
+                        DrawableCompat.setTint(ViewDrawable, Color.GRAY)
+                        binding.statusItem.background = ViewDrawable
+                    }
+                }
             }
         })
 

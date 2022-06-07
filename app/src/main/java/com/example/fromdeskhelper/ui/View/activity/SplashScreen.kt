@@ -24,11 +24,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.network.okHttpClient
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.example.fromdeskhelper.ComprobateUserQuery
 import com.example.fromdeskhelper.core.AuthorizationInterceptor
 import com.example.fromdeskhelper.data.model.Controller.ConnectionController
 import com.example.fromdeskhelper.ui.View.ViewModel.InitViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.SplashScreenViewModel
+import com.example.fromdeskhelper.util.isConnected
 import com.facebook.login.Login
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -132,28 +134,41 @@ class SplashScreen : AppCompatActivity() {
 //                }
 //            }
 //        }
-        SplashModel();
+        SplashModel(baseContext);
+
+
         SplashModel.initLogin.observe(this, Observer {
             startActivity(Intent(baseContext,LoginActivity::class.java))
+            Animatoo.animateZoom(this);
             finish()
         })
         SplashModel.initLogOperator.observe(this, Observer {
            if(it) {
                binding.TEInformation.text = "Iniciando...";
                startActivity(Intent(baseContext,MainActivity::class.java))
+               Animatoo.animateZoom(this);
                finish()
            }else{
-               binding.TEInformation.text = "Ubo un error";
-               this.lifecycleScope.launch {
-                   delay(2000)
-                   startActivity(Intent(baseContext,LoginActivity::class.java))
-                   finish()
-               }
+
+              binding.TEInformation.text = "Ubo un error";
+//               while (true) {
+//                   if (isConnected(baseContext)) {
+//                       SplashModel(baseContext);
+//                   }
+//               }
            }
+        })
+        SplashModel.initLogMessage.observe(this, Observer {
+            binding.TEInformation.text = it;
+        })
+
+        SplashModel.initLoginAnonime.observe(this, Observer {
+            binding.TEInformation.text="Anonimo!"
         })
 
         SplashModel.initPrecentation.observe(this, Observer {
             startActivity(Intent(baseContext,PresenatationActivity::class.java))
+            Animatoo.animateDiagonal(this);
             finish()
         })
 

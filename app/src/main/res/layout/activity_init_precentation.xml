@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/General"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.View.activity.PresenatationActivity">
@@ -29,8 +30,18 @@
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="match_parent"-->
 <!--        app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
-    <include
-        layout="@layout/content_presentation_main"
-        android:background="#BF2222" />
+    <li.yohan.parallax.ParallaxViewPager
+        app:speedRatio="0.6"
+        android:id="@+id/viewPagerPresentation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/backgroundpresentation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+<!--    <include-->
+<!--        layout="@layout/content_presentation_main"-->
+<!--        android:background="#BF2222" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

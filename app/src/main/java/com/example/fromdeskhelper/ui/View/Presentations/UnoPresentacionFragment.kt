@@ -81,9 +81,9 @@ class UnoPresentacionFragment : Fragment() {
         blurbackground();
         fullscreenContentControls?.visibility = View.GONE
         hidePart2Runnable.run()
-        binding.BNext.setOnClickListener{
-            findNavController().navigate(com.example.fromdeskhelper.R.id.action_unoPresentacionFragment_to_dosPresentacionFragment)
-        }
+//        binding.BNext.setOnClickListener{
+//            findNavController().navigate(com.example.fromdeskhelper.R.id.action_unoPresentacionFragment_to_dosPresentacionFragment)
+//        }
         return binding.root
 
     }

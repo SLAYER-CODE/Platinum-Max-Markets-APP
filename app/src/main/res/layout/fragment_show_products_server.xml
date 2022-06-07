@@ -3,11 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.View.fragment.Root.ShowProductsServer">
 
     <!-- TODO: Update blank fragment layout -->
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.github.rubensousa.gravitysnaphelper.GravitySnapRecyclerView
+        app:snapGravity="top"
+        app:snapLastItem="true"
+        app:snapToPadding="true"
         android:id="@+id/LVMylist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,18 +20,17 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="-29dp"
         android:layout_marginEnd="0dp"
-        android:layout_marginBottom="29dp"
         android:clipToPadding="false"
-        android:layoutAnimation="@anim/item_animation_layout_into"
-        android:paddingTop="?attr/actionBarSize"
-        android:paddingBottom="77dp"
+        android:paddingTop="70dp"
+        android:layoutAnimation="@anim/layout_animation_right_to_left"
+        android:paddingBottom="80dp"
         android:foregroundGravity="center_vertical|center">
 
-    </androidx.recyclerview.widget.RecyclerView>
+    </com.github.rubensousa.gravitysnaphelper.GravitySnapRecyclerView>
 
     <LinearLayout
+
         android:id="@+id/TNotItems"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -41,10 +44,10 @@
         android:layout_marginBottom="0dp"
         android:gravity="center"
         android:paddingTop="100dp"
-        android:background="@color/md_black_1000"
 
         android:orientation="vertical">
         <View
+            style="@style/IconItems"
             android:layout_width="100dp"
             android:layout_height="200dp"
             android:layout_gravity="center"
@@ -52,6 +55,7 @@
             android:background="@drawable/ic_baseline_layers_clear_24">
         </View>
         <TextView
+            style="@style/TextItemPrimero"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignTop="@+id/LVMylist"
@@ -63,13 +67,8 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="0dp"
             android:layout_weight="1"
-            android:background="@color/md_black_1000"
             android:gravity="center|top"
-            android:shadowColor="@color/md_green_800"
-            android:shadowDy="6"
-            android:shadowRadius="7"
             android:text="@string/server_clean"
-            android:textColor="@color/md_green_A700"
             android:textSize="20dp"
             android:textStyle="bold" />
     </LinearLayout>

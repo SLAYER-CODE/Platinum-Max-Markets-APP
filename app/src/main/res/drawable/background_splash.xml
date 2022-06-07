@@ -3,9 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:gravity="center"
-        android:width="500dp"
-        android:height="500dp"
-        android:drawable="@drawable/ico_laucher_foreground">
+        android:drawable="@mipmap/maxmarkets">
     </item>
-
 </layer-list>

@@ -18,7 +18,8 @@
         app:layout_constraintTop_toTopOf="parent"
         >
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/ButtonSettingsItems"
             android:textStyle="bold"
             android:textSize="20dp"
             android:paddingRight="30dp"
@@ -26,9 +27,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_baseline_phonelink_setup_24"
-            android:text="Settings">
+            android:text="Setings">
 
-        </Button>
+        </androidx.appcompat.widget.AppCompatButton>
 
         <LinearLayout
             android:scrollbars="vertical"

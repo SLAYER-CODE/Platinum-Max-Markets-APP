@@ -5,10 +5,13 @@ import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fromdeskhelper.ProductsPreviewQuery
 import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.domain.Root.ProductsModelAdapter
+import com.example.fromdeskhelper.ui.View.ViewModel.UtilsShowMainViewModels
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_producto.view.*
 import java.io.ByteArrayInputStream
@@ -21,9 +24,12 @@ import java.io.ByteArrayOutputStream
 
 
 private var reverse:Boolean=false;
-class LocalAdapter (var producto:List<ProductsModelAdapter>):
-    RecyclerView.Adapter<LocalAdapter.ImageHolder>() {
-
+class LocalAdapter (var producto:List<ProductsModelAdapter>,var visualise:Int,var util: UtilsShowMainViewModels?=null):
+    RecyclerView.Adapter<LocalAdapter.ImageHolder>(),Filterable {
+    private var ProductList:List<ProductsModelAdapter>
+    init {
+        ProductList= producto
+    }
     inner class ImageHolder(val view: View): RecyclerView.ViewHolder(view){
 
         fun render(ProductoAndImage:ProductsModelAdapter){
@@ -58,28 +64,31 @@ class LocalAdapter (var producto:List<ProductsModelAdapter>):
 
     override fun getItemViewType(position: Int): Int {
         if(producto[position].image_realation?.size==0) {
-            return 2
+            return 3
         }
-        return super.getItemViewType(1)
+        return visualise
+    }
+
+    fun setItem(inte:Int){
+        visualise=inte
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        if (viewType == 2) {
-            return ImageHolder(
-                layoutInflater.inflate(
-                    R.layout.item_producto_notimage,
-                    parent,
-                    false
-                )
+        var ItemView: LocalAdapter.ImageHolder = ImageHolder(
+            layoutInflater.inflate(
+                R.layout.item_producto_reverse,
+                parent,
+                false
             )
-        }
+        )
+        if (viewType == 1) {
             if (reverse) {
                 reverse = false;
-                return ImageHolder(layoutInflater.inflate(R.layout.item_producto, parent, false))
+                ItemView= ImageHolder(layoutInflater.inflate(R.layout.item_producto, parent, false))
             } else {
                 reverse = true;
-                return ImageHolder(
+                ItemView= ImageHolder(
                     layoutInflater.inflate(
                         R.layout.item_producto_reverse,
                         parent,
@@ -87,6 +96,59 @@ class LocalAdapter (var producto:List<ProductsModelAdapter>):
                     )
                 )
             }
+        } else if (viewType == 2) {
+            ItemView=ImageHolder(
+                layoutInflater.inflate(
+                    R.layout.item_producto_notimage,
+                    parent,
+                    false
+                )
+            )
+        }else if(viewType==3){
+            ItemView=ImageHolder(
+                layoutInflater.inflate(
+                    R.layout.item_producto_listview,
+                    parent,
+                    false
+                )
+            )
+        }else if(viewType == 4){
+            ItemView = ImageHolder(layoutInflater.inflate(R.layout.item_producto_gridview, parent, false))
+        }
+        return ItemView
+
+    }
+
+
+    override fun getFilter(): Filter {
+        return EvenFilter
+    }
+
+    private var EvenFilter: Filter = object : Filter(){
+        override fun performFiltering(constraint: CharSequence?): FilterResults {
+            var Filter:MutableList<ProductsModelAdapter> = mutableListOf();
+            if(constraint==null ||  constraint?.length == 0){
+                Filter.addAll(ProductList)
+            }else{
+                var filterPatter=constraint.toString().lowercase().trim()
+                for (item:ProductsModelAdapter in ProductList){
+                    if(item.product_name.lowercase().contains(filterPatter) || item.qr.toString().contains(filterPatter) ){
+                        Filter.add(item)
+                    }
+                }
+            }
+            var Result: FilterResults = FilterResults()
+            Result.values=Filter
+            return Result
+        }
+
+        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+            producto= listOf()
+            producto =(results?.values as MutableList<ProductsModelAdapter>).toList()
+            notifyDataSetChanged()
+            util?.GetLocalCount(producto.size)
+
+        }
 
     }
 

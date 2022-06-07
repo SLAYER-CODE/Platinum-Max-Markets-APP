@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/cordinatorRoot"
     tools:context=".ui.View.activity.MainActivity">
 
 
@@ -13,10 +14,9 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/toolbarParent"
-            android:backgroundTintMode="src_in"
-            android:foregroundTintMode="screen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/BarLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -25,13 +25,12 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="#99001C19"
                 android:title=""
-                app:title=""
-                app:popupTheme="@style/Theme.Productos.PopupOverlay"
-                app:titleTextColor="@color/md_red_500">
+                style="@style/BarActiveToolBar"
+                app:title="">
 
                 <LinearLayout
+
                     android:id="@+id/BIShowP"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -41,14 +40,14 @@
 
                     <androidx.appcompat.widget.SearchView
                         android:id="@+id/SVProducts"
+                        android:foreground="@color/md_white_1000"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="left"
                         android:layout_weight="2"
-                        android:backgroundTint="@color/md_green_400"
                         android:foregroundGravity="right"
-                        android:foregroundTint="@color/md_green_400"
                         android:gravity="left"
+                        android:theme="@style/ButonActionBar"
                         app:searchIcon="@drawable/ic_baseline_image_search_showproduct" />
 
                     <androidx.appcompat.widget.AppCompatButton
@@ -56,6 +55,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
+                        style="@style/ButonActionBar"
                         android:background="@drawable/ic_baseline_qr_code_scanner_showproduct"
                         android:minWidth="50dp"></androidx.appcompat.widget.AppCompatButton>
 
@@ -84,34 +84,35 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <com.google.android.material.appbar.AppBarLayout
-            android:visibility="gone"
-            tools:visibility="visible"
             android:id="@+id/toolbarParentClient"
-            android:foregroundTintMode="screen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:foregroundTintMode="screen"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbarClient"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/md_blue_500_50"
                 android:title=""
-                app:title=""
+                style="@style/BarActiveToolBar"
                 app:popupTheme="@style/Theme.Productos.PopupOverlay"
+                app:title=""
                 app:titleTextColor="@color/md_red_500">
+
                 <TextView
                     android:id="@+id/TitleClient"
-                    android:textColor="@color/md_white_1000"
-                    android:textSize="20dp"
-                    android:text=""
-                    android:gravity="center_vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-                </TextView>
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text=""
+                    android:textColor="@color/md_white_1000"
+                    android:textSize="20dp"></TextView>
+
                 <LinearLayout
                     android:id="@+id/BIShowPClient"
                     android:layout_width="wrap_content"
@@ -177,9 +178,9 @@
             android:id="@+id/constraintLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
             android:minWidth="350dp"
             android:minHeight="350dp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -196,9 +197,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_max="350dp"
                 tools:layout_height="350dp"
-                tools:layout_width="350dp"
-                >
-            </FrameLayout>
+                tools:layout_width="350dp"></FrameLayout>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/MoveCamera"
@@ -210,8 +209,7 @@
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0">
-            </androidx.appcompat.widget.AppCompatButton>
+                app:layout_constraintVertical_bias="1.0"></androidx.appcompat.widget.AppCompatButton>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/ResizeCamera"
@@ -224,7 +222,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0"></androidx.appcompat.widget.AppCompatButton>
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -243,8 +240,7 @@
         android:layout_gravity="bottom|start"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/button_background"
-        android:backgroundTint="#C82CFF5A"
+        style="@style/ButtonFloatLayout"
         app:srcCompat="@drawable/ic_baseline_autorenew_24" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -254,8 +250,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/button_background"
-        android:backgroundTint="#C82CFF5A"
+        style="@style/ButtonFloatLayout"
         app:srcCompat="@drawable/ic_baseline_add_shopping_cart_24" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -29,6 +29,7 @@ import android.provider.Settings
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.example.fromdeskhelper.ui.View.ViewModel.LoginViewModel
@@ -37,6 +38,8 @@ import com.example.fromdeskhelper.util.MessageSnackBar
 import com.facebook.FacebookSdk
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import eightbitlab.com.blurview.BlurView
+import eightbitlab.com.blurview.RenderScriptBlur
 
 //import android.R
 @AndroidEntryPoint
@@ -128,16 +131,26 @@ private val ORDERED_DENSITY_DP_N: IntArray? = intArrayOf(
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-
+        blurbackground(binding.ToolBarBlurLogin)
 //        database = AppDatabase.getDataBase(this)
 
         val navBuilder = NavOptions.Builder()
-
         navBuilder.setEnterAnim(R.anim.slide_top).setExitAnim(R.anim.wait_anim)
             .setPopEnterAnim(R.anim.wait_anim).setPopExitAnim(R.anim.slide_bottom)
     }
 
-
+    private fun blurbackground(view: BlurView) {
+        val radius = 5f
+        val decorView: View =  window!!.decorView
+        val rootView = decorView.findViewById<View>(android.R.id.content) as ViewGroup
+        val windowBackground = decorView.background
+        view.setupWith(rootView)
+            .setFrameClearDrawable(windowBackground)
+            .setBlurAlgorithm(RenderScriptBlur(this))
+            .setBlurRadius(radius)
+//            .setBlurAutoUpdate(true)
+            .setHasFixedTransformationMatrix(true)
+    }
     override fun attachBaseContext(baseContext: Context) {
         var newContext: Context? = baseContext
 

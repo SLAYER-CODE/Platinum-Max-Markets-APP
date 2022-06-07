@@ -8,7 +8,7 @@
                     </corners>
                     <stroke android:width="5dp" android:color="@color/md_light_green_A700">
                     </stroke>
-                    <solid android:color="@color/md_light_green_A200">
+                    <solid android:color="@color/md_green_500_75_overlay">
 
                     </solid>
                 </shape>

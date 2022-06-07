@@ -71,11 +71,12 @@ class DetallesAdapterImagen (private val mContext: Context,var MyImage:List<Imag
         container.addView(imageView)
 
         if(position==0){
-            imageView.transitionName="transtionexit"
+            imageView.transitionName="image_big"
         }
 
         return imageView
     }
+
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         container.removeView(`object` as View)

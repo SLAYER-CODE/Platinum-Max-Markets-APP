@@ -1,56 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.fromdeskhelper.ui.View.activity.MainActivity">
+    tools:context=".activities.BaseActivity">
 
     <item
-        android:id="@+id/ItAll"
-        android:title="Todos"
-        app:showAsAction="never"
-        android:orderInCategory="1"
-        android:checkable="true"
-        />
-    <group>
-    <item
         android:id="@+id/ItDisposed"
-        android:title="Disponibles"
-        app:showAsAction="never"
-        android:orderInCategory="2"
         android:checkable="true"
-        ></item>
+
+        android:orderInCategory="2"
+        android:title="Disponibles"
+        app:showAsAction="never">
+
+    </item>
 
     <item
         android:id="@+id/ItFotos"
-        android:title="Con imagen"
-        app:showAsAction="never"
-        android:orderInCategory="3"
         android:checkable="true"
-        />
+        android:orderInCategory="3"
+        android:title="Con imagen"
+        app:showAsAction="never" />
     <item
         android:id="@+id/italic"
-        android:title="Precio Maximo"
-        app:showAsAction="never"
+        android:checkable="true"
         android:orderInCategory="4"
+        android:title="Precio Maximo"
+        app:showAsAction="never" />
+    <item
         android:checkable="true"
-        />
-    <item android:title="Precio Minimo"
-        app:showAsAction="never"
-        android:checkable="true"
-        android:orderInCategory="5">
-    </item>
-    <item android:title="En la nube"
-        app:showAsAction="never"
-        android:checkable="true"
-        android:orderInCategory="5">
-    </item>
-     <item android:title="Local Storage"
-        app:showAsAction="never"
-        android:checkable="true"
-        android:orderInCategory="5">
+        android:orderInCategory="5"
+        android:title="Precio Minimo"
+        app:showAsAction="never">
 
     </item>
-
-    </group>
+    <item
+        android:id="@+id/action_notification1"
+        android:icon="@drawable/ic_baseline_list_alt_24"
+        android:title="action_notification"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:enabled="true"
+                android:id="@+id/DetailsChecked"
+                android:checkable="false"
+                android:checked="true"
+                android:iconTint="@color/black_overlay"
+                android:icon="@drawable/ic_baseline_featured_play_list_24"
+                android:orderInCategory="5"
+                android:title="Details"
+                app:showAsAction="never">
+            </item>
+            <item
+                android:id="@+id/ListChecked"
+                android:checkable="false"
+                android:checked="true"
+                android:iconTint="@color/black_overlay"
+                android:icon="@drawable/ic_baseline_view_list_24"
+                android:orderInCategory="5"
+                android:title="List"
+                app:showAsAction="never">
+            </item>
+            <item
+                android:id="@+id/GridDetalles"
+                android:checkable="false"
+                android:checked="true"
+                android:iconTint="@color/black_overlay"
+                android:icon="@drawable/ic_baseline_grid_on_24"
+                android:orderInCategory="5"
+                android:title="Grid"
+                app:showAsAction="never">
+            </item>
+            <item
+                android:id="@+id/GridDetallesListView"
+                android:checkable="false"
+                android:checked="true"
+                android:iconTint="@color/black_overlay"
+                android:icon="@drawable/ic_baseline_grid_on_24"
+                android:orderInCategory="5"
+                android:title="GridListView"
+                app:showAsAction="never">
+            </item>
+        </menu>
+    </item>
 
 
 </menu>

@@ -5,7 +5,6 @@ plugins {
     id("com.apollographql.apollo3").version("3.2.1")
 }
 
-
 apply plugin: "kotlin-android-extensions"
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
@@ -135,6 +134,19 @@ dependencies {
 
 //    implementation('org.mongodb:mongo-java-driver:4.6.0')
 //    implementation 'org.mongodb:mongodb-driver-sync:4.6.0'
+    implementation 'com.github.demoNo:ParallaxViewPager:v1.0.0'
+    implementation 'com.github.ybq:parallaxviewpager:2.0.0'
+    implementation 'com.github.deano2390:FlowTextView:2.0.5'
+
+    
+    implementation 'com.github.mohammadatif:Animatoo:master'
+
+    implementation 'jp.wasabeef:picasso-transformations:2.4.0'
+    // If you want to use the GPU Filters
+    implementation 'jp.co.cyberagent.android:gpuimage:2.1.0'
+
+
+    implementation 'com.github.rubensousa:gravitysnaphelper:2.2.2'
 
 }
 

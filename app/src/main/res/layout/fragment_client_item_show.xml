@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.View.fragment.Root.Clients.ClientItemShowFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_border_details_shoping"
+        android:text="@string/hello_blank_fragment">
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/ButtonItems"
+            android:id="@+id/BMiminizeLog"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="-"
+            android:textSize="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/ButtonItems"
+            android:id="@+id/BCloseShowDetails"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="X"
+            android:textSize="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <eightbitlab.com.blurview.BlurView
+            android:id="@+id/blurViewCard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/SVAPNew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true"
+                android:overScrollMode="never">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/newConstraintLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:foregroundGravity="top|bottom"
+                    android:importantForAutofill="no|yesExcludeDescendants">
+
+                    <LinearLayout
+                        android:id="@+id/llinearConstraint"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:animateLayoutChanges="false"
+                        android:clickable="true"
+                        android:clipChildren="true"
+                        android:focusable="auto"
+                        android:focusableInTouchMode="true"
+                        android:foregroundGravity="bottom"
+                        android:gravity="bottom"
+                        android:orientation="vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:showDividers="middle"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginRight="30dp"
+                            android:layout_marginLeft="30dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView3"
+                                style="@style/TextItemPrimero"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:text="Campos de usuario"
+                                android:textStyle="bold" />
+
+                            <View
+                                android:id="@+id/divider"
+                                style="@style/ItemSeparate"
+                                android:layout_width="match_parent"
+                                android:layout_height="3dp"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="3dp"
+                                android:backgroundTintMode="add" />
+
+                        </LinearLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/TextInputLayoutComprate"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:helperText="Required"
+                            app:startIconDrawable="@drawable/ic_baseline_person_pin_24">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/TENombre"
+                                style="@style/TextInputEditTextaComprate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableTintMode="add"
+                                android:ems="10"
+                                android:hint="Nombre del Client"
+                                android:inputType="textCapSentences"
+                                android:textStyle="normal|bold"
+                                android:tooltipText="@string/dummy_content"
+                                app:helperTextEnabled="false" />
+
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/TextInputLayoutComprate"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:helperText="Required"
+                                app:startIconDrawable="@drawable/ic_baseline_money_addproduct">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/TEPrecio"
+                                    style="@style/TextInputEditTextaComprate"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:drawableTintMode="add"
+                                    android:ems="10"
+                                    android:hint="Precio Total"
+                                    android:inputType="numberDecimal"
+                                    android:text="0"
+                                    android:textStyle="normal|bold"
+                                    android:tooltipText="@string/dummy_content" />
+
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <TextView
+                                android:id="@+id/TVpreciodisconut"
+                                style="@style/TextItemPrimero"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginTop="50dp"
+                                android:padding="1dp"
+                                android:text="Precio con descuento: 0"
+                                android:textStyle="bold" />
+
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatButton
+
+                                android:id="@+id/BDespliegeItems"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_marginLeft="5dp"
+                                android:background="@drawable/ic_baseline_keyboard_double_arrow_up_24"
+                                android:rotation="180"
+                                android:textSize="10dp"
+                                android:textStyle="bold" />
+
+                            <View
+                                android:id="@+id/divider2"
+                                style="@style/ItemSeparate"
+                                android:layout_width="match_parent"
+                                android:layout_height="3dp"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="3dp"
+                                android:layout_weight="1"
+                                android:backgroundTintMode="add" />
+
+                            <TextView
+                                android:id="@+id/textView2"
+                                style="@style/TextItemPrimero"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:text="Mas detalles "
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            tools:visibility="visible">
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:baselineAligned="false"
+                                android:orientation="horizontal">
+
+                                <RelativeLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1">
+
+                                    <com.google.android.material.textfield.TextInputLayout
+                                        style="@style/TextInputLayoutComprate"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:orientation="horizontal"
+                                        app:helperText="@string/Input_PrecieInserte"
+                                        app:startIconDrawable="@drawable/ic_baseline_price_add_product">
+
+
+                                        <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/TEPrecioU"
+                                            style="@style/TextInputEditTextaComprate"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:drawableTintMode="add"
+                                            android:ems="10"
+                                            android:hint="Precio Neto"
+                                            android:inputType="numberDecimal"
+                                            android:text="0"
+                                            android:textStyle="normal|bold"
+                                            android:tooltipText="@string/dummy_content" />
+
+
+                                    </com.google.android.material.textfield.TextInputLayout>
+
+                                    <TextView
+                                        android:id="@+id/TVGanancia"
+                                        style="@style/TextItemPrimero"
+                                        android:layout_width="150dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentTop="true"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_marginTop="45dp"
+                                        android:layout_marginRight="5dp"
+                                        android:gravity="right"
+                                        android:lines="1"
+                                        android:maxWidth="150dp"
+                                        android:padding="1dp"
+                                        android:text="Ganancia: 0"
+                                        android:textStyle="bold" />
+                                </RelativeLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    style="@style/TextInputLayoutComprate"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    app:helperText="Descuento del producto"
+                                    app:startIconDrawable="@drawable/ic_baseline_discount_addproduct">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/TEDescuento"
+                                        style="@style/TextInputEditTextaComprate"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:drawableTintMode="add"
+                                        android:ems="10"
+                                        android:focusableInTouchMode="true"
+                                        android:hint="Descuento"
+                                        android:inputType="numberDecimal"
+                                        android:text="0"
+                                        android:textStyle="normal|bold"
+                                        android:tooltipText="@string/dummy_content" />
+
+
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    style="@style/TextInputLayoutComprate"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="100dp"
+                                    android:layout_weight="1"
+                                    android:hint="Cantidad"
+                                    app:helperText="Cantidad total de los productos"
+
+                                    app:startIconDrawable="@drawable/ic_baseline_storage_addproduct">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/TECantidad"
+                                        style="@style/TextInputEditTextaComprate"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:drawableTintMode="add"
+                                        android:ems="10"
+                                        android:inputType="number"
+                                        android:text="0"
+                                        android:textStyle="normal|bold"
+                                        android:tooltipText="@string/dummy_content" />
+
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    style="@style/TextInputLayoutComprate"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:hint="Peso Total"
+
+                                    app:helperText="Peso total de todos los productos"
+                                    app:startIconDrawable="@drawable/ic_baseline_format_peso_addproduct">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/TECantidadU"
+                                        style="@style/TextInputEditTextaComprate"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:drawableTintMode="add"
+                                        android:ems="10"
+                                        android:inputType="numberDecimal"
+                                        android:text="0"
+                                        android:textStyle="normal|bold"
+                                        android:tooltipText="@string/dummy_content">
+
+                                    </com.google.android.material.textfield.TextInputEditText>
+                                </com.google.android.material.textfield.TextInputLayout>
+
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/TextInputLayoutComprate"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:hint="Caracteristicas de la venta"
+                            android:textAlignment="center"
+                            app:startIconDrawable="@drawable/ic_baseline_location_searching_24">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/TECaracteristicas"
+                                style="@style/TextInputEditTextaComprate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableTintMode="add"
+                                android:ems="10"
+                                android:inputType="textMultiLine|textCapSentences"
+                                android:textStyle="normal|bold"
+                                app:hintTextColor="@color/md_amber_200" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.github.rubensousa.gravitysnaphelper.GravitySnapRecyclerView
+                            android:id="@+id/LVMylistProductComprar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginStart="0dp"
+                            android:layout_marginEnd="0dp"
+                            android:clipToPadding="false"
+                            android:layoutAnimation="@anim/layout_animation_right_to_left"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintBottom_toBottomOf="@+id/TNotItems"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:snapGravity="top"
+                            app:snapLastItem="true"
+                            app:snapToPadding="true" />
+
+                        <LinearLayout
+                            android:id="@+id/TNotItems"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:orientation="horizontal"
+                            android:scrollbars="vertical">
+
+                            <View
+                                android:layout_margin="10dp"
+                                style="@style/IconItems"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:background="@drawable/ic_baseline_content_paste_off_24"></View>
+
+                            <TextView
+                                style="@style/TextItemPrimero"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_alignTop="@+id/LVMylist"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentBottom="true"
+                                android:layout_weight="1"
+                                android:padding="10dp"
+                                android:gravity="center"
+                                android:text="@string/storage_clean"
+                                android:textSize="20dp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearConstraitButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center|top"
+                            android:layout_marginTop="5dp"
+                            android:clipChildren="false"
+                            android:clipToPadding="false"
+                            android:descendantFocusability="blocksDescendants"
+                            android:elevation="10dp"
+                            android:foregroundGravity="center"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.AppCompatButton
+                                    android:id="@+id/SaveItem"
+                                    style="@style/ButtonItems"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:drawableLeft="@drawable/ic_baseline_save_24"
+                                    android:foregroundGravity="center"
+                                    android:gravity="center"
+                                    android:text="Guardar Client"
+                                    android:textStyle="bold" />
+
+                                <androidx.appcompat.widget.AppCompatButton
+                                    android:id="@+id/SendItem"
+                                    style="@style/ButtonItems"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:drawableLeft="@drawable/ic_baseline_router_24"
+                                    android:foregroundGravity="center"
+                                    android:gravity="center"
+                                    android:text="Compartir Lista"
+                                    android:textStyle="bold" />
+
+                                <androidx.appcompat.widget.AppCompatButton
+                                    android:id="@+id/Descartar"
+                                    style="@style/ButtonItems"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:drawableLeft="@drawable/ic_delete"
+                                    android:foregroundGravity="center"
+                                    android:gravity="center"
+                                    android:text="Descartar Cliente"
+                                    android:textStyle="bold" />
+
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
+        </eightbitlab.com.blurview.BlurView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
