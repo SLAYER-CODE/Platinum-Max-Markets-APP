@@ -109,6 +109,17 @@
 ![image](https://user-images.githubusercontent.com/51754456/172651014-47a8bf33-15be-4fb4-83ec-8c541eea9f80.png)
 ![image](https://user-images.githubusercontent.com/51754456/172651120-b857d3ac-7e4e-4096-840a-1e8d467fea7c.png)
 
+## Estructura de Diseño:
+
+### Animaciones
+![image](https://user-images.githubusercontent.com/51754456/172651374-f9e8cceb-8e92-4bc7-af96-9bef71b53a48.png)
+
+### Dibujables
+
+![image](https://user-images.githubusercontent.com/51754456/172651503-59935e81-d29d-4878-99d6-5e0f6541e520.png)
+![image](https://user-images.githubusercontent.com/51754456/172651549-a818429d-d5fc-4e3c-bcfe-156fb9014a57.png)
+![image](https://user-images.githubusercontent.com/51754456/172651606-c62f78b1-f14e-438a-8536-44842a119f0d.png)
+
 
 
 ## Capturas principales del aplicativo.
