@@ -105,9 +105,7 @@
 **Pantallas de precentación**
 
 ![image](https://user-images.githubusercontent.com/51754456/172529491-ed5cc0fb-7490-4b78-b74d-f1c21b84f3e7.png)
-
 ![image](https://user-images.githubusercontent.com/51754456/172529525-f6af3acb-ab30-45bf-8710-20920b45487e.png)
-
 ![image](https://user-images.githubusercontent.com/51754456/172529546-c5022f5b-6b0a-43c8-b1d4-83af5fcb0a3a.png)
 
 **Pantalla de inicio de sessión**
