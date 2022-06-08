@@ -175,7 +175,8 @@ class LoginFragment : Fragment() {
             )
         }
         val googleConf =
-            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail()
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
                 .requestIdToken(getString(R.string.app_id))
                 .build()
 //        val googleCliente = GoogleSignIn.getClient(baseActivity, googleConf)
@@ -212,12 +213,15 @@ class LoginFragment : Fragment() {
                     MessageSnackBar(view,"Ubo un error intentlo Nuevamente",Color.GRAY)
                 }
             }else{
+                Log.i("Login",result.toString())
+                Log.i("Login",result.resultCode.toString())
+                Log.i("Login",result.data?.dataString.toString())
                 MessageSnackBar(view,"Se cancelo",Color.GRAY)
             }
         }
         binding.BGoogle.setOnClickListener {
             val googleCliente = GoogleSignIn.getClient(baseActivity, googleConf)
-            googleCliente.signOut()
+//            googleCliente.signOut()
             resultLauncher.launch(googleCliente.signInIntent)
 //            startActivityForResult(googleCliente.signInIntent, GOOGLE_SIN_IN)
         }
