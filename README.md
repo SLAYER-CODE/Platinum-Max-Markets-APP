@@ -115,6 +115,7 @@
 ### Google
 
 ![image](https://user-images.githubusercontent.com/51754456/172529682-cd5bd3a5-69e2-4463-9ca0-e09a3ad7f1ff.png)
+
 ### Facebook
 
 ![image](https://user-images.githubusercontent.com/51754456/172529734-df64ab76-6cb5-4557-8c58-8b084a1a990c.png)
@@ -171,7 +172,38 @@ IMAGENES:
 
 ![image](https://user-images.githubusercontent.com/51754456/172531756-8b5af648-0069-4c61-8061-7bcb43597583.png)
 
-### Manual instructivo de uso del aplicativo
+## Themas del aplicativo
+
+Modo Oscuro
+
+![image](https://user-images.githubusercontent.com/51754456/172623483-ce7dc764-3235-4825-a8de-791aa9d832ea.png)
+
+
+# Caracteristicas y elementos
+
+**Configuracion de visualisación**
+
+![image](https://user-images.githubusercontent.com/51754456/172623624-5374541c-216a-495c-b167-3774268c3a64.png)
+
+- GridLayout
+![image](https://user-images.githubusercontent.com/51754456/172623724-3fcca2a0-9b7e-4edc-be4c-bba7dfe6f589.png)
+- ListView
+![image](https://user-images.githubusercontent.com/51754456/172623810-92978a1b-e9a2-485e-a324-8e74f835c412.png)
+- Details
+![image](https://user-images.githubusercontent.com/51754456/172623864-9376ea07-26c1-4ce3-ab9f-621bc70b5353.png)
+- GridListView
+![image](https://user-images.githubusercontent.com/51754456/172623933-8d6bd347-8bf0-4701-8939-a75fe7873848.png)
+
+Permiso de camara
+
+![image](https://user-images.githubusercontent.com/51754456/172624003-62d122fe-6a2f-462e-9d00-ea2d17db6b6f.png)
+
+
+Camara en Fragmentos
+
+![image](https://user-images.githubusercontent.com/51754456/172624177-c8475a65-d0b6-4a3a-bcb5-8597339a6b0f.png)
+
+
 
 
 
