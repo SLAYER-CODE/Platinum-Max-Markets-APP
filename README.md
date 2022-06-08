@@ -99,7 +99,18 @@
 - implementation 'jp.co.cyberagent.android:gpuimage:2.1.0'
 - implementation 'com.github.rubensousa:gravitysnaphelper:2.2.2'
 
- 
+## Estructura del aplicativo:
+
+![image](https://user-images.githubusercontent.com/51754456/172648625-81224484-5f68-4b4b-838e-97bf7b0709f3.png)
+![image](https://user-images.githubusercontent.com/51754456/172650676-82984ac0-e14e-4142-9093-61d4bb284126.png)
+![image](https://user-images.githubusercontent.com/51754456/172650778-8e1a28c2-4d83-44f1-ac08-96785b07112a.png)
+![image](https://user-images.githubusercontent.com/51754456/172650838-d2efb519-9736-4107-8300-1875922274ae.png)
+![image](https://user-images.githubusercontent.com/51754456/172650885-6dc437ed-bd59-46b4-9d6e-b2431e14ef11.png)
+![image](https://user-images.githubusercontent.com/51754456/172651014-47a8bf33-15be-4fb4-83ec-8c541eea9f80.png)
+![image](https://user-images.githubusercontent.com/51754456/172651120-b857d3ac-7e4e-4096-840a-1e8d467fea7c.png)
+
+
+
 ## Capturas principales del aplicativo.
 
 **Pantallas de precentación**
