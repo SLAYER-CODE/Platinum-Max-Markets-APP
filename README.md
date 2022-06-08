@@ -186,12 +186,19 @@ Modo Oscuro
 ![image](https://user-images.githubusercontent.com/51754456/172623624-5374541c-216a-495c-b167-3774268c3a64.png)
 
 - GridLayout
+
 ![image](https://user-images.githubusercontent.com/51754456/172623724-3fcca2a0-9b7e-4edc-be4c-bba7dfe6f589.png)
+
 - ListView
+
 ![image](https://user-images.githubusercontent.com/51754456/172623810-92978a1b-e9a2-485e-a324-8e74f835c412.png)
+
 - Details
+
 ![image](https://user-images.githubusercontent.com/51754456/172623864-9376ea07-26c1-4ce3-ab9f-621bc70b5353.png)
+
 - GridListView
+
 ![image](https://user-images.githubusercontent.com/51754456/172623933-8d6bd347-8bf0-4701-8939-a75fe7873848.png)
 
 Permiso de camara
