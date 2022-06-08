@@ -1,26 +1,34 @@
-# Proyecto de mejora e inovacion
-## Empresa: Platinum-MaxMarkets
+# Proyecto de mejora e innovación 
 
-**Estructura del aplicativo Utilizando la arquitectura _MVVM_**
+## Empresa: Platinum-MaxMarkets 
 
-### MVVM
-> MVVM, con Data Binding en Android, tiene los beneficios de facilitar las pruebas y la modularidad, reduciendo a su vez la cantidad de código que tenemos > que escribir para conectar vista + modelo.
-#### Model
-> Lo mismo que para MVC y MVP. No hay cambios.
+**Estructura del aplicativo Utilizando la arquitectura _MVVM_** 
 
-#### View
+### MVVM 
 
-> La vista se vincula con variables "observables" y "acciones" expuestas por el ViewModel de forma flexible.
+> MVVM, con Data Binding en Android, tiene los beneficios de facilitar las pruebas y la modularidad, reduciendo a su vez la cantidad de código que tenemos > que escribir para conectar vista + modelo. 
 
-#### ViewModel
-> Es el responsable de ajustar el modelo y preparar los datos observables que necesita la vista. También proporciona hooks para que la vista pase eventos al modelo. Sin embargo, el ViewModel no está vinculado a la vista.
+#### Model 
 
-## Lenguajes utilizados
+> Lo mismo que para MVC y MVP. No hay cambios. 
 
-1. Kotlin (Aplicativo)
-2. GraphQl(SDL-Consultas)
+#### View 
 
-## Librerias y depedencias
+> La vista se vincula con variables "observables" y "acciones" expuestas por el ViewModel de forma flexible. 
+
+#### ViewModel 
+
+> Es el responsable de ajustar el modelo y preparar los datos observables que necesita la vista. También proporciona hooks para que la vista pase eventos al modelo. Sin embargo, el ViewModel no está vinculado a la vista. 
+
+## Lenguajes utilizados 
+
+
+1. Kotlin (Aplicativo) 
+
+2. GraphQl(SDL-Consultas) 
+
+  
+## Librerías y dependencias 
 
 ***FUNCIONAMIENTO***
 - implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
@@ -94,8 +102,43 @@
  
 ## Capturas principales del aplicativo.
 
+**Pantallas de precentación**
 
+![image](https://user-images.githubusercontent.com/51754456/172529491-ed5cc0fb-7490-4b78-b74d-f1c21b84f3e7.png)
+
+![image](https://user-images.githubusercontent.com/51754456/172529525-f6af3acb-ab30-45bf-8710-20920b45487e.png)
+
+![image](https://user-images.githubusercontent.com/51754456/172529546-c5022f5b-6b0a-43c8-b1d4-83af5fcb0a3a.png)
+
+**Pantalla de inicio de sessión**
+![image](https://user-images.githubusercontent.com/51754456/172529601-f6e2761f-3d52-4a54-acbe-30098b164395.png)
+
+### Google
+![image](https://user-images.githubusercontent.com/51754456/172529682-cd5bd3a5-69e2-4463-9ca0-e09a3ad7f1ff.png)
+### Facebook
+![image](https://user-images.githubusercontent.com/51754456/172529734-df64ab76-6cb5-4557-8c58-8b084a1a990c.png)
+
+**Home**
+- Lista de productos en el dispositivo
+![image](https://user-images.githubusercontent.com/51754456/172529770-bca0b13b-b60f-4820-a87e-21cea305fdd5.png)
+- LIsta de productos servidor
+![image](https://user-images.githubusercontent.com/51754456/172530055-f99f65f2-438b-4c08-81c2-793f9b8b3b63.png)
+- Lista de productos Base de datos MongoDB
+![image](https://user-images.githubusercontent.com/51754456/172530110-f588bc24-112b-4e03-8b78-6134bf7d935a.png)
+
+**Agregación de productos**
+
+QR:
+![image](https://user-images.githubusercontent.com/51754456/172530176-5b6ed638-783d-47a9-9511-76fa73d949c3.png)
+IMAGENES:
+![image](https://user-images.githubusercontent.com/51754456/172530424-13ecaf85-de61-4e8c-ae2a-d9766e565bf2.png)
+
+**Cuadro de navegación**
+
+![image](https://user-images.githubusercontent.com/51754456/172530493-be8f3f85-33e7-4cd1-9379-b6d4ddbdff47.png)
 
 
 ### Manual instructivo de uso del aplicativo
+
+![image](https://user-images.githubusercontent.com/51754456/172530310-6d7071de-5868-4e5d-93a6-4abeacec1406.png)
 
