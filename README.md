@@ -132,13 +132,29 @@ QR:
 ![image](https://user-images.githubusercontent.com/51754456/172530176-5b6ed638-783d-47a9-9511-76fa73d949c3.png)
 IMAGENES:
 ![image](https://user-images.githubusercontent.com/51754456/172530424-13ecaf85-de61-4e8c-ae2a-d9766e565bf2.png)
-
+![image](https://user-images.githubusercontent.com/51754456/172530310-6d7071de-5868-4e5d-93a6-4abeacec1406.png)
 **Cuadro de navegación**
 
 ![image](https://user-images.githubusercontent.com/51754456/172530493-be8f3f85-33e7-4cd1-9379-b6d4ddbdff47.png)
 
+**Permisos**
+![image](https://user-images.githubusercontent.com/51754456/172531018-3ddc11da-a522-456b-8930-059290751302.png)
+
+**CLientes (P2P)**
+![image](https://user-images.githubusercontent.com/51754456/172531293-7231b88a-4408-4a38-bffd-62173fcf9fd2.png)
+
+**Interfaces del cliente**
+![image](https://user-images.githubusercontent.com/51754456/172531354-48369001-1002-47d5-94c6-bc4a2e20f6d8.png)
+
+**Lista de Productos**
+
+***Productos del servidor***
+![image](https://user-images.githubusercontent.com/51754456/172531651-a6a6cf2a-5380-432a-be2d-4ec2906ac68b.png)
+
+***Asistentes***
+![image](https://user-images.githubusercontent.com/51754456/172531756-8b5af648-0069-4c61-8061-7bcb43597583.png)
 
 ### Manual instructivo de uso del aplicativo
 
-![image](https://user-images.githubusercontent.com/51754456/172530310-6d7071de-5868-4e5d-93a6-4abeacec1406.png)
+
 
