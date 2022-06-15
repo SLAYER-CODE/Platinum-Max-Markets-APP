@@ -120,12 +120,12 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:id="@+id/ItemBackground"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             style="@style/IconItems"
-            android:background="@color/md_green_500_25"
+            android:id="@+id/ItemBackground"
+            android:background="@color/md_white_1000_50"
             android:padding="5dp">
 
             <LinearLayout

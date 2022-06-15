@@ -21,8 +21,11 @@ class recyclerItemClickListener(
         view.setOnLongClickListener(null)
     }
 
+
     override fun onChildViewAttachedToWindow(view: View) {
+
         view.setOnClickListener { v -> setOnChildAttachedToWindow(v) }
+        view.setOnLongClickListener { v-> setOnChildAttachedToWindowLong(v)}
     }
 
     private fun setOnChildAttachedToWindow(v: View?) {
@@ -30,9 +33,17 @@ class recyclerItemClickListener(
             val position = mRecycler.getChildLayoutPosition(v)
             if (position >= 0) {
                 clickListener?.invoke(position, v)
+            }
+        }
+    }
+    private fun setOnChildAttachedToWindowLong(v: View?): Boolean {
+        if (v != null) {
+            val position = mRecycler.getChildLayoutPosition(v)
+            if (position >= 0) {
                 longClickListener?.invoke(position, v)
             }
         }
+        return true
     }
 }
 
@@ -74,7 +85,52 @@ class RecyclerViewItemClickListener(
         })
     }
 }
+//Segundo
 
+
+class RecyclerItemClickListenr(context: Context, recyclerView: RecyclerView, private val mListener: OnItemClickListener?) : RecyclerView.OnItemTouchListener {
+
+    private val mGestureDetector: GestureDetector
+
+    interface OnItemClickListener {
+        fun onItemClick(view: View, position: Int)
+
+        fun onItemLongClick(view: View?, position: Int)
+    }
+
+    init {
+
+        mGestureDetector =
+            GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
+                override fun onSingleTapUp(e: MotionEvent): Boolean {
+                    return true
+                }
+
+                override fun onLongPress(e: MotionEvent) {
+                    val childView = recyclerView.findChildViewUnder(e.x, e.y)
+
+                    if (childView != null && mListener != null) {
+                        mListener.onItemLongClick(
+                            childView,
+                            recyclerView.getChildAdapterPosition(childView)
+                        )
+                    }
+                }
+            })
+    }
+
+    override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+        TODO("Not yet implemented")
+    }
+}
 //
 //class recyclerItemClickListener(
 //    private val mRecycler: RecyclerView,

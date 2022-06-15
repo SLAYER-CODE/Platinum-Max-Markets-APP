@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class LoginServiceGraph @Inject constructor(
     private val services:ServicesGraph) {
-    suspend fun ComprobateLogin():ApolloResponse<CategoriasQuery.Data> {
+    suspend fun ComprobateLogin():ApolloResponse<CategoriasQuery.Data>? {
         return withContext(Dispatchers.IO) {
             services.CategoriesGetService()
         }

@@ -106,7 +106,7 @@
 
     <style name="BarActiveToolBar">
         <item name="android:background">@color/md_black_1000</item>
-        <item name="titleTextColor">@color/md_green_A400</item>
+        <item name="titleTextColor">@color/md_black_1000</item>
     </style>
 
 

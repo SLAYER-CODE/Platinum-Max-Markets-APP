@@ -6,13 +6,15 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        style="@style/IconItems"
-        android:background="@color/md_green_500_25"        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+
         android:id="@+id/CardViewParent"
+        style="@style/IconItems"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/md_green_500_25"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,36 +22,87 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_gravity="center"
-                android:layout_weight="0">
-
+                android:layout_weight="0"
+                android:gravity="center">
                 <ImageView
 
-                    style="@style/ButtonFloatLayout"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/ic_baseline_price_add_product"
                     android:id="@+id/IVimagenItem"
+                    style="@style/ButtonFloatLayout"
                     android:layout_width="85dp"
                     android:layout_height="85dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/ic_baseline_price_add_product"
                     android:transitionName="image_small"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-            </LinearLayout>
+
+                <LinearLayout
+                    style="@style/ItemSeparate"
+                    android:layout_width="90dp"
+                    android:layout_height="40dp"
+                    android:padding="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0">
+
+                    <ToggleButton
+                        android:id="@+id/SaveStorage"
+                        style="@style/toggleButton_lint"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/ic_baseline_router_24"
+                        android:checked="false"
+                        android:clickable="true"
+                        android:textColor="@drawable/toogle_select_text"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ToggleButton
+                        android:id="@+id/BSincronise"
+                        style="@style/toggleButton_lint"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/ic_baseline_cloud_sync_24"
+                        android:textColor="@drawable/toogle_select_text"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ToggleButton
+                        android:id="@+id/BSLocal"
+                        style="@style/toggleButton_lint"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/ic_baseline_dataset_linked_24"
+                        android:textColor="@drawable/toogle_select_text"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:id="@+id/ItemBackground"
+                android:background="@color/md_white_1000_50"
                 android:padding="5dp">
+
 
                 <RatingBar
                     android:id="@+id/ratingBar"
@@ -70,6 +123,7 @@
                     app:layout_constraintVertical_bias="0.0" />
 
                 <LinearLayout
+                    android:id="@+id/linearLayout5"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
@@ -84,9 +138,8 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:transitionName="header_title"
-                        style="@style/TextItemPrimero"
                         android:id="@+id/TNombre"
+                        style="@style/TextItemPrimero"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|left"
@@ -96,12 +149,13 @@
                         android:foregroundGravity="center"
                         android:gravity="center|left"
                         android:marqueeRepeatLimit="marquee_forever"
+                        android:maxWidth="250dp"
                         android:scrollHorizontally="true"
                         android:singleLine="true"
-                        android:textStyle="bold"
                         android:text="TextView"
                         android:textSize="22sp"
-                        android:maxWidth="250dp"
+                        android:textStyle="bold"
+                        android:transitionName="header_title"
                         tools:text="Nombre del produto" />
 
                     <LinearLayout
@@ -112,8 +166,8 @@
                         android:showDividers="middle">
 
                         <TextView
-                            style="@style/TextItemPrimero"
                             android:id="@+id/TEPrecio"
+                            style="@style/TextItemPrimero"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -123,8 +177,8 @@
                             tools:text="20.2" />
 
                         <TextView
-                            style="@style/TextItemPrimero"
                             android:id="@+id/TEPrecioU"
+                            style="@style/TextItemPrimero"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -146,52 +200,13 @@
                         tools:text="Detalles" />
 
                 </LinearLayout>
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
-        <LinearLayout
-            android:layout_gravity="bottom"
-            android:layout_width="90dp"
-            android:layout_height="40dp"
-            android:padding="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
-            <ToggleButton
-                android:textColor="@drawable/toogle_select_text"
-                style="@style/toggleButton_lint"
-                android:id="@+id/SaveStorage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:checked="false"
-                android:background="@drawable/ic_baseline_router_24"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-            <ToggleButton
-                android:textColor="@drawable/toogle_select_text"
-                style="@style/toggleButton_lint"
-                android:id="@+id/BSincronise"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/ic_baseline_cloud_sync_24"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-            <ToggleButton
-                android:textColor="@drawable/toogle_select_text"
-                style="@style/toggleButton_lint"
-                android:id="@+id/BSLocal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/ic_baseline_dataset_linked_24"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </LinearLayout>
+
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

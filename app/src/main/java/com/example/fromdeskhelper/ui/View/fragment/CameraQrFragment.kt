@@ -3,6 +3,7 @@ package com.example.fromdeskhelper.ui.View.fragment
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
@@ -141,7 +142,7 @@ class CameraQrFragment : Fragment() {
 
 
         imageAnalisis=ImageAnalysis.Builder()
-            .setTargetResolution(Size(1280, 720))
+//            .setTargetResolution(Size(1280, 720))
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .build()
 
@@ -160,7 +161,7 @@ class CameraQrFragment : Fragment() {
                 Corutine=null;
             }
 
-            imageAnalisis.setAnalyzer(cameraExecutor, QrCodeAnalyzer{ qrResult->
+            imageAnalisis.setAnalyzer(cameraExecutor, QrCodeAnalyzer({ qrResult->
                 imageAnalisis.clearAnalyzer()
                 binding.PVCmain.post {
 //                                cameraProvider.unbindAll()
@@ -193,7 +194,7 @@ class CameraQrFragment : Fragment() {
                         println(resultKeys)
                     }
                 }
-            })
+            },baseActivity.resources.configuration.orientation != Configuration.ORIENTATION_PORTRAIT))
         }
 
         CameraView.CameraActivate.observe(viewLifecycleOwner, Observer {
@@ -255,7 +256,7 @@ class CameraQrFragment : Fragment() {
             if(analizer) {
                 imageAnalisis
                     .apply {
-                        setAnalyzer(cameraExecutor, QrCodeAnalyzer { qrResult ->
+                        setAnalyzer(cameraExecutor, QrCodeAnalyzer({ qrResult ->
 
                             clearAnalyzer()
                             binding.PVCmain.post {
@@ -285,7 +286,7 @@ class CameraQrFragment : Fragment() {
 //                                primero.cancel();
                             }
 
-                        })
+                        },baseActivity.resources.configuration.orientation != Configuration.ORIENTATION_PORTRAIT))
 
                     }
             }

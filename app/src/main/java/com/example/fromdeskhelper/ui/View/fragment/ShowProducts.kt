@@ -1,11 +1,15 @@
 package com.example.fromdeskhelper.ui.View.fragment
 
 import Data.ClientList
+import Data.ClientListGet
+import Data.Producto
 import Data.listInventarioProductos
 import android.animation.TimeInterpolator
 import android.content.Context
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,16 +27,23 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.databinding.FragmentShowProductsBinding
+import com.example.fromdeskhelper.ui.View.ViewModel.ClientLocalViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.SendItems.SendProductsStoreViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.UitlsMainShowViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.UtilsShowMainViewModels
 import com.example.fromdeskhelper.ui.View.activity.MainActivity
+import com.example.fromdeskhelper.ui.View.adapter.ProductoAdapter
+import com.example.fromdeskhelper.ui.View.fragment.Client.ChildFragments.affectOnItemClicks
 import com.example.fromdeskhelper.util.listener.RecyclerViewItemClickListener
 import com.example.fromdeskhelper.util.listener.recyclerItemClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.item_producto.view.*
 import kotlinx.coroutines.launch
 
+//@JvmOverloads
+//fun RecyclerView.affectOnItemLong(onClick: ((position: Int, view: View) -> Unit)? = null, onLongClick: ((position: Int, view: View) -> Unit)? = null) {
+//    this.addOnChildAttachStateChangeListener(recyclerItemClickListener(this, onClick, onLongClick))
+//}
 
 @AndroidEntryPoint
 class ShowProducts : Fragment() {
@@ -46,6 +57,7 @@ class ShowProducts : Fragment() {
     var currentPage: Int = 6
     var itemfinal: Boolean = false;
     var clientcount: Int = 1;
+    var adapter:ProductoAdapter= ProductoAdapter(mutableListOf(),null,0,null)
 
     //    lateinit var daoNew:AppDatabase
 //    private val MainModel: ShowMainViewModel by viewModels(ownerProducer = { requireActivity() });
@@ -59,6 +71,10 @@ class ShowProducts : Fragment() {
     private val UtilsView: UtilsShowMainViewModels by viewModels(ownerProducer = {
         requireActivity()
     });
+
+    private val ClienLocalModel: ClientLocalViewModel by viewModels(ownerProducer = {
+        requireActivity()
+    })
 
 
     interface ClickListener {
@@ -109,6 +125,102 @@ class ShowProducts : Fragment() {
         return view
     }
 
+    val FREQ = 3f
+    val DECAY = 2f
+    val decayingSineWave = TimeInterpolator { input ->
+        val raw = Math.sin(FREQ * input * 2 * Math.PI)
+        (raw * Math.exp((-input * DECAY).toDouble())).toFloat()
+    }
+
+
+    fun setFunction(value: Boolean, client: ClientListGet?) {
+        Log.i("SE APRETO LONG","FINALITEM")
+        adapter.setOnItemListenerListener(object:ProductoAdapter.OnItemListener{
+            override fun OnItemClickListener(view: View?, position: Int) {
+                if (findNavController().currentDestination?.id == R.id.FirstFragment) {
+                    val bundle = Bundle()
+                    val navBuilder = NavOptions.Builder()
+                    navBuilder.setEnterAnim(android.R.anim.fade_in)
+                        .setExitAnim(android.R.anim.fade_out)
+                        .setPopExitAnim(android.R.anim.fade_out)
+                    Log.i("POSICION",position.toString())
+                    bundle.putInt("uid", listaProductos[position].uid)
+                    var animation = 0
+                    var extras: FragmentNavigator.Extras = FragmentNavigatorExtras()
+
+                    if (view?.IVimagenItem != null) {
+                        animation = 1
+                        extras = FragmentNavigatorExtras(view.IVimagenItem to "image_big")
+                    }
+
+                    bundle.putInt("animation", animation)
+                    findNavController().navigate(
+                        resId = R.id.action_FirstFragment_to_detallesProducto,
+                        args = bundle,
+                        navOptions = navBuilder.build(),
+                        extras
+                    )
+                }
+            }
+
+            override fun OnItemLongClickListener(view: View?, position: Int) {
+                if (view!=null&&value && client != null) {
+
+
+                    ClienLocalModel.setRelationSelect(
+                        client.uid,
+                        listaProductos[position].uid
+                    )
+                    view.animate()
+                        .yBy(-50f).xBy(-25f)
+                        .setInterpolator(decayingSineWave)
+                        .setDuration(200).withEndAction {
+                            val ViewDrawable =
+                                DrawableCompat.wrap(view.ItemBackground.background);
+                            DrawableCompat.setTint(ViewDrawable.mutate(), client.color)
+                        }
+
+                        .start();
+
+                }            }
+
+        })
+
+//        binding.LVMylist.affectOnItemClicks(onClick = { position, view: View ->
+//
+//            if (findNavController().currentDestination?.id == R.id.FirstFragment) {
+//                val bundle = Bundle()
+//                val navBuilder = NavOptions.Builder()
+//                navBuilder.setEnterAnim(android.R.anim.fade_in)
+//                    .setExitAnim(android.R.anim.fade_out)
+//                    .setPopExitAnim(android.R.anim.fade_out)
+//
+//                bundle.putInt("uid", listaProductos[position].uid)
+//                var animation = 0
+//                var extras: FragmentNavigator.Extras = FragmentNavigatorExtras()
+//
+//                if (view?.IVimagenItem != null) {
+//                    animation = 1
+//                    extras = FragmentNavigatorExtras(view.IVimagenItem to "image_big")
+//                }
+//
+//                bundle.putInt("animation", animation)
+//                findNavController().navigate(
+//                    resId = R.id.action_FirstFragment_to_detallesProducto,
+//                    args = bundle,
+//                    navOptions = navBuilder.build(),
+//                    extras
+//                )
+//
+//
+//            }
+//        }, onLongClick = { position, view ->
+//
+//
+//        })
+
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
 
@@ -125,108 +237,18 @@ class ShowProducts : Fragment() {
 //
 //            }
 //        })
-
-        binding.LVMylist.addOnItemTouchListener(RecyclerViewItemClickListener(
-            context, binding.LVMylist, object : ClickListener {
-                override fun onClick(view: View?, position: Int) {
-                    if (findNavController().currentDestination?.id == R.id.FirstFragment) {
-                        val bundle = Bundle()
-                        val navBuilder = NavOptions.Builder()
-                        navBuilder.setEnterAnim(android.R.anim.fade_in)
-                            .setExitAnim(android.R.anim.fade_out)
-                            .setPopExitAnim(android.R.anim.fade_out)
-
-                        bundle.putInt("uid", listaProductos[position].uid)
-                        var animation = 0
-                        var extras: FragmentNavigator.Extras = FragmentNavigatorExtras()
-
-                        if (view?.IVimagenItem != null) {
-                            animation = 1
-                            extras = FragmentNavigatorExtras(view.IVimagenItem to "image_big")
-                        }
-
-                        bundle.putInt("animation", animation)
-                        findNavController().navigate(
-                            resId = R.id.action_FirstFragment_to_detallesProducto,
-                            args = bundle,
-                            navOptions = navBuilder.build(),
-                            extras
-                        )
-                    }
-                }
-                val FREQ = 3f
-                val DECAY = 2f
-                val decayingSineWave = TimeInterpolator { input ->
-                    val raw = Math.sin(FREQ * input * 2 * Math.PI)
-                    (raw * Math.exp((-input * DECAY).toDouble())).toFloat()
-                }
-                override fun onLongClick(view: View?, position: Int) {
-//                        Log.i("LOGCLICKITEM",position.toString())
-//                    var views=view?.IVimagenItem
-//                    views?.id=View.generateViewId()
-//                    (view?.linearLayout4 as LinearLayout).addView( i)
-
-                    if (view != null) {
-
-//                        setClipView(view,false)
-//                        var moveLefttoRight = TranslateAnimation(0f, 0f, 0f, 200f)
-//                        moveLefttoRight.setDuration(1000)
-//                        moveLefttoRight.setFillAfter(true)
-//                        view.startAnimation(moveLefttoRight)
-
-                        view.animate()
-                            .yBy(-60f).xBy(-20f)
-                            .setInterpolator(decayingSineWave).withEndAction {
-                                val ViewDrawable =
-                                    DrawableCompat.wrap(view.ItemBackground.background);
-                                DrawableCompat.setTint(ViewDrawable, Color.BLUE)
-                            }
-                            .setDuration(200)
-                            .start();
-
-                    }
-                }
-            }
-        ))
-//        binding.LVMylist.affectOnItemClicks(onClick = { position, view: View ->
-//            if (findNavController().currentDestination?.id == R.id.FirstFragment) {
-//                val bundle = Bundle()
-//                val navBuilder = NavOptions.Builder()
-//                navBuilder.setEnterAnim(android.R.anim.fade_in).setExitAnim(android.R.anim.fade_out)
-//                    .setPopExitAnim(android.R.anim.fade_out)
-//
-//                bundle.putInt("uid", listaProductos[position].uid)
-//                var animation = 0
-//                var extras: FragmentNavigator.Extras = FragmentNavigatorExtras()
-//
-//                if (view.IVimagenItem != null) {
-//                    animation = 1
-//                    extras = FragmentNavigatorExtras(view.IVimagenItem to "image_big")
-//                }
-//
-//                bundle.putInt("animation", animation)
-//                findNavController().navigate(
-//                    resId = R.id.action_FirstFragment_to_detallesProducto,
-//                    args = bundle,
-//                    navOptions = navBuilder.build(),
-//                    extras
-//                )
-//            }
-//        }, onLongClick = {position, view ->
-//            Log.i("LOGCLICKITEM",position.toString())
-//        })
-
-//        lifecycleScope.launch {
-//            StoreSendViewModel.ItemsFlow.collect{it->
-//
-//            }
-//        }
+        ClienLocalModel.itemClientItem.observe(viewLifecycleOwner, Observer {
+            setFunction(true, it)
+        })
 
         StoreSendViewModel.Items.observe(viewLifecycleOwner, Observer {
             listaProductos = it.MyImage
-            binding.LVMylist.adapter = it
+            adapter = it
+            setFunction(false,null)
             comprobateList(it.itemCount)
             lifecycleScope.launch {
+                binding.LVMylist.adapter=adapter
+                adapter.notifyDataSetChanged()
                 binding.LVMylist.startLayoutAnimation()
             }
 

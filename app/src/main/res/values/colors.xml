@@ -604,6 +604,7 @@
     <color name="md_white_1000">#ffffff</color>
     <color name="md_white_1000_screen">#F6F6F6</color>
     <color name="md_white_1000_screen_Fond">#E6FEFF</color>
+    <color name="md_white_1000_screen_OverLay">#81ADFCFF</color>
     <color name="md_white_1000_10">#1affffff</color>
     <color name="md_white_1000_15">#22ffffff</color>
     <color name="md_white_1000_20">#33ffffff</color>

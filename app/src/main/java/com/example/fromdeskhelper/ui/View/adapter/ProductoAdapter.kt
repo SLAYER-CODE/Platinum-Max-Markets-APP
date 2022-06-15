@@ -18,6 +18,7 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import kotlin.random.Random
 
+
 //import com.example.productos.databinding.ItemProductoBinding
 
 
@@ -29,18 +30,30 @@ class ProductoAdapter(
 ) :
     RecyclerView.Adapter<ProductoAdapter.ImageHolder>(),Filterable {
     private var ProductList:List<listInventarioProductos>
+    public  var onItemListener: OnItemListener? = null
+    var id = 0
+
     init {
         ProductList= MyImage
+        onItemListener=null
+    }
+
+    internal  inner class RV_ItemListener : View.OnClickListener,
+        View.OnLongClickListener {
+        override fun onClick(view: View) {
+            onItemListener?.OnItemClickListener(view, view.id)
+        }
+
+        override fun onLongClick(view: View): Boolean {
+            onItemListener?.OnItemLongClickListener(view, view.id)
+            return true
+        }
     }
     inner class ImageHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
         fun render(ProductoAndImage: listInventarioProductos) {
 
-//            val bmp = BitmapFactory.decodeByteArray(superImage, 0, superImage.size)
-//            val bmp = assetsToBitmap("purpleFlower.png")
-//            view.ImagenOrder.setImageBitmap(bmp)
             view.TNombre.isSelected = true;
-
             view.TNombre.text = ProductoAndImage.nombre
             view.TEPrecio.text = "$\\${ProductoAndImage.precioC}"
             view.TEPrecioU.text = "$\\${ProductoAndImage.precioU}"
@@ -81,6 +94,18 @@ class ProductoAdapter(
             view.TNombre.isSelected = true;
             view.TNombre.text = ProductoAndImage.nombre
             view.TEPrecio.text = "$\\${ProductoAndImage.precioC}"
+
+            view.SaveStorage.setOnClickListener {
+                check(true)
+                ViewModelCall?.AddResponse(ProductoAndImage)
+            }
+            view.BSincronise.setOnClickListener {
+                check(true)
+
+            }
+            view.BSLocal.setOnClickListener {
+                check(true)
+            }
         }
 
         fun renderListView(ProductoAndImage: listInventarioProductos) {
@@ -97,8 +122,10 @@ class ProductoAdapter(
             view.ratingBar.rating = ((Random.nextFloat() * (view.ratingBar.numStars - 1)))
             view.IVimagenItem.transitionName = (ProductoAndImage.uid.toString())
             view.IVimagenItem.setImageBitmap(imagen)
+
             view.SaveStorage.setOnClickListener {
                 check(true)
+                Log.i("SE CLICLEO","Item")
                 ViewModelCall?.AddResponse(ProductoAndImage)
             }
             view.BSincronise.setOnClickListener {
@@ -118,7 +145,7 @@ class ProductoAdapter(
     fun setItem(inte:Int){
         visualise=inte
     }
-    
+
 
     override fun getItemViewType(position: Int): Int {
         if (MyImage[position].imageBit == null) {
@@ -130,46 +157,50 @@ class ProductoAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        var ItemView: ImageHolder = ImageHolder(
-            layoutInflater.inflate(
-                R.layout.item_producto_reverse,
-                parent,
-                false
-            )
-        )
+//        var ItemView: ImageHolder = ImageHolder(
+//            layoutInflater.inflate(
+//                R.layout.item_producto_reverse,
+//                parent,
+//                false
+//            )
+//        )
+        var ItemView: View = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_producto_reverse, parent,false)
+
         Log.i("primeroo",viewType.toString())
         if (viewType == 2) {
-            ItemView = ImageHolder(
+            ItemView =
                 layoutInflater.inflate(
                     R.layout.item_producto_notimage,
                     parent,
                     false
-                )
             )
         } else if (viewType == 1) {
             if (reverse) {
                 reverse = false;
                 ItemView =
-                    ImageHolder(layoutInflater.inflate(R.layout.item_producto, parent, false))
+                    layoutInflater.inflate(R.layout.item_producto, parent, false)
             } else {
                 reverse = true;
-                ItemView = ImageHolder(
+                ItemView =
                     layoutInflater.inflate(
                         R.layout.item_producto_reverse,
                         parent,
                         false
-                    )
                 )
             }
         } else if (viewType == 3) {
-            ItemView = ImageHolder(layoutInflater.inflate(R.layout.item_producto_listview, parent, false))
+            ItemView = layoutInflater.inflate(R.layout.item_producto_listview, parent, false)
 
         }else if(viewType == 4){
-            ItemView = ImageHolder(layoutInflater.inflate(R.layout.item_producto_gridview, parent, false))
+            ItemView = layoutInflater.inflate(R.layout.item_producto_gridview, parent, false)
         }
 
-        return ItemView
-
+        ItemView.id=id
+        id++
+        ItemView.setOnClickListener(RV_ItemListener());
+        ItemView.setOnLongClickListener(RV_ItemListener());
+        return ImageHolder(ItemView)
     }
 
 
@@ -227,4 +258,16 @@ class ProductoAdapter(
 
     }
 
+    interface OnItemListener {
+        fun OnItemClickListener(view: View?, position: Int)
+        fun OnItemLongClickListener(view: View?, position: Int)
+    }
+
+
+
+    fun setOnItemListenerListener(listener: OnItemListener) {
+        onItemListener = listener
+    }
+
 }
+

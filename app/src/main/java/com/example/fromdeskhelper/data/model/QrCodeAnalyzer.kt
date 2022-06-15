@@ -1,11 +1,13 @@
 package com.example.fromdeskhelper.data.model
 
+import android.app.Activity
 import android.graphics.ImageFormat.*
 import android.os.Build
 import android.util.Log
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import com.example.fromdeskhelper.ExifUtil.rotateYUV420Degree90
+import com.example.fromdeskhelper.ui.View.activity.MainActivity
 import com.google.zxing.*
 import com.google.zxing.common.HybridBinarizer
 import java.nio.ByteBuffer
@@ -23,7 +25,7 @@ class QrCodeAnalyzer(
 //    private val onEan: (result:Result)->Unit):ImageAnalysis.Analyzer{
 //    }
 
-    private val  onQrCodesDetected: (qrCode: Result) -> Unit
+    private val  onQrCodesDetected: (qrCode: Result) -> Unit,private val activity:Boolean
 ) : ImageAnalysis.Analyzer
 {
     private val yuvFormats = mutableListOf(YUV_420_888)
@@ -112,9 +114,16 @@ class QrCodeAnalyzer(
 //                image.planes[0].buffer.toByteArray().get(x + y *  image.planes[0].buffer.toByteArray().size)
 //        }
 
-//        val data = rotateYUV420Degree90(image.planes[0].buffer.toByteArray(),image.planes[0].buffer.toByteArray().size,image.planes[0].buffer.toByteArray().size)
-//        val data =  image.planes[0].buffer.toByteArray()
-        val data = rotateYUV420Degree90(image.planes[0].buffer.toByteArray(),image.width,image.height)
+        var data:ByteArray?
+        if(activity) {
+            data =  image.planes[0].buffer.toByteArray()
+        }else{
+            data = rotateYUV420Degree90(
+                image.planes[0].buffer.toByteArray(),
+                image.width,
+                image.height
+            )
+        }
 //        val data = rotatedData
 //        val myImg =BitmapFactory.decodeByteArray(data,0,data.size)
 //    val matrix = Matrix()
@@ -145,14 +154,20 @@ class QrCodeAnalyzer(
 //                data[x + y * image.width]
 //            }
 //        }
+        var top:Int
+        if(activity){
+            top=0
+        }else{
+            top=200
+        }
     val source = PlanarYUVLuminanceSource(
             data,
             image.height,
             image.width,
-        200,
-        200,
-            image.height-200,
+        0,
+        top,
             image.width-200,
+            image.height-top,
             false
     )
 //        ).crop(0,0,image.height-200,image.width-200)

@@ -1,5 +1,6 @@
 package com.example.fromdeskhelper.data.db
 
+import Data.ClientAndProducts
 import Data.ClientList
 import Data.ImagenesNew
 import Data.Producto
@@ -10,7 +11,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.fromdeskhelper.data.model.base.ProductoData
 
-@Database(entities = [Producto::class, ImagenesNew::class,ClientList::class],version = 4)
+@Database(entities = [Producto::class, ImagenesNew::class,ClientList::class,ClientAndProducts::class],version = 5)
 @TypeConverters(Converters::class)
 abstract class AppDatabase :RoomDatabase(){
 

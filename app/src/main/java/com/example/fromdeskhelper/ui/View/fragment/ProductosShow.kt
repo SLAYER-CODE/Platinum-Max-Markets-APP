@@ -114,6 +114,9 @@ class ProductosShow : Fragment() {
 
     private val ClienModel:ClientAddShortViewModel by viewModels()
 
+    private val ClienLocalModel: ClientLocalViewModel by viewModels(ownerProducer = {
+        requireActivity()
+    })
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -216,18 +219,22 @@ class ProductosShow : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentProductosShowBinding.inflate(inflater, container, false)
 
-//        CLient add item
         var adapterClient = ClientAdapter(mutableListOf<ClientListGet>())
+
         binding.addclientitems.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-//        binding.addclientitems.layoutManager=GridLayoutManager(baseActivity,2)
+
         binding.BAddclient.setOnClickListener {
             var createClient=createAleatorieList()
             ClienModel.agregateItem(createClient)
-//            adapterClient.addClientFrist(createClient)
-//            binding.addclientitems.adapter = adapterClient
             binding.BAddclient.animate().rotation(180F * (contadorImagen++)).setDuration(200).start()
         }
+
+        binding.BAddclient.setOnLongClickListener {
+
+            true
+        }
+
         adapterClient= ClientAdapter(mutableListOf())
         binding.addclientitems.adapter=adapterClient
          ClienModel.getItemClients().observe(viewLifecycleOwner, Observer {
@@ -238,6 +245,10 @@ class ProductosShow : Fragment() {
 
         binding.paggerid.setPageTransformer(TabletPageTransformer())
 
+
+        ClienLocalModel.closeView.observe(viewLifecycleOwner, Observer {
+            binding.ClientFragmnetShow.visibility = View.GONE
+        })
         binding.addclientitems.addOnItemTouchListener(RecyclerViewItemClickListener(
             context,binding.addclientitems,object : ShowProducts.ClickListener {
                 override fun onClick(view: View?, position: Int) {
@@ -254,6 +265,7 @@ class ProductosShow : Fragment() {
                             binding.addclientitems.adapter?.notifyItemChanged(x)
                         }
                     }
+                    ClienLocalModel.SendselectItem(client)
                     Log.i("SETOCOFINAL",adapterClient.toString())
                 }
                 override fun onLongClick(view: View?, position: Int) {

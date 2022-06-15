@@ -10,11 +10,12 @@
     android:clipChildren="false"
     android:clipToPadding="false"
     android:foregroundGravity="bottom"
-    style="@style/AgregateFontDrawable"
+    android:background="@color/md_black_1000"
     tools:context=".AgregateProducts">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/SVAPNew"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="13dp"

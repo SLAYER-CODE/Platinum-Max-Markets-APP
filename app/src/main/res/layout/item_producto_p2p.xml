@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:clipToOutline="false"
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
@@ -154,6 +157,28 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
+        <TextView
+            style="@style/TextItemPrimero"
+            android:layout_marginTop="60dp"
+            android:layout_gravity="bottom"
+            android:id="@+id/TNQR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:foregroundGravity="center"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:shadowRadius="25"
+            android:singleLine="true"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            tools:text="Nombre del produto" />
     </androidx.cardview.widget.CardView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

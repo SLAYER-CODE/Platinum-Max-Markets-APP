@@ -35,8 +35,12 @@ private const val ARG_PARAM2 = "param2"
 @JvmOverloads
 fun RecyclerView.affectOnItemClicks(onClick: ((position: Int, view: View) -> Unit)? = null, onLongClick: ((position: Int, view: View) -> Unit)? = null) {
     println("SE APRETO CADA ITEM")
-    this.addOnChildAttachStateChangeListener(recyclerItemClickListener(this, onClick, onLongClick))
+    var dato=recyclerItemClickListener(this, onClick, onLongClick)
+    this.clearOnChildAttachStateChangeListeners()
+    this.addOnChildAttachStateChangeListener(dato)
 }
+
+
 
 
 private const val LOGFRAGMENT: String = "FRAGMENTASISTENTFRAGMENT"

@@ -6,11 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="top"
-    style="@style/AgregateFontDrawable"
     android:animateLayoutChanges="true"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:foregroundGravity="bottom"
+    android:background="@color/md_black_1000"
     tools:context=".AgregateProducts">
 
     <androidx.core.widget.NestedScrollView

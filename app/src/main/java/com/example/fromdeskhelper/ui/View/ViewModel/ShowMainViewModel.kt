@@ -29,6 +29,9 @@ Application()
 ) {
     val ItemsRouterTransmited: MutableLiveData<MutableList<listInventarioProductos>> = MutableLiveData();
     public val Items:MutableList<listInventarioProductos> = mutableListOf()
+    public val ResT=MutableLiveData<listInventarioProductos>()
+    public val ResTFacture=MutableLiveData<MutableList<Producto>>()
+
     val ImageReturn: MutableLiveData<String?> = MutableLiveData();
 
     fun ComprobateList(Products: listInventarioProductos):Boolean{
@@ -43,6 +46,7 @@ Application()
         Log.i("SUBIENDO AL SERVIDOR",Products.nombre)
        if(!ComprobateList(Products)){
            Items.add(Products)
+           ResT.postValue(Products)
            RequestItem()
        }
     }

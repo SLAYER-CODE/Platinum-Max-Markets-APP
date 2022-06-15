@@ -70,10 +70,19 @@ class ShowProductsP2PFragment : Fragment() {
         PP2Pproducts.RequestItem()
         PP2Pproducts.ItemsRecivedTransmited.observe(viewLifecycleOwner, Observer {
             adaptador= ProductoRecivedP2PAdapter(it,null)
+            adaptador.notifyItemRangeInserted(0,it.size)
             binding.LVMylist.adapter=adaptador
             comprobateList(it.size)
-            binding.LVMylist.startLayoutAnimation()
         })
+
+//        PP2Pproducts.ItemsRecived.observe(viewLifecycleOwner, Observer {
+//            adaptador= ProductoRecivedP2PAdapter(it,null)
+//            adaptador.notifyItemRangeInserted(0,it.size)
+//            comprobateList(it.size)
+////            binding.LVMylist.startLayoutAnimation()
+//        })
+
+
 
         return binding.root
     }

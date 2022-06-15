@@ -16,29 +16,29 @@ import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
 
-class ServicesGraph @Inject constructor(private val grapql: ApolloClient) {
-    suspend fun CategoriesGetService(): ApolloResponse<CategoriasQuery.Data> {
+class ServicesGraph @Inject constructor(private val grapql: ApolloClient?) {
+    suspend fun CategoriesGetService(): ApolloResponse<CategoriasQuery.Data>? {
         return withContext(Dispatchers.IO) {
-            grapql.query<CategoriasQuery.Data>(CategoriasQuery()).execute();
+            grapql?.query<CategoriasQuery.Data>(CategoriasQuery())?.execute();
         }
     }
-    suspend fun MarcasGetService():ApolloResponse<BrandsQuery.Data>{
+    suspend fun MarcasGetService():ApolloResponse<BrandsQuery.Data>?{
         return withContext(Dispatchers.IO){
-            grapql.query<BrandsQuery.Data>(BrandsQuery()).execute()
+            grapql?.query<BrandsQuery.Data>(BrandsQuery())?.execute()
         }
     }
 
 
-    suspend fun GetProductsPreviewAll():ApolloResponse<ProductsPreviewQuery.Data>{
+    suspend fun GetProductsPreviewAll():ApolloResponse<ProductsPreviewQuery.Data>?{
         return withContext(Dispatchers.IO){
-            var res = grapql.query<ProductsPreviewQuery.Data>(ProductsPreviewQuery()).execute()
+            var res = grapql?.query<ProductsPreviewQuery.Data>(ProductsPreviewQuery())?.execute()
             res
         }
     }
 
     suspend fun SendProduct(
         product:ProductsInput,list:MutableList<com.apollographql.apollo3.api.Upload>
-    ):ApolloResponse<AgregateProductMutation.Data>{
+    ):ApolloResponse<AgregateProductMutation.Data>?{
         return withContext(Dispatchers.IO) {
 //            var testing=ProductsInput(
 //                mutableListOf(),
@@ -55,7 +55,7 @@ class ServicesGraph @Inject constructor(private val grapql: ApolloClient) {
 //            )
 
 
-            grapql.mutation(AgregateProductMutation(myval = product, list )).execute()
+            grapql?.mutation(AgregateProductMutation(myval = product, list ))?.execute()
 //            grapql.mutation(AgregateProductMutation(myval = testing)).execute()
         }
     }
