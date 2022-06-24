@@ -164,6 +164,9 @@ class SplashScreen : AppCompatActivity() {
 
         SplashModel.initLoginAnonime.observe(this, Observer {
             binding.TEInformation.text="Anonimo!"
+            startActivity(Intent(baseContext,MainActivity::class.java))
+            Animatoo.animateZoom(this);
+            finish()
         })
 
         SplashModel.initPrecentation.observe(this, Observer {

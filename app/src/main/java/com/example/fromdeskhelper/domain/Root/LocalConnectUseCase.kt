@@ -93,7 +93,7 @@ class LocalConnectUseCase @Inject constructor(
 ////                            println(path.path)
             val orientedBitmap: Bitmap = ExifUtil.rotateBitmap(x.path!!, imagen)
             val flujo = ByteArrayOutputStream()
-            orientedBitmap.compress(Bitmap.CompressFormat.WEBP, 50, flujo)
+//            orientedBitmap.compress(Bitmap.CompressFormat.JPEG, 1000, flujo)
             val imageInByte: ByteArray = flujo.toByteArray()
 //            val upload = DefaultUpload.Builder().content(imageInByte).build()
 //            uploadImagenes.add(upload)
