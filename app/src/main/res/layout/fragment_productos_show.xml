@@ -17,15 +17,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:background="@color/zxing_transparent"
+        android:background="@color/md_white_1000"
         android:foregroundGravity="center"
         android:gravity="center"
         android:theme="@style/Theme.Productos.AppBarOverlay">
-        <eightbitlab.com.blurview.BlurView
-            android:id="@+id/blurTabLayout"
-            android:layout_gravity="top"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+
 
         <com.google.android.material.tabs.TabLayout
             style="@style/tabMainLayout"
@@ -38,7 +34,6 @@
             app:tabIconTint="@drawable/tablayout_select_icon"
           />
 
-        </eightbitlab.com.blurview.BlurView>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -67,7 +62,6 @@
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_marginStart="80dp"
-            android:layout_marginBottom="15dp"
             android:background="@drawable/borderitemclient"
             app:circularflow_defaultRadius="60dp"
             app:circularflow_radiusInDP="60dp"

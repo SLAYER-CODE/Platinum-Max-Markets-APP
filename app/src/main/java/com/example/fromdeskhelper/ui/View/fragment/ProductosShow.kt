@@ -428,22 +428,10 @@ class ProductosShow : Fragment() {
 
 
 
-        blurbackground(binding.blurTabLayout)
         return binding.root
     }
 
-    private fun blurbackground(view: BlurView) {
-        val radius = 5f
-        val decorView: View =  activity?.window!!.decorView
-        val rootView = decorView.findViewById<View>(android.R.id.content) as ViewGroup
-        val windowBackground = decorView.background
-        view.setupWith(binding.MainRootShowProduct)
-            .setFrameClearDrawable(binding.blurTabLayout.background)
-            .setBlurAlgorithm(RenderScriptBlur(context))
-            .setBlurRadius(radius)
-            .setBlurAutoUpdate(false)
-            .setHasFixedTransformationMatrix(false)
-    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

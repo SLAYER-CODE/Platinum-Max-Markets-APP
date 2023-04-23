@@ -39,7 +39,6 @@
             android:layout_height="match_parent"
             android:scrollbarFadeDuration="0"
             android:scrollbarSize="0dp"
-            android:background="@drawable/background_navdrawable"
             app:itemBackground="@drawable/background_navdrawable"
             app:itemTextColor="@drawable/drawable_select_navigation"
             app:itemIconTint="@drawable/drawable_select_navigation"
