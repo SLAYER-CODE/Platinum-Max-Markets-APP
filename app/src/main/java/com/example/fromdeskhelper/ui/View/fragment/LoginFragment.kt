@@ -183,6 +183,7 @@ class LoginFragment : Fragment() {
 //        googleCliente.signOut()
         var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
 //            MessageSnackBar(view,result.resultCode.toString(),Color.GREEN)
+            //Esto es si se logra encontrar en la base de datos un usuario registrado
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
 //                val data: Intent? = result.data
@@ -213,10 +214,14 @@ class LoginFragment : Fragment() {
                     MessageSnackBar(view,"Ubo un error intentlo Nuevamente",Color.GRAY)
                 }
             }else{
+                if(result.resultCode.toString()=="0"){
+                    MessageSnackBar(view,"Usuario no registrado",Color.RED)
+                }else{
+                    MessageSnackBar(view,"Se cancelo",Color.GRAY)
+                }
                 Log.i("Login",result.toString())
                 Log.i("Login",result.resultCode.toString())
                 Log.i("Login",result.data?.dataString.toString())
-                MessageSnackBar(view,"Se cancelo",Color.GRAY)
             }
         }
         binding.BGoogle.setOnClickListener {
@@ -430,10 +435,15 @@ class LoginFragment : Fragment() {
         binding.login.setOnClickListener {
             disableitems(false)
             loadingProgressBar.visibility = View.VISIBLE
-            loginViewModel.login(
-                usernameEditText.text.toString(),
-                passwordEditText.text.toString()
-            )
+            if(usernameEditText.text.toString()!= "" && passwordEditText.text.toString() != "") {
+                loginViewModel.login(
+                    usernameEditText.text.toString(),
+                    passwordEditText.text.toString()
+                )
+            }else{
+                MessageSnackBar(view,"LLene los campos antes de iniciar",Color.RED)
+
+            }
             loadingProgressBar.visibility = View.INVISIBLE
             disableitems(true)
         }

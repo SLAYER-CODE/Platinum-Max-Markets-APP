@@ -69,7 +69,7 @@ class ProductoAdapter(
             theimagen?.compress(Bitmap.CompressFormat.JPEG, 10, flujo);
             val newimage = flujo.toByteArray()
             val imagen = BitmapFactory.decodeByteArray(newimage, 0, newimage.size)
-            view.ratingBar.rating = ((Random.nextFloat() * (view.ratingBar.numStars - 1)))
+//            view.ratingBar.rating = ((Random.nextFloat() * (view.ratingBar.numStars - 1)))
             view.IVimagenItem.transitionName = (ProductoAndImage.uid.toString())
             view.IVimagenItem.setImageBitmap(imagen)
             view.SaveStorage.setOnClickListener {

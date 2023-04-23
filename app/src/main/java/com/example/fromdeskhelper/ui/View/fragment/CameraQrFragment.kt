@@ -154,12 +154,12 @@ class CameraQrFragment : Fragment() {
                 com.example.fromdeskhelper.R.anim.animation_lineqr
             )
 
-            binding.Vqrline.startAnimation(animation)
-            binding.BRscanner.visibility=View.INVISIBLE
-            if(Corutine!=null) {
-                Corutine!!.cancel()
-                Corutine=null;
-            }
+//            binding.Vqrline.startAnimation(animation)
+//            binding.BRscanner.visibility=View.INVISIBLE
+//            if(Corutine!=null) {
+//                Corutine!!.cancel()
+//                Corutine=null;
+//            }
 
             imageAnalisis.setAnalyzer(cameraExecutor, QrCodeAnalyzer({ qrResult->
                 imageAnalisis.clearAnalyzer()
@@ -183,8 +183,9 @@ class CameraQrFragment : Fragment() {
 
                     AgregateProductsState.AgregateQR(qrResult.text)
                     CameraView.AgregateQR(qrResult.text)
-                    binding.Vqrline.clearAnimation()
-                    binding.Vqrline.visibility=View.INVISIBLE;
+
+//                    binding.Vqrline.clearAnimation()
+//                    binding.Vqrline.visibility=View.INVISIBLE;
 
                     binding.BRscanner.visibility = View.VISIBLE
                     Corutine = GlobalScope.launch(Dispatchers.Main) {
@@ -236,13 +237,12 @@ class CameraQrFragment : Fragment() {
 
     private fun startCameraEscaner(cameraProvider: ProcessCameraProvider,analizer:Boolean){
 
-        val animation = AnimationUtils.loadAnimation(
-            baseActivity,
-            R.anim.animation_lineqr
-        )
-
-        binding.Vqrline.startAnimation(animation)
-        binding.Vqrline.visibility=View.VISIBLE
+//        val animation = AnimationUtils.loadAnimation(
+//            baseActivity,
+//            R.anim.animation_lineqr
+//        )
+//        binding.Vqrline.startAnimation(animation)
+//        binding.Vqrline.visibility=View.VISIBLE
 
         val preview = Preview.Builder().build().also { mPreview ->
             mPreview.setSurfaceProvider(
@@ -267,8 +267,8 @@ class CameraQrFragment : Fragment() {
                                 )
                                 AgregateProductsState.AgregateQR(qrResult.text)
                                 CameraView.AgregateQR(qrResult.text)
-                                binding.Vqrline.clearAnimation()
-                                binding.Vqrline.visibility=View.INVISIBLE;
+//                                binding.Vqrline.clearAnimation()
+//                                binding.Vqrline.visibility=View.INVISIBLE;
                                 binding.BRscanner.visibility = View.VISIBLE
 //                            cameraProvider.unbindAll()
                                 if(ConNet.ComprobationInternet(baseActivity)) {

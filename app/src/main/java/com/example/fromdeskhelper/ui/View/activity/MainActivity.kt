@@ -401,8 +401,7 @@ class MainActivity : AppCompatActivity() {
             }
         MainModel.GetImageResource()
         MainModel.ImageReturn.observe(this, Observer {
-            Log.i("segundo", it.toString())
-            if (it != "null" || it != null) {
+            if (it != "null" && it != null) {
 //                val transformation: Transformation = RoundedCornersTransformation(radius, margin)
 
                 Picasso.get()

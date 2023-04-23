@@ -87,7 +87,7 @@
     </style>
 
     <style name="IconItems">
-        <item name="android:backgroundTint">@color/md_white_1000</item>
+        <item name="android:background">@color/md_white_1000_25</item>
     </style>
 
     <style name="TextItemPrimero">

@@ -338,7 +338,7 @@ class CameraFragment : Fragment() {
                         binding.LayoutCamera.layoutParams.width
                     )
                 )
-                .setFlashMode(ImageCapture.FLASH_MODE_ON)
+//                .setFlashMode(ImageCapture.FLASH_MODE_AUTO)
                 .build()
             //capture
             imageCapture.setCropAspectRatio(Rational(200, 200))

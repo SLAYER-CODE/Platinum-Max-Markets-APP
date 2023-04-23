@@ -9,19 +9,21 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/background_border_details_shoping"
         android:text="@string/hello_blank_fragment">
 
         <androidx.appcompat.widget.AppCompatButton
-            style="@style/ButtonItems"
             android:id="@+id/BMiminizeLog"
-
+            style="@style/ButtonItems"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:text="-"
+            android:background="@drawable/ic_baseline_vertical_align_bottom_24"
             android:textSize="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+          />
 
         <eightbitlab.com.blurview.BlurView
             android:id="@+id/blurViewCard"
@@ -110,7 +112,7 @@
                                 android:id="@+id/TENombre"
                                 style="@style/TextInputEditTextaComprate"
                                 android:layout_width="match_parent"
-                                android:layout_height="60dp"
+                                android:layout_height="50dp"
                                 android:drawableTintMode="add"
                                 android:inputType="text"
                                 android:gravity="left"
@@ -376,7 +378,7 @@
                         <com.google.android.material.textfield.TextInputLayout
                             style="@style/TextInputLayoutComprate"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="40dp"
                             android:layout_weight="1"
                             android:hint="Caracteristicas de la venta"
                             android:textAlignment="center"
@@ -406,7 +408,7 @@
                             android:layout_marginStart="0dp"
                             android:layout_marginEnd="0dp"
                             android:clipToPadding="false"
-                            android:layoutAnimation="@anim/layout_animation_right_to_left"
+                            android:layoutAnimation="@anim/layout_animation_right_to_top"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             app:layout_constraintBottom_toBottomOf="@+id/TNotItems"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -419,8 +421,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:id="@+id/ItemBackground"
-                            android:background="@color/md_white_1000_50"
-                            android:padding="5dp">
+                           >
 
                             <LinearLayout
                                 android:visibility="gone"
@@ -451,9 +452,9 @@
                                     android:marqueeRepeatLimit="marquee_forever"
                                     android:scrollHorizontally="true"
                                     android:singleLine="true"
-                                    android:text="Total: "
-                                    android:textSize="25dp"
                                     android:textStyle="bold"
+                                    android:text="Total: "
+                                    android:textSize="20dp"
                                     android:transitionName="header_title"
                                     tools:text="Total:" />
 

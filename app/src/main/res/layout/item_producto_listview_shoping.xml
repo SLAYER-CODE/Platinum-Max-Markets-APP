@@ -34,8 +34,8 @@
                 <ImageView
                     android:id="@+id/IVimagenItem"
                     style="@style/ButtonFloatLayout"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:background="@drawable/ic_baseline_price_add_product"
                     android:transitionName="image_small"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -49,7 +49,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:id="@+id/ItemBackground"
-                android:background="@color/md_white_1000_50"
                 android:padding="5dp">
 
                 <LinearLayout
@@ -80,8 +79,7 @@
                         android:scrollHorizontally="true"
                         android:singleLine="true"
                         android:text="TextView"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
+                        android:textSize="15sp"
                         android:transitionName="header_title"
                         tools:text="Nombre del produto" />
 
@@ -102,10 +100,9 @@
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/ButtonIdDeleteShoped"
                         android:layout_width="30dp"
-                        android:text="-"
                         android:textSize="30dp"
-                        android:background="@color/md_red_500"
-                        android:layout_height="match_parent">
+                        android:background="@drawable/ic_delete"
+                        android:layout_height="30dp">
 
                     </androidx.appcompat.widget.AppCompatButton>
                 </LinearLayout>

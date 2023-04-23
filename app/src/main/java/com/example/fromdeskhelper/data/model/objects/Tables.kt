@@ -83,7 +83,6 @@ data class ClientListGet(
     val uid: Int,
 )
 
-
 data class ClientProductNew(
     val updateImage: Date,
     @ColumnInfo(index = true)
@@ -91,7 +90,6 @@ data class ClientProductNew(
     @PrimaryKey(autoGenerate = true)
     val idImagen: Int = 0,
 ) : Serializable
-
 
 @Entity(
     tableName = "ClientProduct",
