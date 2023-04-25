@@ -9,6 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.ui.View.ViewModel.ShowMainViewModel
 import kotlinx.android.synthetic.main.item_producto.view.*
+import kotlinx.android.synthetic.main.item_producto.view.IVimagenItem
+import kotlinx.android.synthetic.main.item_producto.view.TEPrecio
+import kotlinx.android.synthetic.main.item_producto.view.TEPrecioU
+import kotlinx.android.synthetic.main.item_producto.view.TNombre
+import kotlinx.android.synthetic.main.item_producto.view.ratingBar
+import kotlinx.android.synthetic.main.item_producto_p2p.view.*
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import kotlin.random.Random
@@ -31,6 +37,8 @@ class ProductoRecivedP2PAdapter (var MyImage:List<listInventarioProductos>,var V
             view.TEPrecio.text="$\\${ProductoAndImage.precioC}"
             view.TEPrecioU.text="$\\${ProductoAndImage.precioU}"
             view.ratingBar.rating=((Random.nextFloat()*(view.ratingBar.numStars-1)))
+            view.TNQR.text = ProductoAndImage.qr
+
             if(ProductoAndImage.imageBit!=null) {
                 val imagenStream = ByteArrayInputStream(ProductoAndImage.imageBit)
                 val theimagen = BitmapFactory.decodeStream(imagenStream)

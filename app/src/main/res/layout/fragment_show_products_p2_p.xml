@@ -21,7 +21,6 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="29dp"
         android:clipToPadding="false"
-        android:layoutAnimation="@anim/item_animation_layout_into"
         android:paddingTop="?attr/actionBarSize"
         android:paddingBottom="77dp"
         android:foregroundGravity="center_vertical|center">

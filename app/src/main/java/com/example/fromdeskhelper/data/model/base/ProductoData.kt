@@ -40,9 +40,25 @@ interface ProductoData {
     @Query("SELECT productos.uid,productos.nombre,productos.precioC,productos.precioU,imagenes.imageBit,qr  FROM productos LEFT JOIN imagenes  on imagenes.id_producto = productos.uid group by productos.uid ORDER BY `update` DESC LIMIT :limit OFFSET :offset  ")
     fun getByInventarioProductos(limit:Int,offset:Int): LiveData<List<listInventarioProductos>>
 
+//    @Transaction
+//    @Query("SELECT * FROM ClientProduct LEFT JOIN client on  client.uid = clientItemId LEFT JOIN productos on productos.uid = productItemId WHERE clientItemId= :user ")
+//    fun getByInventarioUser(user:Int): ClientToProduct
+
+    @Transaction
+    @Query("SELECT * FROM client WHERE client.uid = :user ")
+    fun getByInventarioUser(user:Int): ClientToProduct
+
+
+
     @Transaction
     @Query("SELECT productos.uid,productos.nombre,productos.precioC,productos.precioU,imagenes.imageBit,qr  FROM productos LEFT JOIN imagenes  on imagenes.id_producto = productos.uid group by productos.uid ORDER BY `update` ")
     fun getByInventarioProductosAll(): LiveData<List<listInventarioProductos>>
+
+
+    @Transaction
+    @Query("DELETE FROM ClientProduct WHERE ClientProduct.clientItemId = :user AND ClientProduct.productItemId= :product ")
+    fun removeByInventarioUser(user:Int,product:Int)
+
 
     @Transaction
     @Query("SELECT client.number,client.uid,client.color  FROM client ORDER BY `fecha` ")
@@ -65,6 +81,9 @@ interface ProductoData {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllImages(vararg imagenNew: ImagenesNew)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertProductUser(vararg relation: ClientAndProducts)
 
     @Update
     fun update(producto: Producto)

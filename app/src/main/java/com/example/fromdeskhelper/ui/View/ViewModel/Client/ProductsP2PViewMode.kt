@@ -33,10 +33,14 @@ class ProductsP2PViewMode @Inject constructor():
     fun AddRecived(Products: String){
         viewModelScope.launch {
             var ItemZerialice=Products.split(";")
-
             var imagenBity:ByteArray?=null
-            if(ItemZerialice[4]!="null"){
+            var qr:String?="Sin Codigo"
+
+            if(ItemZerialice[5]!="null"){
                 imagenBity=java.util.Base64.getDecoder().decode(ItemZerialice[4])
+            }
+            if(ItemZerialice[4]!="null"){
+                qr=ItemZerialice[4]
             }
             var NewProduct = listInventarioProductos(
                 ItemZerialice[0].toInt(),
@@ -44,7 +48,7 @@ class ProductsP2PViewMode @Inject constructor():
                 precioU = ItemZerialice[3].toDouble(),
                 precioC = ItemZerialice[2].toDouble(),
                 imageBit = imagenBity,
-                qr=null
+                qr=qr
             )
             Log.i("RECIVIENDO ARCHIVO", NewProduct.toString())
             if (!ComprobateList(NewProduct)) {

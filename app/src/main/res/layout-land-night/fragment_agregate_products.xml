@@ -6,11 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="top"
-    style="@style/AgregateFontDrawable"
     android:animateLayoutChanges="true"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:foregroundGravity="bottom"
+    android:background="@color/md_black_1000"
     tools:context=".AgregateProducts">
 
     <androidx.core.widget.NestedScrollView
@@ -402,7 +402,104 @@
                         android:spinnerMode="dropdown" />
 
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        app:hintTextColor="@color/md_amber_200"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:hint="Contenido"
+                        android:textColorHint="@color/md_blue_A400"
+                        app:helperText="Cantidad de contenido"
+                        app:helperTextTextColor="@color/md_light_blue_600"
+                        app:startIconDrawable="@drawable/ic_baseline_storage_addproduct"
+                        app:startIconTint="@color/md_cyan_400">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/TEContenido"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#D2032910"
+                            android:drawableTintMode="add"
+                            android:ems="10"
+                            android:foregroundTint="@color/md_red_800"
+                            android:inputType="number"
+                            android:text="0"
+                            android:textColor="#EB1818"
+                            android:textColorHighlight="#1EA825"
+                            android:textColorHint="@color/md_blue_A400"
+                            android:textColorLink="#FF0101"
+                            android:textStyle="normal|bold"
+                            android:tooltipText="@string/dummy_content" />
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <Spinner
+                        android:id="@+id/SPTipo"
+                        style="@android:style/Widget.Holo.Spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0"
+                        android:ems="10"
+                        android:foregroundGravity="center"
+                        android:gravity="center"
+                        android:backgroundTint="@color/md_green_A400"
+                        android:spinnerMode="dropdown" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        app:hintTextColor="@color/md_amber_200"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:hint="Actual"
+                        android:textColorHint="@color/md_blue_A400"
+                        app:helperText="Contenido actual"
+                        app:helperTextTextColor="@color/md_light_blue_600"
+                        app:startIconDrawable="@drawable/ic_baseline_format_peso_addproduct"
+                        app:startIconTint="@color/md_cyan_400">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/TEItemSolid"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#D2032910"
+                            android:drawableTintMode="add"
+                            android:ems="10"
+                            android:foregroundTint="@color/md_red_800"
+                            android:inputType="numberDecimal"
+                            android:textColor="#EB1818"
+                            android:textColorHighlight="#1EA825"
+                            android:textColorHint="#6303BDB8"
+                            android:textColorLink="#FF0101"
+                            android:textStyle="normal|bold"
+                            android:tooltipText="@string/dummy_content">
+
+                        </com.google.android.material.textfield.TextInputEditText>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <Spinner
+                        android:id="@+id/SPCActual"
+                        style="@android:style/Widget.Holo.Spinner"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0"
+                        android:ems="10"
+                        android:foregroundGravity="center"
+                        android:gravity="center"
+                        android:backgroundTint="@color/md_green_A400"
+                        android:spinnerMode="dropdown" />
+
+
+                </LinearLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     app:hintTextColor="@color/md_amber_200"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

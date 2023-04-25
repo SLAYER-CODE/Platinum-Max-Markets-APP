@@ -9,6 +9,6 @@ class CallsProductsServerUseCase @Inject constructor(
     private val cliente: ServicesGraph
 ){
     suspend fun PreviewCallUser():ProductsPreviewQuery.Data?{
-        return cliente.GetProductsPreviewAll().data
+        return cliente.GetProductsPreviewAll()?.data
     }
 }

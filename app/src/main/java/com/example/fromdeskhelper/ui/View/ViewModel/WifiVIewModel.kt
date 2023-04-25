@@ -29,6 +29,9 @@ class WifiVIewModel @Inject constructor(
 ) : AndroidViewModel(Application()) {
     val WifiModel: MutableLiveData<WifiModel> = MutableLiveData<WifiModel>()
     val WifiActivate: MutableLiveData<Boolean> = MutableLiveData();
+    val P2pPermisions: MutableLiveData<Boolean> = MutableLiveData();
+    var P2pPermisin: Boolean = false;
+
     val WifiActivateBroadcast: MutableLiveData<Boolean> = MutableLiveData();
     val DeviceListObserver: MutableLiveData<WifiP2pDeviceList?> = MutableLiveData();
     val DeviceListConectObserver: MutableLiveData<MutableList<Pair<SendReceive,Any>>> = MutableLiveData();
@@ -36,11 +39,22 @@ class WifiVIewModel @Inject constructor(
 
     var Items:WifiP2pDeviceList?= null;
     var ItemsConected:MutableList<Pair<SendReceive,Any>> = mutableListOf();
+    var conexSendResponse:MutableLiveData<SendReceive> = MutableLiveData()
+
     var ItemsConectedSecure:MutableList<String> = mutableListOf();
 
     fun SearchList() {
         //     val currentWifi = WifiProvider.quoteModel.random()
         //     WifiModel.postValue(currentWifi)
+    }
+
+    fun getPermissions(){
+        if(!P2pPermisin){
+            P2pPermisions.postValue(true)
+            P2pPermisin=true
+        }else{
+            P2pPermisions.postValue(false)
+        }
     }
 
     fun sendListP2P(List: WifiP2pDeviceList?) {
@@ -69,6 +83,12 @@ class WifiVIewModel @Inject constructor(
             addGetDeviceConectItems()
         }
     }
+
+    fun getItemConected(sendItem:SendReceive){
+        conexSendResponse.postValue(sendItem)
+    }
+
+
 
     fun addGetDeviceConectItems(){
         DeviceListConectObserver.postValue(ItemsConected)

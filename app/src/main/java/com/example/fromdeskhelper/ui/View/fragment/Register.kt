@@ -17,6 +17,8 @@ import com.example.fromdeskhelper.ui.View.activity.LoginActivity
 import com.example.fromdeskhelper.ui.View.activity.MainActivity
 import com.example.fromdeskhelper.util.MessageSnackBar
 import dagger.hilt.android.AndroidEntryPoint
+import eightbitlab.com.blurview.BlurView
+import eightbitlab.com.blurview.RenderScriptBlur
 import java.util.*
 
 
@@ -42,7 +44,18 @@ class Register : Fragment() {
 
     protected lateinit var baseActivity: LoginActivity
     protected lateinit var contextFragment: Context
-
+    private fun blurbackground(view: BlurView?, float:Float) {
+        val radius = float
+        val decorView: View =  activity?.window!!.decorView
+        val rootView = decorView as ViewGroup
+        val windowBackground = decorView.background
+        view?.setupWith(rootView)
+            ?.setFrameClearDrawable(windowBackground)
+            ?.setBlurAlgorithm(RenderScriptBlur(context))
+            ?.setBlurRadius(radius)
+            ?.setBlurAutoUpdate(true)
+            ?.setHasFixedTransformationMatrix(true)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -73,10 +86,13 @@ class Register : Fragment() {
         val passwordEditText = binding.ETpassword
         val passwordRepetEditText = binding.ETpasswordRepet
 
-        binding.Bregister.setOnClickListener {
+
+        blurbackground(binding.fondEdit,1f)
+
+        binding.Bregister?.setOnClickListener {
             loginViewModel.register(binding.ETusername.text.toString(),binding.ETpassword.text.toString())
         }
-        binding.Bregister.setOnClickListener {
+        binding.Bregister?.setOnClickListener {
             binding.PBloading.visibility=View.VISIBLE;
             loginViewModel.register(usernameEditText.text.toString(),passwordEditText.text.toString())
             binding.PBloading.visibility=View.INVISIBLE;

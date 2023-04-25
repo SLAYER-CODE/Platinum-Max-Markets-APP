@@ -10,11 +10,12 @@
     android:clipChildren="false"
     android:clipToPadding="false"
     android:foregroundGravity="bottom"
-    style="@style/AgregateFontDrawable"
+    android:background="@color/md_black_1000"
     tools:context=".AgregateProducts">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/SVAPNew"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="13dp"
@@ -55,7 +56,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="52dp"
+                    android:layout_height="50dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -90,6 +91,7 @@
                     android:layout_height="match_parent"
                     android:textColorHint="@color/md_green_500"
                     app:helperText="Required"
+
                     app:helperTextTextColor="@color/md_red_500"
                     app:startIconDrawable="@drawable/ic_baseline_name_addproduct"
                     app:startIconTint="@color/md_light_green_A700">
@@ -101,15 +103,18 @@
                         android:background="#D2032910"
                         android:drawableTintMode="add"
                         android:ems="10"
+
                         android:hint="Nombre"
-                        android:inputType="textCapSentences"
+                        android:textCursorDrawable="@color/md_white_1000"
+                        android:inputType="textNoSuggestions"
                         android:shadowColor="#000000"
                         android:shadowDy="10"
                         android:shadowRadius="7"
+
                         android:textColor="@color/md_red_500"
                         android:textColorHighlight="@color/md_green_800"
                         android:textColorHint="@color/textHintColor"
-                        android:textStyle="normal|bold"
+                        android:textStyle="normal"
                         android:tooltipText="@string/dummy_content"
                         app:helperTextEnabled="false" />
 
@@ -139,6 +144,7 @@
                             android:background="#D2032910"
                             android:drawableTintMode="add"
                             android:ems="10"
+                            android:textCursorDrawable="@color/md_white_1000"
                             android:foregroundTint="@color/md_red_800"
                             android:hint="Precio"
                             android:inputType="numberDecimal"
@@ -169,7 +175,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="72dp"
+                    android:layout_height="50dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -230,6 +236,7 @@
                                 android:background="#D2032910"
                                 android:drawableTintMode="add"
                                 android:ems="10"
+                                android:textCursorDrawable="@color/md_white_1000"
                                 android:foregroundTint="@color/md_red_800"
                                 android:hint="Precio Neto"
                                 android:inputType="numberDecimal"
@@ -400,7 +407,104 @@
                         android:spinnerMode="dropdown" />
 
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        app:hintTextColor="@color/md_amber_200"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:hint="Contenido"
+                        android:textColorHint="@color/md_blue_A400"
+                        app:helperText="Cantidad de contenido"
+                        app:helperTextTextColor="@color/md_light_blue_600"
+                        app:startIconDrawable="@drawable/ic_baseline_storage_addproduct"
+                        app:startIconTint="@color/md_cyan_400">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/TEContenido"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#D2032910"
+                            android:drawableTintMode="add"
+                            android:ems="10"
+                            android:foregroundTint="@color/md_red_800"
+                            android:inputType="number"
+                            android:text="0"
+                            android:textColor="#EB1818"
+                            android:textColorHighlight="#1EA825"
+                            android:textColorHint="@color/md_blue_A400"
+                            android:textColorLink="#FF0101"
+                            android:textStyle="normal|bold"
+                            android:tooltipText="@string/dummy_content" />
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <Spinner
+                        android:id="@+id/SPTipo"
+                        style="@android:style/Widget.Holo.Spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0"
+                        android:ems="10"
+                        android:foregroundGravity="center"
+                        android:gravity="center"
+                        android:backgroundTint="@color/md_green_A400"
+                        android:spinnerMode="dropdown" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        app:hintTextColor="@color/md_amber_200"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:hint="Actual"
+                        android:textColorHint="@color/md_blue_A400"
+                        app:helperText="Contenido actual"
+                        app:helperTextTextColor="@color/md_light_blue_600"
+                        app:startIconDrawable="@drawable/ic_baseline_format_peso_addproduct"
+                        app:startIconTint="@color/md_cyan_400">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/TEItemSolid"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#D2032910"
+                            android:drawableTintMode="add"
+                            android:ems="10"
+                            android:foregroundTint="@color/md_red_800"
+                            android:inputType="numberDecimal"
+                            android:textColor="#EB1818"
+                            android:textColorHighlight="#1EA825"
+                            android:textColorHint="#6303BDB8"
+                            android:textColorLink="#FF0101"
+                            android:textStyle="normal|bold"
+                            android:tooltipText="@string/dummy_content">
+
+                        </com.google.android.material.textfield.TextInputEditText>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <Spinner
+                        android:id="@+id/SPCActual"
+                        style="@android:style/Widget.Holo.Spinner"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0"
+                        android:ems="10"
+                        android:foregroundGravity="center"
+                        android:gravity="center"
+                        android:backgroundTint="@color/md_green_A400"
+                        android:spinnerMode="dropdown" />
+
+
+                </LinearLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     app:hintTextColor="@color/md_amber_200"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -422,6 +526,7 @@
                         android:background="#D2032910"
                         android:drawableTintMode="add"
                         android:ems="10"
+                        android:textCursorDrawable="@color/md_white_1000"
                         android:foregroundTint="@color/md_red_800"
                         android:inputType="textMultiLine|textCapSentences"
                         android:shadowColor="#C8D8C6"
@@ -601,6 +706,7 @@
                             android:background="#D2032910"
                             android:drawableTintMode="add"
                             android:ems="10"
+                            android:textCursorDrawable="@color/md_white_1000"
                             android:foregroundTint="@color/md_red_800"
                             android:inputType="numberDecimal"
                             android:shadowColor="#C8D8C6"

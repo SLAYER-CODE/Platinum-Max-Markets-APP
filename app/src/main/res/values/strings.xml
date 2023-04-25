@@ -102,4 +102,16 @@
         <item>Paquete</item>
         <item>Caja</item>
     </string-array>
+    <string-array name="dlagsParts">
+        <item>1/5</item>
+        <item>1/4</item>
+        <item>1/3</item>
+        <item>1/2</item>
+    </string-array>
+    <string-array name="dlagsType">
+        <item>Unidades</item>
+        <item>Litros</item>
+    </string-array>
+
+
 </resources>

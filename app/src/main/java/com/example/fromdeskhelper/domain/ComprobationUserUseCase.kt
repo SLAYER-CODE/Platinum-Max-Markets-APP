@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 var LOG_INFO="USECASECOMPROBATE";
 class ComprobationUserUseCase @Inject constructor(
-    private val cliente: ApolloClient
+    private val cliente: ApolloClient?
 ){
     suspend operator fun invoke(token:String):Boolean{
 //        var clientes =ApolloClient.Builder().serverUrl("http://192.168.0.13:2016/graphql")
@@ -23,10 +23,10 @@ class ComprobationUserUseCase @Inject constructor(
 //            .okHttpClient(okHttpClient)
 //                .build()
 
-            var primero = cliente.query(ComprobateUserQuery(token)).execute()
-            var segundo = primero.data.toString()
+            var primero = cliente?.query(ComprobateUserQuery(token))?.execute()
+            var segundo = primero?.data.toString()
             Log.i(LOG_INFO,segundo)
-            return@withContext primero.data!!.comprabationUser
+            return@withContext primero?.data!!.comprabationUser
 //            "Caa"
         }
     }

@@ -8,6 +8,108 @@
     android:layout_marginTop="?attr/actionBarSize"
     tools:context=".ui.View.fragment.Client.ShowMainClient">
 
+    <LinearLayout
+        android:id="@+id/ContainerItems"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="65dp"
+        android:elevation="10dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:id="@+id/DetallesSHOW"
+            android:layout_width="250dp"
+            android:layout_marginBottom="5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/background_border_details_shoping"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ClientFacturesItems"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@color/zxing_transparent"
+                android:padding="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/BarLayoutClient"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <LinearLayout
+                android:id="@+id/ContainerAll"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="0"
+                android:orientation="horizontal"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/TNombre"
+                    style="@style/TextItemPrimero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_weight="1"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:foregroundGravity="center"
+                    android:gravity="center"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:text="Total: "
+                    android:textColor="@color/md_red_500"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:transitionName="header_title"
+                    tools:text="Total:" />
+
+
+                <TextView
+
+                    android:id="@+id/TEPrecioTotal"
+                    style="@style/TextItemPrimero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:text="00.00"
+                    android:textColor="@color/md_red_500"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ClientFactures"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:background="@color/zxing_transparent"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/BarLayoutClient"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/PaggerIdClient"
         android:layout_width="match_parent"
@@ -16,6 +118,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></androidx.viewpager2.widget.ViewPager2>
+
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/BarLayoutClient"

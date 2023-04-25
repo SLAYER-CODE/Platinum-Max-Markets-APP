@@ -1,8 +1,6 @@
 package com.example.fromdeskhelper.data.model.Controller
 
-import Data.ClientList
-import Data.ClientListGet
-import Data.InventarioProducts
+import Data.*
 import androidx.lifecycle.LiveData
 import com.example.fromdeskhelper.data.model.base.ProductoData
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +18,28 @@ class ClientsController @Inject constructor(
             return@withContext DaoProduct.insertClient(Client).toInt()
         }
     }
+
+    suspend fun setRelationProduct(relation:ClientAndProducts){
+        return withContext(Dispatchers.IO) {
+            return@withContext DaoProduct.insertProductUser(relation)
+        }
+    }
+
+    suspend fun productsGetClient(GetClinet:Int):ClientToProduct{
+        return withContext(Dispatchers.IO){
+            return@withContext DaoProduct.getByInventarioUser(GetClinet)
+        }
+    }
+
+
+    suspend fun productsRemoveClient(GetClinet:Int,Product:Int){
+        return withContext(Dispatchers.IO){
+            return@withContext DaoProduct.removeByInventarioUser(GetClinet,Product)
+        }
+    }
+
+
+
 
     fun GetProductsAll(): LiveData<List<ClientListGet>> {
         return DaoProduct.getClientList()

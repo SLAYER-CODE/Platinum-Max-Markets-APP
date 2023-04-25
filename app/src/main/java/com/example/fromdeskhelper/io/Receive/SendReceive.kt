@@ -24,22 +24,23 @@ public class SendReceive:Thread{
     }
 
     override fun run() {
-        var buffer:ByteArray=ByteArray(1024)
-        var byte:Int;
         while (sock!=null){
+            var buffer:ByteArray=ByteArray(1024)
+            var byte:Int;
             try {
                 byte = Istream.read(buffer)
 //                var size = ByteBuffer.wrap( )
                 if(byte>0){
                     handel.obtainMessage(MEESAGE_READ,byte,-1,buffer).sendToTarget();
                 }
+
             }catch (e: IOException){
                 e.printStackTrace()
             }
         }
         super.run()
     }
-    public fun write(byes:ByteArray){
+    fun write(byes:ByteArray){
         try {
             OStream.write(byes)
         }catch (e: IOException){

@@ -3,6 +3,7 @@ package com.example.fromdeskhelper.ui.View.fragment
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
@@ -141,7 +142,7 @@ class CameraQrFragment : Fragment() {
 
 
         imageAnalisis=ImageAnalysis.Builder()
-            .setTargetResolution(Size(1280, 720))
+//            .setTargetResolution(Size(1280, 720))
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .build()
 
@@ -153,14 +154,14 @@ class CameraQrFragment : Fragment() {
                 com.example.fromdeskhelper.R.anim.animation_lineqr
             )
 
-            binding.Vqrline.startAnimation(animation)
-            binding.BRscanner.visibility=View.INVISIBLE
-            if(Corutine!=null) {
-                Corutine!!.cancel()
-                Corutine=null;
-            }
+//            binding.Vqrline.startAnimation(animation)
+//            binding.BRscanner.visibility=View.INVISIBLE
+//            if(Corutine!=null) {
+//                Corutine!!.cancel()
+//                Corutine=null;
+//            }
 
-            imageAnalisis.setAnalyzer(cameraExecutor, QrCodeAnalyzer{ qrResult->
+            imageAnalisis.setAnalyzer(cameraExecutor, QrCodeAnalyzer({ qrResult->
                 imageAnalisis.clearAnalyzer()
                 binding.PVCmain.post {
 //                                cameraProvider.unbindAll()
@@ -182,8 +183,9 @@ class CameraQrFragment : Fragment() {
 
                     AgregateProductsState.AgregateQR(qrResult.text)
                     CameraView.AgregateQR(qrResult.text)
-                    binding.Vqrline.clearAnimation()
-                    binding.Vqrline.visibility=View.INVISIBLE;
+
+//                    binding.Vqrline.clearAnimation()
+//                    binding.Vqrline.visibility=View.INVISIBLE;
 
                     binding.BRscanner.visibility = View.VISIBLE
                     Corutine = GlobalScope.launch(Dispatchers.Main) {
@@ -193,7 +195,7 @@ class CameraQrFragment : Fragment() {
                         println(resultKeys)
                     }
                 }
-            })
+            },baseActivity.resources.configuration.orientation != Configuration.ORIENTATION_PORTRAIT))
         }
 
         CameraView.CameraActivate.observe(viewLifecycleOwner, Observer {
@@ -235,13 +237,12 @@ class CameraQrFragment : Fragment() {
 
     private fun startCameraEscaner(cameraProvider: ProcessCameraProvider,analizer:Boolean){
 
-        val animation = AnimationUtils.loadAnimation(
-            baseActivity,
-            R.anim.animation_lineqr
-        )
-
-        binding.Vqrline.startAnimation(animation)
-        binding.Vqrline.visibility=View.VISIBLE
+//        val animation = AnimationUtils.loadAnimation(
+//            baseActivity,
+//            R.anim.animation_lineqr
+//        )
+//        binding.Vqrline.startAnimation(animation)
+//        binding.Vqrline.visibility=View.VISIBLE
 
         val preview = Preview.Builder().build().also { mPreview ->
             mPreview.setSurfaceProvider(
@@ -255,7 +256,7 @@ class CameraQrFragment : Fragment() {
             if(analizer) {
                 imageAnalisis
                     .apply {
-                        setAnalyzer(cameraExecutor, QrCodeAnalyzer { qrResult ->
+                        setAnalyzer(cameraExecutor, QrCodeAnalyzer({ qrResult ->
 
                             clearAnalyzer()
                             binding.PVCmain.post {
@@ -266,8 +267,8 @@ class CameraQrFragment : Fragment() {
                                 )
                                 AgregateProductsState.AgregateQR(qrResult.text)
                                 CameraView.AgregateQR(qrResult.text)
-                                binding.Vqrline.clearAnimation()
-                                binding.Vqrline.visibility=View.INVISIBLE;
+//                                binding.Vqrline.clearAnimation()
+//                                binding.Vqrline.visibility=View.INVISIBLE;
                                 binding.BRscanner.visibility = View.VISIBLE
 //                            cameraProvider.unbindAll()
                                 if(ConNet.ComprobationInternet(baseActivity)) {
@@ -285,7 +286,7 @@ class CameraQrFragment : Fragment() {
 //                                primero.cancel();
                             }
 
-                        })
+                        },baseActivity.resources.configuration.orientation != Configuration.ORIENTATION_PORTRAIT))
 
                     }
             }

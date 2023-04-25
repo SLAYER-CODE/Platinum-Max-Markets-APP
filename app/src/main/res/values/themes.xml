@@ -87,7 +87,7 @@
     </style>
 
     <style name="IconItems">
-        <item name="android:backgroundTint">@color/md_white_1000</item>
+        <item name="android:background">@color/md_white_1000_25</item>
     </style>
 
     <style name="TextItemPrimero">
@@ -160,9 +160,6 @@
         <item name="android:textColor">@color/md_black_1000</item>
     </style>
 
-    <style name="AgregateFontDrawable">
-        <item name="android:background">@color/md_white_1000_screen_Fond</item>
-    </style>
 
     <style name="ButtonSettingsItems">
         <item name="android:background">@color/md_cyan_A700</item>
@@ -171,7 +168,7 @@
 
 <!--    Item flotante de compra y venta-->
     <style name="ButtonItems">
-        <item name="android:drawableTint">@color/md_blue_A700</item>
+        <item name="android:drawableTint">@color/md_blue_A400</item>
         <item name="android:background">@color/md_blue_500_25</item>
         <item name="android:textColor">@color/md_white_1000</item>
         <item name="android:shadowColor">@color/md_blue_A700</item>
@@ -196,7 +193,7 @@
     <style name="TextInputLayoutComprate">
         <item name="android:textColorHint">@color/md_blue_A400</item>
         <item name="helperTextTextColor">@color/md_cyan_400</item>
-        <item name="hintTextColor">@color/md_amber_200</item>
+        <item name="hintTextColor">@color/md_red_A400</item>
         <item name="startIconTint">@color/md_blue_500</item>
     </style>
 
@@ -208,6 +205,5 @@
         <item name="android:textColorHint">@color/md_amber_200</item>
         <item name="startIconTint">@color/md_cyan_400</item>
     </style>
-
 
 </resources>

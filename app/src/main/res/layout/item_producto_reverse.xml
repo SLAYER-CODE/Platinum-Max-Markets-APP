@@ -42,7 +42,8 @@
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             style="@style/IconItems"
-            android:background="@color/md_green_500_25"
+            android:id="@+id/ItemBackground"
+            android:background="@color/md_white_1000_50"
             android:padding="5dp">
 
             <LinearLayout

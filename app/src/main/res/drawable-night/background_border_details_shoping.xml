@@ -4,6 +4,8 @@
         <shape>
             <stroke android:width="5dp" android:color="@color/md_green_500">
             </stroke>
+            <solid android:color="@color/md_black_1000_75">
+            </solid>
         </shape>
     </item>
 </selector>

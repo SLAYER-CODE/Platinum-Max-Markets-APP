@@ -4,6 +4,8 @@
         <shape>
             <stroke android:width="5dp" android:color="@color/md_blue_700">
             </stroke>
+            <solid android:color="@color/md_white_1000_screen_OverLay">
+            </solid>
         </shape>
     </item>
 </selector>

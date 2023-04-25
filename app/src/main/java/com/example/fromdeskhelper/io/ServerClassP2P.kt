@@ -21,18 +21,18 @@ class ServerClassP2P : Thread {
     private lateinit var handel: android.os.Handler
     private var wifiItemAdd: WifiVIewModel
     private lateinit var content: String
-    private lateinit var listaProductos: MutableList<listInventarioProductos>
+//    private lateinit var listaProductos: MutableList<listInventarioProductos>
 
     constructor(
         handler: android.os.Handler,
         wifiItem: WifiVIewModel,
         host: String,
-        listaProductos: MutableList<listInventarioProductos>
+//        listaProductos: MutableList<listInventarioProductos>
     ) {
         this.handel = handler
         this.wifiItemAdd = wifiItem
         this.content = host
-        this.listaProductos = listaProductos
+//        this.listaProductos = listaProductos
     }
 
     override fun run() {
@@ -47,21 +47,11 @@ class ServerClassP2P : Thread {
 
 
             wifiItemAdd.addDeviceConected(content, sendReceived)
-
             sendReceived.start()
 
-            Log.i("ENVIANDO DATOS", listaProductos.toString())
-            try {
-                for (x in listaProductos) {
-                    Log.i("Enviando Datos", listaProductos.toString())
-//                    var res =("PROC|" + x.uid + ";" + x.nombre + ";" + x.precioC + ";" + x.precioU + ";"+java.util.Base64.getEncoder().encodeToString(x.imageBit))
-                    var res =("PROC|" + x.uid + ";" + x.nombre + ";" + x.precioC + ";" + x.precioU + ";"+null)
-                    Log.i("Enviando DATOS ZERIALIZADOS",res.toString())
-                    sendReceived.write(res.toByteArray())
-                }
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-            }
+
+            wifiItemAdd.getItemConected(sendReceived)
+
 
         } catch (e: IOException) {
             e.printStackTrace()
@@ -69,8 +59,5 @@ class ServerClassP2P : Thread {
         super.run()
     }
 
-    fun returnRecived(): SendReceive {
-        sleep(3000)
-        return sendReceived
-    }
+
 }

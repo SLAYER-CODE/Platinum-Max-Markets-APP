@@ -10,6 +10,7 @@ import com.apollographql.apollo3.api.ApolloResponse
 import com.apollographql.apollo3.api.DefaultUpload
 import com.apollographql.apollo3.api.Optional
 import com.apollographql.apollo3.api.Upload
+import com.apollographql.apollo3.exception.ApolloException
 import com.example.fromdeskhelper.AgregateProductMutation
 import com.example.fromdeskhelper.CategoriasQuery
 import com.example.fromdeskhelper.ComprobateUserQuery
@@ -20,16 +21,21 @@ import com.example.fromdeskhelper.ui.View.activity.MainActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
+import java.lang.Exception
 import java.util.*
 import javax.inject.Inject
 
 class CallsAddProductsUseCase @Inject constructor(
-    private val cliente: ServicesGraph
+    private val cliente: ServicesGraph?
 ) {
     private var LOG_INFO = "USECASEEXTRATADDPRODUCT";
     suspend fun ReturnCategories(): CategoriasQuery.Data {
-        var JsonPrin: CategoriasQuery.Data? = cliente.CategoriesGetService().data
-        return JsonPrin ?: CategoriasQuery.Data(emptyList())
+        try{
+            return cliente?.CategoriesGetService()?.data?: CategoriasQuery.Data(emptyList())
+        }
+        catch(ex:ApolloException){
+            return CategoriasQuery.Data(emptyList())
+        }
     }
 
 //    public val brands_products: List<BrandsInput>,
@@ -106,7 +112,7 @@ class CallsAddProductsUseCase @Inject constructor(
         )
 
 
-        var JsonProduct: AgregateProductMutation.Data? = cliente.SendProduct(sendProduct,uploadImagenes).data
+        var JsonProduct: AgregateProductMutation.Data? = cliente?.SendProduct(sendProduct,uploadImagenes)?.data
         return JsonProduct
     }
 

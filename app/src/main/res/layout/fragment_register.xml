@@ -4,7 +4,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:background="@mipmap/fontregister"
+android:background="@mipmap/img"
 android:theme="@style/ThemeOverlay.finalproductos.FullscreenContainer"
 tools:context=".ui.View.fragment.Register">
 
@@ -24,21 +24,30 @@ tools:context=".ui.View.fragment.Register">
         android:layout_width="0dp"
         android:layout_height="10dp"
         android:layout_gravity="center"
-        android:indeterminateTint="@color/md_green_A400"
+        android:indeterminateTint="@color/md_blue_400"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout3"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout3"
+        app:layout_constraintBottom_toTopOf="@+id/fondEdit"
+        app:layout_constraintEnd_toEndOf="@+id/fondEdit"
+        app:layout_constraintStart_toStartOf="@+id/fondEdit"
+        app:layout_constraintTop_toTopOf="@+id/fondEdit"
         tools:visibility="visible"/>
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="0dp"
+    <eightbitlab.com.blurview.BlurView
+        android:layout_margin="30dp"
+        android:id="@+id/fondEdit"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        android:layout_marginEnd="30dp"
+        <LinearLayout
+        android:background="@color/white_overlay"
+            android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:layoutMode="opticalBounds"
         android:orientation="vertical"
@@ -47,9 +56,10 @@ tools:context=".ui.View.fragment.Register">
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <View
             android:id="@+id/divider"
-            android:backgroundTint="@color/md_green_A400"
+            android:backgroundTint="@color/md_blue_400"
             android:layout_width="match_parent"
             android:layout_height="14dp"
             android:layout_marginTop="10dp"
@@ -64,7 +74,7 @@ tools:context=".ui.View.fragment.Register">
             android:hint="@string/prompt_email"
             android:inputType="textEmailAddress"
             android:selectAllOnFocus="true"
-            android:textColor="#FFFFFF" />
+            android:textColor="@color/md_blue_900" />
 
         <EditText
             android:id="@+id/ETpassword"
@@ -82,7 +92,7 @@ tools:context=".ui.View.fragment.Register">
 
         <View
             android:id="@+id/divider3"
-            android:backgroundTint="@color/md_green_A400"
+            android:backgroundTint="@color/md_blue_400"
             android:layout_width="match_parent"
             android:layout_height="14dp"
             android:layout_marginTop="10dp"
@@ -146,19 +156,19 @@ tools:context=".ui.View.fragment.Register">
             android:selectAllOnFocus="true"
             android:textColor="#FFFFFF" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/Bregister"
+        <Button
+
+            android:id="@+id/login"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:layout_marginTop="10dp"
+            android:layout_margin="5dp"
             android:layout_weight="1"
-            android:background="@drawable/button_background"
+            android:backgroundTint="@color/md_blue_400"
             android:enabled="true"
-            android:text="Registrate"
+            android:text="Registrarse"
             android:textColor="#F3F3F3"
             android:textSize="14sp" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -168,7 +178,7 @@ tools:context=".ui.View.fragment.Register">
 
         </LinearLayout>
     </LinearLayout>
-
+    </eightbitlab.com.blurview.BlurView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

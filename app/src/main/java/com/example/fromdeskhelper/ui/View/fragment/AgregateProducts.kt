@@ -75,12 +75,6 @@ private const val LOGFRAGMENT: String = "AddProducto"
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AgregateProducts.newInstance] factory method to
- * create an instance of this fragment.
- */
-
 
 @AndroidEntryPoint
 class AgregateProducts : Fragment(), CallBackItemTouch {
@@ -595,6 +589,18 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
         )
         binding.SPCantidad.adapter = adapterSCantidad
 
+        var adapterSType = ArrayAdapter<String>(requireContext(),
+            R.layout.item_spiner_peso,
+            resources.getStringArray(R.array.dlagsType))
+
+        binding.SPTipo.adapter=adapterSType
+
+        var adapterSParts =ArrayAdapter<String>(requireContext(),
+            R.layout.item_spiner_peso,
+            resources.getStringArray(R.array.dlagsParts))
+
+        binding.SPCActual.adapter=adapterSParts
+
         binding.SPCantidad.onItemSelectedListener = (object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parentView: AdapterView<*>?,
@@ -620,7 +626,7 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
             }
         })
 
-        binding.SPCantidad.setSelection(1)
+//        binding.SPCantidad.setSelection(1)
 
 
 //        Bindig para el recyclerview de las imagenes
@@ -648,12 +654,10 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
             if (!CamScannerStatus) {
                 val ft: FragmentTransaction = childFragmentManager.beginTransaction()
 
-                ft.setCustomAnimations(
-                    android.R.anim.fade_in,
-                    android.R.anim.fade_out,
-                    android.R.anim.slide_in_left,
-                    android.R.anim.slide_out_right
-                )
+//                ft.setCustomAnimations(
+//                    android.R.anim.fade_in,
+//                    android.R.anim.fade_out,
+//                )
 
                 val DesplazeAnimation =
                     ObjectAnimator.ofInt(
@@ -665,7 +669,7 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
 //            DesplazeAnimation.setAutoCancel(true)
                 CameraView.CloseInFragment(false)
                 ft.replace(R.id.FragmentCamera, CameraQrFragment());
-                ft.commit()
+                ft.commitAllowingStateLoss()
                 if (baseActivity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     (baseActivity.binding.appBarMain.fab.layoutParams as ViewGroup.MarginLayoutParams).setMargins(
                         0,
@@ -680,7 +684,7 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
                         dpToPx(0)
                     )
                 } else {
-                    DesplazeAnimation.start()
+                    if(CamClick==CameraTypes.NULL) DesplazeAnimation.start()
                 }
 //                CameraView.ActivateCamera()
 //                CamClick=CameraTypes.SCANER
@@ -701,12 +705,10 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
             view?.let { activity?.hideKeyboard(it) }
             val ft: FragmentTransaction = childFragmentManager.beginTransaction()
 
-            ft.setCustomAnimations(
-                android.R.anim.fade_in,
-                android.R.anim.fade_out,
-                android.R.anim.slide_in_left,
-                android.R.anim.slide_out_right
-            )
+//            ft.setCustomAnimations(
+//                android.R.anim.fade_in,
+//                android.R.anim.fade_out,
+//            )
 
             val DesplazeAnimation =
                 ObjectAnimator.ofInt(
@@ -718,8 +720,8 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
 //            DesplazeAnimation.setAutoCancel(true)
             CameraView.CloseInFragment(false)
             ft.replace(R.id.FragmentCamera, CameraFragment());
-            ft.setReorderingAllowed(true)
-            ft.commit()
+//            ft.setReorderingAllowed(true)
+            ft.commitAllowingStateLoss()
             if (baseActivity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 (baseActivity.binding.appBarMain.fab.layoutParams as ViewGroup.MarginLayoutParams).setMargins(
                     0,
@@ -734,7 +736,7 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
                     dpToPx(0)
                 )
             } else {
-                DesplazeAnimation.start()
+                if(CamClick==CameraTypes.NULL) DesplazeAnimation.start()
             }
 //            CameraView.ActivateCamera()
             CamClick = CameraTypes.CAMERA

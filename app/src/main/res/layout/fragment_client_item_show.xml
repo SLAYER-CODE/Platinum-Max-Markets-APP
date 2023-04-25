@@ -9,28 +9,21 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/background_border_details_shoping"
         android:text="@string/hello_blank_fragment">
 
         <androidx.appcompat.widget.AppCompatButton
-            style="@style/ButtonItems"
             android:id="@+id/BMiminizeLog"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:text="-"
-            android:textSize="25dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatButton
             style="@style/ButtonItems"
-            android:id="@+id/BCloseShowDetails"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:text="X"
-            android:textSize="15dp"
+            android:background="@drawable/ic_baseline_vertical_align_bottom_24"
+            android:textSize="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+          />
 
         <eightbitlab.com.blurview.BlurView
             android:id="@+id/blurViewCard"
@@ -115,22 +108,45 @@
                             app:helperText="Required"
                             app:startIconDrawable="@drawable/ic_baseline_person_pin_24">
 
-                            <com.google.android.material.textfield.TextInputEditText
+                            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                                 android:id="@+id/TENombre"
                                 style="@style/TextInputEditTextaComprate"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="50dp"
                                 android:drawableTintMode="add"
-                                android:ems="10"
-                                android:hint="Nombre del Client"
-                                android:inputType="textCapSentences"
+                                android:inputType="text"
+                                android:gravity="left"
+                                android:paddingTop="30dp"
+                                android:hint="Nombre del Cliente"
                                 android:textStyle="normal|bold"
                                 android:tooltipText="@string/dummy_content"
                                 app:helperTextEnabled="false" />
 
 
                         </com.google.android.material.textfield.TextInputLayout>
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
+
+                            <HorizontalScrollView
+                                android:id="@+id/chipGroup2HorizontalView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:scrollbars="none"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <com.google.android.material.chip.ChipGroup
+                                    android:id="@+id/Clients"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                </com.google.android.material.chip.ChipGroup>
+                            </HorizontalScrollView>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
@@ -362,7 +378,7 @@
                         <com.google.android.material.textfield.TextInputLayout
                             style="@style/TextInputLayoutComprate"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="40dp"
                             android:layout_weight="1"
                             android:hint="Caracteristicas de la venta"
                             android:textAlignment="center"
@@ -392,7 +408,7 @@
                             android:layout_marginStart="0dp"
                             android:layout_marginEnd="0dp"
                             android:clipToPadding="false"
-                            android:layoutAnimation="@anim/layout_animation_right_to_left"
+                            android:layoutAnimation="@anim/layout_animation_right_to_top"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             app:layout_constraintBottom_toBottomOf="@+id/TNotItems"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -400,6 +416,64 @@
                             app:snapGravity="top"
                             app:snapLastItem="true"
                             app:snapToPadding="true" />
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:id="@+id/ItemBackground"
+                           >
+
+                            <LinearLayout
+                                android:visibility="gone"
+                                android:id="@+id/ContainerAll"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <TextView
+                                    android:textColor="@color/md_red_500"
+                                    android:id="@+id/TNombre"
+                                    style="@style/TextItemPrimero"
+                                    android:layout_width="167dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center|left"
+                                    android:ellipsize="marquee"
+                                    android:focusable="true"
+                                    android:focusableInTouchMode="true"
+                                    android:foregroundGravity="center"
+                                    android:gravity="center"
+                                    android:marqueeRepeatLimit="marquee_forever"
+                                    android:scrollHorizontally="true"
+                                    android:singleLine="true"
+                                    android:textStyle="bold"
+                                    android:text="Total: "
+                                    android:textSize="20dp"
+                                    android:transitionName="header_title"
+                                    tools:text="Total:" />
+
+
+                                <TextView
+                                    android:layout_marginLeft="6dp"
+                                    android:layout_gravity="center"
+                                    android:id="@+id/TEPrecioTotal"
+                                    style="@style/TextItemPrimero"
+                                    android:textColor="@color/md_red_500"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center|left"
+                                    android:text="Price"
+                                    android:textSize="20sp"
+                                    tools:text="20.2" />
+                            </LinearLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <LinearLayout
                             android:id="@+id/TNotItems"
@@ -409,7 +483,6 @@
                             android:layout_alignParentTop="true"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentBottom="true"
-
                             android:gravity="center"
                             android:layout_gravity="center"
                             android:orientation="horizontal"

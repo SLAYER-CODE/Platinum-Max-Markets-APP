@@ -2,16 +2,29 @@ package com.example.fromdeskhelper.ui.View.fragment.Client
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
+import android.widget.ArrayAdapter
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.databinding.FragmentShowMainClientBinding
+import com.example.fromdeskhelper.ui.View.ViewModel.Client.FactureProduct
+import com.example.fromdeskhelper.ui.View.ViewModel.Client.ShowMainClientViewModel
 import com.example.fromdeskhelper.ui.View.activity.MainActivity
+import com.example.fromdeskhelper.ui.View.adapter.MessageAdapter
+import com.example.fromdeskhelper.ui.View.adapter.ShopingContrateProductAdapter
 import com.example.fromdeskhelper.ui.View.adapter.ViewPagerMainAdapter
 import com.example.fromdeskhelper.ui.View.adapter.ViewPagerMainAdapterClient
+import com.example.fromdeskhelper.ui.View.fragment.Client.ChildFragments.affectOnItemClicks
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,8 +53,9 @@ class ShowMainClient : Fragment() {
     private val binding get() = _binding!!
     protected lateinit var baseActivity: MainActivity
     protected lateinit var contextFragment: Context
-
-
+    private val ShowMainClientModel : ShowMainClientViewModel by viewModels(ownerProducer = {requireActivity()})
+    private var OpenItem:Boolean=true
+    private var Facture= mutableListOf<MutableList<FactureProduct>>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -119,10 +133,52 @@ class ShowMainClient : Fragment() {
                 }
             })
         tablayoutnavigator.attach()
+
+        binding.ClientFactures.layoutManager=
+            LinearLayoutManager(baseActivity, LinearLayoutManager.HORIZONTAL,true)
+        binding.ClientFacturesItems.layoutManager=
+            LinearLayoutManager(baseActivity, LinearLayoutManager.VERTICAL,true)
+//        ShowMainClientModel.ItemsRecivedTransmited.postValue(mutableListOf())
+
+
+        ShowMainClientModel.ItemsRecivedTransmited.observe(viewLifecycleOwner, Observer {
+            Facture=it
+            binding.ClientFactures.adapter=MessageAdapter((0 until it.size).toMutableList())
+        })
+
+
+        binding.ClientFactures.affectOnItemClicks(onClick = { position, view: View ->
+            if(OpenItem) {
+                scaleView(view, 1f, 1.3f)
+                binding.ClientFacturesItems.adapter=ShopingContrateProductAdapter(Facture[position])
+                var tem=0.0
+                for ( s in Facture[position]){
+                    tem+=s.price
+                }
+                binding.TEPrecioTotal.text=tem.toString()
+                OpenItem=false
+                binding.DetallesSHOW.visibility=View.VISIBLE
+            }else{
+                scaleView(view, 1f, 1f)
+                OpenItem=true
+                binding.DetallesSHOW.visibility=View.GONE
+            }
+        })
+
         blurbackground(binding.blurTabLayout)
         return binding.root
     }
-
+    fun scaleView(v: View, startScale: Float, endScale: Float) {
+        val anim: Animation = ScaleAnimation(
+            startScale, endScale,  // Start and end values for the X axis scaling
+            startScale, endScale,  // Start and end values for the Y axis scaling
+            Animation.RELATIVE_TO_SELF, 0.5f,  // Pivot point of X scaling
+            Animation.RELATIVE_TO_SELF, 0.5f
+        ) // Pivot point of Y scaling
+        anim.fillAfter = true // Needed to keep the result of the animation
+        anim.duration = 200
+        v.startAnimation(anim)
+    }
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is MainActivity) {

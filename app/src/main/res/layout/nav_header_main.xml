@@ -48,6 +48,15 @@
                 android:text="@string/nav_header_subtitle"
                 android:textSize="10dp"
                 android:textColor="@color/md_green_50" />
+
+            <Button
+                android:id="@+id/logoutView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Logout"
+                android:textSize="10dp"
+                android:drawableLeft= "@drawable/baseline_logout_24"
+                android:textColor="@color/md_green_50" />
         </LinearLayout>
 
     </LinearLayout>

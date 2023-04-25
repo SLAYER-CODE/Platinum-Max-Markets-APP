@@ -35,6 +35,7 @@ data class Producto(
         )
     )
 )
+
 data class ImagenesNew(
     val updateImage: Date,
     @ColumnInfo(index = true)
@@ -66,23 +67,32 @@ data class InventarioProducts(
 @Entity(tableName = "client", indices = arrayOf(Index(value = arrayOf("uid"), unique = true)))
 data class ClientList(
     val fecha: Date,
-    val name: String?=null,
-    val telefone: String?=null,
-    val correo: String?=null,
-    val direction: String?=null,
+    val name: String? = null,
+    val telefone: String? = null,
+    val correo: String? = null,
+    val direction: String? = null,
     val color: Int,
     val number: Int,
     @PrimaryKey(autoGenerate = true)
     val uid: Int = 0,
-):Serializable
+) : Serializable
 
 data class ClientListGet(
     val color: Int,
     val number: Int,
-    val uid: Int ,
+    val uid: Int,
 )
 
+data class ClientProductNew(
+    val updateImage: Date,
+    @ColumnInfo(index = true)
+    val id_producto: Int,
+    @PrimaryKey(autoGenerate = true)
+    val idImagen: Int = 0,
+) : Serializable
+
 @Entity(
+    tableName = "ClientProduct",
     primaryKeys = arrayOf("clientItemId", "productItemId"),
     foreignKeys = arrayOf(
         ForeignKey(
@@ -96,19 +106,23 @@ data class ClientListGet(
             childColumns = arrayOf("productItemId")
         )
     )
-)
 
+)
 data class ClientAndProducts(
     val clientItemId: Int,
     val productItemId: Int
 )
 
-data class ClientNameProduct(
+data class ClientToProduct(
     @Embedded val ClientList: ClientList,
     @Relation(
-        parentColumn = "productItemId",
-        entityColumn = "products",
-        associateBy = Junction(ClientAndProducts::class)
+        parentColumn = "uid",
+        entityColumn = "uid",
+        associateBy = Junction(
+            ClientAndProducts::class,
+            parentColumn = "clientItemId",
+            entityColumn = "productItemId"
+        )
     )
     val products: List<Producto>
 )

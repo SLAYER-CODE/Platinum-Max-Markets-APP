@@ -1,13 +1,17 @@
 package com.example.fromdeskhelper.core
 
-import com.example.fromdeskhelper.data.model.LoginIntProvider
-import dagger.Provides
+import android.util.Log
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
+import okhttp3.ResponseBody
+import java.io.IOException
+import java.lang.Exception
+import java.net.SocketTimeoutException
 import javax.inject.Inject
 import javax.inject.Qualifier
 import javax.inject.Singleton
+
 
 @Singleton
 class AuthorizationInterceptor @Inject constructor (): Interceptor {
@@ -49,4 +53,20 @@ class MyServiceInterceptor @Inject constructor() : Interceptor {
 //        }
         return chain.proceed(requestBuilder.build())
     }
+}
+
+
+@Throws(IOException::class)
+public fun onOnIntercept(chain: Interceptor.Chain): Response {
+    try {
+        val response: Response = chain.proceed(chain.request())
+//        val content: String = UtilityMethods.convertResponseToString(response)
+//        Log.d(TAG, lastCalledMethodName.toString() + " - " + content)
+        return response.newBuilder().body(ResponseBody.create(response.body!!.contentType(), response.toString())).build()
+    } catch (exception: Exception) {
+        exception.printStackTrace()
+        Log.i("se atrevio",exception.toString())
+//        if (listener != null) listener.onConnectionTimeout()
+    }
+    return chain.proceed(chain.request())
 }

@@ -1,4 +1,5 @@
 package com.example.fromdeskhelper.core.di
+
 import android.app.Activity
 import android.content.Context
 import android.net.wifi.WifiManager
@@ -6,16 +7,12 @@ import android.net.wifi.p2p.WifiP2pManager
 import android.os.Looper
 import android.util.Log
 import com.apollographql.apollo3.ApolloClient
-import com.apollographql.apollo3.network.okHttpCallFactory
 import com.apollographql.apollo3.network.okHttpClient
-import com.example.fromdeskhelper.CategoriasQuery
-import com.example.fromdeskhelper.core.ApiKeyInterceptorOkHttpClient
 import com.example.fromdeskhelper.core.AuthorizationInterceptor
+import com.example.fromdeskhelper.core.onOnIntercept
 import com.example.fromdeskhelper.data.LocalNetwork.WifiApiClient
 import com.example.fromdeskhelper.data.Network.LoginApiClient
-import com.example.fromdeskhelper.data.Network.LoginApiClientGraphql
 import com.example.fromdeskhelper.domain.CameraUseCase
-import com.example.fromdeskhelper.ui.View.Presentations.UnoPresentacionFragmentDirections
 import com.example.fromdeskhelper.ui.View.activity.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.GsonBuilder
@@ -23,16 +20,16 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
-
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import okhttp3.Response
+import okhttp3.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.CyclicBarrier
-import javax.inject.Inject
+import java.io.IOException
+import java.net.ConnectException
+import java.util.concurrent.TimeUnit
+import javax.annotation.Nullable
 import javax.inject.Singleton
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -44,10 +41,37 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun providerRetrofit():Retrofit{
-        return Retrofit.Builder()
-            .baseUrl("http://192.168.0.13:2016/").
-            addConverterFactory(GsonConverterFactory.create(gson)).build()
+    @Nullable
+    fun providerRetrofit():Retrofit?{
+
+        var rester = OkHttpClient().
+        newBuilder().readTimeout(200,TimeUnit.SECONDS).
+        connectTimeout(200,TimeUnit.SECONDS).
+        retryOnConnectionFailure(true).addInterceptor(object: Interceptor {
+                override fun intercept(chain: Interceptor.Chain): Response {
+                    try{
+                        return chain.proceed(chain.request());
+                    }catch(e:Exception){
+                        Log.i("SEMOVIO","SIN CONEXION")
+                        return Response.Builder()
+                            .request(chain.request())
+                            .protocol(Protocol.HTTP_1_1)
+                            .code(999)
+                            .message("Sin respuesta")
+                            .body(ResponseBody.create(null, "{${e}}")).build()
+                    }
+                }
+
+            }).build()
+
+
+        try {
+            return Retrofit.Builder()
+                .baseUrl("http://192.168.0.13:2016/").client(rester).
+                addConverterFactory(GsonConverterFactory.create(gson)).build()
+        }catch (ex:Exception){
+            return null
+        }
     }
 
 
@@ -58,23 +82,39 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provederOkHttpClient  (authorizationInterceptor: AuthorizationInterceptor,):OkHttpClient{
-        return OkHttpClient.Builder()
-            .addInterceptor(authorizationInterceptor)
-            .build()
+    @Nullable
+
+    fun provederOkHttpClient  (authorizationInterceptor: AuthorizationInterceptor):OkHttpClient?{
+        try {
+            return OkHttpClient.Builder()
+                .addInterceptor(authorizationInterceptor)
+                .build()
+        }catch (ex:Exception){
+            return null
+        }
+
     }
 
     @Singleton
     @Provides
-    fun providerGraphql(Cliente:OkHttpClient):ApolloClient{
+    @Nullable
+    fun providerGraphql(Cliente:OkHttpClient?):ApolloClient?{
 //
 //        val okHttpClient = OkHttpClient.Builder()
 //            .build()
 
+        try {
+            if(Cliente!=null){
+                return ApolloClient.Builder().serverUrl("http://192.168.0.13:2016/graphql")
+                    .okHttpClient(Cliente)
+                    .build()
+            }else{
+                return null
+            }
+        }catch (ex:Exception){
+            return null
+        }
 
-        return ApolloClient.Builder().serverUrl("http://192.168.0.13:2016/graphql")
-            .okHttpClient(Cliente)
-            .build()
     }
 
     @Provides
@@ -84,15 +124,20 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun providerApiClientLogin(retrofit: Retrofit):LoginApiClient{
-        return retrofit.create(LoginApiClient::class.java)
+    @Nullable
+    fun providerApiClientLogin(retrofit: Retrofit?):LoginApiClient?{
+        try {
+            return retrofit?.create(LoginApiClient::class.java)
+        }catch (ex:ConnectException){
+            return null
+        }
     }
 
     @Singleton
     @Provides
-    fun providerQuoteApiClient(retrofit: Retrofit):WifiApiClient{
-
-        return retrofit.create(WifiApiClient::class.java)
+    @Nullable
+    fun providerQuoteApiClient(retrofit: Retrofit?):WifiApiClient?{
+        return retrofit?.create(WifiApiClient::class.java)
     }
 
     @Singleton

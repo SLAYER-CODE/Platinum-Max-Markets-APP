@@ -63,6 +63,7 @@ class ClientesRoot : Fragment() {
     ): View? {
         _binding = FragmentClientsRootBinding.inflate(inflater, container, false)
         activity?.title="Clientes"
+
 //        Listener=wifiViewModel.WifiListenerPers()
         return binding.root
     }
@@ -108,9 +109,7 @@ class ClientesRoot : Fragment() {
                 binding.settingsItem.visibility=View.GONE
             }
         }
-        baseActivity.binding.appBarMain.refreshFab.setOnClickListener {
-            wifiViewModel.onCreate()
-        }
+
 
         var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -182,7 +181,7 @@ class ClientesRoot : Fragment() {
         })
 
         wifiViewModel.WifiActivateBroadcast.observe(viewLifecycleOwner, Observer {
-            val ViewDrawable = DrawableCompat.wrap(binding.statusItem.background);
+            val ViewDrawable = DrawableCompat.wrap(binding.statusItem.background).mutate();
             val currentNightMode =
                 resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
             when (currentNightMode) {
@@ -228,6 +227,9 @@ class ClientesRoot : Fragment() {
         }
         if(baseActivity.binding.appBarMain.refreshFab.visibility==View.GONE){
             baseActivity.binding.appBarMain.refreshFab.visibility=View.VISIBLE
+        }
+        baseActivity.binding.appBarMain.refreshFab.setOnClickListener {
+            wifiViewModel.onCreate()
         }
         super.onStart()
     }

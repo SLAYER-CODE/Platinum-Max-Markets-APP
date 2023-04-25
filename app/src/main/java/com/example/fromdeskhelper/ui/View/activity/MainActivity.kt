@@ -55,6 +55,7 @@ import com.example.fromdeskhelper.io.Receive.SendReceive
 import com.example.fromdeskhelper.io.ServerClassP2P
 import com.example.fromdeskhelper.ui.View.ViewModel.*
 import com.example.fromdeskhelper.ui.View.ViewModel.Client.ProductsP2PViewMode
+import com.example.fromdeskhelper.ui.View.ViewModel.Client.ShowMainClientViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.SendItems.SendProductsLocalViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.SendItems.SendProductsServerViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.SendItems.SendProductsStoreViewModel
@@ -76,6 +77,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.app_bar_main.view.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
+import java.lang.Exception
 import java.net.InetAddress
 
 
@@ -151,9 +153,9 @@ class MainActivity : AppCompatActivity() {
     )
 
 
-    fun setRefreshMain(){
+    fun setRefreshMain() {
         binding.appBarMain.refreshFab.setOnClickListener {
-            Log.i("REFRESHFAB","SELLAMO")
+            Log.i("REFRESHFAB", "SELLAMO")
             LocalModel.GetAllProducts()
             ServerModel.GetProductsAllPreview()
             StoreSendViewModel.sendAdapterItems(adapterProduct)
@@ -183,7 +185,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var clientClass: ClientServerP2P
     private lateinit var serverClass: ServerClassP2P
-    private lateinit var sendReceived: SendReceive
+    private var sendReceived: SendReceive?=null
 
     private val MainModel: ShowMainViewModel by viewModels();
     private val PP2Pproducts: ProductsP2PViewMode by viewModels()
@@ -193,7 +195,7 @@ class MainActivity : AppCompatActivity() {
     private val ServerSendViewModel: SendProductsServerViewModel by viewModels()
     private val LocalSendViewModel: SendProductsLocalViewModel by viewModels()
     private val StoreSendViewModel: SendProductsStoreViewModel by viewModels()
-
+    private val ShowMainClientModel : ShowMainClientViewModel by viewModels()
 
     private var adapterProduct: ProductoAdapter = ProductoAdapter(listOf(), null, 1);
     private var adapterSever: ServerAdapter = ServerAdapter(listOf(), 1);
@@ -207,16 +209,66 @@ class MainActivity : AppCompatActivity() {
     private var CamScannerStatus: Boolean = false;
 
     private var ItemsSend: MutableList<listInventarioProductos> = mutableListOf()
-
+    private var permissons:Boolean=false
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val policy = ThreadPolicy.Builder().permitAll().build()
-//        Toast.makeText(
-//            baseContext, "Segundo!",
-//            Toast.LENGTH_LONG
-//        ).show()
+
+        val locationPermissionRequest = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            when {
+                permissions.getOrDefault(
+                    android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    false
+                ) -> {
+                    // Precise location access granted.
+                    MessageSnackBar(
+                        findViewById(android.R.id.content),
+                        "Se concedio Permisos de Ubicacion",
+                        Color.LTGRAY
+                    )
+                    permissons=true
+                }
+                permissions.getOrDefault(
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                    false
+                ) -> {
+                    // Only approximate location access granted.
+                    MessageSnackBar(
+                        findViewById(android.R.id.content),
+                        "Se concedio Permisos de Ubicacion En la zona",
+                        Color.CYAN
+                    )
+                }
+                else -> {
+                    MessageSnackBar(
+                        findViewById(android.R.id.content),
+                        "No se concedieron los permisos ",
+                        Color.RED
+                    )
+                    // No location access granted.
+                }
+            }
+        }
+        wifiViewModel.getPermissions()
+        wifiViewModel.P2pPermisions.observe(this, Observer {
+            if(it){
+                if(!permissons) {
+                    locationPermissionRequest.launch(
+                        arrayOf(
+                            android.Manifest.permission.ACCESS_FINE_LOCATION,
+                            android.Manifest.permission.ACCESS_COARSE_LOCATION
+                        )
+                    )
+                }
+            }
+        })
+
+
+
 
         StrictMode.setThreadPolicy(policy)
 
@@ -233,7 +285,10 @@ class MainActivity : AppCompatActivity() {
                             PP2Pproducts.AddRecived(producto)
                         } else if ("CODE:" in tempMSG) {
                             MessageSnackBar(findViewById(android.R.id.content), "CODE", Color.CYAN)
-                        } else {
+                        } else if ("FACTURE|" in tempMSG ){
+                            var Facture= tempMSG.split("|")[1]
+                            ShowMainClientModel.AddFacture(Facture)
+                        }else {
                             MessageSnackBar(findViewById(android.R.id.content), tempMSG, Color.RED)
                         }
                     }
@@ -247,8 +302,8 @@ class MainActivity : AppCompatActivity() {
         setRefreshMain()
         setSupportActionBar(binding.appBarMain.toolbar)
 //        println("SE CREO INICIO")
-        val drawerLayout: DrawerLayout = binding.drawerLayout
-        val navView: NavigationView = binding.navView
+//        val drawerLayout: DrawerLayout = binding.drawerLayout
+//        val navView: NavigationView = binding.navView
 
 //        binding.drawerLayout.MoveCamera.setOnTouchListener(TouchDropListenerAction())
 
@@ -346,8 +401,7 @@ class MainActivity : AppCompatActivity() {
             }
         MainModel.GetImageResource()
         MainModel.ImageReturn.observe(this, Observer {
-            Log.i("segundo", it.toString())
-            if (it != "null" || it != null) {
+            if (it != "null" && it != null) {
 //                val transformation: Transformation = RoundedCornersTransformation(radius, margin)
 
                 Picasso.get()
@@ -358,11 +412,54 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        wifiViewModel.conexSendResponse.observe(this, Observer {
+            sendReceived=it
+            try {
+                for (x in ItemsSend) {
+                    Log.i("Enviando Datos", ItemsSend.toString())
+//                    var res =("PROC|" + x.uid + ";" + x.nombre + ";" + x.precioC + ";" + x.precioU + ";"+java.util.Base64.getEncoder().encodeToString(x.imageBit))
+                    var qr=x.qr
+                    if(qr==null || qr==""){
+                        qr="Sin qr"
+                    }
+                    var res =("PROC|" + x.uid + ";" + x.nombre + ";" + x.precioC + ";" + x.precioU + ";"+qr+";"+null)
+                    it.write(res.toByteArray())
+                    Log.i("Enviando DATOS ZERIALIZADOS",res.toString())
+                }
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+            }
+        })
+
+
+        MainModel.ResT.observe(this, Observer {x->
+            if(sendReceived!=null){
+                var qr=x.qr
+                if(qr==null || qr==""){
+                    qr="Sin qr"
+                }
+                var res =("PROC|" + x.uid + ";" + x.nombre + ";" + x.precioC + ";" + x.precioU + ";"+qr+";"+null)
+                sendReceived?.write(res.toByteArray())
+                Log.i("Enviando DATOS ZERIALIZADOS",res.toString())            }
+        })
+
+
+        MainModel.ResTFacture.observe(this, Observer {x->
+            if(sendReceived!=null){
+                var res="FACTURE|"
+                for (s in x){
+                    res+=s.nombre+":"+s.precioC+";"
+                }
+                sendReceived?.write(res.toByteArray())
+                Log.i("Enviando Datos Zerializados [Factura]",res.toString())
+            }
+        })
 
         MainModel.ItemsRouterTransmited.observe(this, Observer {
             Log.d("ENVIANDO SETEANDO LOS DATOS ", it.toString())
             ItemsSend = it
         })
+
         var listenerConection: WifiP2pManager.ConnectionInfoListener =
             object : WifiP2pManager.ConnectionInfoListener {
                 override fun onConnectionInfoAvailable(p0: WifiP2pInfo?) {
@@ -378,7 +475,6 @@ class MainActivity : AppCompatActivity() {
                             handler = jander,
                             wifiViewModel,
                             p0.groupOwnerAddress.hostAddress,
-                            MainModel.RequestItemFunc()
                         )
                         serverClass.start()
 //                    sendReceived=serverClass.returnRecived()
@@ -404,6 +500,8 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+
+
         mIntentFilter = IntentFilter();
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION)
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION)
@@ -518,14 +616,16 @@ class MainActivity : AppCompatActivity() {
 
             val currentNightMode =
                 resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-            val ViewDrawable = DrawableCompat.wrap(binding.appBarMain.toolbar.background);
+            val ViewDrawable = DrawableCompat.wrap(binding.appBarMain.toolbar.background).mutate();
             when (currentNightMode) {
                 Configuration.UI_MODE_NIGHT_YES -> {
+//                    DrawableCompat.setTint(ViewDrawable, Color.BLACK)
+//                    binding.appBarMain.toolbar.background = ViewDrawable
                     if (it) {
-                        DrawableCompat.setTint(ViewDrawable, Color.GREEN)
+                        DrawableCompat.setTint(ViewDrawable, Color.rgb(0,200,0))
                         binding.appBarMain.toolbar.background = ViewDrawable
                     } else {
-                        DrawableCompat.setTint(ViewDrawable, Color.RED)
+                        DrawableCompat.setTint(ViewDrawable, Color.rgb(220,0,0))
                         binding.appBarMain.toolbar.background = ViewDrawable
                     }
                 } // Night mode is not active, we're using the light theme
@@ -646,6 +746,7 @@ class MainActivity : AppCompatActivity() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
+
             override fun onQueryTextChange(newText: String?): Boolean {
                 adapterLocal.filter.filter(newText)
                 adapterProduct.filter.filter(newText)
@@ -662,11 +763,12 @@ class MainActivity : AppCompatActivity() {
             Log.i("Segundo", binding.appBarMain.SVProducts.query.toString())
 
             adapterProduct = ProductoAdapter(it, MainModel, 1, UtilsMainModel)
-            adapterProduct.filter.filter(binding.appBarMain.SVProducts.query,object :Filter.FilterListener{
-                override fun onFilterComplete(count: Int) {
-                    StoreSendViewModel.sendAdapterItems(adapterProduct)
-                }
-            })
+            adapterProduct.filter.filter(binding.appBarMain.SVProducts.query,
+                object : Filter.FilterListener {
+                    override fun onFilterComplete(count: Int) {
+                        StoreSendViewModel.sendAdapterItems(adapterProduct)
+                    }
+                })
 //            binding.LVMylist.adapter = adaptador
 //            comprobateList(it.size)
         })
@@ -676,11 +778,12 @@ class MainActivity : AppCompatActivity() {
         LocalModel.GetAllProducts()
         LocalModel.AdapterSend.observe(this, Observer {
             adapterLocal = LocalAdapter(it.reversed(), 1, UtilsMainModel)
-            adapterLocal.filter.filter(binding.appBarMain.SVProducts.query,object :Filter.FilterListener{
-                override fun onFilterComplete(count: Int) {
-                    LocalSendViewModel.sendAdapterItems(adapterLocal)
-                }
-            })
+            adapterLocal.filter.filter(binding.appBarMain.SVProducts.query,
+                object : Filter.FilterListener {
+                    override fun onFilterComplete(count: Int) {
+                        LocalSendViewModel.sendAdapterItems(adapterLocal)
+                    }
+                })
 //            binding.LVMylist.adapter=adapter
 //            comprobateList(it.size)
 //            MessageSnackBar(view,"Se actualizo!",Color.CYAN)
@@ -691,11 +794,12 @@ class MainActivity : AppCompatActivity() {
 
         ServerModel.ProductsAllPreview.observe(this, Observer {
             adapterSever = ServerAdapter(it?.productos!!.reversed(), 1, UtilsMainModel)
-            adapterSever.filter.filter(binding.appBarMain.SVProducts.query,object :Filter.FilterListener{
-                override fun onFilterComplete(count: Int) {
-                    ServerSendViewModel.sendAdapterItems(adapterSever)
-                }
-            })
+            adapterSever.filter.filter(binding.appBarMain.SVProducts.query,
+                object : Filter.FilterListener {
+                    override fun onFilterComplete(count: Int) {
+                        ServerSendViewModel.sendAdapterItems(adapterSever)
+                    }
+                })
 //            binding.LVMylist.adapter=adaptador
 //            comprobateList(it?.productos.size)
 //            binding.LVMylist.startLayoutAnimation()
@@ -745,7 +849,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
+        wifiViewModel.onCreate()
         registerReceiver(mReceiver, mIntentFilter)
     }
 
