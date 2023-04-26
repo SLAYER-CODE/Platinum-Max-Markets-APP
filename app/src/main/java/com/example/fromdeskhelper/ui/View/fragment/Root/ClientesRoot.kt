@@ -17,12 +17,14 @@ import android.view.*
 import android.widget.AdapterView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.databinding.FragmentClientsRootBinding
 import com.example.fromdeskhelper.domain.WifiDirectBroadcastReceived
 import com.example.fromdeskhelper.ui.View.ViewModel.Root.ClientsRootViewModel
@@ -30,8 +32,13 @@ import com.example.fromdeskhelper.ui.View.ViewModel.WifiVIewModel
 import com.example.fromdeskhelper.ui.View.activity.MainActivity
 import com.example.fromdeskhelper.ui.View.adapter.P2pClientAdapter
 import com.example.fromdeskhelper.ui.View.adapter.ProductoAdapter
+import com.example.fromdeskhelper.ui.View.adapter.ViewPagerMainAdapter
+import com.example.fromdeskhelper.ui.View.adapter.ViewPagerRootClientAdapter
 import com.example.fromdeskhelper.util.MessageSnackBar
+import com.example.fromdeskhelper.util.TabletPageTransformer
 import com.example.fromdeskhelper.util.listener.recyclerItemClickListener
+import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_clients_root.view.*
@@ -62,11 +69,13 @@ class ClientesRoot : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentClientsRootBinding.inflate(inflater, container, false)
-        activity?.title="Clientes"
+        activity?.title=baseActivity.resources.getString(R.string.menu_CallFinalUser)
 
 //        Listener=wifiViewModel.WifiListenerPers()
         return binding.root
     }
+    private var param1: String? = null
+    private var param2: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         class itemClickListener : AdapterView.OnItemClickListener {
@@ -84,50 +93,47 @@ class ClientesRoot : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
 //        wifiViewModel.onCreate()
 //        Listener=wifiViewModel.WifiListenerPers();
+
+        val adapter by lazy { ViewPagerRootClientAdapter(baseActivity) }
+        binding.paggeclientid.adapter=adapter;
+        binding.paggeclientid.setPageTransformer(TabletPageTransformer())
+
+
+        TabLayoutMediator(binding.TLMainRootClient,binding.paggeclientid,
+            TabLayoutMediator.TabConfigurationStrategy{ tab, position ->
+                when(position){
+                    0->{
+                        tab.text=baseActivity.resources.getString(R.string.home_tab_menus_client_server)
+                        tab.setIcon(R.drawable.baseline_person_24)
+                        val Badged: BadgeDrawable =tab.orCreateBadge
+                        Badged.backgroundColor= ContextCompat.getColor(baseActivity, R.color.md_green_400)
+                        Badged.number=77
+                        Badged.isVisible=true
+                    }
+                    1->{
+                        tab.text=baseActivity.resources.getString(R.string.home_tab_menus_client_local)
+                        tab.setIcon(R.drawable.ic_baseline_broadcast_on_personal_24)
+                        val Badged: BadgeDrawable =tab.orCreateBadge
+                        Badged.backgroundColor= ContextCompat.getColor(baseActivity, R.color.md_green_400)
+                        Badged.number=120
+                        Badged.isVisible=true
+
+                    }
+
+                }
+            }).attach()
+
+
         wifiViewModel.WifiModel.observe(viewLifecycleOwner, Observer { ResutWifi->
             Log.i("WIFIRES",ResutWifi.author)
         })
-        binding.LVMylistClient.layoutManager=
-            LinearLayoutManager(baseActivity, LinearLayoutManager.VERTICAL,false)
-//        binding.LVMylistClient.affectOnItemClicks { position, v ->
-//            MessageSnackBar(view,"Se iso click",Color.GREEN)
-//        }
-        wifiViewModel.refreshsendListP2P( )
-        wifiViewModel.DeviceListObserver.observe(viewLifecycleOwner, Observer {
-            binding.LVMylistClient.adapter=P2pClientAdapter(
-                it?.deviceList?: mutableListOf(),
-                wifiViewModel.RetunrManger(),
-                wifiViewModel.ReturnChangel())
-        })
-
-        binding.statusItem.setOnClickListener {
-            if(binding.settingsItem.visibility==View.GONE){
-                binding.settingsItem.visibility=View.VISIBLE
-            }else{
-                binding.settingsItem.visibility=View.GONE
-            }
-        }
 
 
-        var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                binding.TWifiConnect.text="Wifi ON"
-                binding.SAWifi.isChecked=true
-                Log.i("WIFIRESFINAL","SE ACTIVO")
-            }else{
-            if(wifiViewModel.VerifyWifi()){
-                binding.TWifiConnect.text="Wifi ON"
-                binding.SAWifi.isChecked=true
-                Log.i("WIFIRESFINAL","SE ACTIVO")
-            }else{
-                binding.TWifiConnect.text="Wifi OFF"
-                binding.SAWifi.isChecked=false
-                Log.i("WIFIRESFINAL","SE DESACTIVO")
-            }
-            }
-        }
+
+
         val locationPermissionRequest = registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
         ) { permissions ->
@@ -161,46 +167,27 @@ class ClientesRoot : Fragment() {
         }
 
 
-        wifiViewModel.WifiActivate.observe(viewLifecycleOwner, Observer { t ->
-            if(!t) {
-//                val panelIntent = Intent(Settings.Panel.ACTION_WIFI).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                startActivity(panelIntent);
-                resultLauncher.launch(Intent(Settings.Panel.ACTION_WIFI))
-            }
-            Log.i("WIFIRESFINAL",t.toString())
-            if(wifiViewModel.VerifyWifi()){
-                binding.TWifiConnect.text="Wifi ON"
-                binding.SAWifi.isChecked=true
-                Log.i("WIFIRESFINAL","SE ACTIVO")
-                wifiViewModel.DiscoveryActivate(contextFragment)
-            }else{
-                binding.TWifiConnect.text="Wifi OFF"
-                binding.SAWifi.isChecked=false
-                Log.i("WIFIRESFINAL","SE DESACTIVO")
-            }
-        })
-
         wifiViewModel.WifiActivateBroadcast.observe(viewLifecycleOwner, Observer {
-            val ViewDrawable = DrawableCompat.wrap(binding.statusItem.background).mutate();
+            val ViewDrawable = DrawableCompat.wrap(binding.appBarLayout.background).mutate();
             val currentNightMode =
                 resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
             when (currentNightMode) {
                 Configuration.UI_MODE_NIGHT_YES -> {
                     if (it) {
                         DrawableCompat.setTint(ViewDrawable, Color.GREEN)
-                        binding.statusItem.background = ViewDrawable
+                        binding.appBarLayout.background = ViewDrawable
                     } else {
                         DrawableCompat.setTint(ViewDrawable, Color.RED)
-                        binding.statusItem.background = ViewDrawable
+                        binding.appBarLayout.background = ViewDrawable
                     }
                 }
                 Configuration.UI_MODE_NIGHT_NO->{
                     if (it) {
                         DrawableCompat.setTint(ViewDrawable, Color.CYAN)
-                        binding.statusItem.background = ViewDrawable
+                        binding.appBarLayout.background = ViewDrawable
                     } else {
                         DrawableCompat.setTint(ViewDrawable, Color.GRAY)
-                        binding.statusItem.background = ViewDrawable
+                        binding.appBarLayout.background = ViewDrawable
                     }
                 }
             }
@@ -209,9 +196,9 @@ class ClientesRoot : Fragment() {
 
 
 
-        binding.SAWifi.setOnClickListener{
-            wifiViewModel.ActiveAndDeactiveWifi()
-        }
+        //binding.SAWifi.setOnClickListener{
+        //    wifiViewModel.ActiveAndDeactiveWifi()
+        //}
 
     }
 

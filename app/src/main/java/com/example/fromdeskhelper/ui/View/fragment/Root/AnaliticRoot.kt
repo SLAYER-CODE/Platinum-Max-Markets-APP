@@ -7,10 +7,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.databinding.FragmentAnaliticRootBinding
 import com.example.fromdeskhelper.ui.View.ViewModel.Root.AnaliticViewModel
 import com.example.fromdeskhelper.ui.View.activity.MainActivity
+import com.example.fromdeskhelper.ui.View.adapter.ViewPagerRootAnaliticAdapter
+import com.example.fromdeskhelper.ui.View.adapter.ViewPagerRootClientAdapter
+import com.example.fromdeskhelper.util.TabletPageTransformer
+import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.app_bar_main.*
 
@@ -50,6 +56,37 @@ class AnaliticRoot : Fragment() {
     ): View? {
         _binding = FragmentAnaliticRootBinding.inflate(inflater, container, false)
         activity?.title="Analiticas"
+
+
+        val adapter by lazy { ViewPagerRootAnaliticAdapter(baseActivity) }
+        binding.paggeclientid.adapter=adapter;
+        binding.paggeclientid.setPageTransformer(TabletPageTransformer())
+
+
+        TabLayoutMediator(binding.TLMainRootClient,binding.paggeclientid,
+            TabLayoutMediator.TabConfigurationStrategy{ tab, position ->
+                when(position){
+                    0->{
+                        tab.text="Clientes"
+                        tab.setIcon(R.drawable.baseline_face_24)
+                        val Badged: BadgeDrawable =tab.orCreateBadge
+                        Badged.backgroundColor= ContextCompat.getColor(baseActivity, R.color.md_green_400)
+                        Badged.number=77
+                        Badged.isVisible=true
+                    }
+                    1->{
+                        tab.text="Productos"
+                        tab.setIcon(R.drawable.ic_baseline_shopping_cart_24)
+                        val Badged: BadgeDrawable =tab.orCreateBadge
+                        Badged.backgroundColor= ContextCompat.getColor(baseActivity, R.color.md_green_400)
+                        Badged.number=120
+                        Badged.isVisible=true
+
+                    }
+
+                }
+            }).attach()
+
         return binding.root
     }
 

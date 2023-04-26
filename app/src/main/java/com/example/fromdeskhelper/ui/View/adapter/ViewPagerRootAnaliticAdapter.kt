@@ -7,15 +7,16 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.fromdeskhelper.ui.View.fragment.Root.Clients.ShowAnaliticClientFragment
+import com.example.fromdeskhelper.ui.View.fragment.Root.Clients.ShowAnaliticProductFragment
 import com.example.fromdeskhelper.ui.View.fragment.Root.Clients.ShowClientesFragment
-import com.example.fromdeskhelper.ui.View.fragment.Root.Clients.ShowClientesPerToPerFragment
 import com.example.fromdeskhelper.ui.View.fragment.Root.ShowProductsDatabase
 import com.example.fromdeskhelper.ui.View.fragment.Root.ShowProductsServer
 import com.example.fromdeskhelper.ui.View.fragment.ShowProducts
 
 
-var LOGG_ADAPTER_ROOT_CLIENT="VIEWPAGERADAPTERFRAGMENTES"
-class ViewPagerRootClientAdapter(fa:FragmentActivity) :
+var LOGG_ADAPTER_ROOT_ANALITIC="VIEWPAGERADAPTERFRAGMENTES"
+class ViewPagerRootAnaliticAdapter(fa:FragmentActivity) :
     FragmentStateAdapter(fa) {
 
 //    override fun getItemCount(): Int {
@@ -29,13 +30,13 @@ class ViewPagerRootClientAdapter(fa:FragmentActivity) :
 
     override fun createFragment(position: Int): Fragment {
         when(position){
-            1-> {return ShowClientesPerToPerFragment()}
-            0-> {return ShowClientesFragment()}
+            1-> {return ShowAnaliticClientFragment()}
+            0-> {return ShowAnaliticProductFragment()}
         }
-        return ShowClientesFragment()
+        return ShowAnaliticClientFragment()
     }
 }
-class ViewMainRootClientAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
+class ViewMainRootAnaliticAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
     private val fragmentList: ArrayList<Fragment> = ArrayList()
     override fun createFragment(position: Int): Fragment {
@@ -52,7 +53,7 @@ class ViewMainRootClientAdapter(fragmentManager: FragmentManager, lifecycle: Lif
 }
 
 
-internal class ViewPagerClientRootAdapter(manager: FragmentManager?) :
+internal class ViewPagerClientAnaliticAdapter(manager: FragmentManager?) :
     FragmentPagerAdapter(manager!!) {
     private val mFragmentList: MutableList<Fragment> = ArrayList()
     private val mFragmentTitleList: MutableList<String> = ArrayList()

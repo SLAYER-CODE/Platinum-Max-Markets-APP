@@ -42,21 +42,48 @@
     <string name="nav_header_title">Max Markets Platinum</string>
     <string name="nav_header_subtitle">1edw333@gmail.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Configuración</string>
 
-    <string name="menu_home">Home(Root)</string>
-    <string name="menu_CallFinalUser">Client</string>
-    <string name="menu_estadisticas">Analitics</string>
+    <string name="menu_home">Casa(Raiz)</string>
+    <string name="menu_CallFinalUser">Cliente</string>
+    <string name="menu_estadisticas">Analiticas</string>
     <string name="menu_empresasub">Empleados</string>
-    <string name="menu_notificactions">Notifications</string>
+    <string name="menu_notificactions">Notificaciones</string>
+    <string name="menu_cofiguration">Configuración</string>
+
+    <!--Strings del titulo de inicio algunos lo traen por defecto obtenidos del menu de inicio-->
+
+
+    <string name="title_inicio">Inicio</string>
+    <string name="title_inicio_second">Productos en total</string>
+
+    <!--Strings de submenus (ROOT)-->
+
+    <string name="home_tab_menus_storage">Dispositivo</string>
+    <string name="home_tab_menus_server">Servidor</string>
+    <string name="home_tab_menus_local">Local</string>
+
+    <string name="home_tab_menus_client_server">Clientes (Todos)</string>
+    <string name="home_tab_menus_client_local">Clientes (Local)</string>
+
+
+    <string name="home_tab_menus_analitics_client">Clientes</string>
+    <string name="home_tab_menus_analitics_product">Productos</string>
+
+    <string name="home_tab_menus_notification_product">Productos</string>
+    <string name="home_tab_menus_notification_providers">Proveedores</string>
+
+    <string name="home_tab_menus_empleados_empleados">Empleados</string>
+    <string name="home_tab_menus_empleados_mensajes">Mensajes</string>
+    <string name="home_tab_menus_emṕleados_tareas">Tareas</string>
 
     <!-- Del usuario -->
     <string name="titleUser">Usuario Test</string>
-    <string name="menu_products">Home(User)</string>
-    <string name="menu_location">Locations</string>
-    <string name="menu_orders">Orders</string>
-    <string name="menu_favorites">Favorites</string>
-    <string name="menu_pagos">Payments</string>
+    <string name="menu_products">Home(Userio)</string>
+    <string name="menu_location">Ubicaciones</string>
+    <string name="menu_orders">Ordenes</string>
+    <string name="menu_favorites">Favoritos</string>
+    <string name="menu_pagos">Pagos</string>
 
 
     <!--    Fin de DrawersString-->

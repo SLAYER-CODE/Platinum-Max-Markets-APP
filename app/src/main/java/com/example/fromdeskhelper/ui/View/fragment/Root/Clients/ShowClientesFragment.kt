@@ -9,20 +9,17 @@ import com.example.fromdeskhelper.R
 
 /**
  * A simple [Fragment] subclass.
- * Use the [ShowClientes.newInstance] factory method to
+ * Use the [ShowClientesFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ShowClientes : Fragment() {
+class ShowClientesFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(com.example.fromdeskhelper.ui.View.fragment.Root.ARG_PARAM1)
-            param2 = it.getString(com.example.fromdeskhelper.ui.View.fragment.Root.ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
@@ -43,13 +40,7 @@ class ShowClientes : Fragment() {
          * @return A new instance of fragment ShowClientes.
          */
         // TODO: Rename and change types and number of parameters
-        @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            ShowClientes().apply {
-                arguments = Bundle().apply {
-                    putString(com.example.fromdeskhelper.ui.View.fragment.Root.ARG_PARAM1, param1)
-                    putString(com.example.fromdeskhelper.ui.View.fragment.Root.ARG_PARAM2, param2)
-                }
-            }
+            ShowClientesFragment()
     }
 }

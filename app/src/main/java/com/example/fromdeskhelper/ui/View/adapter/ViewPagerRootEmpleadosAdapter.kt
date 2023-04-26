@@ -8,7 +8,9 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.fromdeskhelper.ui.View.fragment.Root.Clients.ShowClientesFragment
-import com.example.fromdeskhelper.ui.View.fragment.Root.Clients.ShowClientesPerToPerFragment
+import com.example.fromdeskhelper.ui.View.fragment.Root.Clients.ShowEmpleadosEmployedFragment
+import com.example.fromdeskhelper.ui.View.fragment.Root.Clients.ShowEmpleadosMensajesFragment
+import com.example.fromdeskhelper.ui.View.fragment.Root.Clients.ShowEmpleadosTareasFragment
 import com.example.fromdeskhelper.ui.View.fragment.Root.Clients.ShowNotificationClientFragment
 import com.example.fromdeskhelper.ui.View.fragment.Root.Clients.ShowNotificationProvidersFragment
 import com.example.fromdeskhelper.ui.View.fragment.Root.ShowProductsDatabase
@@ -16,8 +18,8 @@ import com.example.fromdeskhelper.ui.View.fragment.Root.ShowProductsServer
 import com.example.fromdeskhelper.ui.View.fragment.ShowProducts
 
 
-var LOGG_ADAPTER_ROOT_NOTIFICATION="VIEWPAGERADAPTERFRAGMENTES"
-class ViewPagerRootNotificationAdapter(fa:FragmentActivity) :
+var LOGG_ADAPTER_ROOT_EMPLEADOS="VIEWPAGERADAPTERFRAGMENTES"
+class ViewPagerRootEmpleadosAdapter(fa:FragmentActivity) :
     FragmentStateAdapter(fa) {
 
 //    override fun getItemCount(): Int {
@@ -27,17 +29,19 @@ class ViewPagerRootNotificationAdapter(fa:FragmentActivity) :
         private const val ARG_OBJECT="object"
     }
 
-    override fun getItemCount(): Int=2
+    override fun getItemCount(): Int=3
 
     override fun createFragment(position: Int): Fragment {
         when(position){
-            1-> {return ShowNotificationClientFragment()}
-            0-> {return ShowNotificationProvidersFragment()}
+            1-> {return ShowEmpleadosEmployedFragment()}
+            0-> {return ShowEmpleadosMensajesFragment()}
+            2-> {return ShowEmpleadosTareasFragment()}
+
         }
-        return ShowClientesFragment()
+        return ShowEmpleadosEmployedFragment()
     }
 }
-class ViewMainRootNotificationAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
+class ViewMainRootEmpleadosAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
     private val fragmentList: ArrayList<Fragment> = ArrayList()
     override fun createFragment(position: Int): Fragment {
@@ -54,7 +58,7 @@ class ViewMainRootNotificationAdapter(fragmentManager: FragmentManager, lifecycl
 }
 
 
-internal class ViewPagerNotificationRootAdapter(manager: FragmentManager?) :
+internal class ViewPagerEmpleadosRootAdapter(manager: FragmentManager?) :
     FragmentPagerAdapter(manager!!) {
     private val mFragmentList: MutableList<Fragment> = ArrayList()
     private val mFragmentTitleList: MutableList<String> = ArrayList()
