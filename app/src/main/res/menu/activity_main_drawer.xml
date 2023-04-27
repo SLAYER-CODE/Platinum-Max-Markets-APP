@@ -34,6 +34,11 @@
             android:id="@+id/notificationsRoot"
             android:icon="@drawable/ic_baseline_notifications_24"
             android:title="@string/menu_notificactions" />
+
+        <item
+            android:id="@+id/configurationRoot"
+            android:icon="@drawable/baseline_settings_24"
+            android:title="@string/menu_cofiguration" />
     </group>
     <item android:title="@string/titleUser" >
         <menu>

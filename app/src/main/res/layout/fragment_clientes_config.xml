@@ -29,7 +29,7 @@
             android:orientation="vertical"
             android:paddingRight="40dp"
             android:scrollbars="vertical"
-            android:visibility="gone"
+            android:visibility="visible"
 
             tools:visibility="visible"
 

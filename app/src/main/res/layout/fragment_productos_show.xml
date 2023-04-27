@@ -24,13 +24,14 @@
 
 
         <com.google.android.material.tabs.TabLayout
-            style="@style/tabMainLayout"
             app:tabMaxWidth="0dp"
             app:tabMode="fixed"
             app:tabGravity="fill"
             android:id="@+id/TLMain"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            style="@style/tabMainLayout"
+            app:tabIndicatorHeight="6dp"
             app:tabIconTint="@drawable/tablayout_select_icon"
           />
 
@@ -45,9 +46,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-
     </androidx.viewpager2.widget.ViewPager2>
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:id="@+id/itemconstraint"

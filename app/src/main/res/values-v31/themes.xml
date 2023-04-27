@@ -87,6 +87,7 @@
 
     <style name="IconItems">
         <item name="android:background">@color/md_white_1000_25</item>
+        <item name="android:backgroundTint">@color/md_white_1000</item>
     </style>
 
     <style name="TextItemPrimero">
@@ -130,10 +131,12 @@
     </style>
 
     <style name="tabMainLayout">
-        <item name="android:background">@color/md_cyan_500_25</item>
-        <item name="tabSelectedTextColor">@color/md_blue_500</item>
-        <item name="tabTextColor">@color/md_white_1000</item>
+        <item name="android:background">@color/md_blue_500</item>
+        <item name="tabSelectedTextColor">@color/md_white_1000</item>
+        <item name="tabTextColor">@color/md_grey_400</item>
+        <item name="tabIndicatorColor">@color/md_white_1000</item>
     </style>
+
 
     <style name="toggleButton_lint"  parent="ThemeOverlay.AppCompat.Dark">
         <item name="android:buttonStyleToggle">@style/Widget.Button.Toggle</item>

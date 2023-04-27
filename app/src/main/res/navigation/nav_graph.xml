@@ -78,7 +78,7 @@
         tools:layout="@layout/fragment_empleados_root" />
     <fragment
         android:id="@+id/notificationsRoot"
-        android:name="com.example.fromdeskhelper.ui.View.fragment.Root.Notifications"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.Root.NotificationsRoot"
         tools:layout="@layout/fragment_notifications_users"/>
 
     <fragment
@@ -104,6 +104,11 @@
     <fragment
         android:id="@+id/paymentsClient"
         android:name="com.example.fromdeskhelper.ui.View.fragment.Client.PaymentsClientFragment"
+        tools:layout="@layout/fragment_payments_client"/>
+
+    <fragment
+        android:id="@+id/configurationRoot"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.Root.ConfigurationRoot"
         tools:layout="@layout/fragment_payments_client"/>
 
 </navigation>

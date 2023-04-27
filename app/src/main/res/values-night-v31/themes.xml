@@ -128,11 +128,11 @@
     </style>
 
     <style name="tabMainLayout">
-        <item name="android:background">@color/md_green_500_25</item>
-        <item name="tabSelectedTextColor">@color/md_green_A400</item>
-        <item name="tabTextColor">@color/md_white_1000</item>
+        <item name="android:background">@color/md_green_500</item>
+        <item name="tabSelectedTextColor">@color/md_light_green_A400</item>
+        <item name="tabTextColor">@color/md_red_400</item>
+        <item name="tabIndicatorColor">@color/md_light_green_A400</item>
     </style>
-
     <style name="toggleButton_lint"  parent="ThemeOverlay.AppCompat.Dark">
         <item name="android:buttonStyleToggle">@style/Widget.Button.Toggle</item>
         <item name="android:textOn">On</item>

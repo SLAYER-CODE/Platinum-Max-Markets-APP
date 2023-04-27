@@ -92,6 +92,7 @@ class ConfigurationRoot : Fragment() {
                     Log.i("WIFIRESFINAL","SE DESACTIVO")
                 }
             }
+
         }
 
 

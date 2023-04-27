@@ -141,11 +141,13 @@
                 android:id="@+id/TLMainCLient"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/tabMainLayout"
                 app:tabGravity="fill"
-                app:tabIconTint="@drawable/drawable_select_navigation"
                 app:tabMaxWidth="0dp"
-                app:tabMode="fixed" />
+                app:tabMode="fixed"
+                style="@style/tabMainLayout"
+                app:tabIndicatorHeight="6dp"
+                app:tabIconTint="@drawable/tablayout_select_icon"
+                />
         </eightbitlab.com.blurview.BlurView>
     </com.google.android.material.appbar.AppBarLayout>
 

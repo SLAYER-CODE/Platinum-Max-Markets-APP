@@ -13,6 +13,7 @@ import com.example.fromdeskhelper.databinding.FragmentNotificationsUsersBinding
 import com.example.fromdeskhelper.ui.View.ViewModel.Root.NotificationsViewModel
 import com.example.fromdeskhelper.ui.View.activity.MainActivity
 import com.example.fromdeskhelper.ui.View.adapter.ViewPagerRootClientAdapter
+import com.example.fromdeskhelper.ui.View.adapter.ViewPagerRootNotificationAdapter
 import com.example.fromdeskhelper.util.TabletPageTransformer
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.tabs.TabLayoutMediator
@@ -38,7 +39,7 @@ class NotificationsRoot : Fragment() {
         _binding = FragmentNotificationsUsersBinding.inflate(inflater, container, false)
         activity?.title=baseActivity.resources.getString(R.string.menu_notificactions)
 
-        val adapter by lazy { ViewPagerRootClientAdapter(baseActivity) }
+        val adapter by lazy { ViewPagerRootNotificationAdapter(baseActivity) }
         binding.paggeclientid.adapter=adapter;
         binding.paggeclientid.setPageTransformer(TabletPageTransformer())
 

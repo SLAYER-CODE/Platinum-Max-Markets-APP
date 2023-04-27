@@ -52,7 +52,6 @@
             android:layout_height="200dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:backgroundTint="@color/md_white_1000"
             android:background="@drawable/ic_baseline_layers_clear_24">
         </View>
         <TextView

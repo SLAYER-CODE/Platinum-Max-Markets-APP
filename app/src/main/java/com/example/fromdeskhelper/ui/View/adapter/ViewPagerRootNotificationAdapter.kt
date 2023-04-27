@@ -33,7 +33,7 @@ class ViewPagerRootNotificationAdapter(fa:FragmentActivity) :
             1-> {return ShowNotificationClientFragment()}
             0-> {return ShowNotificationProvidersFragment()}
         }
-        return ShowClientesFragment()
+        return ShowNotificationClientFragment()
     }
 }
 class ViewMainRootNotificationAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
