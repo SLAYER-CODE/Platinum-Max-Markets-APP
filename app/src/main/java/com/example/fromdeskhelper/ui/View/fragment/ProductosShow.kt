@@ -5,6 +5,7 @@ import Data.ClientListGet
 import Data.listInventarioProductos
 import android.animation.TimeInterpolator
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -13,7 +14,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
-import androidx.collection.arraySetOf
+import android.widget.Toolbar
+import androidx.activity.viewModels
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
@@ -21,6 +24,9 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,13 +40,14 @@ import com.example.fromdeskhelper.ui.View.ViewModel.*
 import com.example.fromdeskhelper.ui.View.activity.MainActivity
 import com.example.fromdeskhelper.ui.View.adapter.*
 import com.example.fromdeskhelper.ui.View.fragment.Root.Clients.ClientItemShowFragment
+import com.example.fromdeskhelper.ui.animation.ClientNavigationBehavior
 import com.example.fromdeskhelper.util.TabletPageTransformer
 import com.example.fromdeskhelper.util.listener.RecyclerViewItemClickListener
 import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayoutMediator
+import com.leochuan.CircleLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import eightbitlab.com.blurview.BlurView
-import eightbitlab.com.blurview.RenderScriptBlur
 import kotlinx.android.synthetic.main.fragment_productos_show.*
 import kotlinx.android.synthetic.main.fragment_show_products.view.*
 import kotlinx.android.synthetic.main.item_client_list.view.*
@@ -103,20 +110,22 @@ class ProductosShow : Fragment() {
 
     var currentPage:Int=6
     var itemfinal:Boolean=false;
-    var clientcount:Int=1;
     private var listaProductos = emptyList<listInventarioProductos>()
 //    var adaptador: ProductoAdapter = ProductoAdapter(listOf());
     private val UtilsMainModel:UtilsShowMainViewModels by viewModels(ownerProducer = {requireActivity()})
-    private var contadorImagen = 1;
 
     //Item Productos
     private val MainModel : ShowMainViewModel by viewModels(ownerProducer = {requireActivity()});
 
-    private val ClienModel:ClientAddShortViewModel by viewModels()
-
-    private val ClienLocalModel: ClientLocalViewModel by viewModels(ownerProducer = {
+    //ADD action bar base activity config
+    private val CameraView: CameraViewModel by viewModels(ownerProducer = {
         requireActivity()
     })
+
+    private var CamScannerStatus: Boolean = false;
+    private val MainView: MainActiviyViewModel by viewModels()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -139,9 +148,9 @@ class ProductosShow : Fragment() {
         if(baseActivity.binding.appBarMain.toolbarParentClient!!.visibility==View.VISIBLE){
             baseActivity.binding.appBarMain.toolbarParentClient!!.visibility=View.GONE
         }
-        if(baseActivity.binding.appBarMain.toolbarParent.visibility==View.GONE){
-            baseActivity.binding.appBarMain.toolbarParent.visibility=View.VISIBLE
-        }
+     /*   if(binding.toolbarParent.visibility==View.GONE){
+           binding.toolbarParent.visibility=View.VISIBLE
+        }*/
         if(baseActivity.binding.appBarMain.fab.visibility==View.GONE){
             baseActivity.binding.appBarMain.fab.visibility=View.VISIBLE
         }
@@ -152,7 +161,7 @@ class ProductosShow : Fragment() {
 //        baseActivity.binding.appBarMain.refreshFab.setOnClickListener {
 //            refreshList()
 //        }
-        baseActivity.binding.appBarMain.BIShowP.visibility=View.VISIBLE
+        binding.BIShowP.visibility=View.VISIBLE
         baseActivity.binding.appBarMain.refreshFab.setImageResource(R.drawable.ic_baseline_autorenew_24)
 
     }
@@ -181,37 +190,13 @@ class ProductosShow : Fragment() {
 
         super.onResume()
     }
-    fun createAleatorieList(): ClientList {
-        val NewClient = ClientList(
-            fecha = Date(),
-            color =Color.argb(200, (50..255).random(), (25..255).random(), (25..255).random()),
-            number = clientcount
-        )
-        clientcount += 1
-        return NewClient;
-    }
-    fun scaleView(v: View, startScale: Float, endScale: Float) {
-        val anim: Animation = ScaleAnimation(
-            startScale, endScale,  // Start and end values for the X axis scaling
-            startScale, endScale,  // Start and end values for the Y axis scaling
-            Animation.RELATIVE_TO_SELF, 0.5f,  // Pivot point of X scaling
-            Animation.RELATIVE_TO_SELF, 0.5f
-        ) // Pivot point of Y scaling
-        anim.fillAfter = true // Needed to keep the result of the animation
-        anim.duration = 200
-        v.startAnimation(anim)
-    }
+
 
     interface ClickListener {
         fun onClick(view: View?, position: Int)
         fun onLongClick(view: View?, position: Int)
     }
-    val FREQ = 3f
-    val DECAY = 2f
-    val decayingSineWave = TimeInterpolator { input ->
-        val raw = Math.sin(FREQ * input * 2 * Math.PI)
-        (raw * Math.exp((-input * DECAY).toDouble())).toFloat()
-    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -219,78 +204,77 @@ class ProductosShow : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentProductosShowBinding.inflate(inflater, container, false)
 
-        var adapterClient = ClientAdapter(mutableListOf<ClientListGet>())
+        val navcontroller =findNavController()
+        val appbarlayout= AppBarConfiguration(navcontroller.graph)
+        binding.toolbar?.setupWithNavController(navcontroller,appbarlayout)
 
-        binding.addclientitems.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
-        binding.BAddclient.setOnClickListener {
-            var createClient=createAleatorieList()
-            ClienModel.agregateItem(createClient)
-            binding.BAddclient.animate().rotation(180F * (contadorImagen++)).setDuration(200).start()
+        //baseActivity.setActionBar(binding.toolbar as Toolbar)
+//Configuraciones de la barra de herramientas
+
+        //SE TERMINO LA CONECTIVADDD
+        CameraView.CameraActivate.observe(this, Observer {
+            if (it == CameraTypes.SCANER) {
+                binding.BQRScanner?.setBackgroundResource(R.drawable.ic_baseline_close_24_showproduct)
+                baseActivity.binding.appBarMain.BQRScannerClient.setBackgroundResource(R.drawable.ic_baseline_close_24_showproduct)
+                baseActivity.binding.appBarMain.constraintLayout.visibility = View.VISIBLE
+            } else {
+                binding.BQRScanner?.setBackgroundResource(R.drawable.ic_baseline_qr_code_scanner_showproduct)
+                baseActivity.binding.appBarMain.BQRScannerClient.setBackgroundResource(R.drawable.ic_baseline_qr_code_scanner_showproduct)
+                if (this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    baseActivity.binding.appBarMain.constraintLayout.visibility = View.GONE
+                } else {
+                    baseActivity.binding.appBarMain.constraintLayout.visibility = View.INVISIBLE
+                }
+                CamScannerStatus = false
+            }
+        })
+
+        CameraView.QRBindig.observe(this, Observer {
+            Log.i("QRRESIVED", it)
+            binding.SVProducts.setQuery(it, false)
+            binding.SVProducts.clearFocus()
+        })
+
+
+
+
+        var Listener = View.OnClickListener {
+            if (!CamScannerStatus) {
+                MainView.RestoreCamera()
+                val ft: FragmentTransaction =  parentFragmentManager.beginTransaction()
+                ft.setCustomAnimations(
+                    android.R.anim.fade_in,
+                    android.R.anim.fade_out,
+                    android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right
+                )
+                CameraView.CloseInFragment(false)
+                CameraView.CamaraStatus(CameraTypes.SCANER, true)
+                ft.replace(R.id.FragmentCamera, CameraQrFragment());
+                ft.setReorderingAllowed(true)
+                ft.commit()
+                CamScannerStatus = true;
+            } else {
+                CameraView.CloseInFragment(true)
+                CameraView.CamaraStatus(CameraTypes.NULL, true)
+                CamScannerStatus = false;
+            }
         }
+        binding.BQRScanner.setOnClickListener(Listener)
+//        baseActivity.binding.appBarMain.BQRScannerClient.setOnClickListener(Listener)
 
-        binding.BAddclient.setOnLongClickListener {
 
-            true
-        }
 
-        adapterClient= ClientAdapter(mutableListOf())
-        binding.addclientitems.adapter=adapterClient
-         ClienModel.getItemClients().observe(viewLifecycleOwner, Observer {
-             adapterClient.Clients=it.reversed().toMutableList()
-             adapterClient.notifyItemInserted(0)
-             binding.addclientitems.scrollToPosition(0);
-         })
+
+
+        //((binding.cordinaterClient.layoutParams) as CoordinatorLayout.LayoutParams).behavior = ClientNavigationBehavior()
+
+
+
+        //Desde aca se borro el bloque
 
         binding.paggerid.setPageTransformer(TabletPageTransformer())
-
-
-        ClienLocalModel.closeView.observe(viewLifecycleOwner, Observer {
-            binding.ClientFragmnetShow.visibility = View.GONE
-        })
-        binding.addclientitems.addOnItemTouchListener(RecyclerViewItemClickListener(
-            context,binding.addclientitems,object : ShowProducts.ClickListener {
-                override fun onClick(view: View?, position: Int) {
-                    val ViewDrawable=DrawableCompat.wrap(binding.TLMain.background);
-                    var client= adapterClient.Clients[position]
-                    DrawableCompat.setTint(ViewDrawable,client.color)
-                    Log.i("SETOCO",position.toString())
-
-                    for (x in 0.. adapterClient.Clients.size){
-
-                        if(x == position){
-                            scaleView(view!!,1f,1.2f)
-                        }else{
-                            binding.addclientitems.adapter?.notifyItemChanged(x)
-                        }
-                    }
-                    ClienLocalModel.SendselectItem(client)
-                    Log.i("SETOCOFINAL",adapterClient.toString())
-                }
-                override fun onLongClick(view: View?, position: Int) {
-                    if (view != null) {
-                        view?.animate()
-                            .yBy(-60f).xBy(-20f)
-                            .setInterpolator(decayingSineWave)
-                            .setDuration(200)
-                            .start();
-                        val ft: FragmentTransaction =
-                            baseActivity.supportFragmentManager.beginTransaction()
-                        ft.setCustomAnimations(
-                            android.R.anim.fade_in,
-                            android.R.anim.fade_out,
-                        )
-                        var bundle=Bundle()
-                        bundle.putInt("uid", adapterClient.Clients[position].uid)
-                        ft.replace(R.id.ClientFragmnetShow, ClientItemShowFragment()::class.java,bundle,"");
-                        ft.setReorderingAllowed(true)
-                        ft.commit()
-                        binding.ClientFragmnetShow.visibility = View.VISIBLE
-                    }
-                }
-            }
-        ))
 
 
 
@@ -362,7 +346,7 @@ class ProductosShow : Fragment() {
         binding.paggerid.adapter=adapter;
 //        binding.paggerid.adapter=fragmento
 
-        val tablayoutnavigator=TabLayoutMediator(binding.TLMain,binding.paggerid as ViewPager2,
+        val tablayoutnavigator=TabLayoutMediator(binding.TLMain,binding.paggerid as ViewPager2,false,
             TabLayoutMediator.TabConfigurationStrategy{ tab, position ->
                 when(position){
                     0->{

@@ -192,7 +192,7 @@ class ConnectionController {
 
             Class.forName("net.sourceforge.jtds.jdbc.Driver").newInstance()
 //            conexion = DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.0.13:1433;instance=MYINSTACIA;databaseName=Cafeteria:user=slayer;password=tiopazhc;integratedSecurity=true")
-            conexion= DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.0.13:3000;instance=MYINSTACIA;databaseName=Cafeteria;integratedSecurity=true","slayer","tiopazhc")
+            conexion= DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.0.17:3000;instance=MYINSTACIA;databaseName=Cafeteria;integratedSecurity=true","slayer","tiopazhc")
 
         }catch (e:Exception){
             println(e.toString())

@@ -38,19 +38,19 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
+        android:layout_marginTop="0dp"
         android:layout_marginBottom="0dp"
         android:gravity="center"
         android:paddingTop="100dp"
         android:orientation="vertical">
         <View
             style="@style/IconItems"
-            android:layout_width="100dp"
-            android:layout_height="200dp"
+            android:layout_width="110dp"
+            android:layout_height="210dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@drawable/ic_baseline_domain_disabled_24">
+            android:background="@drawable/baseline_leak_remove_24">
         </View>
         <TextView
             style="@style/TextItemPrimero"

@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:layout_marginTop="?attr/actionBarSize"
+tools:context=".ui.View.fragment.Root.Config.ShowConfigWifiDirectFragment">
+
+<LinearLayout
+    android:layout_marginTop="30dp"
+    style="@style/DrawableFondTabs"
+    android:id="@+id/linearLayout6"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+    <TextView
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="40dp"
+        android:text="@string/config_wifi">
+    </TextView>
+
+    <LinearLayout
+        android:id="@+id/settingsItemAplication"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical"
+        android:scrollbars="vertical"
+        android:visibility="visible"
+        tools:visibility="visible"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <View
+                style="@style/FontIconConfig"
+                android:background="@drawable/baseline_wifi_24"
+                android:layout_weight="0"
+                android:layout_margin="10dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp">
+            </View>
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/Tname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center_vertical"
+                        android:text="@string/config_wifi"
+                        android:textStyle="bold"
+                        android:textSize="17dp">
+
+                    </TextView>
+                    <TextView
+                        android:id="@+id/TWifiConnect"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/config_wifi_default"
+                        android:textStyle="italic"
+                        android:textSize="17dp">
+
+                    </TextView>
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/TWifiComment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:gravity="center_vertical"
+                    android:text="@string/config_wifi_state_details"
+                    android:padding="6dp"
+                    android:textSize="14dp">
+                </TextView>
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/SAWifi"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:thumbTint="@color/md_green_800"
+                android:trackTint="@color/md_green_500" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                style="@style/FontIconConfig"
+                android:background="@drawable/baseline_wifi_protected_setup_24"
+                android:layout_weight="0"
+                android:layout_margin="10dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp">
+            </View>
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+
+                >
+                <TextView
+                    android:id="@+id/TCompart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:gravity="center_vertical"
+                    android:text="@string/config_wifi_data"
+                    android:textStyle="bold"
+                    android:textSize="17dp">
+
+                </TextView>
+                <TextView
+                    android:id="@+id/TCompartDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/config_wifi_data_details"
+                    android:padding="6dp"
+                    android:textSize="14dp">
+                </TextView>
+            </LinearLayout>
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/SDataPeriodic"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:thumbTint="@color/md_green_800"
+                android:trackTint="@color/md_green_500" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                style="@style/FontIconConfig"
+                android:layout_weight="0"
+                android:layout_margin="10dp"
+                android:layout_width="60dp"
+                android:layout_height="50dp">
+            </View>
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+
+                >
+                <LinearLayout
+                    android:layout_weight="0"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/Ttime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/config_wifi_time"
+                        android:textStyle="normal"
+                        android:textSize="17dp">
+
+                    </TextView>
+                    <TextView
+                        android:id="@+id/Ttimetext"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/config_wifi_time_default"
+                        android:textStyle="italic"
+                        android:textSize="17dp">
+                    </TextView>
+
+
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/TtimeDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/config_wifi_time_details"
+                    android:padding="6dp"
+                    android:textSize="14dp">
+                </TextView>
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <!--El estado puede cambiar entre privado, publico , cerrado , clausurado, etc-->
+            <View
+                style="@style/FontIconConfig"
+                android:background="@drawable/baseline_align_vertical_center_24"
+                android:layout_weight="0"
+                android:layout_margin="10dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp">
+            </View>
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/Tlimit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/config_wifi_limit"
+                        android:textStyle="bold"
+                        android:textSize="17dp">
+
+                    </TextView>
+                    <TextView
+                        android:id="@+id/tlimitDefault"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/config_wifi_limit_default"
+                        android:textStyle="normal"
+                        android:textSize="17dp">
+                    </TextView>
+
+
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/TlmitDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/config_wifi_limit_details"
+                    android:padding="6dp"
+                    android:textSize="14dp">
+                </TextView>
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                style="@style/FontIconConfig"
+                android:background="@drawable/baseline_qr_code_2_24"
+                android:layout_weight="0"
+                android:layout_margin="10dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp">
+            </View>
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/Tcode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center_vertical"
+                        android:text="@string/config_wifi_qr"
+                        android:textStyle="bold"
+                        android:textSize="17dp">
+
+                    </TextView>
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/TcodeDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/config_wifi_qr_details"
+                    android:padding="6dp"
+                    android:textSize="14dp">
+                </TextView>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                style="@style/FontIconConfig"
+                android:background="@drawable/baseline_track_changes_24"
+                android:layout_weight="0"
+                android:layout_margin="10dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp">
+            </View>
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/Truc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center_vertical"
+                        android:text="@string/config_wifi_energia"
+                        android:textStyle="bold"
+                        android:textSize="17dp">
+
+                    </TextView>
+                    <TextView
+                        android:id="@+id/TrucText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/config_wifi_energia_default"
+                        android:textStyle="normal"
+                        android:textSize="17dp">
+                    </TextView>
+
+
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/TrucDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/config_wifi_energia_details"
+                    android:padding="6dp"
+                    android:textSize="14dp">
+                </TextView>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

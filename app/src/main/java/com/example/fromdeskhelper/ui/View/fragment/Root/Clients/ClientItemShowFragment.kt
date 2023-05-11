@@ -78,7 +78,6 @@ class ClientItemShowFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentClientItemShowBinding.inflate(inflater, container, false)
-        blurbackground(binding.blurViewCard)
         return binding.root
     }
     fun comprobateList(Size: Int) {

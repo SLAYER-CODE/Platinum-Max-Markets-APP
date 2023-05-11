@@ -27,7 +27,7 @@ class GetPermisionsUseCaseTest{
 
     @Test
     fun funcer(){
-        var cliente = ApolloClient.Builder().serverUrl("http://192.168.0.13:2016/graphql").build()
+        var cliente = ApolloClient.Builder().serverUrl("http://192.168.0.17:2016/graphql").build()
         runBlocking {
             Log.i(LOG_CLASS,cliente.query(ComprobateUserQuery("")).execute().data.toString() )
         }

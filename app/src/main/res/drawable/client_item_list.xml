@@ -9,10 +9,13 @@
                 <gradient
                     android:centerColor="#66FFFFFF"
                     android:endColor="#28FFFFFF"
-                    android:gradientRadius="20dp"
+                    android:gradientRadius="35dp"
                     android:startColor="#A8FFFFFF"
                     android:type="radial"></gradient>
+                <corners android:radius="100dp" />
+
             </shape>
+
         </item>
     </layer-list>
 </inset>

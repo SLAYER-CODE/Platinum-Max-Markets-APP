@@ -62,12 +62,15 @@ class SplashScreenViewModel @Inject constructor(
                                 FirebaseAuth.getInstance().getAccessToken(true)
                                     .addOnCompleteListener { token ->
                                         if (token.isSuccessful) {
+                                            //Este bloque de codigo muestra que fue correcta la autenticacion en el servidor de firebase
                                             viewModelScope.launch {
                                                 authorizationInterceptor.setSessionToken(token.result.token.toString())
 //                                    var resultado = loginApollo(token.result.token.toString())
                                                 initLogOperator.postValue(true)
                                             }
                                         } else {
+                                           //Este otro bloque de codigo muestra si esa conexion fue desecha y se intenta validar nuevamente, es decir si se cambia la contraseña
+                                           //en uso de la aplicacion entonces retornara este error (Lo mandara nuevamente al inicio de session)
                                             initLogOperator.postValue(false)
                                         }
                                     }
@@ -76,9 +79,10 @@ class SplashScreenViewModel @Inject constructor(
                     }
                     break
                 }else{
-                    initLogMessage.postValue("Sin Internet")
-                    delay(500)
+                    initLogMessage.postValue("Sin acceso a internet")
+                    delay(100)
                     initLoginAnonime.postValue(true)
+                    break
                 }
                 delay(1000)
             }

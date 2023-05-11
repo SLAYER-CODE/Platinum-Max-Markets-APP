@@ -272,7 +272,7 @@ class CameraQrFragment : Fragment() {
                                 binding.BRscanner.visibility = View.VISIBLE
 //                            cameraProvider.unbindAll()
                                 if(ConNet.ComprobationInternet(baseActivity)) {
-                                    baseActivity.binding.appBarMain.PBbarList.visibility=View.VISIBLE
+                                    baseActivity.binding.appBarMain.PBbarList?.visibility=View.VISIBLE
                                     Corutine = GlobalScope.launch(Dispatchers.Main) {
                                         val resultKeys = withContext(Dispatchers.IO) {
                                             ConnectToPost.ConnectAndGet(qrResult.text)

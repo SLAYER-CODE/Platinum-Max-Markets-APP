@@ -2,15 +2,15 @@ package com.example.fromdeskhelper.util
 
 import android.app.Activity
 import android.content.Context
-import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.TextView
+import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -19,21 +19,20 @@ fun hideKeyboardFrom(context: Context, view: View) {
     imm.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
-fun MessageSnackBar(view: View, text: String, color: Int) {
+fun MessageSnackBar(view: View, text: String, color: Int,buton:View?=null) {
     val snackbar = Snackbar.make(
         view, text,
         Snackbar.LENGTH_LONG
     ).setAction("Action", null)
+    snackbar.setAnchorView(buton)
 
-    snackbar.setActionTextColor(color)
-    val snackbarView = snackbar.view
-
-    snackbarView.setBackgroundColor(Color.BLACK)
-    val textView =
-        snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
-    textView.setTextColor(color)
-    textView.textSize = 17f
+    //val snackbarView = snackbar.view
+    //val textView =
+    //    snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
+    //textView.setTextColor(color)
+    //textView.textSize = 17f
     (snackbar.view).layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+    snackbar.animationMode = BaseTransientBottomBar.ANIMATION_MODE_SLIDE
     snackbar.show()
 }
 
@@ -76,8 +75,12 @@ fun isConnected(context: Context): Boolean {
 
 class TabletPageTransformer : ViewPager2.PageTransformer {
     override fun transformPage(page: View, pos: Float) {
-        page.pivotX = (if (pos > 0) 0 else page.width).toFloat()
-        page.pivotY = page.height * 0.5f
-        page.rotationY = 45f * pos
+        val width = page.width.toFloat()
+        val height = page.height.toFloat()
+        val rotation = -15f * pos * -1.25f
+        page.pivotX = width * 0.5f
+        page.pivotY = height
+        page.rotation = rotation
     }
 }
+

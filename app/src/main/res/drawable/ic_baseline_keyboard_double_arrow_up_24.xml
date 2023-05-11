@@ -19,7 +19,7 @@
                     android:pathData="M6,17.59l1.41,1.41l4.59,-4.58l4.59,4.58l1.41,-1.41l-6,-6z"
                     android:strokeWidth="5" />
                 <path
-                    android:fillColor="@color/md_teal_500"
+                    android:fillColor="#006296"
                     android:pathData="M6,11l1.41,1.41l4.59,-4.58l4.59,4.58l1.41,-1.41l-6,-6z" />
             </group>
         </vector>
@@ -38,11 +38,11 @@
                 android:pivotX="0.0"
                 android:pivotY="-100.0">
             <path
-                android:fillColor="@color/md_green_A400"
+                android:fillColor="@color/md_blue_A700"
                 android:pathData="M6,17.59l1.41,1.41l4.59,-4.58l4.59,4.58l1.41,-1.41l-6,-6z"
                 android:strokeWidth="20" />
             <path
-                android:fillColor="#4808821C"
+                android:fillColor="#770460A7"
                 android:pathData="M6,11l1.41,1.41l4.59,-4.58l4.59,4.58l1.41,-1.41l-6,-6z" />
             </group>
         </vector>

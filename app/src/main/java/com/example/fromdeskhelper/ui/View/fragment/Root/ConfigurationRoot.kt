@@ -76,50 +76,7 @@ class ConfigurationRoot : Fragment() {
         //    }
         //}
 
-        var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                binding.TWifiConnect.text="Wifi ON"
-                binding.SAWifi.isChecked=true
-                Log.i("WIFIRESFINAL","SE ACTIVO")
-            }else{
-                if(wifiViewModel.VerifyWifi()){
-                    binding.TWifiConnect.text="Wifi ON"
-                    binding.SAWifi.isChecked=true
-                    Log.i("WIFIRESFINAL","SE ACTIVO")
-                }else{
-                    binding.TWifiConnect.text="Wifi OFF"
-                    binding.SAWifi.isChecked=false
-                    Log.i("WIFIRESFINAL","SE DESACTIVO")
-                }
-            }
 
-        }
-
-
-        wifiViewModel.WifiActivate.observe(viewLifecycleOwner, Observer { t ->
-            if(!t) {
-//                val panelIntent = Intent(Settings.Panel.ACTION_WIFI).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                startActivity(panelIntent);
-                resultLauncher.launch(Intent(Settings.Panel.ACTION_WIFI))
-            }
-            Log.i("WIFIRESFINAL",t.toString())
-            if(wifiViewModel.VerifyWifi()){
-                binding.TWifiConnect.text="Wifi ON"
-                binding.SAWifi.isChecked=true
-                Log.i("WIFIRESFINAL","SE ACTIVO")
-                wifiViewModel.DiscoveryActivate(contextFragment)
-            }else{
-                binding.TWifiConnect.text="Wifi OFF"
-                binding.SAWifi.isChecked=false
-                Log.i("WIFIRESFINAL","SE DESACTIVO")
-            }
-        })
-
-
-
-        binding.SAWifi.setOnClickListener{
-            wifiViewModel.ActiveAndDeactiveWifi()
-        }
 
         return binding.root
     }

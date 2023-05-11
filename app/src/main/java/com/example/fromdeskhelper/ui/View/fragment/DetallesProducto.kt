@@ -43,8 +43,8 @@ class DetallesProducto : Fragment() {
     private lateinit var imagenes:List<ImagenesNew>
     private lateinit var baseActivity: MainActivity
     private lateinit var contextFragment: Context
-    private  lateinit var productoLiveData:LiveData<InventarioProducts>;
     private var _binding: FragmentDetallesProductsBinding? = null
+    private  lateinit var productoLiveData:LiveData<InventarioProducts>;
     private val binding get() = _binding!!
     private var editable:Boolean=false;
     private lateinit var adapter: DetallesAdapterImagen

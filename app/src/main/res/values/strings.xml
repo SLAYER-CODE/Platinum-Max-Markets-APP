@@ -1,8 +1,16 @@
 <resources>
+    <!-- Global Strings-->
+
+
+    <string name="unlgoin">Salir</string>
+    <string name="change">Cargando ...</string>
+    <string name="anonyme">Sin usuario (Anonimo)</string>
+    <string name="rescaning">PRECIONA PARA ESCANEAR NUEVAMENTE</string>
+
     <!--    Texto de Nulidad de fragmentos-->
-    <string name="storage_clean">No hay productos registrados en tu dispositivo...</string>
-    <string name="server_clean">No hay Productos en el servidor de la empresa...</string>
-    <string name="local_clean">No existen productos en la base de datos local de la tienda...</string>
+    <string name="storage_clean">No se encontraron productos en el dispositivo, Intente agregar un producto</string>
+    <string name="server_clean">No se encontraron productos en el servidor</string>
+    <string name="local_clean">No se encontraron productos en la base de datos local</string>
 
     <!--    Texto de Nulidad de LISTAS CLIENTE-->
     <string name="p2pproduct_clean">Encuentre un local cercano para conectarse...</string>
@@ -44,7 +52,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Configuración</string>
 
-    <string name="menu_home">Casa(Raiz)</string>
+    <string name="menu_home">Casa</string>
     <string name="menu_CallFinalUser">Cliente</string>
     <string name="menu_estadisticas">Analiticas</string>
     <string name="menu_empresasub">Empleados</string>
@@ -66,7 +74,6 @@
     <string name="home_tab_menus_client_server">Clientes (Todos)</string>
     <string name="home_tab_menus_client_local">Clientes (Local)</string>
 
-
     <string name="home_tab_menus_analitics_client">Clientes</string>
     <string name="home_tab_menus_analitics_product">Productos</string>
 
@@ -77,6 +84,77 @@
     <string name="home_tab_menus_empleados_mensajes">Mensajes</string>
     <string name="home_tab_menus_emṕleados_tareas">Tareas</string>
 
+    <!-- Pestaña de inicio del usuario-->
+
+    <string name="home_action_panel_title">Acciones</string>
+    <string name="home_action_panel_details">Controle las acciones de sus empleados, registros o ultimos accesos</string>
+
+    <string name="home_employed_panel_title">Tareas de empleados</string>
+    <string name="home_employed_panel_details">Asigne tareas o vea las ultimas tareas asignadas a sus empleados de su establecimiento</string>
+
+    <string name="home_providers_panel_title">Abastecimiento</string>
+    <string name="home_providers_panel_details">Ponga en prioridad los productos mas vendidos para su respectivo abastecimiento</string>
+
+    <string name="home_organize_panel_title">Organize sus productos</string>
+    <string name="home_organize_panel_details">Modifique y organize sus productos por bloques</string>
+
+    <string name="home_register_panel_title">Registrar un producto</string>
+    <string name="home_register_panel_details">Inserte la informacion de su producto, si este fue registrado sera notificado</string>
+
+    <string name="home_sincronize_panel_title">Sincronize los datos (Servidor)</string>
+    <string name="home_sincronize_panel_details">Vincule, deslige ,carge , descarge todos sus datos con el servidor general de todos los centros comerciales</string>
+
+    <string name="home_sincronize_local_panel_title">Sincronize los datos (Local)</string>
+    <string name="home_sincronize_local_panel_details">Vincule, deslige ,carge , descarge todos los datos con la base de datos local de la tienda o centro comercial</string>
+
+    <string name="home_search_panel_title">Buscar un producto</string>
+    <string name="home_search_panel_details">Encunetra el producto ideal en su almacenamiento interno, base de datos local o en el servidor</string>
+
+    <string name="home_emit_panel_title">Emitir</string>
+    <string name="home_emit_panel_details">Selecione los productos o servicios registrados que decee emitir para todos los clientes conectados</string>
+
+    <string name="home_client_panel_title">Clientes</string>
+    <string name="home_client_panel_details">Interaccione con los clientes</string>
+
+    <string name="home_receipts_panel_title">Recibos</string>
+    <string name="home_receipts_panel_details">Genere , ingrese o modifique los recibos de su local</string>
+
+    <string name="home_history_panel_title">Historia de productos</string>
+    <string name="home_history_panel_details">Vea los cambios a lo largo del tiempo de cada uno de sus productos</string>
+
+    <!--Campo devisualisacion para usuarios-->
+
+    <string name="home_user_shoping_local_qr_panel_title">Compra rapida</string>
+    <string name="home_user_shoping_local_qr_panel_details">Genere una cuenta con la lista de los productos que vaya recolectando utilizando el QR</string>
+
+    <string name="home_user_products_panel_title">Productos</string>
+    <string name="home_user_products_panel_details">Vea en tiempo real todos los productos de todas las tiendas actualmente en su circulo de Wifi-Direct y agregelos a su compra</string>
+
+    <string name="home_user_stores_panel_title">Tiendas</string>
+    <string name="home_user_stores_panel_details">Vea en tiempo real todas las tiendas disponibles actualmente en su entorno con Wifi-Direct</string>
+
+    <string name="home_user_vincule_panel_title">Vincule sus datos a su cuenta</string>
+    <string name="home_user_vincule_panel_details">Controle la vinculacion de sus datos a la nube para ser utilizados por internet</string>
+
+    <string name="home_user_filter_store_panel_title">Filtros</string>
+    <string name="home_user_filter_store_panel_details">Inserte filtros para ubicar el producto o servicio segun las caracteristicas de la tienda o el producto</string>
+
+    <string name="home_user_search_panel_title">Busqueda</string>
+    <string name="home_user_search_panel_details">Busqueda de un producto o servicio en particular</string>
+
+    <string name="home_user_interact_panel_title">Interacciones</string>
+    <string name="home_user_interact_panel_details">Solicite un encargo , ayuda o un en servicio en la tienda descubriendo dispositivos cercanos</string>
+
+
+    <string name="home_user_accounts_panel_title">Mis cuentas</string>
+    <string name="home_user_accounts_panel_details">Vea todas sus cuentas de, Compras rapidas , Generadas o enviadas , listas o encargadas</string>
+
+    <string name="home_user_shoping_qr_panel_title">Informacion QR o Barras</string>
+    <string name="home_user_shoping_qr_panel_details">Obtenga la informacion de sus productos mediante el QR o codigo de barras</string>
+    <!--Usuario Comun, Empleados, Administrador, Dueño de local-->
+
+
+
     <!-- Del usuario -->
     <string name="titleUser">Usuario Test</string>
     <string name="menu_products">Home(Userio)</string>
@@ -84,6 +162,131 @@
     <string name="menu_orders">Ordenes</string>
     <string name="menu_favorites">Favoritos</string>
     <string name="menu_pagos">Pagos</string>
+
+    <!--Configuraciones-->
+
+    <string name="config_company">Empresa</string>
+    <string name="config_company_details">Modifica la visualisacion de tu puesto o local para los usuarios</string>
+
+    <!--Company Configs Fragment-->
+    <string name="config_company_icon">Icono</string>
+    <string name="config_company_icon_details">Selecione un icono o logo para su local</string>
+
+    <string name="config_company_name">Nombre</string>
+    <string name="config_company_name_default">Platinum Max Market</string>
+    <string name="config_company_name_details">Establecer el nombre de su local o puesto</string>
+
+
+    <string name="config_company_ruc">RUC</string>
+    <string name="config_company_ruc_default">Cargando...</string>
+    <string name="config_company_ruc_details">Modifique el ruc de su establecimiento</string>
+
+    <string name="config_company_dueño">Propietario</string>
+    <string name="config_company_dueño_default">Validando</string>
+
+    <string name="config_company_dueño_details">Dueño del establecimiento o propietario encargado ahora mismo</string>
+
+
+    <string name="config_company_servicio">Servicio</string>
+    <string name="config_company_servicio_details">Servicio que ofresca su local o establecimiento</string>
+
+
+    <string name="config_company_color">Color</string>
+    <string name="config_company_color_details">Selecione el thema representativo de su local</string>
+
+    <string name="config_company_code">Codigo</string>
+    <string name="config_company_code_default">Cargando...</string>
+    <string name="config_company_code_details">Codigo unico que representan a esta cuenta como dueño del establecimiento</string>
+
+
+    <string name="config_company_status">Estado</string>
+    <string name="config_company_status_default">Cargando...</string>
+
+    <string name="config_company_status_details">Modifique el estado se su local segun sus preferencias</string>
+    <!--Company Config-->
+
+
+    <string name="config_wifi">Wifi-Direct</string>
+    <string name="config_wifi_default">Cargando...</string>
+    <string name="config_wifi_state_details">Habilitar el wifi direct para enviar productos</string>
+    <string name="config_wifi_details">Configuracion de wifi de la aplicacion</string>
+
+
+    <string name="config_wifi_data">Compartir datos</string>
+
+    <string name="config_wifi_data_details">Automatiza el enviode datos periodicamente</string>
+
+    <string name="config_wifi_qr">Vincular Dispositivo QR</string>
+    <string name="config_wifi_qr_details">Genera un codigo de vinculaciòn con los dispositivos</string>
+
+    <string name="config_wifi_time">Tiempo de envio</string>
+    <string name="config_wifi_time_default">15 Minutos</string>
+
+    <string name="config_wifi_time_details">Selecione el tiempo de envio para que los datos se envien automaticamente</string>
+
+    <string name="config_wifi_energia">Ahoro de energia</string>
+    <string name="config_wifi_energia_default">Normal</string>
+    <string name="config_wifi_energia_details">Selecione el estado de ahoro de energia</string>
+
+
+    <string name="config_wifi_limit">Limite</string>
+    <string name="config_wifi_limit_default">100</string>
+    <string name="config_wifi_limit_details">Establesca el limite de envio de los productos mediante Wifi-Direct</string>
+
+    <string name="config_user">Usuarios</string>
+    <string name="config_user_details">Configuracion para los clientes del establecimiento</string>
+
+    <string name="config_user_filter">Filtros</string>
+    <string name="config_user_filter_details">Filtro para usuarios ,bloqueados etc ...</string>
+
+
+    <string name="config_user_geoubication">Geoubicacion</string>
+    <string name="config_user_geoubication_details">Geolocalizar usuarios </string>
+
+    <string name="config_proveedores">Proveedores</string>
+    <string name="config_proveedores_details">Proveedores de tu local o del centro comercial</string>
+    <string name="config_products">Productos</string>
+
+
+    <string name="config_other_config">Otros</string>
+
+
+    <string name="config_storage">Almacenamiento</string>
+
+    <string name="config_cuentas">Cuenta</string>
+    <string name="config_cuentas_details">Cuenta de los usuarios</string>
+
+
+    <string name="config_empleados">Empleados</string>
+    <string name="config_empleados_details">Establesca los limites y privileguios de tus empleados</string>
+
+
+    <string name="config_process">Procesamiento</string>
+    <string name="config_process_details">Configura el rendimiento del dispositivo al usar la aplicacion</string>
+
+    <string name="config_separate_area_user">Usuario</string>
+    <string name="config_separate_area_app">Aplicacion</string>
+
+    <string name="config_separate_area_system">Dispositivo</string>
+
+    <!--Agregar productos-->
+
+
+    <string name="agregate_product_name">Nombre del producto o servicio</string>
+    <string name="agregate_product_price">Precio</string>
+    <string name="agregate_product_price_neto">Precio neto</string>
+    <string name="agregate_product_price_neto_info">Valor del producto neto</string>
+
+    <string name="agregate_product_require">Requerido</string>
+
+    <string name="agregate_product_disconut">Descuento</string>
+    <string name="agregate_product_disconut_info">Rebaja actual presentada</string>
+
+    <string name="agregate_product_separate_o">Obligatorio</string>
+    <string name="agregate_product_separate_opcional">Opcional</string>
+
+    <string name="agregate_product_capture_notfiles">Agregue una captura de su producto</string>
+    <string name="agregate_product_image_files">Agregar una imagen desde el almacenamiento</string>
 
 
     <!--    Fin de DrawersString-->
@@ -100,21 +303,49 @@
     <!-- Strings used for fragments for navigation -->
 
 
+    <!--String del dialog cliente-->
+    <string name="dialog_client_helper_divider">Campos del cliente requeridos</string>
+    <string name="dialog_client_name">Nombre del cliente</string>
+    <string name="dialog_client_precio">Precio total</string>
+    <string name="dialog_client_require">Requerido</string>
+    <string name="dialog_client_details">Comentario de la venta</string>
+    <string name="dialog_client_allDetails_title">Nombre del cliente</string>
+    <string name="dialog_client_price_descont">En descuento: 0</string>
+    <string name="dialog_client_price_neto">Neto</string>
+    <string name="dialog_client_price_neto_info">Ganacia</string>
+    <string name="dialog_client_price_neto_details">Precio neto</string>
+    <string name="dialog_client_price_discont">Real</string>
+    <string name="dialog_client_price_discont_details">Precio sin descuento</string>
+    <string name="dialog_client_price_cantidad">Cantidad</string>
+    <string name="dialog_client_price_cantidad_details">Numero de productos</string>
+    <string name="dialog_client_price_peso">Peso total</string>
+    <string name="dialog_client_price_peso_details">Cantidad de peso</string>
+
+    <string name="dialog_client_price_price_all">Precio final con descuento</string>
+    <string name="dialog_client_notitems">No hay productos o servicios añadidos</string>
+    <string name="dialog_client_button_save">Guardar datos</string>
+    <string name="dialog_client_button_compart">Compartir Lista</string>
+    <string name="dialog_client_button_discart">Eliminar cliente</string>
+    <string name="dialog_client_title">Detalles del cliente</string>
+
+
     <string name="first_fragment_label">Inicio</string>
     <string name="second_fragment_label">Editar Producto</string>
     <string name="tre_activity_label">Agregar Producto</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="dummy_content">Contenido</string>
     <string name="addproduct_discount">Precio con descuento:</string>
     <string name="Input_PrecieInserte">Inserte el precio Origuinal</string>
+
+    <string name="addproduct_continue_categoria">Inserte cada categoria</string>
+    <string name="addproduct_continue_marca">Inserte cada marca</string>
     <string-array name="dlagsPeso">
         <item>(Kilogramos)/1000 KG</item>
         <item>(Hectogramos)/100 HG</item>

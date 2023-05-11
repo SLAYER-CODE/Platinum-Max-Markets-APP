@@ -52,7 +52,7 @@ object NetworkModule {
                     try{
                         return chain.proceed(chain.request());
                     }catch(e:Exception){
-                        Log.i("SEMOVIO","SIN CONEXION")
+                        Log.i("RETROFIT","SIN CONEXION")
                         return Response.Builder()
                             .request(chain.request())
                             .protocol(Protocol.HTTP_1_1)
@@ -63,11 +63,10 @@ object NetworkModule {
                 }
 
             }).build()
-
-
         try {
+            Log.i("RETROFIT","INICIANDO CONEXION")
             return Retrofit.Builder()
-                .baseUrl("http://192.168.0.13:2016/").client(rester).
+                .baseUrl("http://192.168.0.17:2016/").client(rester).
                 addConverterFactory(GsonConverterFactory.create(gson)).build()
         }catch (ex:Exception){
             return null
@@ -105,7 +104,7 @@ object NetworkModule {
 
         try {
             if(Cliente!=null){
-                return ApolloClient.Builder().serverUrl("http://192.168.0.13:2016/graphql")
+                return ApolloClient.Builder().serverUrl("http://192.168.0.17:2016/graphql")
                     .okHttpClient(Cliente)
                     .build()
             }else{

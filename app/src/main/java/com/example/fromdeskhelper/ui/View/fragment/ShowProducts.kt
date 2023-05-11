@@ -13,6 +13,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -27,8 +28,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.databinding.FragmentShowProductsBinding
+import com.example.fromdeskhelper.ui.View.ViewModel.CameraViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.ClientLocalViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.SendItems.SendProductsStoreViewModel
+import com.example.fromdeskhelper.ui.View.ViewModel.ShowLocalViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.UitlsMainShowViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.UtilsShowMainViewModels
 import com.example.fromdeskhelper.ui.View.activity.MainActivity
@@ -75,6 +78,12 @@ class ShowProducts : Fragment() {
     private val ClienLocalModel: ClientLocalViewModel by viewModels(ownerProducer = {
         requireActivity()
     })
+
+    private val LocalModel: ShowLocalViewModel by viewModels(ownerProducer = {
+        requireActivity()
+    })
+
+
 
 
     interface ClickListener {
@@ -237,6 +246,13 @@ class ShowProducts : Fragment() {
 //
 //            }
 //        })
+
+
+
+//        Configuraciones de la barra personalizada
+
+
+
         ClienLocalModel.itemClientItem.observe(viewLifecycleOwner, Observer {
             setFunction(true, it)
         })
@@ -246,15 +262,21 @@ class ShowProducts : Fragment() {
             adapter = it
             setFunction(false,null)
             comprobateList(it.itemCount)
+
+
             lifecycleScope.launch {
                 binding.LVMylist.adapter=adapter
                 adapter.notifyDataSetChanged()
                 binding.LVMylist.startLayoutAnimation()
             }
-
 //            Log.i("adapterproductcall",it.toString())
 
         })
+
+        binding.swipe.setOnRefreshListener {
+            binding.LVMylist.startLayoutAnimation()
+            binding.swipe.isRefreshing=false
+        }
 //        UtilsViewProduct.RequestLayoutItem.observe(viewLifecycleOwner, Observer {
 //            binding.LVMylist.adapter = listaProductos
 //            binding.LVMylist.apply {

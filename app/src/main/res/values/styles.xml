@@ -25,10 +25,8 @@
 
     <style name="SplashTheme" parent="Theme.FinalProductos.NoActionBar">
         <item name="android:windowFullscreen">true</item>
-        <item name="android:background" >@drawable/background_splash</item>
+        <!--<item name="android:background" >@drawable/background_splash</item>-->
         <!--        <item name="android:background" >@mipmap/ic_launcher_logo</item>-->
-        <item name="backgroundColor">@color/md_white_1000_screen</item>
-        <item name="android:windowBackground">@color/md_white_1000_screen</item>
         <item name="colorPrimary">@color/md_blue_400</item>
         <item name="colorPrimaryDark">@color/md_blue_400</item>
         <item name="colorAccent">@color/md_blue_400</item>
@@ -63,6 +61,27 @@
         <item name="android:buttonStyleToggle">@style/Widget.Button.Toggle</item>
         <item name="android:textOn"></item>
         <item name="android:textOff"></item>
+    </style>
+
+    <style name="titleBackground">
+        <item name="android:background">@color/md_blue_500</item>
+    </style>
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Dialog.MinWidth">
+        <!-- Fill the screen -->1
+
+        <!-- No backgrounds, titles or window float -->
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:windowIsFloating">true</item>
+        <!-- Just to prove it's working -->
+    </style>
+
+    <style name="TextTitle" parent="@android:style/TextAppearance">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">30dp</item>
+        <item name="android:shadowRadius">2</item>
+        <item name="android:shadowColor">@color/md_white_1000</item>
+        <item name="android:shadowDy">3</item>
+        <item name="android:shadowDx">3</item>
     </style>
 
 

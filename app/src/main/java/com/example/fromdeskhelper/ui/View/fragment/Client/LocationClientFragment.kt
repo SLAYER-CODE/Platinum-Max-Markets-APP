@@ -43,8 +43,8 @@ class LocationClientFragment : Fragment() {
     }
 
     override fun onStart() {
-        if(baseActivity.binding.appBarMain.toolbarParent.visibility==View.VISIBLE){
-            baseActivity.binding.appBarMain.toolbarParent.visibility=View.GONE
+        if(baseActivity.binding.appBarMain.toolbarParent?.visibility==View.VISIBLE){
+            baseActivity.binding.appBarMain.toolbarParent?.visibility=View.GONE
         }
         if(baseActivity.binding.appBarMain.fab.visibility==View.VISIBLE){
             baseActivity.binding.appBarMain.fab.visibility=View.GONE

@@ -58,7 +58,7 @@ class ServerAdapter(var producto: List<ProductsPreviewQuery.Producto>,var itemLa
 //            view.IVimagenItem.transitionName=(ProductoAndImage.uid.toString())
 //            view.IVimagenItem.setImageBitmap(imagen)
             Picasso.get()
-                .load("http://192.168.0.13:2016/uploads/" + ProductoAndImage.image_realation!![0].image_name)
+                .load("http://192.168.0.17:2016/uploads/" + ProductoAndImage.image_realation!![0].image_name)
                 .fit()
                 .centerCrop()
                 .into(view.IVimagenItem)

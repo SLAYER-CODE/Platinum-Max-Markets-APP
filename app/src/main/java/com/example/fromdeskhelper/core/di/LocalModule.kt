@@ -15,7 +15,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object LocalModule {
-    private val uri = "mongodb://tiopazhc:n2bc4cj5afk@192.168.0.13:27017"
+    private val uri = "mongodb://tiopazhc:n2bc4cj5afk@192.168.0.17:27017"
     @Provides
     @Singleton
     fun MongoClientRetorner():MongoClient{

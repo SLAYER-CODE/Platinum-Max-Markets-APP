@@ -83,6 +83,11 @@ data class ClientListGet(
     val uid: Int,
 )
 
+data class HomeListClient(
+    val title:String,
+    val info:String
+)
+
 data class ClientProductNew(
     val updateImage: Date,
     @ColumnInfo(index = true)

@@ -5,7 +5,7 @@
 
     <group android:id="@+id/GRUItems" android:checkableBehavior="single" >
         <item
-            android:id="@+id/FirstFragment"
+            android:id="@+id/HomeFragmnet"
             android:icon="@drawable/ic_baseline_home_24"
             tools:checked="true"
             android:title="@string/menu_home" />

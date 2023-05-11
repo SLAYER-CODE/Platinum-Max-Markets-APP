@@ -1,180 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:clipChildren="false"
+    android:fitsSystemWindows="true"
+    android:clipToOutline="false"
     android:id="@+id/cordinatorRoot"
     tools:context=".ui.View.activity.MainActivity">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/toolbarParent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/BarLayout"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:title=""
-                style="@style/BarActiveToolBar">
-
-                <LinearLayout
-
-                    android:id="@+id/BIShowP"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:orientation="horizontal"
-                    android:visibility="visible">
-
-                    <androidx.appcompat.widget.SearchView
-                        android:id="@+id/SVProducts"
-                        android:foreground="@color/md_white_1000"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="left"
-                        android:layout_weight="2"
-                        android:foregroundGravity="right"
-                        android:gravity="left"
-                        android:theme="@style/ButonActionBar"
-                        app:searchIcon="@drawable/ic_baseline_image_search_showproduct" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/BQRScanner"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        style="@style/ButonActionBar"
-                        android:background="@drawable/ic_baseline_qr_code_scanner_showproduct"
-                        android:minWidth="50dp"></androidx.appcompat.widget.AppCompatButton>
-
-
-                </LinearLayout>
-            </androidx.appcompat.widget.Toolbar>
-
-            <ProgressBar
-                android:id="@+id/PBbarList"
-                style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:background="#000000"
-                android:hapticFeedbackEnabled="true"
-                android:indeterminate="true"
-                android:indeterminateOnly="true"
-                android:indeterminateTint="#11FF00"
-                android:indeterminateTintMode="src_atop"
-                android:progressBackgroundTint="#000000"
-                android:progressTint="#000000"
-                android:requiresFadingEdge="horizontal"
-                android:secondaryProgressTint="#000000"
-                android:soundEffectsEnabled="true"
-                android:visibility="gone" />
-
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/toolbarParentClient"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:foregroundTintMode="screen"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="gone">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbarClient"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:title=""
-                style="@style/BarActiveToolBar"
-                app:popupTheme="@style/Theme.Productos.PopupOverlay"
-                app:title=""
-                app:titleTextColor="@color/md_red_500">
-
-                <TextView
-                    android:id="@+id/TitleClient"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text=""
-                    android:textColor="@color/md_white_1000"
-                    android:textSize="20dp"></TextView>
-
-                <LinearLayout
-                    android:id="@+id/BIShowPClient"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:orientation="horizontal"
-                    android:visibility="visible">
-
-                    <androidx.appcompat.widget.SearchView
-                        android:id="@+id/SVProductsClient"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="left"
-                        android:layout_weight="2"
-                        android:backgroundTint="@color/md_green_400"
-                        android:foregroundGravity="right"
-                        android:foregroundTint="@color/md_green_400"
-                        android:gravity="left"
-                        app:searchIcon="@drawable/ic_baseline_image_search_showproduct" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/BQRScannerClient"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:background="@drawable/ic_baseline_qr_code_scanner_showproduct"
-                        android:minWidth="50dp"></androidx.appcompat.widget.AppCompatButton>
-                </LinearLayout>
-            </androidx.appcompat.widget.Toolbar>
-
-            <ProgressBar
-                android:id="@+id/PBbarListClient"
-                style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:background="#000000"
-                android:hapticFeedbackEnabled="true"
-                android:indeterminate="true"
-                android:indeterminateOnly="true"
-                android:indeterminateTint="#11FF00"
-                android:indeterminateTintMode="src_atop"
-                android:progressBackgroundTint="#000000"
-                android:progressTint="#000000"
-                android:requiresFadingEdge="horizontal"
-                android:secondaryProgressTint="#000000"
-                android:soundEffectsEnabled="true"
-                android:visibility="gone" />
-
-        </com.google.android.material.appbar.AppBarLayout>
-
-
         <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_anchor="@id/toolbarParent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:id="@+id/include"
             layout="@layout/content_main"
-            android:background="#BF2222"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/refreshFab"
+        android:layout_width="73dp"
+        app:layout_behavior=".ui.animation.FloatingHideBehavior"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
+        style="@style/ButtonFloatLayout"
+        app:srcCompat="@drawable/ic_baseline_autorenew_24" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/toolbarParentClient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foregroundTintMode="screen"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarClient"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:title=""
+            style="@style/BarActiveToolBar"
+            app:popupTheme="@style/Theme.Productos.PopupOverlay"
+            app:title=""
+            app:titleTextColor="@color/md_red_500">
+
+            <TextView
+                android:id="@+id/TitleClient"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text=""
+                android:textColor="@color/md_white_1000"
+                android:textSize="20dp"></TextView>
+
+            <LinearLayout
+                android:id="@+id/BIShowPClient"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/SVProductsClient"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_weight="2"
+                    android:backgroundTint="@color/md_green_400"
+                    android:foregroundGravity="right"
+                    android:foregroundTint="@color/md_green_400"
+                    android:gravity="left"
+                    app:searchIcon="@drawable/ic_baseline_image_search_showproduct" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/BQRScannerClient"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_baseline_qr_code_scanner_showproduct"
+                    android:minWidth="50dp"></androidx.appcompat.widget.AppCompatButton>
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <ProgressBar
+            android:id="@+id/PBbarListClient"
+            style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#000000"
+            android:hapticFeedbackEnabled="true"
+            android:indeterminate="true"
+            android:indeterminateOnly="true"
+            android:indeterminateTint="#11FF00"
+            android:indeterminateTintMode="src_atop"
+            android:progressBackgroundTint="#000000"
+            android:progressTint="#000000"
+            android:requiresFadingEdge="horizontal"
+            android:secondaryProgressTint="#000000"
+            android:soundEffectsEnabled="true"
+            android:visibility="gone" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -225,7 +162,6 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
     <!--    <fragment-->
     <!--        android:id="@+id/nav_host_fragment"-->
     <!--        android:name="androidx.navigation.fragment.NavHostFragment"-->
@@ -233,15 +169,6 @@
     <!--        android:layout_height="match_parent"-->
     <!--        app:defaultNavHost="true"-->
     <!--        app:navGraph="@navigation/nav_agregate" />-->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/refreshFab"
-        android:layout_width="73dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|start"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="20dp"
-        style="@style/ButtonFloatLayout"
-        app:srcCompat="@drawable/ic_baseline_autorenew_24" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -249,8 +176,80 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         style="@style/ButtonFloatLayout"
         app:srcCompat="@drawable/ic_baseline_add_shopping_cart_24" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:id="@+id/cordinaterClient"
+        android:layout_width="130dp"
+        app:layout_dodgeInsetEdges="bottom"
+        android:layout_gravity="bottom|end"
+        android:layout_height="130dp"
+        android:clipToPadding="false"
+        android:clipChildren="false"
+        android:clipToOutline="false"
+        >
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/itemconstraint"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            android:clipToOutline="false"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/addclientitems"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                android:overScrollMode="never"
+                android:clipToOutline="false"
+                android:nestedScrollingEnabled="false"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTintMode="src_atop"
+                android:foregroundTintMode="screen"
+                android:rotation="45"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabClient"
+        android:layout_width="73dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone"
+        style="@style/ButtonFloatLayout"
+        app:srcCompat="@drawable/ic_baseline_broadcast_on_personal_24" />
+
+    <FrameLayout
+        tools:visibility="visible"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:id="@+id/ClientFragmnetShow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="30dp"
+        android:elevation="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_client_item_show"></FrameLayout>
+
+</FrameLayout>

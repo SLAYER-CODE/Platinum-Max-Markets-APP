@@ -1,43 +1,25 @@
 package com.example.fromdeskhelper.ui.View.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Build
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import android.view.WindowInsets
+import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.example.fromdeskhelper.databinding.ActivitySplashScreenBinding
-import android.content.Intent
-import android.content.SharedPreferences
-import android.util.AttributeSet
-import android.util.Log
-import android.view.WindowManager
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.LifecycleOwner
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
-import com.apollographql.apollo3.ApolloClient
-import com.apollographql.apollo3.network.okHttpClient
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
-import com.example.fromdeskhelper.ComprobateUserQuery
-import com.example.fromdeskhelper.core.AuthorizationInterceptor
-import com.example.fromdeskhelper.data.model.Controller.ConnectionController
+import com.example.fromdeskhelper.databinding.ActivitySplashScreenBinding
 import com.example.fromdeskhelper.ui.View.ViewModel.InitViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.SplashScreenViewModel
-import com.example.fromdeskhelper.util.isConnected
-import com.facebook.login.Login
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
-import okhttp3.OkHttpClient
-import java.lang.Runnable
-import java.sql.Connection
 
 
 /**
@@ -54,11 +36,11 @@ class SplashScreen : AppCompatActivity() {
     private val loginViewModel: InitViewModel by viewModels();
     private val SplashModel : SplashScreenViewModel by viewModels();
 
-    @SuppressLint("InlinedApi")
+  /*  @SuppressLint("InlinedApi")
     private val hidePart2Runnable = Runnable {
         // Delayed removal of status and navigation bar
         if (Build.VERSION.SDK_INT >= 30) {
-            fullscreenContent.windowInsetsController?.hide(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
+           fullscreenContent.windowInsetsController?.hide(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
         } else {
 
             // Note that some of these constants are new as of API 16 (Jelly Bean)
@@ -77,10 +59,9 @@ class SplashScreen : AppCompatActivity() {
         // Delayed display of UI elements
         supportActionBar?.show()
         fullscreenContentControls.visibility = View.VISIBLE
-    }
+    }*/
     private var isFullscreen: Boolean = false
 
-    private val hideRunnable = Runnable { hide() }
 
     /**
      * Touch listener to use for in-layout UI controls to delay hiding the
@@ -99,6 +80,10 @@ class SplashScreen : AppCompatActivity() {
         false
     }
 
+    override fun onStart() {
+
+        super.onStart()
+    }
     override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
 
         return super.onCreateView(name, context, attrs)
@@ -106,14 +91,21 @@ class SplashScreen : AppCompatActivity() {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         super.onCreate(savedInstanceState)
+        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                or View.SYSTEM_UI_FLAG_IMMERSIVE)
 
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        isFullscreen = true
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        //isFullscreen = true
+        //supportActionBar?.setDisplayHomeAsUpEnabled(true)
 //        startActivity(Intent(this, LoginActivity::class.java))
 //        finish()
         loginViewModel();
@@ -150,7 +142,10 @@ class SplashScreen : AppCompatActivity() {
                finish()
            }else{
 
-              binding.TEInformation.text = "Ubo un error";
+              binding.TEInformation.text = "Error al iniciar Session";
+               startActivity(Intent(baseContext,LoginActivity::class.java))
+               Animatoo.animateShrink(this);
+               finish()
 //               while (true) {
 //                   if (isConnected(baseContext)) {
 //                       SplashModel(baseContext);
@@ -163,6 +158,7 @@ class SplashScreen : AppCompatActivity() {
         })
 
         SplashModel.initLoginAnonime.observe(this, Observer {
+            //SE ESTA INICIANDO 2 VECES BUSCANDO EL ERROR.. Solucionado faltaba un break al terminal el analisis
             binding.TEInformation.text="Anonimo!"
             startActivity(Intent(baseContext,MainActivity::class.java))
             Animatoo.animateZoom(this);
@@ -229,18 +225,12 @@ class SplashScreen : AppCompatActivity() {
         // Trigger the initial hide() shortly after the activity has been
         // created, to briefly hint to the user that UI controls
         // are available.
-        delayedHide(1000)
+        //delayedHide(1000)
     }
 
-    private fun toggle() {
-        if (isFullscreen) {
-            hide()
-        } else {
-            show()
-        }
-    }
 
-    private fun hide() {
+
+   /* private fun hide() {
         // Hide UI first
         supportActionBar?.hide()
         fullscreenContentControls.visibility = View.GONE
@@ -266,7 +256,7 @@ class SplashScreen : AppCompatActivity() {
         // Schedule a runnable to display UI elements after a delay
         hideHandler.removeCallbacks(hidePart2Runnable)
         hideHandler.postDelayed(showPart2Runnable, UI_ANIMATION_DELAY.toLong())
-    }
+    }*/
 
 //    private fun changepreferensd(): Boolean {
 //

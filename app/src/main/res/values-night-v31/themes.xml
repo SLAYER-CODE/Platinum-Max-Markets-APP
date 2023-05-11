@@ -53,8 +53,6 @@
 
     <style name="SplashTheme" parent="Theme.FinalProductos.NoActionBar">
         <item name="android:windowFullscreen">true</item>
-        <item name="background">@color/md_black_1000</item>
-        <item name="android:windowBackground" >@color/md_black_1000</item>
         <item name="colorPrimary">@color/md_black_1000</item>
         <item name="colorPrimaryDark">@color/ef_black_alpha_50</item>
         <item name="colorAccent">@color/md_black_1000</item>
@@ -74,7 +72,20 @@
         <item name="tabIndicatorColor">@color/md_green_A400</item>
         <item name="tabRippleColor">@color/md_green_A400</item>
         <item name="tabTextColor">@color/md_white_1000</item>
+        <item name="snackbarStyle">@style/MySnackBarStyle</item>
+        <item name="snackbarTextViewStyle">@style/MySnackBarTextStyle</item>
     </style>
+
+    <style name="MySnackBarStyle" parent="Widget.MaterialComponents.Snackbar">
+        <item name="android:background">@color/md_black_1000</item>
+    </style>
+
+    <style name="MySnackBarTextStyle" parent="Widget.MaterialComponents.Snackbar.TextView">
+        <item name="android:textColor">@color/md_green_A400</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">17dp</item>
+    </style>
+
 
     <style name="BarLayout">
         <item name="android:background">@color/black_overlay</item>
@@ -119,8 +130,16 @@
     <style name="ToolBarLogin">
         <item name="titleTextColor">@color/md_green_A700</item>
     </style>
-    <style name="DrawableFond">
+
+    <style name="DrawableFondTabs">
         <item name="android:background">@color/md_black_1000</item>
+    </style>
+    <style name="FontIconConfig">
+        <item name="android:backgroundTint">@color/md_white_1000</item>
+    </style>
+
+    <style name="DrawableFond">
+        <item name="android:background">@color/md_green_500</item>
     </style>
 
     <style name="fontMainDrawable">
@@ -145,5 +164,15 @@
     </style>
     <style name="carView">
         <item name="cardBackgroundColor">@color/md_green_500_75_overlay</item>
+    </style>
+
+
+
+    <style name="QRContainer">
+        <item name="android:backgroundTint">@color/md_red_500</item>
+    </style>
+
+    <style name="QRRescanner">
+        <item name="android:backgroundTint">@color/md_green_A400</item>
     </style>
 </resources>

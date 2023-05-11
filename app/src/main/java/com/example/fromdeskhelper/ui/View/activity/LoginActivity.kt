@@ -30,10 +30,13 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.fromdeskhelper.ui.View.ViewModel.LoginViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.SplashScreenViewModel
+import com.example.fromdeskhelper.ui.View.ViewModel.Util.ShowConnectedViewModel
 import com.example.fromdeskhelper.util.MessageSnackBar
 import com.facebook.FacebookSdk
 import com.google.android.material.snackbar.Snackbar
@@ -48,6 +51,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityLoginMainBinding
     lateinit var navController: NavController
+    private val connectedViewModel : ShowConnectedViewModel by viewModels()
 
 //    private lateinit var database: AppDatabase;
 
@@ -117,16 +121,43 @@ private val ORDERED_DENSITY_DP_N: IntArray? = intArrayOf(
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        //Agrandar la pantalla Modo inmersivo
+
+
 //        setTheme(R .style.Theme_NoTitleBar_Fullscreen);
 //        setTheme(themedefault.style.Theme_NoTitleBar_Fullscreen)
         setTheme(themedefault.style.Theme_Material_Light_NoActionBar_Fullscreen)
         super.onCreate(savedInstanceState)
-
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        window.decorView.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                        or View.SYSTEM_UI_FLAG_IMMERSIVE)
 //        binding.toolbar.setBackgroundColor()
         binding = ActivityLoginMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-//        println("SE CREO INICIO")
+        var reconect = Snackbar.make(
+            binding.containerloginroot, "Iniciar sin conexion (Modo de uso en dispositivo)",
+            Snackbar.LENGTH_INDEFINITE
+        ).setAction("Ir", object :View.OnClickListener{
+            override fun onClick(p0: View?) {
+
+            }
+        })
+
+        connectedViewModel(baseContext)
+        connectedViewModel.connected.observe(this, Observer {
+            if(it){
+                reconect.dismiss()
+            }else{
+                reconect.show()
+            }
+        })
+
+        //        println("SE CREO INICIO")
         navController = findNavController(R.id.nav_host_fragment_content_login)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)

@@ -1,13 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="?attr/actionBarSize"
     tools:context=".ui.View.fragment.ProductosShow"
     android:id="@+id/MainRootShowProduct">
     <!-- TODO: Update blank fragment layout -->
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/toolbarParent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/BarLayout">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:title=""
+                android:contentInsetStart="0dp"
+                android:contentInsetStartWithNavigation="0dp"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                android:background="@color/zxing_transparent"
+                app:layout_scrollFlags="scroll|snap|snapMargins"
+                style="@style/BarActiveToolBar">
+
+                <LinearLayout
+
+                    android:id="@+id/BIShowP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <androidx.appcompat.widget.SearchView
+                        android:id="@+id/SVProducts"
+                        android:foreground="@color/md_white_1000"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="left"
+                        android:layout_weight="2"
+                        android:foregroundGravity="right"
+                        android:gravity="left"
+                        android:theme="@style/ButonActionBar"
+                        app:searchIcon="@drawable/ic_baseline_image_search_showproduct" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/BQRScanner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        style="@style/ButonActionBar"
+                        android:background="@drawable/ic_baseline_qr_code_scanner_showproduct"
+                        android:minWidth="50dp"/>
+
+
+                </LinearLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+            <ProgressBar
+                android:id="@+id/PBbarList"
+                style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="#000000"
+                android:hapticFeedbackEnabled="true"
+                android:indeterminate="true"
+                android:indeterminateOnly="true"
+                android:indeterminateTint="#11FF00"
+                android:indeterminateTintMode="src_atop"
+                android:progressBackgroundTint="#000000"
+                android:progressTint="#000000"
+                android:requiresFadingEdge="horizontal"
+                android:secondaryProgressTint="#000000"
+                android:soundEffectsEnabled="true"
+                android:visibility="gone" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -25,87 +105,34 @@
 
         <com.google.android.material.tabs.TabLayout
             app:tabMaxWidth="0dp"
+            app:tabInlineLabel="true"
             app:tabMode="fixed"
             app:tabGravity="fill"
             android:id="@+id/TLMain"
+            app:tabRippleColor="@color/md_blue_500"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             style="@style/tabMainLayout"
-            app:tabIndicatorHeight="6dp"
+            app:tabIndicatorHeight="2dp"
+            android:elevation="0dp"
             app:tabIconTint="@drawable/tablayout_select_icon"
           />
 
 
-    </com.google.android.material.appbar.AppBarLayout>
 
+
+    </com.google.android.material.appbar.AppBarLayout>
     <androidx.viewpager2.widget.ViewPager2
+        style="@style/DrawableFondTabs"
         android:id="@+id/paggerid"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
     </androidx.viewpager2.widget.ViewPager2>
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
-        android:id="@+id/itemconstraint"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:paddingRight="73dp"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/BAddclient"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_marginStart="80dp"
-            android:background="@drawable/borderitemclient"
-            app:circularflow_defaultRadius="60dp"
-            app:circularflow_radiusInDP="60dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.github.rubensousa.gravitysnaphelper.GravitySnapRecyclerView
-            android:id="@+id/addclientitems"
-            android:layout_width="0dp"
-            android:layout_height="75dp"
-            android:layout_marginBottom="5dp"
-            android:backgroundTintMode="src_atop"
-            android:clipToPadding="false"
-            android:foregroundGravity="left"
-            android:foregroundTintMode="screen"
-            android:orientation="horizontal"
-            android:overScrollMode="always"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            app:snapGravity="start"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/BAddclient">
-
-        </com.github.rubensousa.gravitysnaphelper.GravitySnapRecyclerView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <FrameLayout
-        android:visibility="gone"
-        android:id="@+id/ClientFragmnetShow"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
-        android:elevation="20dp"
-        app:layout_constraintBottom_toTopOf="@id/itemconstraint"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/fragment_client_item_show"></FrameLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

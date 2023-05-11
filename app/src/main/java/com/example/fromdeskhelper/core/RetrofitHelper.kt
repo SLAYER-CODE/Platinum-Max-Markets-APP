@@ -16,7 +16,7 @@ object RetrofitHelper {
 
     fun getRtrofit():Retrofit{
         return Retrofit.Builder()
-            .baseUrl("http://192.168.0.13:2016/").
+            .baseUrl("http://192.168.0.17:2016/").
                 addConverterFactory(GsonConverterFactory.create(gson)).build()
     }
 }

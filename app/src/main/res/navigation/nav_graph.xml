@@ -3,13 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/HomeFragmnet">
 <!--    Primer Framgneo-->
+    <fragment
+        android:id="@+id/HomeFragmnet"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.HomeFragment"
+        tools:layout="@layout/fragment_home">
+        >
+
+        <action
+            android:id="@+id/action_HomeFragmnet_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+
+
     <fragment
         android:id="@+id/FirstFragment"
         android:name="com.example.fromdeskhelper.ui.View.fragment.ProductosShow"
         tools:layout="@layout/fragment_productos_show">
-
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
@@ -109,6 +120,77 @@
     <fragment
         android:id="@+id/configurationRoot"
         android:name="com.example.fromdeskhelper.ui.View.fragment.Root.ConfigurationRoot"
-        tools:layout="@layout/fragment_payments_client"/>
+        tools:layout="@layout/fragment_clientes_config">
+
+        <action
+            android:id="@+id/action_configurationRoot_to_ShowConfigWifiDirect"
+            app:destination="@id/ShowConfigWifiDirect" />
+        <action
+            android:id="@+id/action_configurationRoot_to_ShowConfigProduct"
+            app:destination="@id/ShowConfigProduct" />
+        <action
+            android:id="@+id/action_configurationRoot_to_ShowConfigUser"
+            app:destination="@id/ShowConfigUser" />
+        <action
+            android:id="@+id/action_configurationRoot_to_configurationProcess"
+            app:destination="@id/configurationProcess" />
+        <action
+            android:id="@+id/action_configurationRoot_to_ShowConfigEmployed"
+            app:destination="@id/ShowConfigEmployed" />
+        <action
+            android:id="@+id/action_configurationRoot_to_ShowConfigStorage"
+            app:destination="@id/ShowConfigStorage" />
+        <action
+            android:id="@+id/action_configurationRoot_to_ShowConfigProviders"
+            app:destination="@id/ShowConfigProviders" />
+        <action
+            android:id="@+id/action_configurationRoot_to_ShowConfigCompany"
+            app:destination="@id/ShowConfigCompany" />
+
+    </fragment>
+
+
+
+    <fragment
+        android:id="@+id/ShowConfigCompany"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.Root.Config.ShowConfigCompanyFragment"
+        tools:layout="@layout/fragment_show_config_company"/>
+
+
+    <fragment
+        android:id="@+id/ShowConfigUser"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.Root.Config.ShowConfigUserFragment"
+        tools:layout="@layout/fragment_show_config_user"/>
+
+
+    <fragment
+        android:id="@+id/ShowConfigWifiDirect"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.Root.Config.ShowConfigWifiDirectFragment"
+        tools:layout="@layout/fragment_show_config_wifi_direct"/>
+
+    <fragment
+        android:id="@+id/ShowConfigEmployed"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.Root.Config.ShowConfigEmployedFragment"
+        tools:layout="@layout/fragment_show_config_employed"/>
+
+    <fragment
+        android:id="@+id/ShowConfigProviders"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.Root.Config.ShowConfigProvidersFragment"
+        tools:layout="@layout/fragment_show_config_providers"/>
+
+    <fragment
+        android:id="@+id/ShowConfigProduct"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.Root.Config.ShowConfigProductFragment"
+        tools:layout="@layout/fragment_show_config_product"/>
+
+    <fragment
+        android:id="@+id/ShowConfigStorage"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.Root.Config.ShowConfigStorageFragment"
+        tools:layout="@layout/fragment_show_config_storage"/>
+
+    <fragment
+        android:id="@+id/configurationProcess"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.Root.Config.ShowConfigProcessFragment"
+        tools:layout="@layout/fragment_show_config_process"/>
 
 </navigation>

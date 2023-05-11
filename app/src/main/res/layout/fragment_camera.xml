@@ -46,15 +46,15 @@
             android:id="@+id/BcaptureImage"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/button_caputre"
             app:layout_constraintBottom_toBottomOf="@+id/PVCmain"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.94"
+            app:layout_constraintHorizontal_bias="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/PVCmain"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="1" />
 
         <FrameLayout
             android:id="@+id/frameLayout"
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:pointerIcon="zoom_in"
-                android:progressTint="#1DFD0D" />
+                android:progressTint="@color/md_cyan_500" />
 
         </FrameLayout>
 

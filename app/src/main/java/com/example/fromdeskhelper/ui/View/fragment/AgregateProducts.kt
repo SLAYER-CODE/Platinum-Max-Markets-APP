@@ -20,16 +20,17 @@ import android.text.TextWatcher
 import android.transition.*
 import android.util.Log
 import android.view.*
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.net.toUri
 import androidx.core.view.children
-import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.*
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -53,9 +54,10 @@ import com.example.fromdeskhelper.ui.View.fragment.CameraFragment
 import com.example.fromdeskhelper.ui.View.fragment.CameraQrFragment
 import com.example.fromdeskhelper.util.MessageSnackBar
 import com.example.fromdeskhelper.util.hideKeyboard
-import com.example.fromdeskhelper.util.hideKeyboardFrom
 import com.example.fromdeskhelper.util.listener.DragAndDropListenerActions
 import com.example.fromdeskhelper.util.listener.TouchDropListenerAction
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
@@ -153,13 +155,22 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
 
 
     override fun onStart() {
+//        baseActivity.binding.appBarMain.collapsingToolbar?.isTitleEnabled=false
+//        baseActivity.binding.appBarMain.collapsingToolbar?.isActivated=false
+//        baseActivity.binding.appBarMain.toolbarParent?.setExpanded(false)
+
+
+        (baseActivity.binding.appBarMain.toolbarParent?.layoutParams as CoordinatorLayout.LayoutParams).behavior = null
+
         Log.i(LOGFRAGMENT, "Se Inicio onStart [*]")
 //        (activity as MainActivity).functionFabRefresh(::clearItems);
         baseActivity.binding.appBarMain.refreshFab.setOnClickListener {
             clearItems()
         }
-        baseActivity.binding.appBarMain.BIShowP.visibility = View.INVISIBLE
+//        baseActivity.binding.appBarMain.BIShowP.visibility = View.INVISIBLE
         baseActivity.binding.appBarMain.refreshFab.setImageResource(R.drawable.ic_baseline_clear_all_24)
+
+
         super.onStart()
     }
 
@@ -178,7 +189,6 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
 
 //
 //        Log.i(LOGFRAGMENT, "La camara es $toogleCamera")
@@ -677,7 +687,7 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
                         dpToPx(360),
                         dpToPx(20)
                     )
-                    (baseActivity.binding.appBarMain.toolbarParent.layoutParams as ViewGroup.MarginLayoutParams).setMargins(
+                    (baseActivity.binding.appBarMain.toolbarParent?.layoutParams as ViewGroup.MarginLayoutParams).setMargins(
                         0,
                         0,
                         dpToPx(340),
@@ -729,7 +739,7 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
                     dpToPx(360),
                     dpToPx(20)
                 )
-                (baseActivity.binding.appBarMain.toolbarParent.layoutParams as ViewGroup.MarginLayoutParams).setMargins(
+                (baseActivity.binding.appBarMain.toolbarParent?.layoutParams as ViewGroup.MarginLayoutParams).setMargins(
                     0,
                     0,
                     dpToPx(340),
@@ -1018,6 +1028,10 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
     ): View? {
         _binding = FragmentAgregateProductsBinding.inflate(inflater, container, false)
         activity?.setTitle("Agregar Producto [$parametro]")
+
+        val navcontroller =findNavController()
+        val appbarlayout= AppBarConfiguration(navcontroller.graph)
+        binding.toolbar?.setupWithNavController(navcontroller,appbarlayout)
         return binding.root
     }
 

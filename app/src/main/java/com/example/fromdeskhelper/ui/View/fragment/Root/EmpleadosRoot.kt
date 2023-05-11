@@ -87,8 +87,8 @@ class EmpleadosRoot : Fragment() {
         if(baseActivity.binding.appBarMain.toolbarParentClient!!.visibility==View.VISIBLE){
             baseActivity.binding.appBarMain.toolbarParentClient!!.visibility=View.GONE
         }
-        if(baseActivity.binding.appBarMain.toolbarParent.visibility==View.GONE){
-            baseActivity.binding.appBarMain.toolbarParent.visibility=View.VISIBLE
+        if(baseActivity.binding.appBarMain.toolbarParent?.visibility==View.GONE){
+            baseActivity.binding.appBarMain.toolbarParent?.visibility=View.VISIBLE
         }
         if(baseActivity.binding.appBarMain.fab.visibility==View.GONE){
             baseActivity.binding.appBarMain.fab.visibility=View.VISIBLE

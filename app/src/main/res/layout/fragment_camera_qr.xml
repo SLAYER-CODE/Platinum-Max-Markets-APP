@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:pointerIcon="zoom_in"
-            android:progressTint="#1DFD0D" />
+            android:progressTint="@color/md_cyan_500" />
 
     </FrameLayout>
 
@@ -78,12 +78,11 @@
             android:layout_width="315dp"
             android:layout_height="315dp"
             android:background="@drawable/reset_drawable_scanner"
-            android:shadowColor="#C93D3A3A"
-            android:shadowDy="10"
-            android:shadowRadius="10"
-            android:text="Preciona para escanear nuevamente"
+            android:text="@string/rescaning"
             android:textColor="#FFFFFF"
             android:textSize="14sp"
+            style="@style/QRRescanner"
+            android:textStyle="bold"
             android:visibility="invisible"
             tools:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -111,11 +110,12 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <View
+                style="@style/QRContainer"
                 android:id="@+id/borderqrxml"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/border_qr"
-                android:layout_margin="10dp"
+                android:layout_margin="4dp"
                 android:foregroundGravity="center"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"

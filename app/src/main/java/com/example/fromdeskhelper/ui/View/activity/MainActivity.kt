@@ -1,10 +1,14 @@
 package com.example.fromdeskhelper.ui.View.activity
 
 
+import Data.ClientList
+import Data.ClientListGet
 import Data.listInventarioProductos
+import android.animation.TimeInterpolator
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
@@ -20,13 +24,16 @@ import android.provider.Settings
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
 import android.widget.Filter
-import android.widget.ImageView
-import android.widget.SearchView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -34,10 +41,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.os.bundleOf
-import androidx.core.view.children
-import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
@@ -49,6 +54,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.data.model.Types.CameraTypes
 import com.example.fromdeskhelper.databinding.ActivityMainBinding
+import com.example.fromdeskhelper.databinding.NavHeaderMainBinding
 import com.example.fromdeskhelper.domain.WifiDirectBroadcastReceived
 import com.example.fromdeskhelper.io.ClientServerP2P
 import com.example.fromdeskhelper.io.Receive.SendReceive
@@ -59,15 +65,21 @@ import com.example.fromdeskhelper.ui.View.ViewModel.Client.ShowMainClientViewMod
 import com.example.fromdeskhelper.ui.View.ViewModel.SendItems.SendProductsLocalViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.SendItems.SendProductsServerViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.SendItems.SendProductsStoreViewModel
+import com.example.fromdeskhelper.ui.View.adapter.ClientAdapter
 import com.example.fromdeskhelper.ui.View.adapter.LocalAdapter
 import com.example.fromdeskhelper.ui.View.adapter.P2pClientAdapter
 import com.example.fromdeskhelper.ui.View.adapter.ProductoAdapter
 import com.example.fromdeskhelper.ui.View.adapter.ServerAdapter
 import com.example.fromdeskhelper.ui.View.fragment.CameraQrFragment
+import com.example.fromdeskhelper.ui.View.fragment.Root.Clients.ClientItemShowFragment
+import com.example.fromdeskhelper.ui.View.fragment.ShowProducts
 import com.example.fromdeskhelper.util.MessageSnackBar
+import com.example.fromdeskhelper.util.listener.RecyclerViewItemClickListener
 import com.example.fromdeskhelper.util.listener.TouchListenerResize
 import com.example.fromdeskhelper.util.listener.TouchlistenerMove
-import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.leochuan.CenterSnapHelper
+import com.leochuan.CircleLayoutManager
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import eightbitlab.com.blurview.BlurView
@@ -77,8 +89,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.app_bar_main.view.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
-import java.lang.Exception
 import java.net.InetAddress
+import java.util.Date
 
 
 @AndroidEntryPoint
@@ -155,7 +167,11 @@ class MainActivity : AppCompatActivity() {
 
     fun setRefreshMain() {
         binding.appBarMain.refreshFab.setOnClickListener {
-            Log.i("REFRESHFAB", "SELLAMO")
+            MessageSnackBar(
+                binding.appBarMain.cordinatorRoot,
+                "Se refrezcaron todas las vistas",
+                Color.LTGRAY
+            )
             LocalModel.GetAllProducts()
             ServerModel.GetProductsAllPreview()
             StoreSendViewModel.sendAdapterItems(adapterProduct)
@@ -173,7 +189,6 @@ class MainActivity : AppCompatActivity() {
         return if (context is ContextWrapper) getActivity(context.baseContext) else null
     }
 
-    private val CameraView: CameraViewModel by viewModels()
     private val MainView: MainActiviyViewModel by viewModels()
     private val UtilsView: UitlsMainShowViewModel by viewModels()
     private val UtilsMainModel: UtilsShowMainViewModels by viewModels()
@@ -202,18 +217,74 @@ class MainActivity : AppCompatActivity() {
     private var adapterLocal: LocalAdapter = LocalAdapter(listOf(), 1)
 
 
+    //Clientes
+
+    private val ClienModel:ClientAddShortViewModel by viewModels()
+    var clientcount:Int=1;
+    private var contadorImagen = 1;
+
+    private val ClienLocalModel: ClientLocalViewModel by viewModels()
     override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
         return super.onCreateView(name, context, attrs)
     }
 
-    private var CamScannerStatus: Boolean = false;
 
     private var ItemsSend: MutableList<listInventarioProductos> = mutableListOf()
     private var permissons:Boolean=false
+    fun createAleatorieList(): ClientList {
+        val NewClient = ClientList(
+            fecha = Date(),
+            color =Color.argb(200, (50..255).random(), (25..255).random(), (25..255).random()),
+            number = clientcount
+        )
+        clientcount += 1
+        return NewClient;
+    }
 
+
+    fun scaleView(v: View, startScale: Float, endScale: Float) {
+        val anim: Animation = ScaleAnimation(
+            startScale, endScale,  // Start and end values for the X axis scaling
+            startScale, endScale,  // Start and end values for the Y axis scaling
+            Animation.RELATIVE_TO_SELF, 0.5f,  // Pivot point of X scaling
+            Animation.RELATIVE_TO_SELF, 0.5f
+        ) // Pivot point of Y scaling
+        anim.fillAfter = true // Needed to keep the result of the animation
+        anim.duration = 200
+        v.startAnimation(anim)
+    }
+    val FREQ = 3f
+    val DECAY = 2f
+
+    val decayingSineWave = TimeInterpolator { input ->
+        val raw = Math.sin(FREQ * input * 2 * Math.PI)
+        (raw * Math.exp((-input * DECAY).toDouble())).toFloat()
+    }
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val header = NavHeaderMainBinding.bind(binding.navView.getHeaderView(0))
+
+        window.decorView.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                or View.SYSTEM_UI_FLAG_IMMERSIVE)
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+
+        if (baseContext.resources.configuration
+                .orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        } else if (baseContext.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        }
+
+
         val policy = ThreadPolicy.Builder().permitAll().build()
 
         val locationPermissionRequest = registerForActivityResult(
@@ -226,7 +297,7 @@ class MainActivity : AppCompatActivity() {
                 ) -> {
                     // Precise location access granted.
                     MessageSnackBar(
-                        findViewById(android.R.id.content),
+                        binding.appBarMain.cordinatorRoot,
                         "Se concedio Permisos de Ubicacion",
                         Color.LTGRAY
                     )
@@ -238,14 +309,14 @@ class MainActivity : AppCompatActivity() {
                 ) -> {
                     // Only approximate location access granted.
                     MessageSnackBar(
-                        findViewById(android.R.id.content),
+                        binding.appBarMain.cordinatorRoot,
                         "Se concedio Permisos de Ubicacion En la zona",
                         Color.CYAN
                     )
                 }
                 else -> {
                     MessageSnackBar(
-                        findViewById(android.R.id.content),
+                        binding.appBarMain.cordinatorRoot,
                         "No se concedieron los permisos ",
                         Color.RED
                     )
@@ -284,12 +355,12 @@ class MainActivity : AppCompatActivity() {
                             var producto = tempMSG.split("|")[1]
                             PP2Pproducts.AddRecived(producto)
                         } else if ("CODE:" in tempMSG) {
-                            MessageSnackBar(findViewById(android.R.id.content), "CODE", Color.CYAN)
+                            MessageSnackBar(binding.appBarMain.cordinatorRoot, "CODE", Color.CYAN)
                         } else if ("FACTURE|" in tempMSG ){
                             var Facture= tempMSG.split("|")[1]
                             ShowMainClientModel.AddFacture(Facture)
                         }else {
-                            MessageSnackBar(findViewById(android.R.id.content), tempMSG, Color.RED)
+                            MessageSnackBar(binding.appBarMain.cordinatorRoot, tempMSG, Color.RED)
                         }
                     }
                 }
@@ -297,10 +368,109 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+
+
+        //Insertando el codigo inflado
+        var adapterClient = ClientAdapter(mutableListOf<ClientListGet>())
+
+        var radius:Int =(resources.displayMetrics.density*65f).toInt()
+        var distance:Int = (resources.displayMetrics.density*65f).toInt()
+        var sistem = CircleLayoutManager.Builder(baseContext)
+            .setRadius(radius)
+            .setAngleInterval(45)
+            .setDistanceToBottom(distance)
+            .setGravity(CircleLayoutManager.RIGHT).setZAlignment(6).setReverseLayout(true)
+            .build()
+        sistem.maxVisibleItemCount=5
+        sistem.infinite=true
+
+
+
+        binding.appBarMain.addclientitems?.layoutManager = sistem
+        CenterSnapHelper().attachToRecyclerView(binding.appBarMain.addclientitems)
+                //LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
+            //ArcClientLayout(context = this,)
+
+
+
+
+        binding.appBarMain.fabClient?.setOnClickListener {
+            var createClient=createAleatorieList()
+            ClienModel.agregateItem(createClient)
+        }
+
+        binding.appBarMain.fabClient?.setOnLongClickListener {
+            true
+        }
+        adapterClient= ClientAdapter(mutableListOf())
+        binding.appBarMain.addclientitems?.adapter=adapterClient
+        ClienModel.getItemClients().observe(this, Observer {
+            adapterClient.Clients=it.reversed().toMutableList()
+            adapterClient.notifyItemInserted(0)
+            binding.appBarMain.addclientitems?.scrollToPosition(0);
+        })
+        binding.appBarMain.addclientitems?.addOnItemTouchListener(RecyclerViewItemClickListener(
+            baseContext,binding.appBarMain.addclientitems!!,object : ShowProducts.ClickListener {
+                override fun onClick(view: View?, position: Int) {
+                    //val ViewDrawable=DrawableCompat.wrap(binding.TLMain.background);
+                    //DrawableCompat.setTint(ViewDrawable,client.color)
+                    var client= adapterClient.Clients[position]
+
+                    Log.i("SETOCO",position.toString())
+
+                    for (x in 0.. adapterClient.Clients.size){
+
+                        if(x == position){
+                            scaleView(view!!,1f,1.2f)
+                        }else{
+                            binding.appBarMain.addclientitems?.adapter?.notifyItemChanged(x)
+                        }
+                    }
+                    ClienLocalModel.SendselectItem(client)
+                    Log.i("SETOCOFINAL",adapterClient.toString())
+                }
+                override fun onLongClick(view: View?, position: Int) {
+                    if (view != null) {
+                        view?.animate()
+                            .yBy(-60f).xBy(-20f)
+                            .setInterpolator(decayingSineWave)
+                            .setDuration(200)
+                            .start();
+
+                        var dialog:Dialog = Dialog(this@MainActivity,R.style.MyDialogTheme)
+
+
+                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                        dialog.setContentView(R.layout.fragment_client_item_show)
+                        dialog.show()
+
+                       /* val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+                        ft.setCustomAnimations(
+                            android.R.anim.fade_in,
+                            android.R.anim.fade_out,
+                        )
+                        var bundle=Bundle()
+                        bundle.putInt("uid", adapterClient.Clients[position].uid)
+                        ft.replace(R.id.ClientFragmnetShow, ClientItemShowFragment()::class.java,bundle,"");
+                        ft.setReorderingAllowed(true)
+                        ft.commit()
+                        binding.appBarMain.ClientFragmnetShow?.visibility = View.VISIBLE*/
+                    }
+                }
+            }
+        ))
+        ClienLocalModel.closeView.observe(this, Observer {
+            binding.appBarMain.ClientFragmnetShow?.visibility = View.GONE
+        })
+
+
+        //Finalizando la insertacio nde dcodidwqd
+
+
+
+        setSupportActionBar(binding.appBarMain.toolbar)
         setContentView(binding.root)
         setRefreshMain()
-        setSupportActionBar(binding.appBarMain.toolbar)
 //        println("SE CREO INICIO")
 //        val drawerLayout: DrawerLayout = binding.drawerLayout
 //        val navView: NavigationView = binding.navView
@@ -323,7 +493,7 @@ class MainActivity : AppCompatActivity() {
 //            ), drawerLayout
 //        )
         appBarConfiguration = AppBarConfiguration.Builder(
-            R.id.FirstFragment,
+            R.id.HomeFragmnet,
             R.id.clientsRoot,
             R.id.analiticRoot,
             R.id.empleadosRoot,
@@ -400,17 +570,22 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         MainModel.GetImageResource()
+
         MainModel.ImageReturn.observe(this, Observer {
-            if (it != "null" && it != null) {
+//            Log.i("image",it.toString())
+            if (it.toString() != "null" && it.toString() != null) {
 //                val transformation: Transformation = RoundedCornersTransformation(radius, margin)
 
                 Picasso.get()
-                    .load(it).fit()
+                    .load("https://lh3.googleusercontent.com/a-/AOh14GjsFbwZhd41PQPxQoljtFkB92WkNfa6P5LTjAo_WQ=s96-c").fit()
                     .transform(CropCircleTransformation())
 //                    .into(binding.drawerLayout.nav_view.getHeaderView(0).findViewById(R.id.ImageUserPresentation) as ImageView)
-                    .into(binding.drawerLayout.ImageUserPresentation)
+                    .into(header.ImageUserPresentation)
             }
         })
+
+        header.TNameEmail?.text=(FirebaseAuth.getInstance().currentUser?.email?:R.string.anonyme).toString()
+        header.TName?.text=(FirebaseAuth.getInstance().currentUser?.displayName?:R.string.nav_header_title).toString()
 
         wifiViewModel.conexSendResponse.observe(this, Observer {
             sendReceived=it
@@ -482,7 +657,7 @@ class MainActivity : AppCompatActivity() {
                     } else if (p0!!.groupFormed) {
 //                    MessageSnackBar(getApplicationContext() as View,"NO SE CONECTO",Color.RED)
                         MessageSnackBar(
-                            findViewById(android.R.id.content),
+                            binding.appBarMain.cordinatorRoot,
                             "SE Conecto!",
                             Color.GREEN
                         )
@@ -510,33 +685,9 @@ class MainActivity : AppCompatActivity() {
 
         mReceiver = wifiViewModel.getregisterBroadcast(perrListener, listenerConection)
 
-        //SE TERMINO LA CONECTIVADDD
-        CameraView.CameraActivate.observe(this, Observer {
-            if (it == CameraTypes.SCANER) {
-                binding.appBarMain.BQRScanner.setBackgroundResource(R.drawable.ic_baseline_close_24_showproduct)
-                binding.appBarMain.BQRScannerClient.setBackgroundResource(R.drawable.ic_baseline_close_24_showproduct)
-
-                binding.appBarMain.constraintLayout.visibility = View.VISIBLE
-            } else {
-                binding.appBarMain.BQRScanner.setBackgroundResource(R.drawable.ic_baseline_qr_code_scanner_showproduct)
-                binding.appBarMain.BQRScannerClient.setBackgroundResource(R.drawable.ic_baseline_qr_code_scanner_showproduct)
-                if (this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    binding.appBarMain.constraintLayout.visibility = View.GONE
-                } else {
-                    binding.appBarMain.constraintLayout.visibility = View.INVISIBLE
-                }
-                CamScannerStatus = false
-            }
-        })
 
 
 
-
-        CameraView.QRBindig.observe(this, Observer {
-            Log.i("QRRESIVED", it)
-            binding.appBarMain.SVProducts.setQuery(it, false)
-            binding.appBarMain.SVProducts.clearFocus()
-        })
         binding.drawerLayout.MoveCamera.setOnTouchListener(
             TouchlistenerMove(binding.drawerLayout.constraintLayout, MainView::SavePointMoveCamera)
         )
@@ -564,21 +715,21 @@ class MainActivity : AppCompatActivity() {
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
                     MessageSnackBar(
-                        findViewById(android.R.id.content),
+                        binding.appBarMain.cordinatorRoot,
                         "WIFI ACTIVADO",
                         Color.MAGENTA
                     )
                 } else {
                     if (wifiViewModel.VerifyWifi()) {
                         MessageSnackBar(
-                            findViewById(android.R.id.content),
+                            binding.appBarMain.cordinatorRoot,
                             "WIFI ACTIVADO",
                             Color.MAGENTA
                         )
                         Log.i("WIFIRESFINAL", "SE ACTIVO")
                     } else {
                         MessageSnackBar(
-                            findViewById(android.R.id.content),
+                            binding.appBarMain.cordinatorRoot,
                             "WIFI DESACTIVADO",
                             Color.RED
                         )
@@ -603,10 +754,11 @@ class MainActivity : AppCompatActivity() {
             wifiViewModel.DiscoveryActivate(this)
         }
 
+        //COnfigurando la barra por si existe , si o si tiene que existir lo que hace el primer fragmento
         wifiViewModel.WifiActivateBroadcast.observe(this, Observer {
             Log.i("P2PDesing", "Se decidio" + android.os.Build.VERSION.SDK_INT)
             if (28 != android.os.Build.VERSION.SDK_INT) {
-                binding.appBarMain.toolbar.setBackgroundDrawable(
+                binding.appBarMain.toolbar?.setBackgroundDrawable(
                     ContextCompat.getDrawable(
                         baseContext,
                         R.drawable.background_bar
@@ -616,65 +768,41 @@ class MainActivity : AppCompatActivity() {
 
             val currentNightMode =
                 resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-            val ViewDrawable = DrawableCompat.wrap(binding.appBarMain.toolbar.background).mutate();
+            val ViewDrawable = DrawableCompat.wrap(binding.appBarMain.toolbar!!.background).mutate();
             when (currentNightMode) {
                 Configuration.UI_MODE_NIGHT_YES -> {
 //                    DrawableCompat.setTint(ViewDrawable, Color.BLACK)
 //                    binding.appBarMain.toolbar.background = ViewDrawable
                     if (it) {
                         DrawableCompat.setTint(ViewDrawable, Color.rgb(0,200,0))
-                        binding.appBarMain.toolbar.background = ViewDrawable
+                        binding.appBarMain.toolbar?.background = ViewDrawable
                     } else {
                         DrawableCompat.setTint(ViewDrawable, Color.rgb(220,0,0))
-                        binding.appBarMain.toolbar.background = ViewDrawable
+                        binding.appBarMain.toolbar?.background = ViewDrawable
                     }
                 } // Night mode is not active, we're using the light theme
                 Configuration.UI_MODE_NIGHT_NO -> {
                     if (it) {
                         DrawableCompat.setTint(ViewDrawable, Color.CYAN)
-                        binding.appBarMain.toolbar.background = ViewDrawable
+                        binding.appBarMain.toolbar?.background = ViewDrawable
                     } else {
                         DrawableCompat.setTint(ViewDrawable, Color.GRAY)
-                        binding.appBarMain.toolbar.background = ViewDrawable
+                        binding.appBarMain.toolbar?.background = ViewDrawable
                     }
                 } // Night mode is active, we're using dark theme
             }
         })
 
 
-        var Listener = View.OnClickListener {
-            if (!CamScannerStatus) {
-                MainView.RestoreCamera()
-                val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
-                ft.setCustomAnimations(
-                    android.R.anim.fade_in,
-                    android.R.anim.fade_out,
-                    android.R.anim.slide_in_left,
-                    android.R.anim.slide_out_right
-                )
-                CameraView.CloseInFragment(false)
-                CameraView.CamaraStatus(CameraTypes.SCANER, true)
-                ft.replace(R.id.FragmentCamera, CameraQrFragment());
-                ft.setReorderingAllowed(true)
-                ft.commit()
-                CamScannerStatus = true;
-            } else {
-                CameraView.CloseInFragment(true)
-                CameraView.CamaraStatus(CameraTypes.NULL, true)
-                CamScannerStatus = false;
-            }
-        }
-        binding.appBarMain.BQRScanner.setOnClickListener(Listener)
-        binding.appBarMain.BQRScannerClient.setOnClickListener(Listener)
-
-
-        blurbackground(binding.BlurVIewDrawable)
+        //blurbackground(binding.BlurVIewDrawable)
 
 
         val navigationMenuView = nav_view.getChildAt(0)
         if (navigationMenuView != null) {
-            navigationMenuView.setVerticalScrollBarEnabled(false)
+            navigationMenuView.isVerticalScrollBarEnabled = true
         }
+
+
 
         binding.drawerLayout.setScrimColor(Color.argb(0.15f, 0f, 0f, 0f))
         val actionBarDrawerToggle: ActionBarDrawerToggle =
@@ -696,14 +824,31 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.drawerLayout.addDrawerListener(actionBarDrawerToggle)
+        binding.appBarMain.fab.setOnLongClickListener {
+            binding.appBarMain.cordinaterClient?.visibility=View.VISIBLE
+            binding.appBarMain.fab.visibility = View.GONE
+            binding.appBarMain.fabClient?.visibility=View.VISIBLE
+            true
+
+        }
+
+        binding.appBarMain.fabClient?.setOnLongClickListener {
+            binding.appBarMain.cordinaterClient?.visibility=View.GONE
+            binding.appBarMain.fabClient?.visibility = View.GONE
+            binding.appBarMain.fab.visibility=View.VISIBLE
+
+            true
+        }
+
         binding.appBarMain.fab.setOnClickListener {
 //            findNavController(0).navigate(R.id.action_agregateProducts3_to_FirstFragment)
+
             datasize += 1
 
             val bundle = bundleOf("titlenumber" to datasize.toString())
             val navBuilder = NavOptions.Builder()
             navBuilder.setEnterAnim(R.anim.slide_in_right).setExitAnim(android.R.anim.fade_out)
-                .setPopExitAnim(R.anim.slide_out_left)
+             .setPopExitAnim(R.anim.slide_out_left)
             navController.navigate(R.id.agregateProducts3, bundle, navBuilder.build())
 
 //            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
@@ -741,7 +886,7 @@ class MainActivity : AppCompatActivity() {
 //            isval.close()
 //        }
 
-        binding.appBarMain.SVProducts.setOnQueryTextListener(object :
+        binding.appBarMain.SVProducts?.setOnQueryTextListener(object :
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
@@ -760,10 +905,10 @@ class MainActivity : AppCompatActivity() {
 
         MainModel.AllProducts().observe(this, Observer {
             Log.i("Segundo", "CLaro que si")
-            Log.i("Segundo", binding.appBarMain.SVProducts.query.toString())
+            Log.i("Segundo", binding.appBarMain.SVProducts?.query.toString())
 
             adapterProduct = ProductoAdapter(it, MainModel, 1, UtilsMainModel)
-            adapterProduct.filter.filter(binding.appBarMain.SVProducts.query,
+            adapterProduct.filter.filter(binding.appBarMain.SVProducts?.query,
                 object : Filter.FilterListener {
                     override fun onFilterComplete(count: Int) {
                         StoreSendViewModel.sendAdapterItems(adapterProduct)
@@ -778,7 +923,7 @@ class MainActivity : AppCompatActivity() {
         LocalModel.GetAllProducts()
         LocalModel.AdapterSend.observe(this, Observer {
             adapterLocal = LocalAdapter(it.reversed(), 1, UtilsMainModel)
-            adapterLocal.filter.filter(binding.appBarMain.SVProducts.query,
+            adapterLocal.filter.filter(binding.appBarMain.SVProducts?.query,
                 object : Filter.FilterListener {
                     override fun onFilterComplete(count: Int) {
                         LocalSendViewModel.sendAdapterItems(adapterLocal)
@@ -794,7 +939,7 @@ class MainActivity : AppCompatActivity() {
 
         ServerModel.ProductsAllPreview.observe(this, Observer {
             adapterSever = ServerAdapter(it?.productos!!.reversed(), 1, UtilsMainModel)
-            adapterSever.filter.filter(binding.appBarMain.SVProducts.query,
+            adapterSever.filter.filter(binding.appBarMain.SVProducts?.query,
                 object : Filter.FilterListener {
                     override fun onFilterComplete(count: Int) {
                         ServerSendViewModel.sendAdapterItems(adapterSever)
@@ -864,6 +1009,7 @@ class MainActivity : AppCompatActivity() {
         context: Context,
         attrs: AttributeSet
     ): View? {
+
         return super.onCreateView(parent, name, context, attrs)
     }
 
@@ -979,6 +1125,16 @@ class MainActivity : AppCompatActivity() {
 //        adapterSever.notifyDataSetChanged()
 
         return super.onOptionsItemSelected(item)
+    }
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="23dp"
+    tools:context=".ui.View.fragment.HomeFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/toolbarParent"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:backgroundTint="@color/md_white_1000_screen"
+        style="@style/BarLayout">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:collapsedTitleTextColor="@color/md_white_1000"
+            app:expandedTitleTextColor="@color/md_blue_400"
+            app:expandedTitleTextAppearance="@style/TextTitle"
+            app:expandedTitleGravity="start|bottom"
+            app:contentScrim="@color/md_blue_300"
+            app:titleCollapseMode="scale"
+            app:expandedTitleMarginBottom="25dp"
+            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+            >
+
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:fitsSystemWindows="true"
+                android:id="@+id/lottieAnimationView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_speed="0.3"
+                app:lottie_loop="false"
+                app:lottie_rawRes="@raw/employed"/>
+
+            <TextView
+                android:textStyle="bold|italic"
+                android:fontFamily="cursive"
+                android:textSize="25dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_gravity="bottom|right"
+                android:text="Empleado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                app:title="Edwin Paz"
+                app:titleTextColor="@color/md_blue_500"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:contentInsetStart="0dp"
+                android:contentInsetStartWithNavigation="0dp"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                android:background="@color/black_overlay"
+                app:layout_scrollFlags="scroll|snap|snapMargins"
+                style="@style/BarActiveToolBar">
+
+                <LinearLayout
+
+                    android:id="@+id/BIShowP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <androidx.appcompat.widget.SearchView
+                        android:id="@+id/SVProducts"
+                        android:foreground="@color/md_white_1000"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="left"
+                        android:layout_weight="2"
+                        android:foregroundGravity="right"
+                        android:gravity="left"
+                        android:theme="@style/ButonActionBar"
+                        app:searchIcon="@drawable/ic_baseline_image_search_showproduct" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/BQRScanner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        style="@style/ButonActionBar"
+                        android:background="@drawable/ic_baseline_qr_code_scanner_showproduct"
+                        android:minWidth="50dp"/>
+
+
+                </LinearLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+            <ProgressBar
+                android:id="@+id/PBbarList"
+                style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="#000000"
+                android:hapticFeedbackEnabled="true"
+                android:indeterminate="true"
+                android:indeterminateOnly="true"
+                android:indeterminateTint="#11FF00"
+                android:indeterminateTintMode="src_atop"
+                android:progressBackgroundTint="#000000"
+                android:progressTint="#000000"
+                android:requiresFadingEdge="horizontal"
+                android:secondaryProgressTint="#000000"
+                android:soundEffectsEnabled="true"
+                android:visibility="gone" />
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        style="@style/DrawableFondTabs"
+        android:layout_width="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_height="match_parent">
+        <com.github.rubensousa.gravitysnaphelper.GravitySnapRecyclerView
+            android:id="@+id/RVMenuHome"
+            app:snapGravity="top"
+            app:snapLastItem="true"
+            app:snapToPadding="true"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.github.rubensousa.gravitysnaphelper.GravitySnapRecyclerView>
+
+</androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

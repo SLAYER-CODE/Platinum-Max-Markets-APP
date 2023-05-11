@@ -1,6 +1,7 @@
 package com.example.fromdeskhelper
 
 import android.app.Application
+import android.content.res.Configuration
 import com.facebook.FacebookSdk
 import com.google.firebase.FirebaseApp
 import dagger.hilt.android.HiltAndroidApp

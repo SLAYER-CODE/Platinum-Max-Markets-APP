@@ -1,171 +1,444 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/md_white_1000"
     tools:context=".ui.View.fragment.Root.Clients.ClientItemShowFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/background_border_details_shoping"
-        android:text="@string/hello_blank_fragment">
+    <LinearLayout
+        android:id="@+id/DialogTitle"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:background="@color/md_blue_500"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/BMiminizeLog"
-            style="@style/ButtonItems"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/ic_baseline_vertical_align_bottom_24"
-            android:textSize="25dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-          />
+        <TextView
 
-        <eightbitlab.com.blurview.BlurView
-            android:id="@+id/blurViewCard"
+            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/dialog_client_title"
+            android:textColor="@color/md_white_1000"
+            android:textSize="18dp"
+            android:textStyle="bold">
+
+        </TextView>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_weight="0"
+            android:id="@+id/BMiminizeLog"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/md_white_1000"
+            android:background="@drawable/baseline_transit_enterexit_24"
+            android:textSize="25dp"
+            />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/DialogTitle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingBottom="50dp"
+        android:text="@string/hello_blank_fragment">
+
+
+
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/SVAPNew"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:overScrollMode="always"
             android:padding="10dp"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintStart_toStartOf="parent">
 
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/SVAPNew"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/newConstraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fillViewport="true"
-                android:overScrollMode="never">
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:foregroundGravity="top|bottom"
+                android:importantForAutofill="no|yesExcludeDescendants">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/newConstraintLayout"
+                <LinearLayout
+                    android:id="@+id/llinearConstraint"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="top"
-                    android:clipChildren="false"
-                    android:clipToPadding="false"
-                    android:foregroundGravity="top|bottom"
-                    android:importantForAutofill="no|yesExcludeDescendants">
+                    android:animateLayoutChanges="false"
+                    android:clickable="true"
+                    android:clipChildren="true"
+                    android:focusable="auto"
+                    android:focusableInTouchMode="true"
+                    android:foregroundGravity="bottom"
+                    android:gravity="bottom"
+                    android:orientation="vertical"
+                    android:showDividers="middle"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <LinearLayout
-                        android:id="@+id/llinearConstraint"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:animateLayoutChanges="false"
-                        android:clickable="true"
-                        android:clipChildren="true"
-                        android:focusable="auto"
-                        android:focusableInTouchMode="true"
-                        android:foregroundGravity="bottom"
-                        android:gravity="bottom"
-                        android:orientation="vertical"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:showDividers="middle"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        android:background="@color/md_grey_200"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                        <LinearLayout
+                        <TextView
+                            android:id="@+id/textView3"
+                            style="@style/TextItemPrimero"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:text="@string/dialog_client_helper_divider"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_marginTop="2dp"
+                            android:id="@+id/divider"
+                            style="@style/ItemSeparate"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_marginRight="30dp"
-                            android:layout_marginLeft="30dp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
+                            android:layout_height="2dp"
+                            android:layout_gravity="center"
+                            android:backgroundTintMode="add" />
 
-                            <TextView
-                                android:id="@+id/textView3"
-                                style="@style/TextItemPrimero"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="5dp"
-                                android:text="Campos de usuario"
-                                android:textStyle="bold" />
+                    </LinearLayout>
 
-                            <View
-                                android:id="@+id/divider"
-                                style="@style/ItemSeparate"
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/AddInputTextHintLine"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:helperText="Required"
+                        app:startIconDrawable="@drawable/ic_baseline_person_pin_24">
+
+                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                            android:id="@+id/TENombre"
+                            style="@style/AddInputText"
+                            android:textSize="15dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/dialog_client_name"
+                            app:helperTextEnabled="true" />
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <HorizontalScrollView
+                            android:id="@+id/chipGroup2HorizontalView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:scrollbars="none"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.chip.ChipGroup
+                                android:id="@+id/Clients"
                                 android:layout_width="match_parent"
-                                android:layout_height="3dp"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="3dp"
-                                android:backgroundTintMode="add" />
+                                android:layout_height="match_parent">
 
-                        </LinearLayout>
+                            </com.google.android.material.chip.ChipGroup>
+                        </HorizontalScrollView>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
                         <com.google.android.material.textfield.TextInputLayout
-                            style="@style/TextInputLayoutComprate"
+                            style="@style/AddInputTextHintLine"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             app:helperText="Required"
-                            app:startIconDrawable="@drawable/ic_baseline_person_pin_24">
+                            app:startIconDrawable="@drawable/ic_baseline_money_addproduct">
 
-                            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                                android:id="@+id/TENombre"
-                                style="@style/TextInputEditTextaComprate"
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/TEPrecio"
+                                style="@style/AddInputText"
                                 android:layout_width="match_parent"
-                                android:layout_height="50dp"
-                                android:drawableTintMode="add"
-                                android:inputType="text"
-                                android:gravity="left"
-                                android:paddingTop="30dp"
-                                android:hint="Nombre del Cliente"
-                                android:textStyle="normal|bold"
-                                android:tooltipText="@string/dummy_content"
-                                app:helperTextEnabled="false" />
+                                android:layout_height="wrap_content"
+                                android:hint="Precio Total"
+                                android:textSize="15dp"
+                                android:inputType="numberDecimal" />
 
 
                         </com.google.android.material.textfield.TextInputLayout>
-                        <androidx.constraintlayout.widget.ConstraintLayout
+
+                        <TextView
+                            android:id="@+id/TVpreciodisconut"
+                            style="@style/AddInputTextInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="50dp"
+                            android:textSize="11dp"
+                            android:text="Precio con descuento: 0"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+
+
+
+
+
+                    <com.github.rubensousa.gravitysnaphelper.GravitySnapRecyclerView
+                        android:id="@+id/LVMylistProductComprar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="0dp"
+                        android:clipToPadding="false"
+                        android:layoutAnimation="@anim/layout_animation_right_to_top"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintBottom_toBottomOf="@+id/TNotItems"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:snapGravity="top"
+                        app:snapLastItem="true"
+                        app:snapToPadding="true" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/ItemBackground"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <LinearLayout
+                            android:id="@+id/ContainerAll"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:id="@+id/TNombre"
+                                style="@style/TextItemPrimero"
+                                android:layout_width="167dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|left"
+                                android:ellipsize="marquee"
+                                android:focusable="true"
+                                android:focusableInTouchMode="true"
+                                android:foregroundGravity="center"
+                                android:gravity="center"
+                                android:marqueeRepeatLimit="marquee_forever"
+                                android:scrollHorizontally="true"
+                                android:singleLine="true"
+                                android:text="Total: "
+                                android:textColor="@color/md_red_500"
+                                android:textSize="20dp"
+                                android:textStyle="bold"
+                                android:transitionName="header_title"
+                                tools:text="Total:" />
+
+
+                            <TextView
+                                android:id="@+id/TEPrecioTotal"
+                                style="@style/TextItemPrimero"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="6dp"
+                                android:layout_weight="1"
+                                android:gravity="center|left"
+                                android:text="Price"
+                                android:textColor="@color/md_red_500"
+                                android:textSize="20sp"
+                                tools:text="20.2" />
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <LinearLayout
+                        android:layout_margin="5dp"
+                        android:background="@color/md_grey_100"
+                        android:id="@+id/TNotItems"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:scrollbars="vertical">
+
+                        <View
+                            style="@style/IconItems"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/ic_baseline_content_paste_off_24"></View>
+
+                        <TextView
+                            style="@style/TextItemPrimero"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="match_parent"
+                            android:layout_alignTop="@+id/LVMylist"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="@string/dialog_client_notitems"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </LinearLayout>
+ <LinearLayout
+                        android:background="@color/md_grey_200"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:layout_marginBottom="1dp"
+                            android:id="@+id/BDespliegeItems"
+                            android:layout_width="35dp"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/ic_baseline_keyboard_double_arrow_up_24"
+                            android:rotation="180"
+                            android:textSize="10dp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:id="@+id/divider2"
+                            style="@style/ItemSeparate"
+                            android:layout_marginTop="2dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:backgroundTintMode="add" />
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            style="@style/TextItemPrimero"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:textSize="15dp"
+                            android:text="Mas detalles "
+                            android:textStyle="bold|italic" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        tools:visibility="visible">
 
 
-                            <HorizontalScrollView
-                                android:id="@+id/chipGroup2HorizontalView"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:baselineAligned="false"
+                            android:orientation="horizontal">
+
+                            <RelativeLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:scrollbars="none"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent">
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
 
-                                <com.google.android.material.chip.ChipGroup
-                                    android:id="@+id/Clients"
+                                <com.google.android.material.textfield.TextInputLayout
+                                    style="@style/AddInputTextHint"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal"
+                                    app:helperText="@string/dialog_client_price_neto_details"
+                                    app:startIconDrawable="@drawable/ic_baseline_price_add_product">
 
-                                </com.google.android.material.chip.ChipGroup>
-                            </HorizontalScrollView>
 
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/TEPrecioU"
+                                        style="@style/AddInputText"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:drawableTintMode="add"
+                                        android:ems="10"
+                                        android:hint="@string/dialog_client_price_neto"
+                                        android:inputType="numberDecimal"
+                                        android:text="0"
+                                        android:textStyle="normal|bold"
+                                        android:tooltipText="@string/dummy_content" />
+
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <TextView
+                                    android:id="@+id/TVGanancia"
+                                    style="@style/AddInputTextInfo"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginRight="5dp"
+                                    android:lines="1"
+                                    android:maxWidth="150dp"
+                                    android:text="Ganancia: 0"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
-                                style="@style/TextInputLayoutComprate"
+                                style="@style/AddInputTextHint"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                app:helperText="Required"
-                                app:startIconDrawable="@drawable/ic_baseline_money_addproduct">
+                                android:layout_weight="1"
+                                app:helperText="@string/dialog_client_price_discont_details"
+                                app:startIconDrawable="@drawable/ic_baseline_discount_addproduct">
 
                                 <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/TEPrecio"
-                                    style="@style/TextInputEditTextaComprate"
+                                    android:id="@+id/TEDescuento"
+                                    style="@style/AddInputText"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:drawableTintMode="add"
                                     android:ems="10"
-                                    android:hint="Precio Total"
+                                    android:focusableInTouchMode="true"
+                                    android:hint="@string/dialog_client_price_discont"
                                     android:inputType="numberDecimal"
                                     android:text="0"
                                     android:textStyle="normal|bold"
@@ -173,418 +446,157 @@
 
 
                             </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
 
-                            <TextView
-                                android:id="@+id/TVpreciodisconut"
-                                style="@style/TextItemPrimero"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentTop="true"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginTop="50dp"
-                                android:padding="1dp"
-                                android:text="Precio con descuento: 0"
-                                android:textStyle="bold" />
-
-                        </RelativeLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="35dp"
-                            android:gravity="center_vertical"
+                            android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <androidx.appcompat.widget.AppCompatButton
-
-                                android:id="@+id/BDespliegeItems"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:layout_marginLeft="5dp"
-                                android:background="@drawable/ic_baseline_keyboard_double_arrow_up_24"
-                                android:rotation="180"
-                                android:textSize="10dp"
-                                android:textStyle="bold" />
-
-                            <View
-                                android:id="@+id/divider2"
-                                style="@style/ItemSeparate"
-                                android:layout_width="match_parent"
-                                android:layout_height="3dp"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="3dp"
-                                android:layout_weight="1"
-                                android:backgroundTintMode="add" />
-
-                            <TextView
-                                android:id="@+id/textView2"
-                                style="@style/TextItemPrimero"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:text="Mas detalles "
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:visibility="gone"
-                            tools:visibility="visible">
-
-
-                            <LinearLayout
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/AddInputTextHint"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:baselineAligned="false"
-                                android:orientation="horizontal">
+                                android:layout_weight="1"
+                                android:hint="@string/dialog_client_price_cantidad"
+                                app:helperText="@string/dialog_client_price_cantidad_details"
+                                app:startIconDrawable="@drawable/ic_baseline_storage_addproduct">
 
-                                <RelativeLayout
-                                    android:layout_width="wrap_content"
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/TECantidad"
+                                    style="@style/AddInputText"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1">
-
-                                    <com.google.android.material.textfield.TextInputLayout
-                                        style="@style/TextInputLayoutComprate"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:orientation="horizontal"
-                                        app:helperText="@string/Input_PrecieInserte"
-                                        app:startIconDrawable="@drawable/ic_baseline_price_add_product">
+                                    android:drawableTintMode="add"
+                                    android:ems="10"
+                                    android:inputType="number"
+                                    android:text="0"
+                                    android:textStyle="normal|bold"
+                                    android:tooltipText="@string/dummy_content" />
 
 
-                                        <com.google.android.material.textfield.TextInputEditText
-                                            android:id="@+id/TEPrecioU"
-                                            style="@style/TextInputEditTextaComprate"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:drawableTintMode="add"
-                                            android:ems="10"
-                                            android:hint="Precio Neto"
-                                            android:inputType="numberDecimal"
-                                            android:text="0"
-                                            android:textStyle="normal|bold"
-                                            android:tooltipText="@string/dummy_content" />
+                            </com.google.android.material.textfield.TextInputLayout>
 
-
-                                    </com.google.android.material.textfield.TextInputLayout>
-
-                                    <TextView
-                                        android:id="@+id/TVGanancia"
-                                        style="@style/TextItemPrimero"
-                                        android:layout_width="150dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_alignParentTop="true"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_marginTop="45dp"
-                                        android:layout_marginRight="5dp"
-                                        android:gravity="right"
-                                        android:lines="1"
-                                        android:maxWidth="150dp"
-                                        android:padding="1dp"
-                                        android:text="Ganancia: 0"
-                                        android:textStyle="bold" />
-                                </RelativeLayout>
-
-                                <com.google.android.material.textfield.TextInputLayout
-                                    style="@style/TextInputLayoutComprate"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    app:helperText="Descuento del producto"
-                                    app:startIconDrawable="@drawable/ic_baseline_discount_addproduct">
-
-                                    <com.google.android.material.textfield.TextInputEditText
-                                        android:id="@+id/TEDescuento"
-                                        style="@style/TextInputEditTextaComprate"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:drawableTintMode="add"
-                                        android:ems="10"
-                                        android:focusableInTouchMode="true"
-                                        android:hint="Descuento"
-                                        android:inputType="numberDecimal"
-                                        android:text="0"
-                                        android:textStyle="normal|bold"
-                                        android:tooltipText="@string/dummy_content" />
-
-
-                                </com.google.android.material.textfield.TextInputLayout>
-                            </LinearLayout>
-
-
-                            <LinearLayout
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/AddInputTextHint"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <com.google.android.material.textfield.TextInputLayout
-                                    style="@style/TextInputLayoutComprate"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="100dp"
-                                    android:layout_weight="1"
-                                    android:hint="Cantidad"
-                                    app:helperText="Cantidad total de los productos"
-
-                                    app:startIconDrawable="@drawable/ic_baseline_storage_addproduct">
-
-                                    <com.google.android.material.textfield.TextInputEditText
-                                        android:id="@+id/TECantidad"
-                                        style="@style/TextInputEditTextaComprate"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:drawableTintMode="add"
-                                        android:ems="10"
-                                        android:inputType="number"
-                                        android:text="0"
-                                        android:textStyle="normal|bold"
-                                        android:tooltipText="@string/dummy_content" />
-
-
-                                </com.google.android.material.textfield.TextInputLayout>
-
-                                <com.google.android.material.textfield.TextInputLayout
-                                    style="@style/TextInputLayoutComprate"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:hint="Peso Total"
-
-                                    app:helperText="Peso total de todos los productos"
-                                    app:startIconDrawable="@drawable/ic_baseline_format_peso_addproduct">
-
-                                    <com.google.android.material.textfield.TextInputEditText
-                                        android:id="@+id/TECantidadU"
-                                        style="@style/TextInputEditTextaComprate"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:drawableTintMode="add"
-                                        android:ems="10"
-                                        android:inputType="numberDecimal"
-                                        android:text="0"
-                                        android:textStyle="normal|bold"
-                                        android:tooltipText="@string/dummy_content">
-
-                                    </com.google.android.material.textfield.TextInputEditText>
-                                </com.google.android.material.textfield.TextInputLayout>
-
-
-                            </LinearLayout>
-                        </LinearLayout>
-
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            style="@style/TextInputLayoutComprate"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_weight="1"
-                            android:hint="Caracteristicas de la venta"
-                            android:textAlignment="center"
-                            app:startIconDrawable="@drawable/ic_baseline_location_searching_24">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/TECaracteristicas"
-                                style="@style/TextInputEditTextaComprate"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:drawableTintMode="add"
-                                android:ems="10"
-                                android:inputType="textMultiLine|textCapSentences"
-                                android:textStyle="normal|bold"
-                                app:hintTextColor="@color/md_amber_200" />
-
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <com.github.rubensousa.gravitysnaphelper.GravitySnapRecyclerView
-                            android:id="@+id/LVMylistProductComprar"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginStart="0dp"
-                            android:layout_marginEnd="0dp"
-                            android:clipToPadding="false"
-                            android:layoutAnimation="@anim/layout_animation_right_to_top"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            app:layout_constraintBottom_toBottomOf="@+id/TNotItems"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:snapGravity="top"
-                            app:snapLastItem="true"
-                            app:snapToPadding="true" />
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:id="@+id/ItemBackground"
-                           >
-
-                            <LinearLayout
-                                android:visibility="gone"
-                                android:id="@+id/ContainerAll"
-                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:orientation="horizontal"
-                                android:paddingLeft="5dp"
-                                android:paddingRight="5dp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent">
+                                android:hint="@string/dialog_client_price_peso"
+                                app:helperText="@string/dialog_client_price_peso_details"
+                                app:startIconDrawable="@drawable/ic_baseline_format_peso_addproduct">
 
-                                <TextView
-                                    android:textColor="@color/md_red_500"
-                                    android:id="@+id/TNombre"
-                                    style="@style/TextItemPrimero"
-                                    android:layout_width="167dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center|left"
-                                    android:ellipsize="marquee"
-                                    android:focusable="true"
-                                    android:focusableInTouchMode="true"
-                                    android:foregroundGravity="center"
-                                    android:gravity="center"
-                                    android:marqueeRepeatLimit="marquee_forever"
-                                    android:scrollHorizontally="true"
-                                    android:singleLine="true"
-                                    android:textStyle="bold"
-                                    android:text="Total: "
-                                    android:textSize="20dp"
-                                    android:transitionName="header_title"
-                                    tools:text="Total:" />
-
-
-                                <TextView
-                                    android:layout_marginLeft="6dp"
-                                    android:layout_gravity="center"
-                                    android:id="@+id/TEPrecioTotal"
-                                    style="@style/TextItemPrimero"
-                                    android:textColor="@color/md_red_500"
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/TECantidadU"
+                                    style="@style/AddInputText"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:gravity="center|left"
-                                    android:text="Price"
-                                    android:textSize="20sp"
-                                    tools:text="20.2" />
-                            </LinearLayout>
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                                    android:drawableTintMode="add"
+                                    android:ems="10"
+                                    android:inputType="numberDecimal"
+                                    android:text="0"
+                                    android:textStyle="normal|bold"
+                                    android:tooltipText="@string/dummy_content">
 
-                        <LinearLayout
-                            android:id="@+id/TNotItems"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentBottom="true"
-                            android:gravity="center"
-                            android:layout_gravity="center"
-                            android:orientation="horizontal"
-                            android:scrollbars="vertical">
+                                </com.google.android.material.textfield.TextInputEditText>
+                            </com.google.android.material.textfield.TextInputLayout>
 
-                            <View
-                                android:layout_margin="10dp"
-                                style="@style/IconItems"
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:background="@drawable/ic_baseline_content_paste_off_24"></View>
-
-                            <TextView
-                                style="@style/TextItemPrimero"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_alignTop="@+id/LVMylist"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentBottom="true"
-                                android:layout_weight="1"
-                                android:padding="10dp"
-                                android:gravity="center"
-                                android:text="@string/storage_clean"
-                                android:textSize="20dp"
-                                android:textStyle="bold"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/linearConstraitButton"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center|top"
-                            android:layout_marginTop="5dp"
-                            android:clipChildren="false"
-                            android:clipToPadding="false"
-                            android:descendantFocusability="blocksDescendants"
-                            android:elevation="10dp"
-                            android:foregroundGravity="center"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <androidx.appcompat.widget.LinearLayoutCompat
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:orientation="horizontal">
-
-                                <androidx.appcompat.widget.AppCompatButton
-                                    android:id="@+id/SaveItem"
-                                    style="@style/ButtonItems"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:drawableLeft="@drawable/ic_baseline_save_24"
-                                    android:foregroundGravity="center"
-                                    android:gravity="center"
-                                    android:text="Guardar Client"
-                                    android:textStyle="bold" />
-
-                                <androidx.appcompat.widget.AppCompatButton
-                                    android:id="@+id/SendItem"
-                                    style="@style/ButtonItems"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:drawableLeft="@drawable/ic_baseline_router_24"
-                                    android:foregroundGravity="center"
-                                    android:gravity="center"
-                                    android:text="Compartir Lista"
-                                    android:textStyle="bold" />
-
-                                <androidx.appcompat.widget.AppCompatButton
-                                    android:id="@+id/Descartar"
-                                    style="@style/ButtonItems"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:drawableLeft="@drawable/ic_delete"
-                                    android:foregroundGravity="center"
-                                    android:gravity="center"
-                                    android:text="Descartar Cliente"
-                                    android:textStyle="bold" />
-
-
-                            </androidx.appcompat.widget.LinearLayoutCompat>
 
                         </LinearLayout>
-
-
                     </LinearLayout>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.core.widget.NestedScrollView>
-        </eightbitlab.com.blurview.BlurView>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/AddInputTextHintLineBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:hint="@string/dialog_client_details"
+                        android:textAlignment="center"
+                        app:startIconDrawable="@drawable/ic_baseline_location_searching_24">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/TECaracteristicas"
+                            style="@style/AddInputText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textMultiLine|textCapSentences"
+                            android:textStyle="normal|bold"
+                            app:hintTextColor="@color/md_amber_200" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+    <LinearLayout
+        android:id="@+id/linearConstraitButton"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="5dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:descendantFocusability="blocksDescendants"
+        android:elevation="10dp"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/md_grey_300"
+            android:orientation="horizontal">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/Descartar"
+                style="@style/ButtonItems"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_delete"
+                android:foregroundGravity="center"
+                android:gravity="center"
+                android:text="@string/dialog_client_button_discart"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/SendItem"
+                style="@style/ButtonItems"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_baseline_router_24"
+                android:foregroundGravity="center"
+                android:gravity="center"
+                android:text="@string/dialog_client_button_compart"
+                android:textStyle="bold" />
+
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/SaveItem"
+                style="@style/ButtonItems"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_baseline_save_24"
+                android:foregroundGravity="center"
+                android:gravity="center"
+                android:text="@string/dialog_client_button_save"
+                android:textStyle="bold" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

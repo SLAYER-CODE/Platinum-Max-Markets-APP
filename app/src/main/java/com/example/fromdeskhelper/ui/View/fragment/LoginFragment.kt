@@ -38,6 +38,7 @@ import com.example.fromdeskhelper.ui.View.activity.LoginActivity
 import com.example.fromdeskhelper.ui.View.activity.MainActivity
 import com.example.fromdeskhelper.ui.login.LoggedInUserView
 import com.example.fromdeskhelper.ui.View.ViewModel.LoginViewModel
+import com.example.fromdeskhelper.ui.View.ViewModel.Util.ShowConnectedViewModel
 import com.example.fromdeskhelper.util.MessageSnackBar
 //import com.example.fromdeskhelper.ui.login.LoginViewModelFactory
 import com.facebook.*
@@ -46,10 +47,13 @@ import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.*
 import dagger.hilt.android.AndroidEntryPoint
 import eightbitlab.com.blurview.BlurView
 import eightbitlab.com.blurview.RenderScriptBlur
+import kotlinx.android.synthetic.main.fragment_login.container
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -75,7 +79,6 @@ class LoginFragment : Fragment() {
 
     private val GOOGLE_SIN_IN = 100
     private val loginViewModel: LoginViewModel by viewModels();
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
@@ -91,6 +94,7 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
@@ -115,7 +119,10 @@ class LoginFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
+
+
 //        loginViewModel = ViewModelProvider(this, LoginViewModelFactory()).get(LoginViewModel::class.java)
         activity?.setTitle("Inicia Session")
 

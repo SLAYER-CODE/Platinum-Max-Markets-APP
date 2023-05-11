@@ -1,7 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="black_overlay">#66000000</color>
+    <color name="home_action_panel">@color/md_yellow_300</color>
+    <color name="home_employed_panel">@color/md_orange_100</color>
+    <color name="home_providers_panel">@color/md_grey_300</color>
+    <color name="home_organize_panel">@color/md_blue_100</color>
+    <color name="home_register_panel">@color/md_green_400</color>
+    <color name="home_sincronize_panel">@color/md_red_400</color>
+    <color name="home_sincronize_local_panel">@color/md_pink_200</color>
+    <color name="home_search_panel">@color/md_blue_500</color>
+    <color name="home_emit_panel">@color/md_green_A400</color>
+    <color name="home_client_panel">@color/md_light_blue_400</color>
+    <color name="home_receipts_panel">@color/md_orange_500</color>
+    <color name="home_history_panel">@color/md_falcon_400</color>
+
+    <color name="home_user_shoping_local_qr_panel">@color/md_blue_500</color>
+    <color name="home_user_shoping_panel">@color/md_blue_500</color>
+    <color name="home_user_vincule_panel">@color/md_blue_500</color>
+    <color name="home_user_stores_panel">@color/md_blue_500</color>
+    <color name="home_user_products_panel">@color/md_blue_500</color>
+    <color name="home_user_filter_store_panel">@color/md_blue_500</color>
+    <color name="home_user_search_panel">@color/md_blue_500</color>
+    <color name="home_user_interact_panel">@color/md_blue_500</color>
+    <color name="home_user_accounts_panel">@color/md_blue_500</color>
+    <color name="home_user_shoping_qr_panel">@color/md_blue_500</color>
+
+
+    <color name="black_overlay">#28000000</color>
     <color name="white_overlay">#6F086B78</color>
     <color name="textHintColor">#A800B1C1</color>
 
@@ -685,5 +710,5 @@
     <color name="md_falcon_500_75">#c0384e77</color>
     <color name="md_falcon_A400_25">#40598bae</color>
 
-    <color name="md_statusbar_translucent">#4000</color>
+    <color name="md_statusbar_translucent">#61FBFAFA</color>
 </resources>
