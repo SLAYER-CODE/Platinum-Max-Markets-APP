@@ -20,7 +20,7 @@ import com.example.fromdeskhelper.test.CategoriasQuery_TestBuilder.Data
 
 class ComprobationUserUseCaseTest{
     @RelaxedMockK
-    private var apolloclient: ApolloClient = NetworkModule.providerGraphql();
+    private var apolloclient: ApolloClient? = NetworkModule.providerGraphql();
     lateinit var comprobationUserUseCase:ComprobationUserUseCase
     @Before
     fun onBefore(){

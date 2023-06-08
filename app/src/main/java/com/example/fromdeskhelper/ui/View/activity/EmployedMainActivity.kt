@@ -935,6 +935,8 @@ class MainActivity : AppCompatActivity() {
 //            binding.LVMylist.startLayoutAnimation()
         })
         //ServerList
+
+        //Esta funcion se encarga de pedir los productos al inicio de la aplicacion
         ServerModel.GetProductsAllPreview()
 
         ServerModel.ProductsAllPreview.observe(this, Observer {

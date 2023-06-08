@@ -48,7 +48,7 @@ import com.example.fromdeskhelper.type.BrandsInput
 import com.example.fromdeskhelper.type.CategoriesInput
 import com.example.fromdeskhelper.ui.View.ViewModel.AgregateProductViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.CameraViewModel
-import com.example.fromdeskhelper.ui.View.activity.MainActivity
+import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import com.example.fromdeskhelper.ui.View.adapter.ImageAdapter
 import com.example.fromdeskhelper.ui.View.fragment.CameraFragment
 import com.example.fromdeskhelper.ui.View.fragment.CameraQrFragment
@@ -56,8 +56,6 @@ import com.example.fromdeskhelper.util.MessageSnackBar
 import com.example.fromdeskhelper.util.hideKeyboard
 import com.example.fromdeskhelper.util.listener.DragAndDropListenerActions
 import com.example.fromdeskhelper.util.listener.TouchDropListenerAction
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
@@ -108,7 +106,7 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
     private var parametro: String? = null;
     private var _binding: FragmentAgregateProductsBinding? = null
     private val binding get() = _binding!!
-    protected lateinit var baseActivity: MainActivity
+    protected lateinit var baseActivity: EmployedMainActivity
     protected lateinit var contextFragment: Context
 
     private var offsetViewItem: Rect = Rect()
@@ -1038,7 +1036,7 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MainActivity) {
+        if (context is EmployedMainActivity) {
             this.baseActivity = context
         }
         this.contextFragment = context
