@@ -6,18 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.fromdeskhelper.R
-import com.example.fromdeskhelper.databinding.FragmentPaymentsClientBinding
 import com.example.fromdeskhelper.databinding.FragmentShowProductsP2PBinding
 import com.example.fromdeskhelper.ui.View.ViewModel.Client.ProductsP2PViewMode
-import com.example.fromdeskhelper.ui.View.activity.MainActivity
-import com.example.fromdeskhelper.ui.View.adapter.Client.ProductoP2PAdapter
+import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import com.example.fromdeskhelper.ui.View.adapter.Client.ProductoRecivedP2PAdapter
-import com.example.fromdeskhelper.ui.View.adapter.ProductoAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Rename parameter arguments, choose names that match
@@ -39,7 +34,7 @@ class ShowProductsP2PFragment : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentShowProductsP2PBinding? = null
     private val binding get() = _binding!!
-    protected lateinit var baseActivity: MainActivity
+    protected lateinit var baseActivity: EmployedMainActivity
     protected lateinit var contextFragment: Context
     private val PP2Pproducts: ProductsP2PViewMode by viewModels(ownerProducer = {requireActivity()})
     var adaptador: ProductoRecivedP2PAdapter = ProductoRecivedP2PAdapter(listOf(),null);
@@ -99,7 +94,7 @@ class ShowProductsP2PFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MainActivity) {
+        if (context is EmployedMainActivity) {
             this.baseActivity = context
         }
         this.contextFragment = context

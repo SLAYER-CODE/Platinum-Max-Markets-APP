@@ -12,13 +12,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fromdeskhelper.R
+import com.example.fromdeskhelper.databinding.AsistentP2pBinding
+import com.example.fromdeskhelper.databinding.ItemDeviceBinding
 import com.example.fromdeskhelper.io.Receive.SendReceive
-import kotlinx.android.synthetic.main.asistent_p2p.view.*
-import kotlinx.android.synthetic.main.image_new_new.view.*
-import kotlinx.android.synthetic.main.item_client_list.view.*
-import kotlinx.android.synthetic.main.item_device.view.*
-import kotlinx.android.synthetic.main.item_producto.view.*
-import kotlinx.android.synthetic.main.item_producto.view.TNombre
+//import kotlinx.android.synthetic.main.asistent_p2p.view.*
+//import kotlinx.android.synthetic.main.image_new_new.view.*
+//import kotlinx.android.synthetic.main.item_client_list.view.*
+//import kotlinx.android.synthetic.main.item_device.view.*
+//import kotlinx.android.synthetic.main.item_producto.view.*
+//import kotlinx.android.synthetic.main.item_producto.view.TNombre
 import java.lang.IllegalArgumentException
 import java.lang.reflect.Method
 
@@ -47,14 +49,14 @@ class P2pClientConectedAdapter(
         return
     }
 
-    inner class ClientP2PHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    inner class ClientP2PHolder(val view: ItemDeviceBinding) : RecyclerView.ViewHolder(view.root) {
         @SuppressLint("MissingPermission")
         fun render(ProductoAndImage: WifiP2pDevice) {
 
 //            val bmp = BitmapFactory.decodeByteArray(superImage, 0, superImage.size)
 //            val bmp = assetsToBitmap("purpleFlower.png")
 //            view.ImagenOrder.setImageBitmap(bmp)
-            view
+
             view.NombreText.text = ProductoAndImage.deviceName
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 if (ProductoAndImage.wfdInfo != null) {
@@ -74,6 +76,8 @@ class P2pClientConectedAdapter(
             view.TDeviceADDR.text = ProductoAndImage.deviceAddress
             view.TTipePrimary.text = ProductoAndImage.primaryDeviceType
             view.TTipeSecond.text = ProductoAndImage.secondaryDeviceType
+
+
 //            view.TEstate.text = ProductoAndImage.status.toString()
 //            view.TConectable.text = if (ProductoAndImage.isServiceDiscoveryCapable) "No es captable" else "Transpasable"
 //            view.LLItem.setOnClickListener {
@@ -115,10 +119,10 @@ class P2pClientConectedAdapter(
         }
 
         fun RenderSecure(name:String,sendReceive: SendReceive){
-            view.TNombre.text = name
-            view.BAlerUser.setOnClickListener {
-                sendReceive.write("Un cliente necesita tu ayuda Ubicacion [-5122112.2,+4122112.2] Segundo Piso Abajo".toByteArray())
-            }
+//            view.TNombre.text = name
+//            view.BAlerUser.setOnClickListener {
+//                sendReceive.write("Un cliente necesita tu ayuda Ubicacion [-5122112.2,+4122112.2] Segundo Piso Abajo".toByteArray())
+//            }
         }
     }
 
@@ -150,13 +154,14 @@ class P2pClientConectedAdapter(
 //                )
 //            else->throw IllegalArgumentException("TYPO INVALIDO NO UBICADO!! :D")
 //        }
-        return ClientP2PHolder(
-            layoutInflater.inflate(
-                R.layout.asistent_p2p,
-                parent,
-                false
-            )
-        )
+        return ClientP2PHolder(ItemDeviceBinding.inflate(layoutInflater,parent,false))
+//        return ClientP2PHolder(
+//            layoutInflater.inflate(
+//                R.layout.asistent_p2p,
+//                parent,
+//                false
+//            )
+//        )
     }
 
 
@@ -166,7 +171,9 @@ class P2pClientConectedAdapter(
         if(item.second is WifiP2pDevice){
             holder.render(item.second as WifiP2pDevice)
         }else if(item.second is String){
-            holder.RenderSecure(item.second as String,item.first)
+
+//            holder.RenderSecure(item.second as String,item.first)
+
         }else{
             Log.w("ADAPTER","No existe este typo de dato"+item.toString())
         }

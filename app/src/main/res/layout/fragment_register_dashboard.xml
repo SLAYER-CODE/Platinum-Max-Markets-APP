@@ -5,91 +5,125 @@
     android:id="@+id/FLPrincipio"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="top"
-    android:animateLayoutChanges="true"
-    android:clipChildren="false"
-    android:clipToPadding="false"
-    android:foregroundGravity="bottom"
     android:background="@color/md_white_1000"
+    android:foregroundGravity="bottom"
     tools:context=".RegisterDashboardFragment">
 
-
-
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/toolbarParent"
+        android:id="@+id/ABLAgregate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/BarLayout">
+        android:background="@color/md_green_500"
+        android:paddingTop="25dp"
+        android:clipToPadding="true">
 
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:title=""
-                android:contentInsetStart="0dp"
-                android:contentInsetStartWithNavigation="0dp"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                android:background="@color/zxing_transparent"
-                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
-                style="@style/BarActiveToolBar">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/Toolbar"
+            style="@style/BarActiveToolBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/md_green_500"
+            android:title="Inserte su producto"
+            app:layout_scrollFlags="noScroll|enterAlways"
+            app:title="Rellene los campos">
 
-                <LinearLayout
-                    android:id="@+id/BIShowP"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:orientation="horizontal"
-                    android:visibility="visible">
-                    <androidx.appcompat.widget.SearchView
-                        android:id="@+id/SVProducts"
-                        android:foreground="@color/md_white_1000"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="left"
-                        android:layout_weight="2"
-                        android:foregroundGravity="right"
-                        android:gravity="left"
-                        android:theme="@style/ButonActionBar"
-                        app:searchIcon="@drawable/ic_baseline_image_search_showproduct" />
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/BQRScanner"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        style="@style/ButonActionBar"
-                        android:background="@drawable/ic_baseline_qr_code_scanner_showproduct"
-                        android:minWidth="50dp"/>
-                </LinearLayout>
-            </androidx.appcompat.widget.Toolbar>
-            <ProgressBar
-                android:id="@+id/PBbarList"
-                style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:background="#000000"
-                android:hapticFeedbackEnabled="true"
-                android:indeterminate="true"
-                android:indeterminateOnly="true"
-                android:indeterminateTint="#11FF00"
-                android:indeterminateTintMode="src_atop"
-                android:progressBackgroundTint="#000000"
-                android:progressTint="#000000"
-                android:requiresFadingEdge="horizontal"
-                android:secondaryProgressTint="#000000"
-                android:soundEffectsEnabled="true"
-                android:visibility="gone" />
+            <LinearLayout
+                android:id="@+id/BIShowP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/ClearButton"
+                    style="@style/ButonActionBar"
+                    android:layout_width="35dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_baseline_clear_all_24"
+                    android:gravity="center" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/SaveButton"
+                    style="@style/ButonActionBar"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_baseline_save_24"
+                    android:gravity="center"></androidx.appcompat.widget.AppCompatButton>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/DiscartButton"
+                    style="@style/ButonActionBar"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_baseline_close_24"
+                    android:gravity="center" />
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <ProgressBar
+            android:id="@+id/PBbarList"
+            style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#000000"
+            android:hapticFeedbackEnabled="true"
+            android:indeterminate="true"
+            android:indeterminateOnly="true"
+            android:indeterminateTint="#11FF00"
+            android:indeterminateTintMode="src_atop"
+            android:progressBackgroundTint="#000000"
+            android:progressTint="#000000"
+            android:requiresFadingEdge="horizontal"
+            android:secondaryProgressTint="#000000"
+            android:soundEffectsEnabled="true"
+            android:visibility="gone" />
     </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp"
+        app:cardUseCompatPadding="true">
+
+        <Button
+            android:enabled="false"
+            android:backgroundTint="@color/md_green_300"
+            android:id="@+id/BAgregate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_baseline_dashboard_agregateproduct"
+            android:foregroundGravity="center"
+            android:gravity="center"
+            android:padding="10dp"
+            android:paddingStart="10dp"
+            android:text="@string/addProductButton"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+    </androidx.cardview.widget.CardView>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/SVAPNew"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="13dp"
         android:fillViewport="true"
-        android:overScrollMode="never">
+        android:overScrollMode="never"
+        android:paddingBottom="50dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/newConstraintLayout"
@@ -122,753 +156,833 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <LinearLayout
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    app:cardElevation="5dp"
+                    app:cardUseCompatPadding="true">
 
-                    <TextView
-                        android:id="@+id/textView3"
-                        android:layout_marginRight="5dp"
+                    <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/agregate_product_separate_o"
-                        android:textColor="@color/md_blue_A400"
-                        android:textStyle="bold"
-                        android:textSize="18dp" />
-
-                    <View
-                        android:layout_gravity="center"
-                        android:id="@+id/divider"
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:background="?android:attr/listDivider"
-                        android:backgroundTint="@color/md_blue_A400"
-                        android:backgroundTintMode="add"
-                        android:foregroundTint="#FFFFFF"
-                        android:foregroundTintMode="add" />
-
-                </LinearLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/AddInputTextHint"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:helperText="@string/agregate_product_require"
-                    app:startIconDrawable="@drawable/ic_baseline_name_addproduct"
-                    >
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        style="@style/AddInputText"
-                        android:id="@+id/TENombre"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/agregate_product_name"/>
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/AddInputTextHint"
-                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:helperText="@string/agregate_product_require"
-                        app:startIconDrawable="@drawable/ic_baseline_money_addproduct">
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:paddingTop="20dp">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/TEPrecio"
+                        <TextView
+                            android:padding="5dp"
+                            android:id="@+id/textView3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/agregate_product_price"
-                            android:inputType="numberDecimal" />
-
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <TextView
-                        android:id="@+id/TVpreciodisconut"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Precio con descuento: 0"
-                        style="@style/AddInputTextInfo" />
-
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textView2"
-                        android:layout_marginRight="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/agregate_product_separate_opcional"
-                        android:textColor="@color/md_blue_A400"
-                        android:textStyle="bold"
-                        android:textSize="18dp" />
-                    <View
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:id="@+id/divider2"
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:background="?android:attr/listDivider"
-                        android:backgroundTint="@color/md_blue_A400"
-                        android:backgroundTintMode="add"
-                        android:foregroundTint="#FFFFFF"
-                        android:foregroundTintMode="add" />
-
-
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:baselineAligned="false"
-                    android:orientation="horizontal">
-
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
+                            android:fontFamily="@font/lilitaoe_regular"
+                            android:text="@string/agregate_product_separate_o"
+                            android:textColor="@color/md_green_600"
+                            android:textSize="15dp" />
 
                         <com.google.android.material.textfield.TextInputLayout
-                            style="@style/AddInputTextHintLine"
+                            style="@style/AddInputTextHint"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            app:startIconDrawable="@drawable/ic_baseline_price_add_product">
-
+                            android:layout_height="wrap_content"
+                            app:helperText="@string/agregate_product_require"
+                            app:startIconDrawable="@drawable/ic_baseline_name_addproduct">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/TEPrecioU"
+                                android:id="@+id/TENombre"
+                                style="@style/AddInputText"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Precio Neto"
-                                android:inputType="numberDecimal"
-                                style="@style/AddInputText"/>
+                                android:hint="@string/agregate_product_name" />
 
 
                         </com.google.android.material.textfield.TextInputLayout>
 
-                        <TextView
-                            android:id="@+id/TVGanancia"
-                            style="@style/AddInputTextInfo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:text="Ganancia: 0" />
-                    </RelativeLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/AddInputTextHintLine"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        app:helperText="Descuento del producto"
-                        app:startIconDrawable="@drawable/ic_baseline_discount_addproduct"
-                        >
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/TEDescuento"
-                            style="@style/AddInputText"
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:focusableInTouchMode="true"
-                            android:hint="Descuento"
-                            android:inputType="numberDecimal"/>
+                            android:layout_height="wrap_content">
 
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_marginTop="15dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/AddInputTextHint"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_weight="1"
-                        android:hint="Cantidad"
-                        app:startIconDrawable="@drawable/ic_baseline_storage_addproduct">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/TECantidad"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="number"
-                            android:text="0"
-                            style="@style/AddInputText"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <Spinner
-                        android:id="@+id/SPCantidad"
-                        style="@android:style/Widget.Holo.Spinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="0"
-                        android:ems="10"
-                        android:foregroundGravity="center"
-                        android:gravity="center"
-                        android:popupBackground="@color/md_blue_grey_100"
-                        android:spinnerMode="dropdown" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/AddInputTextHint"
-
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="Peso"
-                        app:startIconDrawable="@drawable/ic_baseline_format_peso_addproduct">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/TECantidadU"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="0"
-                            android:inputType="numberDecimal"
-
-                            style="@style/AddInputText">
-
-                        </com.google.android.material.textfield.TextInputEditText>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-
-                    <Spinner
-                        android:id="@+id/SPpeso"
-                        style="@android:style/Widget.Holo.Spinner"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="0"
-                        android:ems="10"
-                        android:foregroundGravity="center"
-                        android:gravity="center"
-                        android:popupBackground="@color/md_blue_grey_100"
-                        android:spinnerMode="dropdown" />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/AddInputTextHint"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_weight="1"
-                        android:hint="Contenido"
-                        app:startIconDrawable="@drawable/ic_baseline_storage_addproduct">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            style="@style/AddInputText"
-                            android:id="@+id/TEContenido"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="number"/>
-
-
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <Spinner
-                        android:id="@+id/SPTipo"
-                        style="@android:style/Widget.Holo.Spinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="0"
-                        android:ems="10"
-                        android:foregroundGravity="center"
-                        android:gravity="center"
-                        android:popupBackground="@color/md_blue_grey_100"
-                        android:spinnerMode="dropdown" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/AddInputTextHint"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="Actual"
-                        app:startIconDrawable="@drawable/ic_baseline_format_peso_addproduct">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/TEItemSolid"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="0"
-                            android:inputType="numberDecimal">
-
-                        </com.google.android.material.textfield.TextInputEditText>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-
-                    <Spinner
-                        android:id="@+id/SPCActual"
-                        style="@android:style/Widget.Holo.Spinner"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="0"
-                        android:ems="10"
-                        android:foregroundGravity="center"
-                        android:gravity="center"
-                        android:popupBackground="@color/md_blue_grey_100"
-                        android:spinnerMode="dropdown" />
-
-
-                </LinearLayout>
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/AddInputTextHint"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:hint="Detalles y caracteristicas"
-                    app:startIconDrawable="@drawable/ic_baseline_recommend_addproducto">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        style="@style/AddInputText"
-                        android:id="@+id/TECaracteristicas"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textMultiLine|textCapSentences" />
-
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-
-                    <HorizontalScrollView
-                        android:id="@+id/chipGroup2HorizontalView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:scrollbars="none"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <com.google.android.material.chip.ChipGroup
-                            android:id="@+id/chipGroup2"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                        </com.google.android.material.chip.ChipGroup>
-                    </HorizontalScrollView>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <LinearLayout
-                    android:divider="@color/md_black_1000"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/AddInputTextHintLine"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="Categorias"
-                        app:hintAnimationEnabled="true"
-                        app:helperText="@string/addproduct_continue_categoria"
-                        app:startIconDrawable="@drawable/ic_baseline_category_addproduct"
-                        >
-                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                            style="@style/AddInputText"
-                            android:id="@+id/TECategoria"
-                            android:inputType="text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"/>
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/AddInputTextHintLine"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="Marca"
-
-                        app:helperText="@string/addproduct_continue_marca"
-                        app:startIconDrawable="@drawable/ic_baseline_bookmark_addproduct">
-
-                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                            style="@style/AddInputText"
-                            android:id="@+id/TEMarca"
-                            android:inputType="text"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1">
-
-                        </androidx.appcompat.widget.AppCompatAutoCompleteTextView>
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
-
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-
-                    <HorizontalScrollView
-                        android:id="@+id/ChipScrollMarcas"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:scrollbars="none"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <com.google.android.material.chip.ChipGroup
-                            android:id="@+id/ChipGroupMarca"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                        </com.google.android.material.chip.ChipGroup>
-                    </HorizontalScrollView>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:foregroundGravity="center"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/AddInputTextHintLineBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="QR"
-                        app:startIconDrawable="@drawable/ic_baseline_qr_code_addproduct">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/TEQR"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="numberDecimal"
-                            style="@style/AddInputText"/>
-
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/BEscaner"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:layout_marginRight="15dp"
-                        android:backgroundTint="@color/md_blue_500"
-                        android:background="@drawable/ic_baseline_qr_code_scanner_addproduct" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearConstraitButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center|top"
-                    android:layout_marginTop="5dp"
-                    android:clipChildren="false"
-                    android:clipToPadding="false"
-                    android:descendantFocusability="blocksDescendants"
-                    android:elevation="10dp"
-                    android:foregroundGravity="center"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/textInputLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:foregroundGravity="center"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-
-                        <FrameLayout
-
-                            android:id="@+id/FragmentCamera"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintHeight_max="360dp"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintWidth_max="360dp"
-                            tools:layout_width="400dp">
-                        </FrameLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/LEandI"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:background="@drawable/backgroud_focus"
-                        android:dividerPadding="10dp"
-                        android:orientation="horizontal"
-                        android:weightSum="2"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <TextView
-                            android:id="@+id/textView4"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_margin="10dp"
-                            android:layout_weight="1"
-                            android:foregroundGravity="fill_horizontal|fill"
-                            android:gravity="center"
-                            android:padding="10dp"
-
-                            android:text="Editar Imagen"
-                            android:textColor="#929292"
-                            android:textSize="18dp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/textView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_margin="10dp"
-                            android:layout_weight="1"
-                            android:foregroundGravity="fill_horizontal|fill"
-                            android:gravity="center"
-                            android:padding="18dp"
-
-                            android:text="Usar Inteligencia Artificial"
-                            android:textColor="#929292"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/DeletAndSaveParent"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:clipChildren="true"
-                        android:clipToPadding="false"
-                        android:elevation="2dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/SaveDrag"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="30dp"
-                            android:layout_marginEnd="5dp"
-                            android:layout_weight="1"
-                            android:drawableLeft="@drawable/ic_baseline_drive_file_move_24"
-                            android:gravity="center"
-                            android:text="Guardar"
-                            android:textColor="#4886FF"
-                            android:textSize="24dp" />
-
-                        <TextView
-                            android:id="@+id/DeleteDrag"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginEnd="30dp"
-                            android:layout_weight="1"
-                            android:drawableRight="@drawable/ic_delete"
-                            android:drawableTint="#AB0000"
-                            android:gravity="center"
-                            android:text="Eliminar"
-                            android:textColor="#AB0000"
-                            android:textSize="24dp" />
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        style="@style/AddBackgroundfonticons"
-                        android:id="@+id/LLShow"
-                        android:layout_width="match_parent"
-                        android:layout_height="120dp"
-                        android:layout_marginTop="10dp"
-                        android:clipChildren="false"
-                        android:clipToPadding="false"
-                        android:elevation="3dp"
-                        android:layoutDirection="inherit"
-                        android:measureWithLargestChild="true"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:id="@+id/CapturaLayout"
-                            android:layout_width="115dp"
-                            android:layout_height="115dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="0"
-                            android:clipChildren="true"
-                            android:clipToPadding="true"
-                            android:orientation="horizontal">
-
-                            <View
-                                style="@style/ButtonFloatLayout"
-                                android:id="@+id/BCaptura"
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/AddInputTextHint"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/ic_baseline_camera_alt_24"
-                                android:clickable="true"
-                                tools:ignore="SpeakableTextPresentCheck" />
+                                app:helperText="@string/agregate_product_require"
+                                app:startIconDrawable="@drawable/ic_baseline_money_addproduct">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/TEPrecio"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/agregate_product_price"
+                                    android:inputType="numberDecimal" />
+
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <TextView
+                                android:id="@+id/TVpreciodisconut"
+                                style="@style/AddInputTextInfo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Precio con descuento: 0" />
+
+                        </RelativeLayout>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="5dp"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:paddingTop="20dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lilitaoe_regular"
+                                android:text="@string/agregate_product_separate_opcional"
+                                android:textColor="@color/md_green_600"
+                                android:textSize="15dp" />
 
                         </LinearLayout>
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:baselineAligned="false"
+                            android:orientation="horizontal">
+
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    style="@style/AddInputTextHintLine"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    app:startIconDrawable="@drawable/ic_baseline_price_add_product">
+
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/TEPrecioU"
+                                        style="@style/AddInputText"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:hint="Precio Neto"
+                                        android:inputType="numberDecimal" />
+
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <TextView
+                                    android:id="@+id/TVGanancia"
+                                    style="@style/AddInputTextInfo"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentStart="true"
+                                    android:text="Ganancia: 0" />
+                            </RelativeLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/AddInputTextHintLine"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                app:helperText="Descuento del producto"
+                                app:startIconDrawable="@drawable/ic_baseline_discount_addproduct">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/TEDescuento"
+                                    style="@style/AddInputText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:focusableInTouchMode="true"
+                                    android:hint="Descuento"
+                                    android:inputType="numberDecimal" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/AddInputTextHint"
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:hint="Cantidad"
+                                app:startIconDrawable="@drawable/ic_baseline_storage_addproduct">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/TECantidad"
+                                    style="@style/AddInputText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:inputType="number"
+                                    />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <Spinner
+                                android:id="@+id/SPCantidad"
+                                style="@android:style/Widget.Holo.Spinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_weight="0"
+                                android:ems="10"
+                                android:foregroundGravity="center"
+                                android:gravity="center"
+                                android:popupBackground="@color/md_blue_grey_100"
+                                android:spinnerMode="dropdown" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/AddInputTextHint"
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:hint="Peso"
+                                app:startIconDrawable="@drawable/ic_baseline_format_peso_addproduct">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/TECantidadU"
+                                    style="@style/AddInputText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="numberDecimal">
+
+                                </com.google.android.material.textfield.TextInputEditText>
+                            </com.google.android.material.textfield.TextInputLayout>
+
+
+                            <Spinner
+                                android:id="@+id/SPpeso"
+                                style="@android:style/Widget.Holo.Spinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_weight="0"
+                                android:ems="10"
+                                android:foregroundGravity="center"
+                                android:gravity="center"
+                                android:popupBackground="@color/md_blue_grey_100"
+                                android:spinnerMode="dropdown" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/AddInputTextHint"
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:layout_weight="1"
+                                android:hint="Contenido"
+                                app:startIconDrawable="@drawable/ic_baseline_storage_addproduct">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/TEContenido"
+                                    style="@style/AddInputText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="number" />
+
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <Spinner
+                                android:id="@+id/SPTipo"
+                                style="@android:style/Widget.Holo.Spinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_weight="0"
+                                android:ems="10"
+                                android:foregroundGravity="center"
+                                android:gravity="center"
+                                android:popupBackground="@color/md_blue_grey_100"
+                                android:spinnerMode="dropdown" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/AddInputTextHint"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:hint="Actual"
+                                app:startIconDrawable="@drawable/ic_baseline_format_peso_addproduct">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/TEItemSolid"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="numberDecimal"
+                                    >
+
+                                </com.google.android.material.textfield.TextInputEditText>
+                            </com.google.android.material.textfield.TextInputLayout>
+
+
+                            <Spinner
+                                android:id="@+id/SPCActual"
+                                style="@android:style/Widget.Holo.Spinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_weight="0"
+                                android:ems="10"
+                                android:foregroundGravity="center"
+                                android:gravity="center"
+                                android:popupBackground="@color/md_blue_grey_100"
+                                android:spinnerMode="dropdown" />
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:cardElevation="5dp"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:paddingTop="20dp">
+
+                        <TextView
+                            android:padding="5dp"
+                            android:id="@+id/TVDInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/lilitaoe_regular"
+                            android:text="@string/agregate_product_separate_details"
+                            android:textColor="@color/md_green_600"
+                            android:textSize="15dp" />
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/AddInputTextHint"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:clipChildren="false"
-                            android:clipToPadding="false">
+                            android:hint="@string/agregate_product_detalles"
+                            app:startIconDrawable="@drawable/ic_baseline_recommend_addproducto">
 
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/RVCaptureImages"
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/TECaracteristicas"
+                                style="@style/AddInputText"
                                 android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_gravity="center"
-                                android:clipChildren="false"
-                                android:clipToPadding="false"
-                                android:foregroundGravity="center_vertical|center"
-                                android:paddingLeft="10dp"
-                                android:paddingRight="10dp"
-                                app:layout_constrainedHeight="true"
-                                app:layout_constraintBottom_toBottomOf="@+id/TNotItems"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                style="@style/AddBackgroundCameraImagesFond"
+                                android:layout_height="wrap_content"
+                                android:inputType="textMultiLine|textCapSentences" />
 
-                                >
 
-                            </androidx.recyclerview.widget.RecyclerView>
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                            <TextView
-                                style="@style/AddBackgroundCameraImagesFond"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-                                android:padding="10dp"
-                                android:id="@+id/TNotItems"
-                                android:layout_width="0dp"
-                                android:layout_height="0dp"
-                                android:gravity="center"
-                                android:text="@string/agregate_product_capture_notfiles"
-                                android:textSize="25sp"
-                                android:textStyle="bold"
+
+                            <HorizontalScrollView
+                                android:id="@+id/chipGroup2HorizontalView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:scrollbars="none"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <com.google.android.material.chip.ChipGroup
+                                    android:id="@+id/chipGroup2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                </com.google.android.material.chip.ChipGroup>
+                            </HorizontalScrollView>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:divider="@color/md_black_1000"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/AddInputTextHintLine"
+                                app:helperTextTextColor="@color/md_grey_500"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:hint="Categorias"
+                                app:helperText="@string/addproduct_continue_categoria"
+                                app:hintAnimationEnabled="true"
+                                app:startIconDrawable="@drawable/ic_baseline_category_addproduct">
+
+                                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                                    android:id="@+id/TECategoria"
+                                    style="@style/AddInputText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="70dp"
+                                    android:layout_weight="1"
+                                    android:inputType="text" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/AddInputTextHintLine"
+                                app:helperTextTextColor="@color/md_grey_500"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:hint="Marca"
+                                app:helperText="@string/addproduct_continue_marca"
+                                app:startIconDrawable="@drawable/ic_baseline_bookmark_addproduct">
+
+                                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                                    android:id="@+id/TEMarca"
+                                    style="@style/AddInputText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="70dp"
+                                    android:layout_weight="1"
+                                    android:inputType="text">
+
+                                </androidx.appcompat.widget.AppCompatAutoCompleteTextView>
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <HorizontalScrollView
+                                android:id="@+id/ChipScrollMarcas"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:scrollbars="none"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <com.google.android.material.chip.ChipGroup
+                                    android:id="@+id/ChipGroupMarca"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                </com.google.android.material.chip.ChipGroup>
+                            </HorizontalScrollView>
+
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </LinearLayout>
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        style="@style/AddBackgroundImageFolder"
-                        android:id="@+id/BAgregateFile"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:drawableRight="@drawable/ic_baseline_drive_folder_upload_24"
-                        android:gravity="center"
-                        android:paddingRight="20dp"
-                        android:text="@string/agregate_product_image_files"
-                        android:textAllCaps="false"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
+                </androidx.cardview.widget.CardView>
 
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:orientation="horizontal">
 
-                        <CheckBox
-                            style="@style/AddCheckBox"
-                            android:id="@+id/CSaveStorage"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:checked="true"
-                            android:gravity="center"
-                            android:text="Storage" />
 
-                        <CheckBox
-                            style="@style/AddCheckBox"
-                            android:id="@+id/CSaveServer"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="30dp"
-                            android:layout_marginRight="30dp"
-                            android:layout_weight="1"
-                            android:text="Server" />
-
-                        <CheckBox
-                            style="@style/AddCheckBox"
-                            android:id="@+id/CSaveLocal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:text="Local" />
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-
-                </LinearLayout>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/BAgregate"
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="75dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="75dp"
-                    android:drawableLeft="@drawable/ic_baseline_dashboard_agregateproduct"
-                    android:foregroundGravity="center"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:paddingStart="10dp"
-                    android:text="Agregar Producto"
-                    android:textSize="15dp"
-                    style="@style/AddButtom"
-                    android:textStyle="bold" />
+                    android:layout_height="match_parent"
+                    app:cardElevation="5dp"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:paddingTop="20dp">
+
+                        <TextView
+                            android:padding="5dp"
+                            android:id="@+id/TVDInfoCamera"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/lilitaoe_regular"
+                            android:text="@string/agregate_product_separate_capture"
+                            android:textColor="@color/md_green_600"
+                            android:textSize="15dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:foregroundGravity="center"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/AddInputTextHintLineBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:hint="QR"
+                                app:startIconDrawable="@drawable/ic_baseline_qr_code_addproduct">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/TEQR"
+                                    style="@style/AddInputText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="numberDecimal" />
+
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/BEscaner"
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
+                                android:layout_marginRight="15dp"
+                                android:background="@drawable/ic_baseline_qr_code_scanner_addproduct"
+                                android:backgroundTint="@color/md_green_500" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearConstraitButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center|top"
+                            android:layout_marginTop="5dp"
+                            android:clipChildren="false"
+                            android:clipToPadding="false"
+                            android:descendantFocusability="blocksDescendants"
+                            android:elevation="10dp"
+                            android:foregroundGravity="center"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/textInputLayout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:foregroundGravity="center"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+
+                                <FrameLayout
+                                    android:id="@+id/FragmentCamera"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintHeight_max="350dp"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintRight_toRightOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintWidth_max="350dp"></FrameLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/LEandI"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:background="@drawable/backgroud_focus"
+                                android:dividerPadding="10dp"
+                                android:orientation="horizontal"
+                                android:weightSum="2"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <TextView
+                                    android:id="@+id/textView4"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    android:foregroundGravity="fill_horizontal|fill"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+
+                                    android:text="Editar Imagen"
+                                    android:textColor="#929292"
+                                    android:textSize="18dp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/textView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:layout_margin="10dp"
+                                    android:layout_weight="1"
+                                    android:foregroundGravity="fill_horizontal|fill"
+                                    android:gravity="center"
+                                    android:padding="18dp"
+
+                                    android:text="Usar Inteligencia Artificial"
+                                    android:textColor="#929292"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/DeletAndSaveParent"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginEnd="5dp"
+                                android:clipChildren="true"
+                                android:clipToPadding="false"
+                                android:elevation="2dp"
+                                android:orientation="horizontal">
+
+                                <androidx.appcompat.widget.LinearLayoutCompat
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1">
+
+                                    <TextView
+                                        android:id="@+id/SaveDragImage"
+                                        android:layout_width="25dp"
+                                        android:layout_height="25dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/ic_baseline_drive_file_move_24"
+                                        android:gravity="center"
+                                        android:textColor="#4886FF" />
+
+                                    <TextView
+                                        android:id="@+id/SaveDrag"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/lilitaoe_regular"
+                                        android:gravity="center"
+                                        android:text="Guardar"
+                                        android:textColor="#4886FF"
+                                        android:textSize="24dp" />
+                                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                                <androidx.appcompat.widget.LinearLayoutCompat
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1">
+
+                                    <TextView
+                                        android:id="@+id/DeleteDrag"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:drawableTint="#AB0000"
+                                        android:fontFamily="@font/lilitaoe_regular"
+                                        android:gravity="center"
+                                        android:text="Eliminar"
+                                        android:textColor="#AB0000"
+                                        android:textSize="24dp" />
+
+                                    <TextView
+                                        android:id="@+id/DeleteDragImage"
+                                        android:layout_width="25dp"
+                                        android:layout_height="25dp"
+                                        android:layout_weight="1"
+                                        android:background="@drawable/ic_delete"
+                                        android:gravity="center"
+                                        android:textColor="#4886FF" />
+                                </androidx.appcompat.widget.LinearLayoutCompat>
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:id="@+id/LLShow"
+                                style="@style/AddBackgroundfonticons"
+                                android:layout_width="match_parent"
+                                android:layout_height="120dp"
+                                android:layout_marginTop="10dp"
+                                android:clipChildren="false"
+                                android:clipToPadding="false"
+                                android:elevation="3dp"
+                                android:layoutDirection="inherit"
+                                android:measureWithLargestChild="true"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:id="@+id/CapturaLayout"
+                                    android:layout_width="115dp"
+                                    android:layout_height="115dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="0"
+                                    android:background="@color/md_grey_200"
+                                    android:clipChildren="true"
+                                    android:clipToPadding="true"
+                                    android:elevation="10dp"
+                                    android:orientation="horizontal">
+
+                                    <View
+                                        android:id="@+id/BCaptura"
+                                        style="@style/ButtonFloatLayout"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/ic_baseline_camera_alt_24"
+                                        android:clickable="true"
+                                        tools:ignore="SpeakableTextPresentCheck" />
+
+                                </LinearLayout>
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:clipChildren="false"
+                                    android:clipToPadding="false"
+                                    android:elevation="7dp">
+
+
+                                    <androidx.recyclerview.widget.RecyclerView
+                                        android:id="@+id/RVCaptureImages"
+                                        style="@style/AddBackgroundCameraImagesFond"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_gravity="center"
+                                        android:clipChildren="false"
+                                        android:clipToPadding="false"
+                                        android:elevation="5dp"
+                                        android:foregroundGravity="center_vertical|center"
+                                        android:nestedScrollingEnabled="false"
+                                        android:overScrollMode="never"
+                                        android:paddingLeft="10dp"
+                                        android:paddingRight="10dp"
+                                        app:layout_constrainedHeight="true"
+                                        app:layout_constraintBottom_toBottomOf="@+id/TNotItems"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+
+                                        >
+
+                                    </androidx.recyclerview.widget.RecyclerView>
+
+                                    <TextView
+                                        android:elevation="6dp"
+                                        android:id="@+id/TNotItems"
+                                        style="@style/AddBackgroundCameraImagesFond"
+                                        android:layout_width="0dp"
+                                        android:layout_height="0dp"
+                                        android:fontFamily="@font/lilitaoe_regular"
+                                        android:gravity="center"
+                                        android:padding="10dp"
+                                        android:text="@string/agregate_product_capture_notfiles"
+                                        android:textSize="25sp"
+                                        android:textStyle="bold"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/BAgregateFile"
+                                style="@style/AddBackgroundImageFolder"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:drawableRight="@drawable/ic_baseline_drive_folder_upload_24"
+                                android:gravity="center"
+                                android:paddingRight="20dp"
+                                android:text="@string/agregate_product_image_files"
+                                android:textAllCaps="false"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_marginTop="6dp"
+                                android:paddingTop="5dp"
+                                android:id="@+id/textView3S"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/agregate_product_separate_r"
+                                android:textColor="@color/md_red_500"
+                                android:textSize="13dp" />
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:orientation="horizontal">
+
+                                <CheckBox
+                                    android:id="@+id/CSaveStorage"
+                                    android:buttonTint="@color/md_green_600"
+                                    android:textStyle="bold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:checked="true"
+                                    android:gravity="center"
+                                    android:text="Storage" />
+
+                                <CheckBox
+                                    android:id="@+id/CSaveServer"
+                                    android:buttonTint="@color/md_blue_500"
+                                    android:textStyle="bold"                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="30dp"
+                                    android:layout_marginRight="30dp"
+                                    android:layout_weight="1"
+                                    android:text="Server" />
+
+                                <CheckBox
+                                    android:buttonTint="@color/md_red_500"
+                                    android:textStyle="bold"
+                                    android:id="@+id/CSaveLocal"
+                                    style="@style/AddCheckBox"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:text="Local" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,14 +22,15 @@
     <string name="facebook_app_id">3032761643672289</string>
     <string name="fb_login_protocol_scheme">fb3032761643672289</string>
     <!--FinDeProveedores-->
-    <string name="contry">Contry</string>
+    <string name="contry">Pais</string>
     <string name="apodo">Apodo</string>
-    <string name="nombre">Name</string>
+    <string name="nombre">Nombres</string>
+    <string name="lastname">Apellidos</string>
 
-    <string name="passwordRepet">Password Repet</string>
-    <string name="prompt_telefono">Phone Number</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
+    <string name="passwordRepet">Repetir contraseña</string>
+    <string name="prompt_telefono">Numero de telefono</string>
+    <string name="prompt_email">Correo electronico</string>
+    <string name="prompt_password">Contraseña</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome!"</string>
@@ -38,8 +39,17 @@
     <string name="invalid_passwordRepet">Repite la contraseña para ingresar</string>
 
     <string name="login_failed">"Login failed"</string>
+    <string name="login_button_client">Iniciar como Cliente</string>
+    <string name="login_button_admin">Iniciar como Empleado</string>
+    <string name="login_text_coal">Iniciar session</string>
+    <string name="login_not_register">El usuario no existe ¿Desea registrarse?</string>
+    <string name="login_google_register">Iniciar session con gogole</string>
+    <string name="login_facebook_register">Iniciar session con facebook</string>
+    <string name="login_register">Registrarse </string>
+
     <string name="title_activity_init_precentation">InitPrecentation</string>
     <string name="title_activity_main_cliente">MainCliente</string>
+
     <!--Fin Inicio de session-->
 
 
@@ -84,6 +94,15 @@
     <string name="home_tab_menus_empleados_mensajes">Mensajes</string>
     <string name="home_tab_menus_emṕleados_tareas">Tareas</string>
 
+    <!--    Roles o campos definidos del acceso-->
+    <string name="home_title_admin">Jefe</string>
+    <string name="home_title_admin_fun">(Funciones)</string>
+    <string name="home_title_user">Usuario</string>
+    <string name="home_title_user_fun">(Funciones)</string>
+    <string name="home_error_button">Reiniciar session</string>
+    <string name="home_error_anonime">Continuar sin internet</string>
+    <string name="home_anonime_title">Anonimo</string>
+    <string name="home_anonime_fasted">Funciones (Rapidas)</string>
     <!-- Pestaña de inicio del usuario-->
 
     <string name="home_action_panel_title">Acciones</string>
@@ -114,13 +133,26 @@
     <string name="home_emit_panel_details">Selecione los productos o servicios registrados que decee emitir para todos los clientes conectados</string>
 
     <string name="home_client_panel_title">Clientes</string>
-    <string name="home_client_panel_details">Interaccione con los clientes</string>
+    <string name="home_client_panel_details">Interaccione con los clientes o dispositivos cercanos para enviarles anuncios o ofertas</string>
 
     <string name="home_receipts_panel_title">Recibos</string>
     <string name="home_receipts_panel_details">Genere , ingrese o modifique los recibos de su local</string>
 
     <string name="home_history_panel_title">Historia de productos</string>
     <string name="home_history_panel_details">Vea los cambios a lo largo del tiempo de cada uno de sus productos</string>
+
+    <string name="home_config_panel_title">Configuracion de tienda</string>
+    <string name="home_config_panel_details">Configure su local con todas las caracteristicas para ser reconocido facilmente </string>
+
+    <string name="home_analitic_panel_title">Analiticas</string>
+    <string name="home_analitic_panel_details">Observe las anliticas de su empresa en el centro comercial</string>
+
+    <string name="home_fast_qr_panel_title">Escaneo Rapido</string>
+    <string name="home_fast_qr_panel_details">Escanee de forma rapida y delivere que decea hacer , agregar, listar, o actualizar</string>
+
+    <string name="home_error_panel_title">SQL INJECT [ERROR]</string>
+    <string name="home_error_panel_details">Funcion no encontrada actualize la aplicacion o contactese  con el administrador</string>
+
 
     <!--Campo devisualisacion para usuarios-->
 
@@ -151,9 +183,8 @@
 
     <string name="home_user_shoping_qr_panel_title">Informacion QR o Barras</string>
     <string name="home_user_shoping_qr_panel_details">Obtenga la informacion de sus productos mediante el QR o codigo de barras</string>
+
     <!--Usuario Comun, Empleados, Administrador, Dueño de local-->
-
-
 
     <!-- Del usuario -->
     <string name="titleUser">Usuario Test</string>
@@ -162,6 +193,20 @@
     <string name="menu_orders">Ordenes</string>
     <string name="menu_favorites">Favoritos</string>
     <string name="menu_pagos">Pagos</string>
+
+    <!-- Del Admin -->
+    <string name="titleAdmin">Asociado</string>
+    <string name="titleAdminSeudo">(Jefe)</string>
+    <string name="titleHomeChange">Bienvenido</string>
+    <string name="titleCorrecto">Preciona para escanear nuevamente</string>
+
+    <string name="titleRegister">Registro</string>
+    <string name="titleRegisterDetails">Inserte sus datos para comenzar con el registro</string>
+    <string name="titleRegisterEmployed">Escanear Inicio</string>
+    <string name="titleRegisterAnonime">Anonimamente</string>
+    <string name="titleRegisterButton">Registrate ahora</string>
+    <string name="titleLoginUnconon">Rellene todos las campos</string>
+    <string name="titleRegisterAnotationDetails">Llene los campos y luego registrese en nuestro servicio, tambien puede registrarse utilizando el QR otorgado por el Dueño del local si es empleado</string>
 
     <!--Configuraciones-->
 
@@ -281,9 +326,14 @@
 
     <string name="agregate_product_disconut">Descuento</string>
     <string name="agregate_product_disconut_info">Rebaja actual presentada</string>
+    <string name="agregate_product_separate_r">Requerido (Seleccione 1): </string>
 
     <string name="agregate_product_separate_o">Obligatorio</string>
     <string name="agregate_product_separate_opcional">Opcional</string>
+    <string name="agregate_product_separate_details">Caracteristicas</string>
+    <string name="agregate_product_separate_capture">Reconocimiento y guardado</string>
+
+    <string name="agregate_product_detalles">Detalles del servicio o producto</string>
 
     <string name="agregate_product_capture_notfiles">Agregue una captura de su producto</string>
     <string name="agregate_product_image_files">Agregar una imagen desde el almacenamiento</string>
@@ -328,6 +378,11 @@
     <string name="dialog_client_button_discart">Eliminar cliente</string>
     <string name="dialog_client_title">Detalles del cliente</string>
 
+<!--    scanner items fast-->
+    <string name="qr_fast_add_list_pending">Añadir a busqueda pendiente</string>
+    <string name="qr_fast_edit">Editar Producto</string>
+    <string name="qr_fast_register">Registrar Producto</string>
+    <string name="qr_fast_card_shoping">Añadir al carrito de compras</string>
 
     <string name="first_fragment_label">Inicio</string>
     <string name="second_fragment_label">Editar Producto</string>
@@ -372,4 +427,26 @@
     </string-array>
 
 
+    <string name="app_name_user">Platinium User</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+
+
+    <!--    String de aplicaciones de texto para usuarios-->
+
+    <string name="ubication_add_user">Ingresa tu ubicacion</string>
+    <string name="send_user_fre">Envio gratis </string>
+    <string name="send_commno">en millones de productos</string>
+    <string name="add_user_ofertas">Ofertas</string>
+    <string name="add_user_ver_all">Ver todas</string>
+    <string name="add_user_category">Categorias</string>
+    <string name="add_user_ver_all_category">Ver todas las categorias</string>
+
+    <!--Reintentando el proceso de inicio-->
+
+    <string name="splash_connect_pending">Estableciendo conexion ...</string>
+
+
+<!--    Dashboard items-->
+    <string name="addProductButton">Agregar Producto</string>
 </resources>

@@ -5,7 +5,12 @@ import android.provider.MediaStore
 import android.util.Log
 import com.example.fromdeskhelper.ExifUtil
 import com.example.fromdeskhelper.data.Network.LocalServiceMG
-import com.example.fromdeskhelper.ui.View.activity.MainActivity
+import com.example.fromdeskhelper.data.model.objects.ResponseAdd
+import com.example.fromdeskhelper.data.model.objects.Upload
+import com.example.fromdeskhelper.data.model.objects.mongod.ProductsLocalImput
+import com.example.fromdeskhelper.data.model.objects.mongod.ProductsModelAdapter
+import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
+import com.google.gson.annotations.SerializedName
 import org.bson.Document
 import java.io.ByteArrayOutputStream
 import java.lang.Exception
@@ -16,7 +21,7 @@ import javax.inject.Inject
 private var LOG_USECASECONNECTLOCAL="USECASELOCALCONNECT"
 
 class LocalConnectUseCase @Inject constructor(
-    private val service:LocalServiceMG
+    private val service:LocalServiceMG,
 ) {
     suspend fun ConnectComprobate():Boolean{
         return service.ComprobateConect()
@@ -30,7 +35,7 @@ class LocalConnectUseCase @Inject constructor(
 //        Log.e("Final",resupuesta?.toMutableList().toString())
         resupuesta?.forEach {
 //            Log.i(LOG_USECASECONNECTLOCAL, it.get("imageList").toString() )
-            var Images= it.get("imageList") as MutableList<Document>
+            var Images= it.get("image_realation") as MutableList<Document>
             var sedImage : MutableList<Pair<String,ByteArray>> = mutableListOf()
             for (x in Images){
                 Log.i(LOG_USECASECONNECTLOCAL,x.keys.toString())
@@ -44,22 +49,25 @@ class LocalConnectUseCase @Inject constructor(
             }
             var Product:ProductsModelAdapter
             =ProductsModelAdapter(
-                it.get("brandList") as List<String>,
-                it.get("categoryList") as List<String>,
-                it.getString("detalles"),
+                it.get("brands_products") as List<String>,
+                it.get("category_products") as List<String>,
+                it.getString("description"),
                 sedImage,
-                it.getDouble("precioC"),
-                it.getDouble("precioU"),
-                it.getString("name"),
-                it.getString("qr"),
-                it.getDouble("stockC"),
-                it.getDouble("stockU"),
-                it.getString( "update"),
+                it.getOrDefault("old_price",0.0).toString().toDouble(),
+                it.getOrDefault("price_cantidad",0.0).toString().toDouble(),
+                it.getOrDefault("price_unity",0.0).toString().toDouble(),
+                it.getOrDefault("product_name","Undefinend").toString(),
+                it.getOrDefault("qr","Undefined").toString(),
+                it.getInteger("quantity_cantidad"),
+                it.getInteger("quantity_unity"),
+                it.getString( "update_product"),
             )
             lista.add(Product)
         }
         return lista
     }
+
+
     suspend fun AddProductOne(
         ListCategoria: List<String>,
         LittMarca: List<String>,
@@ -72,7 +80,8 @@ class LocalConnectUseCase @Inject constructor(
         stockcantidad: String,
         stockunidad: String,
         qr: String,
-        mutableList: MutableList<Uri>, baseActivity: MainActivity
+        mutableList: MutableList<Uri>, baseActivity: EmployedMainActivity,
+        server:Int?=2
     ):Boolean{
         val name = name
         val precio: Double = precio.toDouble()
@@ -81,7 +90,7 @@ class LocalConnectUseCase @Inject constructor(
         val detalles: String = detalles
         val categoria: String = categoria
         val stock: Int = if (stockcantidad.isEmpty()) 1 else stockcantidad.toInt()
-        val stockU: Double = if (stockunidad.isEmpty()) 0.0 else stockunidad.toDouble()
+        val stockU: Int = if (stockunidad.isEmpty()) 0 else stockunidad.toInt()
         val qr: String = qr
         val imagenes= mutableListOf<Document>()
 
@@ -116,61 +125,43 @@ class LocalConnectUseCase @Inject constructor(
             ListCategoria,
             detalles,
             imagenes,
-            precio,
-            precio,
-            precioU,
+            precio.toDouble(),
+            precio.toDouble(),
+            precioU?.toDouble(),
             name,
             qr,
-            stock.toDouble(),
-            stockU.toDouble(),
+            stock,
+            stockU,
             Date().toString()
         )
-        var result = Document()
-        result.
-            append("update", sendProduct.update_product).
-            append("name", sendProduct.product_name).
-            append("precioC", sendProduct.price_cantidad).
-            append("precioU", sendProduct.price_unity).
-            append("detalles", sendProduct.description).
-            append("stockC", sendProduct.quantity_cantidad).
-            append("stockU", sendProduct.quantity_unity).
-            append("qr", sendProduct.qr).
-            append("imageList",sendProduct.image_realation).
-            append("categoryList", sendProduct.category_products).
-            append("brandList", sendProduct.brands_products)
 
-
-        return service.AgregateProduct(result)
+        if(server==Upload.SERVER_LOCAL){
+            var server = service.sendProductServer(sendProduct)
+            Log.i("OPENSERVERLOCALPRODUCT","agrengando al servidor enviando peticion")
+            //realizando un ping
+//            service.sendPingLocal()
+//            service.PingLocal()
+            return server!=null && server.isSuccessful
+        }else if(server==Upload.SERVER_LOCAL_DATABASE){
+            var result = Document()
+            result.append("update_product", sendProduct.update_product)
+                .append("product_name", sendProduct.product_name)
+                .append("old_price", sendProduct.old_price)
+                .append("price_cantidad", sendProduct.price_cantidad)
+                .append("price_unity", sendProduct.price_unity)
+                .append("description", sendProduct.description)
+                .append("quantity_cantidad", sendProduct.quantity_cantidad)
+                .append("quantity_unity", sendProduct.quantity_unity)
+                .append("qr", sendProduct.qr)
+                .append("image_realation", sendProduct.image_realation)
+                .append("category_products", sendProduct.category_products)
+                .append("brands_products", sendProduct.brands_products)
+            return service.AgregateProduct(result)
+        }else{
+            return false
+        }
+//        return ResponseAdd(Upload.SERVER_LOCAL_DATABASE, true)
     }
+
 }
 
-
-public data class ProductsLocalImput(
-    public val brands_products: List<String>,
-    public val category_products: List<String>,
-    public val description: String,
-    public val image_realation: MutableList<Document>,
-    public val old_price: Double,
-    public val price_cantidad: Double,
-    public val price_unity: Double?,
-    public val product_name: String,
-    public val qr: String?,
-    public val quantity_cantidad: Double?,
-    public val quantity_unity: Double?,
-    public val update_product: String?,
-)
-
-
-public data class ProductsModelAdapter(
-    public val brands_products: List<String>,
-    public val category_products: List<String>,
-    public val description: String,
-    public val image_realation: MutableList<Pair<String,ByteArray>>,
-    public val price_cantidad: Double,
-    public val price_unity: Double?,
-    public val product_name: String,
-    public val qr: String?,
-    public val quantity_cantidad: Double?,
-    public val quantity_unity: Double?,
-    public val update_product: String?,
-)

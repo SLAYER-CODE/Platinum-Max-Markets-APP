@@ -9,12 +9,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fromdeskhelper.ProductsPreviewQuery
 import com.example.fromdeskhelper.R
+import com.example.fromdeskhelper.databinding.ItemProductoListviewShopingContrateBinding
 import com.example.fromdeskhelper.ui.View.ViewModel.Client.FactureProduct
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_producto.view.*
-import kotlinx.android.synthetic.main.item_producto.view.TEPrecio
-import kotlinx.android.synthetic.main.item_producto.view.TNombre
-import kotlinx.android.synthetic.main.item_producto_listview_shoping.view.*
+//import kotlinx.android.synthetic.main.item_producto.view.*
+//import kotlinx.android.synthetic.main.item_producto.view.TEPrecio
+//import kotlinx.android.synthetic.main.item_producto.view.TNombre
+//import kotlinx.android.synthetic.main.item_producto_listview_shoping.view.*
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.lang.Exception
@@ -28,7 +29,7 @@ class ShopingContrateProductAdapter (
 ):
     RecyclerView.Adapter<ShopingContrateProductAdapter.ImageHolder>() {
 
-    inner class ImageHolder(val view: View): RecyclerView.ViewHolder(view){
+    inner class ImageHolder(val view: ItemProductoListviewShopingContrateBinding): RecyclerView.ViewHolder(view.root){
 
         fun render(ProductoAndImage: FactureProduct,pos:Int) {
 
@@ -44,7 +45,8 @@ class ShopingContrateProductAdapter (
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return ImageHolder(layoutInflater.inflate(R.layout.item_producto_listview_shoping_contrate, parent, false))
+//        return ImageHolder(layoutInflater.inflate(R.layout.item_producto_listview_shoping_contrate, parent, false))
+        return ImageHolder(ItemProductoListviewShopingContrateBinding.inflate(layoutInflater,parent, false))
     }
 
 

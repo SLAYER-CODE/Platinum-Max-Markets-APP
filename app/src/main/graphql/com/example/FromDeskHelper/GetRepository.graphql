@@ -10,6 +10,35 @@ query Brands{
         brand_id
     }
 }
+query GetRolesAdmin {
+    getRoles:getRoles {
+        fuctions {
+            id_fuction
+            name
+            user_acces
+            anonime_acces
+        }
+        user
+    }
+}
+query GetDataAsociate{
+    getDataAsociate:getDataAsociate {
+        nik
+        age
+        dni
+        name
+        secondname
+        lastname
+        secondlastname
+        user_id {
+            username
+            email
+            photo
+            random_code
+
+        }
+    }
+}
 
 query ProductsPreview{
     productos:Products {
@@ -24,6 +53,7 @@ query ProductsPreview{
         }
     }
 }
+
 query CountProducts{
     countproduct:ProductsCount
 }
@@ -39,6 +69,31 @@ mutation AgregateProduct($myval:ProductsInput!,$file:[Upload!]! ){
 #        __typename
 #    }
 #}
+
+query ComprobationEmployed{
+    comprobationEmployed:comprobationEmployed
+}
+
+query ComprobationConnection{
+    comprobationConnection:comprobationConnection
+}
+
+query ComprobationWorked{
+    comprobationWorked:comprobationWorked
+}
+
+query ComprobationRoot{
+    comprobationRoot:comprobationRoot
+}
+
+query ComprobationAdmin{
+    comprobationAdmin:comprobationAdmin
+}
+
+query Comprobation{
+    comprobation:comprobation
+}
+
 
 
 query ComprobateUser($token:String!){

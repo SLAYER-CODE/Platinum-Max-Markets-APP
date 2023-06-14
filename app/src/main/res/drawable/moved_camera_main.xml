@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item>
+
         <layer-list>
-            <item android:width="100dp" android:height="100dp">
+
+
+            <item>
                 <shape>
+
                     <solid android:color="@color/md_green_A400">
                     </solid>
-                    <gradient
-                        android:gradientRadius="150dp"
-                        android:centerX="100%"
-                        android:centerY="100%"
-                        android:centerColor="@color/md_black_1000"
-                        android:startColor="@color/md_green_A400"
-                        android:endColor="@color/black_overlay"
-                        android:type="radial">
-                    </gradient>
-                    <corners android:radius="100dp" android:bottomRightRadius="10dp">
+                    <corners android:radius="100dp" android:topLeftRadius="0dp">
                     </corners>
                 </shape>
             </item>
+            <item  android:bottom="10dp" android:top="10dp" android:right="10dp" android:left="10dp"  android:drawable="@drawable/baseline_zoom_out_map_24"></item>
+
         </layer-list>
     </item>
 </selector>

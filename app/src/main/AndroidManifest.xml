@@ -1,66 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.fromdeskhelper">
+    package="com.example.fromdeskhelper" >
 
+    <uses-feature android:name="android.hardware.camera.any" />
 
-    <uses-feature android:name="android.hardware.camera.any"/>
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.NEARBY_WIFI_DEVICES"
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission
+        android:name="android.permission.NEARBY_WIFI_DEVICES"
         android:usesPermissionFlags="neverForLocation" />
-
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.FLASHLIGHT" android:permissionGroup="android.permission-group.HARDWARE_CONTROLS" android:protectionLevel="normal"/>
-
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="android.permission.FLASHLIGHT"
+        android:permissionGroup="android.permission-group.HARDWARE_CONTROLS"
+        android:protectionLevel="normal" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+<!--    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>-->
+<!--    <uses-permission android:name="android.permission.READ_PHONE_STATE" />-->
+<!--    <uses-permission android:name="android.Manifest.permission.READ_PHONE_STATE" />-->
 
     <application
-
-        android:usesCleartextTraffic="true"
+        android:name=".ActivityMainApp"
         android:allowBackup="true"
-        android:name="com.example.fromdeskhelper.ActivityMainApp"
-        android:windowSoftInputMode="stateHidden|adjustResize"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.FinalProductos.Fullscreen">
+        android:theme="@style/Theme.FinalProductos.Fullscreen"
+        android:usesCleartextTraffic="true"
+        android:windowSoftInputMode="stateHidden|adjustResize" >
 
-
-<!--        <activity-->
-<!--            android:name=".ui.View.activity.SplashScreen"-->
-<!--            android:configChanges="orientation|keyboardHidden|screenSize"-->
-<!--            android:exported="true"-->
-<!--            android:label="@string/title_activity_splash_screen"-->
-<!--            android:screenOrientation="portrait"-->
-<!--            android:supportsRtl="true"-->
-<!--            android:theme="@style/Theme.FinalProductos.Fullscreen">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
-
+        <!-- <activity -->
+        <!-- android:name=".ui.View.activity.SplashScreen" -->
+        <!-- android:configChanges="orientation|keyboardHidden|screenSize" -->
+        <!-- android:exported="true" -->
+        <!-- android:label="@string/title_activity_splash_screen" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:supportsRtl="true" -->
+        <!-- android:theme="@style/Theme.FinalProductos.Fullscreen"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
+        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
         <activity
-            android:name="com.example.fromdeskhelper.ui.View.activity.SplashScreen"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="fullSensor"
+            android:name=".ui.View.activity.SplashScreen"
+            android:exported="true"
             android:label="@string/app_name"
-            android:exported="true">
+            android:screenOrientation="fullSensor"
+            android:theme="@style/SplashTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -68,25 +69,17 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-
         <meta-data
-
             android:name="com.google.android.gms.common.api"
             android:value="@string/app_id" />
-
-
 
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-
-
-
-
         <activity
             android:name="com.facebook.CustomTabActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -95,40 +88,46 @@
 
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
-        </activity>
-
-<!--        Actividad de presenatacion-->
+        </activity> <!-- Actividad de presenatacion -->
         <activity
-            android:name="com.example.fromdeskhelper.ui.View.activity.PresenatationActivity"
+            android:name=".ui.View.activity.PresenatationActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.FinalProductos.NoActionBar" />
-<!--        Actividad de Inicio de session-->
+            android:theme="@style/Theme.FinalProductos.NoActionBar" /> <!-- Actividad de Inicio de session -->
         <activity
-            android:name="com.example.fromdeskhelper.ui.View.activity.LoginActivity"
+            android:name=".ui.View.activity.LoginActivity"
             android:exported="true"
             android:label="@string/app_name"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:supportsRtl="true"
-            android:launchMode="singleTask"
-            android:theme="@style/SplashThemeDos"
-            android:windowSoftInputMode="adjustPan"/>
-<!--        Actividad principal de la aplicacion-->
-
+            android:theme="@style/Theme.FinalProductos.NoActionBar"
+            android:windowSoftInputMode="adjustPan" /> <!-- Actividad principal de la aplicacion -->
         <activity
-            android:name="com.example.fromdeskhelper.ui.View.activity.MainActivity"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
+            android:name=".ui.View.activity.EmployedMainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="true"
             android:label="@string/app_name"
             android:screenOrientation="fullSensor"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:theme="@style/Theme.FinalProductos.NoActionBar">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            android:theme="@style/Theme.FinalProductos.NoActionBar"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" >
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
+
+        <activity
+            android:name=".ui.View.activity.UserMainActivity"
+            android:exported="false"
+            android:label="@string/app_name_user"
+            android:screenOrientation="fullUser"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/Theme.FinalProductos.Fullscreen.NoActionBar" />
+
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"

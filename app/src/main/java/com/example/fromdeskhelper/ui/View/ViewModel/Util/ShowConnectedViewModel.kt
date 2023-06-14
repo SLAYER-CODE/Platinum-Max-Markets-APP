@@ -5,11 +5,9 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.fromdeskhelper.core.AuthorizationInterceptor
 import com.example.fromdeskhelper.core.di.NetworkModule
 import com.example.fromdeskhelper.data.PreferencesManager
 import com.example.fromdeskhelper.data.model.LoginIntProvider
-import com.example.fromdeskhelper.domain.ComprobationUserUseCase
 import com.example.fromdeskhelper.util.isConnected
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GetTokenResult

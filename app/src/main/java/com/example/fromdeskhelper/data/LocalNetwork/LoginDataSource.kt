@@ -19,7 +19,6 @@ import javax.inject.Inject
 
 
 class LoginDataSource @Inject constructor(){
-
     fun login(username: String, password: String,action:  MutableLiveData<Result<LoggedInUser>>,actionError: MutableLiveData<Result<Exception>>) {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(username, password)
             .addOnCompleteListener {
@@ -30,6 +29,10 @@ class LoginDataSource @Inject constructor(){
                         it.result.user!!.uid,
                         it.result.user?.displayName ?: "Sin Name"
                     )))
+
+                    //Verificando si inicia session en el servidor
+
+
                 } else {
 //                    try {
 //                        throw (it.exception as FirebaseAuthException)

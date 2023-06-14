@@ -35,10 +35,9 @@ import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.fromdeskhelper.ui.View.ViewModel.LoginViewModel
-import com.example.fromdeskhelper.ui.View.ViewModel.SplashScreenViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.Util.ShowConnectedViewModel
 import com.example.fromdeskhelper.util.MessageSnackBar
-import com.facebook.FacebookSdk
+//import com.facebook.FacebookSdk
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import eightbitlab.com.blurview.BlurView
@@ -63,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
 //        supportActionBar?.setTitle("Inicio")
 //        super.setActionBar(toolbar)
 //    }
-@TargetApi(Build.VERSION_CODES.N)
+@TargetApi(VERSION_CODES.N)
 private val ORDERED_DENSITY_DP_N: IntArray? = intArrayOf(
     DisplayMetrics.DENSITY_LOW,
     DisplayMetrics.DENSITY_MEDIUM,
@@ -79,7 +78,7 @@ private val ORDERED_DENSITY_DP_N: IntArray? = intArrayOf(
     DisplayMetrics.DENSITY_XXXHIGH
 )
 
-    @TargetApi(Build.VERSION_CODES.N_MR1)
+    @TargetApi(VERSION_CODES.N_MR1)
     private val ORDERED_DENSITY_DP_N_MR1 = intArrayOf(
         DisplayMetrics.DENSITY_LOW,
         DisplayMetrics.DENSITY_MEDIUM,
@@ -97,7 +96,7 @@ private val ORDERED_DENSITY_DP_N: IntArray? = intArrayOf(
         DisplayMetrics.DENSITY_XXXHIGH
     )
 
-    @TargetApi(Build.VERSION_CODES.P)
+    @TargetApi(VERSION_CODES.P)
     private val ORDERED_DENSITY_DP_P = intArrayOf(
         DisplayMetrics.DENSITY_LOW,
         DisplayMetrics.DENSITY_MEDIUM,
@@ -126,7 +125,7 @@ private val ORDERED_DENSITY_DP_N: IntArray? = intArrayOf(
 
 //        setTheme(R .style.Theme_NoTitleBar_Fullscreen);
 //        setTheme(themedefault.style.Theme_NoTitleBar_Fullscreen)
-        setTheme(themedefault.style.Theme_Material_Light_NoActionBar_Fullscreen)
+//        setTheme(themedefault.style.Theme_Material_Light_NoActionBar_Fullscreen)
         super.onCreate(savedInstanceState)
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         window.decorView.systemUiVisibility = (
@@ -138,7 +137,6 @@ private val ORDERED_DENSITY_DP_N: IntArray? = intArrayOf(
 //        binding.toolbar.setBackgroundColor()
         binding = ActivityLoginMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
         var reconect = Snackbar.make(
             binding.containerloginroot, "Iniciar sin conexion (Modo de uso en dispositivo)",
             Snackbar.LENGTH_INDEFINITE
@@ -157,12 +155,11 @@ private val ORDERED_DENSITY_DP_N: IntArray? = intArrayOf(
             }
         })
 
-        //        println("SE CREO INICIO")
-        navController = findNavController(R.id.nav_host_fragment_content_login)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+//        navController = findNavController(R.id.nav_host_fragment_content_login)
+//        appBarConfiguration = AppBarConfiguration(navController.graph)
+//        setupActionBarWithNavController(navController, appBarConfiguration)
 
-        blurbackground(binding.ToolBarBlurLogin)
+//        blurbackground(binding.ToolBarBlurLogin)
 //        database = AppDatabase.getDataBase(this)
 
         val navBuilder = NavOptions.Builder()

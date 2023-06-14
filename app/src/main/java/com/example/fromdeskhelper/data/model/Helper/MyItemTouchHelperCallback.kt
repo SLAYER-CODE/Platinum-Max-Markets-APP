@@ -8,7 +8,11 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fromdeskhelper.data.model.base.CallBackItemTouch
-import kotlinx.android.synthetic.main.image_new_new.view.*
+import com.example.fromdeskhelper.databinding.ImageNewNewBinding
+
+//import kotlinx.android.synthetic.main.image_new_new.view.viewParent
+
+//import kotlinx.android.synthetic.main.image_new_new.view.*
 
 
 class MyItemTouchHelperCallback : ItemTouchHelper.Callback{
@@ -103,13 +107,13 @@ class MyItemTouchHelperCallback : ItemTouchHelper.Callback{
 //            val foregroudView:View=((ImageAdapter.ImageHolder(viewHolder.itemView))).viewF
 //            getDefaultUIUtil().onDrawOver(c,recyclerView,foregroudView,dX,dY,actionState,isCurrentlyActive);
 //            println(dX.toString()+" "+dY.toString())
-            resPosX=viewHolder.itemView.viewParent.x
-            resPosY=viewHolder.itemView.viewParent.y
-            callbackItemTouch.CalculateArea(viewHolder.itemView.viewParent.x,viewHolder.itemView.viewParent.y)
+            resPosX=ImageNewNewBinding.bind(viewHolder.itemView).viewParent.x
+            resPosY=ImageNewNewBinding.bind(viewHolder.itemView).viewParent.y
+            callbackItemTouch.CalculateArea(ImageNewNewBinding.bind(viewHolder.itemView).viewParent.x,ImageNewNewBinding.bind(viewHolder.itemView).viewParent.y)
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
 
         }else {
-            val foregroudView: View = ((ImageAdapter.ImageHolder(viewHolder.itemView))).viewB
+            val foregroudView: View = (ImageAdapter.ImageHolder(ImageNewNewBinding.bind(viewHolder.itemView))).viewB
             getDefaultUIUtil().onDrawOver(
                 c,
                 recyclerView,
@@ -147,7 +151,7 @@ class MyItemTouchHelperCallback : ItemTouchHelper.Callback{
         isCurrentlyActive: Boolean
     ) {
         if(actionState!=ItemTouchHelper.ACTION_STATE_DRAG){
-            val foregroudView:View=((ImageAdapter.ImageHolder(viewHolder.itemView))).viewF
+            val foregroudView:View=(ImageAdapter.ImageHolder( ImageNewNewBinding.bind(viewHolder.itemView ))).viewF
             getDefaultUIUtil().onDraw(c,recyclerView,foregroudView,dX,dY,actionState,isCurrentlyActive);
         }
 //        else{
@@ -190,8 +194,8 @@ class MyItemTouchHelperCallback : ItemTouchHelper.Callback{
 //            itemViewHolder.onItemClear()
 //        }
 
-        val foregroudView:View=((ImageAdapter.ImageHolder(viewHolder.itemView))).viewF
-        foregroudView.setBackgroundColor(ContextCompat.getColor(ImageAdapter.ImageHolder(viewHolder.itemView).viewF.context,android.R.color.black));
+        val foregroudView:View=(ImageAdapter.ImageHolder( ImageNewNewBinding.bind(viewHolder.itemView ))).viewF
+        foregroudView.setBackgroundColor(ContextCompat.getColor((ImageAdapter.ImageHolder( ImageNewNewBinding.bind(viewHolder.itemView ))).viewF.context,android.R.color.black));
         getDefaultUIUtil().clearView(foregroudView)
 //        return
         super.clearView(recyclerView, viewHolder)
@@ -210,7 +214,7 @@ class MyItemTouchHelperCallback : ItemTouchHelper.Callback{
         callbackItemTouch.prepareViews(true,viewHolder);
 
         if(viewHolder!=null){
-            val foregroudView:View=((ImageAdapter.ImageHolder(viewHolder.itemView))).viewF
+            val foregroudView:View=(ImageAdapter.ImageHolder( ImageNewNewBinding.bind(viewHolder.itemView ))).viewF
             if(actionState==ItemTouchHelper.ACTION_STATE_DRAG){
                 foregroudView.setBackgroundColor(Color.GREEN);
             }

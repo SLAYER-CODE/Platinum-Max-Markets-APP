@@ -15,17 +15,6 @@
     android:layout_gravity="center"
     android:layoutDirection="inherit">
 
-    <View
-        android:id="@+id/punteroFocus"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:animateLayoutChanges="true"
-        android:background="@drawable/pulse_camera"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </View>
 
     <androidx.camera.view.PreviewView
         android:id="@+id/PVCmain"
@@ -37,69 +26,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25">
+        app:layout_constraintTop_toTopOf="parent">
 
     </androidx.camera.view.PreviewView>
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.42"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <SeekBar
-            android:id="@+id/SBzoom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:pointerIcon="zoom_in"
-            android:progressTint="@color/md_cyan_500" />
-
-    </FrameLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintqr"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="15dp"
-        android:visibility="visible"
-        tools:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/frameLayout">
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/BRscanner"
-            android:layout_width="315dp"
-            android:layout_height="315dp"
-            android:background="@drawable/reset_drawable_scanner"
-            android:text="@string/rescaning"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            style="@style/QRRescanner"
-            android:textStyle="bold"
-            android:visibility="invisible"
-            tools:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </androidx.appcompat.widget.AppCompatButton>
-
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="315dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             android:shadowColor="#C93D3A3A"
-            android:shadowDy="10"
-            android:shadowRadius="10"
             android:textColor="#FFFFFF"
             android:textSize="14sp"
             android:visibility="visible"
@@ -110,7 +44,6 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.airbnb.lottie.LottieAnimationView
-                style="@style/QRContainer"
                 app:lottie_rawRes="@raw/scanning_qr_code"
                 android:id="@+id/borderqrxml"
                 android:layout_width="match_parent"
@@ -120,40 +53,38 @@
                 android:cropToPadding="false"
                 android:foregroundGravity="center"
                 android:visibility="visible"
+                app:lottie_speed="1.5"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-<!--            <View-->
-<!--                android:id="@+id/Vqrline"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:background="@drawable/line_qr_scan"-->
-<!--                android:visibility="visible"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                 />-->
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:foregroundGravity="left"
+        android:foregroundGravity="center"
         android:gravity="center"
         android:orientation="horizontal"
-        android:layout_marginBottom="27dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.13"
         app:layout_constraintStart_toStartOf="parent">
 
 
         <ToggleButton
+            android:backgroundTint="@color/md_grey_400"
+            style="@style/toggleButton_lint"
+            android:id="@+id/BZoom"
+            android:layout_width="33dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:checked="false"
+            android:background="@drawable/baseline_zoom_in_24"
+            android:gravity="center" />
+
+        <ToggleButton
+            android:backgroundTint="@color/md_grey_400"
             style="@style/toggleButton_lint"
             android:id="@+id/BLinterna"
             android:layout_width="33dp"
@@ -164,6 +95,7 @@
             android:gravity="center" />
 
         <ToggleButton
+            android:backgroundTint="@color/md_grey_400"
             style="@style/toggleButton"
             android:id="@+id/BCalidad"
             android:layout_width="33dp"
@@ -174,6 +106,7 @@
 
         <ToggleButton
             style="@style/toggleButton_lint"
+            android:backgroundTint="@color/md_grey_400"
             android:id="@+id/BObjectIA"
             android:layout_width="33dp"
             android:layout_height="32dp"
@@ -182,5 +115,176 @@
             android:gravity="center" />
 
     </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/BRscanner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/md_falcon_500_50"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:gravity="bottom|left"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingBottom="100dp"
+                        android:text="@string/qr_fast_add_list_pending"
+                        android:fontFamily="@font/cherry_regular"
+                        android:textColor="@color/md_white_1000"
+                        android:layout_margin="3dp"
+                        android:layout_gravity="center"
+                        android:textSize="12dp"
+                        android:drawableTint="@color/md_white_1000"
+                        android:drawableTop="@drawable/baseline_manage_search_24"
+                        android:background="@color/md_blue_grey_500_50"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </androidx.appcompat.widget.AppCompatButton>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:gravity="bottom|right"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingBottom="110dp"
+                        android:text="@string/qr_fast_edit"
+                        android:fontFamily="@font/cherry_regular"
+                        android:textColor="@color/md_white_1000"
+                        android:layout_margin="3dp"
+                        android:layout_gravity="center"
+                        android:textSize="12dp"
+                        android:drawableTint="@color/md_white_1000"
+                        android:drawableTop="@drawable/ic_baseline_edit_24"
+                        android:background="@color/md_blue_grey_500_50"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </androidx.appcompat.widget.AppCompatButton>
+                </LinearLayout>
+            <LinearLayout
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:gravity="top|left"
+                    android:paddingTop="100dp"
+                    android:fontFamily="@font/cherry_regular"
+                    android:textColor="@color/md_white_1000"
+                    android:layout_gravity="center"
+                    android:textSize="12dp"
+                    android:drawableTint="@color/md_white_1000"
+                    android:drawableBottom="@drawable/baseline_app_registration_24"
+                    android:background="@color/md_blue_grey_500_75"
+                    android:text="@string/qr_fast_register"
+                    android:layout_margin="3dp"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </androidx.appcompat.widget.AppCompatButton>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+
+                    android:gravity="top|right"
+                    android:paddingTop="100dp"
+                    android:text="@string/qr_fast_card_shoping"
+                    android:fontFamily="@font/cherry_regular"
+                    android:textColor="@color/md_white_1000"
+                    android:layout_gravity="center"
+                    android:textSize="12dp"
+                    android:drawableTint="@color/md_white_1000"
+                    android:background="@color/md_blue_grey_500_50"
+
+                    android:layout_margin="3dp"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </androidx.appcompat.widget.AppCompatButton>
+            </LinearLayout>
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            app:cardCornerRadius="100dp"
+            app:cardElevation="5dp"
+            android:clipChildren="false"
+            android:clipToOutline="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:background="@color/zxing_transparent"
+            android:elevation="1dp"
+            android:layout_gravity="center"
+            android:layout_width="200dp"
+            android:layout_height="200dp"/>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:background="@color/md_falcon_400"
+            android:elevation="2dp"
+            app:lottie_rawRes="@raw/check_blue"
+            android:id="@+id/LAOK"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="false"
+            android:foregroundGravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:elevation="3dp"
+            android:id="@+id/TVRegister"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:fontFamily="@font/lilitaoe_regular"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_gravity="center|center_vertical"
+            android:gravity="center"
+            android:text="@string/titleCorrecto"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content">
+        </TextView>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

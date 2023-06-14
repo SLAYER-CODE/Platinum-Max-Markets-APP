@@ -1,6 +1,7 @@
 package com.example.fromdeskhelper.data.Network
 
 import android.util.Log
+import com.example.fromdeskhelper.core.static.Collections
 import com.mongodb.MongoException
 import com.mongodb.client.MongoDatabase
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +20,7 @@ class UtilLocalServiceMG @Inject constructor(
     suspend fun GetPProductCount(): Int? {
         return withContext(Dispatchers.IO) {
             try {
-                var segundo = Database.getCollection("product")
+                var segundo = Database.getCollection(Collections.BASE_DATABASE_COLLECTION_PRODUCT)
                 var result = segundo.count()
                 return@withContext result.toInt()
             } catch (me: MongoException) {

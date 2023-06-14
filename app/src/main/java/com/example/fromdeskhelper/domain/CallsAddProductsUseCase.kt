@@ -1,27 +1,20 @@
 package com.example.fromdeskhelper.domain
 
-import Data.ImagenesNew
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
-import com.apollographql.apollo3.ApolloClient
-import com.apollographql.apollo3.api.ApolloResponse
 import com.apollographql.apollo3.api.DefaultUpload
 import com.apollographql.apollo3.api.Optional
 import com.apollographql.apollo3.api.Upload
 import com.apollographql.apollo3.exception.ApolloException
 import com.example.fromdeskhelper.AgregateProductMutation
 import com.example.fromdeskhelper.CategoriasQuery
-import com.example.fromdeskhelper.ComprobateUserQuery
 import com.example.fromdeskhelper.ExifUtil
 import com.example.fromdeskhelper.data.Network.ServicesGraph
 import com.example.fromdeskhelper.type.*
-import com.example.fromdeskhelper.ui.View.activity.MainActivity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import java.io.ByteArrayOutputStream
-import java.lang.Exception
 import java.util.*
 import javax.inject.Inject
 
@@ -62,7 +55,7 @@ class CallsAddProductsUseCase @Inject constructor(
         stockcantidad: String,
         stockunidad: String,
         qr: String,
-        mutableList: MutableList<Uri>, baseActivity: MainActivity
+        mutableList: MutableList<Uri>, baseActivity: EmployedMainActivity
     ): AgregateProductMutation.Data? {
         val name = name
         val precio: Double = precio.toDouble()

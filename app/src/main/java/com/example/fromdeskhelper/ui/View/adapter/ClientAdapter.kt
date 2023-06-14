@@ -8,12 +8,13 @@ import android.view.ViewGroup
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fromdeskhelper.R
-import kotlinx.android.synthetic.main.item_client_list.view.*
+import com.example.fromdeskhelper.databinding.ItemClientListBinding
+//import kotlinx.android.synthetic.main.item_client_list.view.*
 
 
 class ClientAdapter(var Clients:MutableList<ClientListGet>):RecyclerView.Adapter<ClientAdapter.HolderClient>() {
 
-    inner class HolderClient(val view:View):RecyclerView.ViewHolder(view){
+    inner class HolderClient(val view:ItemClientListBinding):RecyclerView.ViewHolder(view.root){
         fun render(Cliente:ClientListGet){
             val ViewDrawable=DrawableCompat.wrap(view.TVClientVent.background);
             DrawableCompat.setTint(ViewDrawable,Cliente.color)
@@ -38,7 +39,8 @@ class ClientAdapter(var Clients:MutableList<ClientListGet>):RecyclerView.Adapter
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HolderClient {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return HolderClient(layoutInflater.inflate(R.layout.item_client_list, parent, false))
+        return HolderClient(ItemClientListBinding.inflate(layoutInflater,parent,false))
+//        return HolderClient(layoutInflater.inflate(R.layout.item_client_list, parent, false))
     }
 
     override fun onBindViewHolder(holder: HolderClient, position: Int) {

@@ -40,6 +40,12 @@ class MainActiviyViewModel @Inject constructor(
             OpenCamera.postValue(PositionsValues(Values.MoveX,Values.MoveY,Values.ScaleX,Values.ScaleY))
         }
     }
+    fun RestoreCameraLand(){
+        viewModelScope.launch {
+            var Values = PreferencesM.preferencesFlowCamera.first()
+            OpenCamera.postValue(PositionsValues(Values.MoveY,Values.MoveX,Values.ScaleY,Values.ScaleX))
+        }
+    }
 }
 data class PositionsValues(
     var movex:Float,

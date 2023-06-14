@@ -1,24 +1,14 @@
 package com.example.fromdeskhelper.ui.View.fragment
 
-import Data.ClientList
-import Data.ClientListGet
 import Data.listInventarioProductos
-import android.animation.TimeInterpolator
 import android.content.Context
 import android.content.res.Configuration
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.ScaleAnimation
-import android.widget.Toolbar
-import androidx.activity.viewModels
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
@@ -37,21 +27,16 @@ import com.example.fromdeskhelper.data.db.AppDatabase
 import com.example.fromdeskhelper.data.model.Types.CameraTypes
 import com.example.fromdeskhelper.databinding.FragmentProductosShowBinding
 import com.example.fromdeskhelper.ui.View.ViewModel.*
-import com.example.fromdeskhelper.ui.View.activity.MainActivity
+import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import com.example.fromdeskhelper.ui.View.adapter.*
-import com.example.fromdeskhelper.ui.View.fragment.Root.Clients.ClientItemShowFragment
-import com.example.fromdeskhelper.ui.animation.ClientNavigationBehavior
 import com.example.fromdeskhelper.util.TabletPageTransformer
-import com.example.fromdeskhelper.util.listener.RecyclerViewItemClickListener
 import com.google.android.material.badge.BadgeDrawable
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayoutMediator
-import com.leochuan.CircleLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_productos_show.*
-import kotlinx.android.synthetic.main.fragment_show_products.view.*
-import kotlinx.android.synthetic.main.item_client_list.view.*
-import kotlinx.android.synthetic.main.item_producto.view.*
+//import kotlinx.android.synthetic.main.fragment_productos_show.*
+//import kotlinx.android.synthetic.main.fragment_show_products.view.*
+//import kotlinx.android.synthetic.main.item_client_list.view.*
+//import kotlinx.android.synthetic.main.item_producto.view.*
 import java.util.*
 
 
@@ -104,7 +89,7 @@ class ProductosShow : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentProductosShowBinding? = null
     private val binding get() = _binding!!
-    protected lateinit var baseActivity: MainActivity
+    protected lateinit var baseActivity: EmployedMainActivity
     protected lateinit var contextFragment: Context
     lateinit var daoNew: AppDatabase
 
@@ -138,7 +123,7 @@ class ProductosShow : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MainActivity) {
+        if (context is EmployedMainActivity) {
             this.baseActivity = context
         }
         this.contextFragment = context
@@ -151,18 +136,18 @@ class ProductosShow : Fragment() {
      /*   if(binding.toolbarParent.visibility==View.GONE){
            binding.toolbarParent.visibility=View.VISIBLE
         }*/
-        if(baseActivity.binding.appBarMain.fab.visibility==View.GONE){
-            baseActivity.binding.appBarMain.fab.visibility=View.VISIBLE
-        }
-        if(baseActivity.binding.appBarMain.refreshFab.visibility==View.GONE){
-            baseActivity.binding.appBarMain.refreshFab.visibility=View.VISIBLE
-        }
+//        if(baseActivity.binding.appBarMain.fab.visibility==View.GONE){
+//            baseActivity.binding.appBarMain.fab.visibility=View.VISIBLE
+//        }
+//        if(baseActivity.binding.appBarMain.refreshFab.visibility==View.GONE){
+//            baseActivity.binding.appBarMain.refreshFab.visibility=View.VISIBLE
+//        }
 //        (baseActivity as MainActivity).functionFabRefresh(::refreshList)
 //        baseActivity.binding.appBarMain.refreshFab.setOnClickListener {
 //            refreshList()
 //        }
         binding.BIShowP.visibility=View.VISIBLE
-        baseActivity.binding.appBarMain.refreshFab.setImageResource(R.drawable.ic_baseline_autorenew_24)
+//        baseActivity.binding.appBarMain.refreshFab.setImageResource(R.drawable.ic_baseline_autorenew_24)
 
     }
 
@@ -181,7 +166,7 @@ class ProductosShow : Fragment() {
 //        })
 //
 //
-        baseActivity.setRefreshMain()
+//        baseActivity.setRefreshMain()
         MainModel.GetCount().observe(viewLifecycleOwner, onChanged = {
             activity?.setTitle(if(it==0)"Inicio" else ("${it} Productos en Total"))
             val gridLayoutManager = GridLayoutManager(baseActivity, 1)
@@ -213,24 +198,24 @@ class ProductosShow : Fragment() {
 //Configuraciones de la barra de herramientas
 
         //SE TERMINO LA CONECTIVADDD
-        CameraView.CameraActivate.observe(this, Observer {
-            if (it == CameraTypes.SCANER) {
-                binding.BQRScanner?.setBackgroundResource(R.drawable.ic_baseline_close_24_showproduct)
-                baseActivity.binding.appBarMain.BQRScannerClient.setBackgroundResource(R.drawable.ic_baseline_close_24_showproduct)
-                baseActivity.binding.appBarMain.constraintLayout.visibility = View.VISIBLE
-            } else {
-                binding.BQRScanner?.setBackgroundResource(R.drawable.ic_baseline_qr_code_scanner_showproduct)
-                baseActivity.binding.appBarMain.BQRScannerClient.setBackgroundResource(R.drawable.ic_baseline_qr_code_scanner_showproduct)
-                if (this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    baseActivity.binding.appBarMain.constraintLayout.visibility = View.GONE
-                } else {
-                    baseActivity.binding.appBarMain.constraintLayout.visibility = View.INVISIBLE
-                }
-                CamScannerStatus = false
-            }
-        })
+//        CameraView.CameraActivate.observe(viewLifecycleOwner, Observer {
+//            if (it == CameraTypes.SCANER) {
+//                binding.BQRScanner?.setBackgroundResource(R.drawable.ic_baseline_close_24_showproduct)
+//                baseActivity.binding.appBarMain.BQRScannerClient.setBackgroundResource(R.drawable.ic_baseline_close_24_showproduct)
+//                baseActivity.binding.appBarMain.constraintLayout.visibility = View.VISIBLE
+//            } else {
+//                binding.BQRScanner?.setBackgroundResource(R.drawable.ic_baseline_qr_code_scanner_showproduct)
+//                baseActivity.binding.appBarMain.BQRScannerClient.setBackgroundResource(R.drawable.ic_baseline_qr_code_scanner_showproduct)
+//                if (this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//                    baseActivity.binding.appBarMain.constraintLayout.visibility = View.GONE
+//                } else {
+//                    baseActivity.binding.appBarMain.constraintLayout.visibility = View.INVISIBLE
+//                }
+//                CamScannerStatus = false
+//            }
+//        })
 
-        CameraView.QRBindig.observe(this, Observer {
+        CameraView.QRBindig.observe(viewLifecycleOwner, Observer {
             Log.i("QRRESIVED", it)
             binding.SVProducts.setQuery(it, false)
             binding.SVProducts.clearFocus()

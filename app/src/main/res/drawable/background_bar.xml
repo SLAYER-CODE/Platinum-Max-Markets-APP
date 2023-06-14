@@ -2,14 +2,14 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <layer-list>
-            <item android:bottom="20dp">
+            <item >
                 <shape  android:dither="true" >
                     <gradient
                         android:type="linear"
-                        android:angle="280"
-                        android:endColor="#000B2000"
-                        android:centerColor="#23002001"
-                        android:startColor="@color/md_green_900">
+                        android:angle="270"
+                        android:endColor="#00004F95"
+                        android:centerColor="#83004F95"
+                        android:startColor="#D5004F95">
                     </gradient>
                 </shape>
             </item>

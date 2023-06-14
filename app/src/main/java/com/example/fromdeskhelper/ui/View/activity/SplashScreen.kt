@@ -2,6 +2,7 @@ package com.example.fromdeskhelper.ui.View.activity
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -11,15 +12,23 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
+import com.example.fromdeskhelper.R
+import com.example.fromdeskhelper.data.model.objects.ErrorUser
+import com.example.fromdeskhelper.data.model.objects.User
+import com.example.fromdeskhelper.data.model.objects.UserLogin
 import com.example.fromdeskhelper.databinding.ActivitySplashScreenBinding
+import com.example.fromdeskhelper.ui.View.ViewModel.AuthenticationUserViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.InitViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.SplashScreenViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import okhttp3.internal.toImmutableList
 
 
 /**
@@ -35,6 +44,7 @@ class SplashScreen : AppCompatActivity() {
     private val hideHandler = Handler()
     private val loginViewModel: InitViewModel by viewModels();
     private val SplashModel : SplashScreenViewModel by viewModels();
+    private val AutenticationModel: AuthenticationUserViewModel by viewModels();
 
   /*  @SuppressLint("InlinedApi")
     private val hidePart2Runnable = Runnable {
@@ -134,25 +144,97 @@ class SplashScreen : AppCompatActivity() {
             Animatoo.animateZoom(this);
             finish()
         })
+
+
         SplashModel.initLogOperator.observe(this, Observer {
-           if(it) {
-               binding.TEInformation.text = "Iniciando...";
-               startActivity(Intent(baseContext,MainActivity::class.java))
+            AutenticationModel.setCUser(it)
+            var EmployedIntent=Intent(baseContext, EmployedMainActivity::class.java)
+
+           if(it.admin==true) {
+               //Iniciar como admin "Todas las funciones"
+               binding.TEInformation.text = "Validando Acceso...";
+               var parm= Bundle();
+               parm.putInt("IN",User.ADMIN)
+               EmployedIntent.putExtras(parm)
+               startActivity(EmployedIntent)
                Animatoo.animateZoom(this);
                finish()
-           }else{
+           }
+            else if(it.employed==true){
+                //Iniciame como empleado
+               //Iniciar como admin "Todas las funciones"
+               binding.TEInformation.text = "Iniciando ...";
 
-              binding.TEInformation.text = "Error al iniciar Session";
-               startActivity(Intent(baseContext,LoginActivity::class.java))
-               Animatoo.animateShrink(this);
+               startActivity(EmployedIntent)
+               Animatoo.animateZoom(this);
                finish()
-//               while (true) {
-//                   if (isConnected(baseContext)) {
-//                       SplashModel(baseContext);
-//                   }
-//               }
+
+           }else if(it.user_acces==true){
+               binding.TEInformation.text = "Bienvenido...";
+               startActivity(Intent(baseContext, UserMainActivity::class.java))
+               Animatoo.animateZoom(this);
+               finish()
+               //Iniciame como usuario con las opcioens que se nos otorgen
+           }else{
+               val builder = AlertDialog.Builder(this)
+               val positiveButtonClick = { dialog: DialogInterface, which: Int ->
+
+                   SplashModel(baseContext);
+//                   binding.PBSS.isEnabled=true
+//                   binding.PBSS.isIndeterminate=true
+
+                   Toast.makeText(applicationContext,
+                       R.string.splash_connect_pending, Toast.LENGTH_SHORT).show()
+
+               }
+
+               val items = arrayOf(ErrorUser.ANONIMO,ErrorUser.INICIAR,ErrorUser.REGISTRARSE,ErrorUser.INICIAR_USER,ErrorUser.EXIT)
+               if(it.anonime==null && it.user_acces==null){
+                   //Error en firebase
+                   binding.TEInformation.text = "Error al iniciar Session";
+//                   startActivity(Intent(baseContext,LoginActivity::class.java))
+//                   Animatoo.animateShrink(this);
+//                   finish()
+
+               }
+               if(it.anonime==true && it.user_acces==null){
+                   //No encontro el servidor pero si valido al usuario en firebase
+                   binding.TEInformation.text = "Error en el servidor";
+
+               }
+
+               builder.setTitle("Hubo un error")
+               builder.setItems(items){dialog,with->
+                   if(items[with] == ErrorUser.ANONIMO){
+                       startActivity(Intent(baseContext, EmployedMainActivity::class.java))
+                       Animatoo.animateShrink(this);
+                       finish()
+                   }else if(items[with] == ErrorUser.INICIAR){
+                       startActivity(Intent(baseContext, LoginActivity::class.java))
+                       Animatoo.animateFade(this);
+                       finish()
+                   }else if(items[with] == ErrorUser.REGISTRARSE) {
+                       startActivity(Intent(baseContext, LoginActivity::class.java))
+                       Animatoo.animateSlideDown(this);
+                       finish()
+                   }else if(items[with] == ErrorUser.INICIAR_USER){
+                       startActivity(Intent(baseContext, UserMainActivity::class.java))
+                       Animatoo.animateShrink(this);
+                       finish()
+                   }else{
+                       Animatoo.animateZoom(this);
+                       finish()
+                   }
+               }
+               builder.setPositiveButton("REINTENTAR", positiveButtonClick)
+               builder.show()
+//               binding.PBSS.isEnabled=false
+//               binding.PBSS.isIndeterminate=false
+
+
            }
         })
+
         SplashModel.initLogMessage.observe(this, Observer {
             binding.TEInformation.text = it;
         })
@@ -160,7 +242,7 @@ class SplashScreen : AppCompatActivity() {
         SplashModel.initLoginAnonime.observe(this, Observer {
             //SE ESTA INICIANDO 2 VECES BUSCANDO EL ERROR.. Solucionado faltaba un break al terminal el analisis
             binding.TEInformation.text="Anonimo!"
-            startActivity(Intent(baseContext,MainActivity::class.java))
+            startActivity(Intent(baseContext,EmployedMainActivity::class.java))
             Animatoo.animateZoom(this);
             finish()
         })

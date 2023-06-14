@@ -1,8 +1,22 @@
-# This file was generated based on ".graphqlconfig". Do not edit manually.
+# This file was generated. Do not edit manually.
 
 schema {
     query: Query
     mutation: Mutation
+}
+
+type Associate {
+    age: String
+    dni: String!
+    home_direction: String!
+    id: ID!
+    lastname: String!
+    local_id: Establishments!
+    name: String!
+    nik: String!
+    secondlastname: String!
+    secondname: String!
+    user_id: Users!
 }
 
 type Brands {
@@ -15,10 +29,70 @@ type Categories {
     category_name: String!
 }
 
+type Directions {
+    amenity: String!
+    avenide: String!
+    city: String!
+    country: String!
+    departament: String!
+    direction_id: ID!
+    distrit: String!
+    lg: String!
+    lt: String!
+    neighbourhood: String!
+    place: String!
+    postal_code: String!
+    province: String!
+    reference: String!
+    urban_zone: String!
+}
+
+type Establishments {
+    description: String!
+    floor: Int!
+    foro: Int!
+    id: ID!
+    image_relation: SloganImages
+    mall_id: Mall!
+    name: String!
+    position: Int!
+    web: String!
+}
+
+type Functions {
+    anonime_acces: Boolean!
+    details: String!
+    id_fuction: ID!
+    name: String!
+    root_acces: Boolean!
+    user_acces: Boolean!
+}
+
 type ListWish {
     user_id: Users!
     wish_id: ID!
     wish_products_id: [Products!]!
+}
+
+type Mall {
+    description: String!
+    direction_id: Directions
+    duel: String!
+    establishments: Int!
+    floors: Int!
+    foro: Int!
+    id: ID!
+    image_relation: MallImages
+    name: String!
+    update: DateTime!
+}
+
+type MallImages {
+    image_description: String!
+    image_id: ID!
+    image_name: String!
+    image_realation: [Mall!]
+    md5_image: String!
 }
 
 type Mutation {
@@ -53,9 +127,9 @@ type Products {
     price_unity: Float
     product_id: ID!
     product_name: String!
-    qr: String!
-    quantity_cantidad: Int!
-    quantity_unity: Int!
+    qr: String
+    quantity_cantidad: Int
+    quantity_unity: Int
     update_product: DateTime!
     user_relation: Users
 }
@@ -66,17 +140,50 @@ type Query {
     Products: [Products!]!
     ProductsCount: Int!
     Sessiones: [Users!]!
+    comprobation: Boolean!
+    comprobationAdmin: Boolean!
+    comprobationConnection: Boolean!
+    comprobationEmployed: Boolean!
+    comprobationRoot: Boolean!
     comprobationUser(token: String!): Boolean!
+    comprobationWorked: Boolean!
+    getDataAsociate: Associate!
+    getDataEmployed: UserWorkedGet!
+    getRoles: RoleGet!
+    getRolesEmployed: [Boolean!]!
     ping: String!
+}
+
+type RoleGet {
+    fuctions: [Functions!]!
+    user: Boolean!
 }
 
 type ShoppingCart {
     shoppingCardt_id: ID!
 }
 
+type SloganImages {
+    image_description: String!
+    image_id: ID!
+    image_name: String!
+    image_realation: [Establishments!]
+    md5_image: String!
+}
+
+type UserWorkedGet {
+    age: String!
+    email: String!
+    establishmentNumber: String!
+    mall: String!
+    name: String!
+    nik: String!
+}
+
 type Users {
     birthday: DateTime!
     email: String!
+    email_verify: Boolean
     lastToken: String!
     phone_id: Phone
     photo: String!

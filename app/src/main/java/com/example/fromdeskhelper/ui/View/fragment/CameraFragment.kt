@@ -30,10 +30,9 @@ import com.example.fromdeskhelper.data.model.Types.CameraTypes
 import com.example.fromdeskhelper.databinding.FragmentCameraBinding
 import com.example.fromdeskhelper.ui.View.ViewModel.AgregateProductViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.CameraViewModel
-import com.example.fromdeskhelper.ui.View.activity.MainActivity
+import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import com.example.fromdeskhelper.util.MessageSnackBar
 import com.example.fromdeskhelper.util.hideKeyboardFrom
-import com.google.android.material.snackbar.Snackbar
 import com.google.common.util.concurrent.ListenableFuture
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
@@ -59,7 +58,7 @@ class CameraFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    protected lateinit var baseActivity: MainActivity
+    protected lateinit var baseActivity: EmployedMainActivity
     protected lateinit var contextFragment: Context
     private var _binding: FragmentCameraBinding? = null
     private val binding get() = _binding!!
@@ -111,7 +110,7 @@ class CameraFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        if (context is MainActivity) {
+        if (context is EmployedMainActivity) {
             this.baseActivity = context
 
         }

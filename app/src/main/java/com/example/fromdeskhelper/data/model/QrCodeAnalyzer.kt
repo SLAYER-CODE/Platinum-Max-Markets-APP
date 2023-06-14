@@ -1,13 +1,10 @@
 package com.example.fromdeskhelper.data.model
 
-import android.app.Activity
 import android.graphics.ImageFormat.*
 import android.os.Build
-import android.util.Log
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import com.example.fromdeskhelper.ExifUtil.rotateYUV420Degree90
-import com.example.fromdeskhelper.ui.View.activity.MainActivity
 import com.google.zxing.*
 import com.google.zxing.common.HybridBinarizer
 import java.nio.ByteBuffer

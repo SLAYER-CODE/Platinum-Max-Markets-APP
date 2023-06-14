@@ -4,7 +4,6 @@ package com.example.fromdeskhelper.ui.View.fragment
 //XDDDD
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -16,29 +15,24 @@ import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.example.fromdeskhelper.R
-import com.example.fromdeskhelper.data.Privilegies
 import com.example.fromdeskhelper.data.Providers
 import com.example.fromdeskhelper.data.Result
-import com.example.fromdeskhelper.data.model.Controller.ConnectionController
 import com.example.fromdeskhelper.databinding.FragmentLoginBinding
-import com.example.fromdeskhelper.ui.View.ViewModel.LOG_CLASS
 import com.example.fromdeskhelper.ui.View.activity.LoginActivity
-import com.example.fromdeskhelper.ui.View.activity.MainActivity
+import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import com.example.fromdeskhelper.ui.login.LoggedInUserView
 import com.example.fromdeskhelper.ui.View.ViewModel.LoginViewModel
-import com.example.fromdeskhelper.ui.View.ViewModel.Util.ShowConnectedViewModel
 import com.example.fromdeskhelper.util.MessageSnackBar
 //import com.example.fromdeskhelper.ui.login.LoginViewModelFactory
 import com.facebook.*
@@ -47,19 +41,11 @@ import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.material.snackbar.BaseTransientBottomBar
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.*
 import dagger.hilt.android.AndroidEntryPoint
 import eightbitlab.com.blurview.BlurView
 import eightbitlab.com.blurview.RenderScriptBlur
-import kotlinx.android.synthetic.main.fragment_login.container
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.sql.CallableStatement
-import java.sql.PreparedStatement
-import java.sql.Types
 
 //private const val USER_PREFERENCES_NAME = "user_preferences"
 val LOGINIT="LOGINFRAGMENT"
@@ -94,6 +80,9 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        val navcontroller =findNavController()
+        val appbarlayout= AppBarConfiguration(navcontroller.graph)
+//        binding.toolbar?.setupWithNavController(navcontroller,appbarlayout)
 
         return binding.root
     }
@@ -121,9 +110,10 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
-
+//        setSupportActionBar(binding.toolbar)
 
 //        loginViewModel = ViewModelProvider(this, LoginViewModelFactory()).get(LoginViewModel::class.java)
+
         activity?.setTitle("Inicia Session")
 
         val usernameEditText = binding.username
@@ -131,15 +121,14 @@ class LoginFragment : Fragment() {
         val loadingProgressBar = binding.loading
 //        loadingProgressBar.visibility=View.INVISIBLE
 
-        blurbackground(binding.fondBackground,1f)
-        blurbackground(binding.fondEdit,0.5f)
+        blurbackground(binding.BVContent,0.3f)
 
 
 //        binding.connectWithFbButton.setFragment(this)
         loginViewModel();
         loginViewModel.usuarioLoginProvider.observe(viewLifecycleOwner, Observer {
             MessageSnackBar(view = view, "Se registro Correctamente", Color.GREEN)
-            val intent = Intent(activity, MainActivity::class.java)
+            val intent = Intent(activity, EmployedMainActivity::class.java)
             startActivity(intent)
             Animatoo.animateZoom(baseActivity);
             baseActivity.finish()
@@ -174,8 +163,8 @@ class LoginFragment : Fragment() {
             MessageSnackBar(view = view, it.message.toString(), Color.RED)
         })
         binding.Bregister.setOnClickListener {
-            MessageSnackBar(view = view, "Crea tu cuenta", Color.YELLOW)
-            Navigation.findNavController(view).navigate(
+//            MessageSnackBar(view = view, "Crea tu cuenta", Color.YELLOW)
+            findNavController().navigate(
                 R.id.action_loginFragment_to_registerFragment,
                 Bundle(),
                 null
@@ -448,11 +437,14 @@ class LoginFragment : Fragment() {
                     passwordEditText.text.toString()
                 )
             }else{
-                MessageSnackBar(view,"LLene los campos antes de iniciar",Color.RED)
-
+                MessageSnackBar(view,this.getString(R.string.titleLoginUnconon),Color.RED)
             }
             loadingProgressBar.visibility = View.INVISIBLE
             disableitems(true)
+        }
+
+        binding.loginAdmin?.setOnClickListener {
+
         }
 
 //        registerButton.setOnClickListener {
@@ -481,7 +473,7 @@ class LoginFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             loginViewModel.initFirebaseToken()
-            var initLoginActiviti: Intent = Intent(baseActivity, MainActivity::class.java)
+            var initLoginActiviti: Intent = Intent(baseActivity, EmployedMainActivity::class.java)
             startActivity(initLoginActiviti)
             Animatoo.animateZoom(baseActivity);
             baseActivity.finish()

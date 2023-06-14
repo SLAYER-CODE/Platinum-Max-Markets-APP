@@ -8,8 +8,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fromdeskhelper.ProductsPreviewQuery
 import com.example.fromdeskhelper.R
+import com.example.fromdeskhelper.databinding.ItemProductoP2pBinding
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_producto.view.*
+//import kotlinx.android.synthetic.main.item_producto.view.*
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 //import com.example.productos.databinding.ItemProductoBinding
@@ -21,18 +22,18 @@ import java.io.ByteArrayOutputStream
 class ProductoP2PAdapter (var producto:List<ProductsPreviewQuery.Producto>):
     RecyclerView.Adapter<ProductoP2PAdapter.ImageHolder>() {
 
-    inner class ImageHolder(val view: View): RecyclerView.ViewHolder(view){
+    inner class ImageHolder(val binding: ItemProductoP2pBinding): RecyclerView.ViewHolder(binding.root){
 
         fun render(ProductoAndImage:ProductsPreviewQuery.Producto){
 
 //            val bmp = BitmapFactory.decodeByteArray(superImage, 0, superImage.size)
 //            val bmp = assetsToBitmap("purpleFlower.png")
 //            view.ImagenOrder.setImageBitmap(bmp)
-            view.TNombre.isSelected=true;
+            binding.TNombre.isSelected=true;
 
-            view.TNombre.text=ProductoAndImage.product_name
+            binding.TNombre.text=ProductoAndImage.product_name
 
-            view.TEPrecio.text="$\\${ProductoAndImage.price_cantidad}"
+            binding.TEPrecio.text="$\\${ProductoAndImage.price_cantidad}"
 
 
             //FUNCION QUE APLICA LA IMAGEN DENTRO DE TVIMAGENITEM
@@ -53,12 +54,12 @@ class ProductoP2PAdapter (var producto:List<ProductsPreviewQuery.Producto>):
             Picasso.get()
                 .load("http://192.168.0.17:2016/uploads/"+ProductoAndImage.image_realation!![0].image_name).fit()
                 .centerCrop()
-                .into(view.IVimagenItem)
+                .into(binding.IVimagenItem)
         }
         fun renderNotImagen(ProductoAndImage: ProductsPreviewQuery.Producto){
-            view.TNombre.isSelected=true;
-            view.TNombre.text=ProductoAndImage.product_name
-            view.TEPrecio.text="$\\${ProductoAndImage.price_cantidad}"
+            binding.TNombre.isSelected=true;
+            binding.TNombre.text=ProductoAndImage.product_name
+            binding.TEPrecio.text="$\\${ProductoAndImage.price_cantidad}"
 
         }
 
@@ -74,7 +75,8 @@ class ProductoP2PAdapter (var producto:List<ProductsPreviewQuery.Producto>):
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return ImageHolder(layoutInflater.inflate(R.layout.item_producto_p2p, parent, false))
+        return ImageHolder(ItemProductoP2pBinding.inflate(layoutInflater,parent,false))
+//        return ImageHolder(layoutInflater.inflate(R.layout.item_producto_p2p, parent, false))
     }
 
 
@@ -85,9 +87,10 @@ class ProductoP2PAdapter (var producto:List<ProductsPreviewQuery.Producto>):
         }else{
             holder.renderNotImagen(producto[position])
         }
-        holder.view.setOnClickListener {
 
-        }
+//        holder.binding.setOnClickListener {
+//
+//        }
     }
 
 //    fun addNewListCurrent(newlist: List<listInventarioProductos>){

@@ -10,7 +10,7 @@ import com.example.fromdeskhelper.ui.View.Presentations.UnoPresentacionFragment
 import com.example.fromdeskhelper.ui.View.activity.PresenatationActivity
 import eightbitlab.com.blurview.BlurView
 import eightbitlab.com.blurview.RenderScriptBlur
-import kotlinx.android.synthetic.main.fragment_uno_precentacion.view.*
+//import kotlinx.android.synthetic.main.fragment_uno_precentacion.view.*
 
 
 private var LOGG_ADAPTER_PRESENTATION = "VIEWPAGERADAPTERFRAGMENTES"

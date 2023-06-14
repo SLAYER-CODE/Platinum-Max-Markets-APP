@@ -5,10 +5,6 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.fromdeskhelper.core.AuthorizationInterceptor
-import com.example.fromdeskhelper.data.PreferencesManager
-import com.example.fromdeskhelper.data.model.WifiModel
-import com.example.fromdeskhelper.domain.ComprobationUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

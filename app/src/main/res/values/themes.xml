@@ -10,7 +10,7 @@
         <item name="colorSecondaryVariant">@color/md_light_blue_600</item>
         <item name="colorOnSecondary">@color/md_white_1000</item>
         <!--        <item name="android:windowBackground" >@color/md_green_200</item>-->
-        <item name="android:windowBackground" >@color/md_blue_50</item>
+        <item name="android:windowBackground">@color/md_blue_50</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
 
@@ -69,10 +69,12 @@
         <item name="fullscreenTextColor">@color/md_light_blue_600</item>
         <item name="android:windowBackground">@color/md_white_1000</item>
     </style>
+
     <style name="EdiText">
         <item name="android:textColorHint">@color/md_black_1000_50</item>
     </style>
-    <style name="DrawNavigation" >
+
+    <style name="DrawNavigation">
         <item name="subheaderColor">@color/md_blue_500</item>
     </style>
 
@@ -96,7 +98,7 @@
     </style>
 
     <style name="ButtonFloatLayout">
-        <item name="android:backgroundTint">@color/md_blue_500</item>
+        <item name="android:backgroundTint">@color/md_green_500</item>
     </style>
 
     <style name="IconItems">
@@ -119,7 +121,6 @@
         <item name="android:foregroundTint">@color/md_white_1000_screen</item>
         <item name="android:editTextColor">@android:color/white</item>
         <item name="android:textColorHint">@color/md_white_1000</item>
-
     </style>
 
 
@@ -143,7 +144,7 @@
     </style>
 
     <style name="fontMainDrawable">
-<!--        <item name="android:background">@color/md_blue_500_25</item>-->
+        <!--        <item name="android:background">@color/md_blue_500_25</item>-->
     </style>
 
 
@@ -154,7 +155,7 @@
         <item name="tabIndicatorColor">@color/md_white_1000</item>
     </style>
 
-    <style name="toggleButton_lint"  parent="ThemeOverlay.AppCompat.Dark">
+    <style name="toggleButton_lint" parent="ThemeOverlay.AppCompat.Dark">
         <item name="android:buttonStyleToggle">@style/Widget.Button.Toggle</item>
         <item name="android:textOn">On</item>
         <item name="android:textOff">Off</item>
@@ -167,6 +168,7 @@
         <item name="android:fontWeight">500</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="carView">
         <item name="cardBackgroundColor">@color/md_blue_100</item>
     </style>
@@ -181,6 +183,7 @@
         <item name="android:background">@color/md_blue_400</item>
         <item name="android:drawableTint">@color/md_white_1000</item>
     </style>
+
     <style name="FontIconConfig">
         <item name="android:backgroundTint">@color/md_black_1000</item>
     </style>
@@ -190,7 +193,7 @@
         <item name="android:background">@color/md_white_1000</item>
     </style>
 
-<!--    Item flotante de compra y venta-->
+    <!--    Item flotante de compra y venta-->
     <style name="ButtonItems">
         <item name="android:drawableTint">@color/md_white_1000</item>
         <item name="android:background">@color/md_blue_500</item>
@@ -201,11 +204,11 @@
         <item name="android:paddingStart">10dp</item>
     </style>
 
-<!--    <style name="BotonAgregate">-->
-<!--        <imte name="android:background">@color/md_blue_500_50</imte>-->
-<!--        <item name="android:textColor">@color/md_black_1000</item>-->
-<!--        <item name="android:shadowColor">@color/md_blue_500_50</item>-->
-<!--    </style>-->
+    <!--    <style name="BotonAgregate">-->
+    <!--        <imte name="android:background">@color/md_blue_500_50</imte>-->
+    <!--        <item name="android:textColor">@color/md_black_1000</item>-->
+    <!--        <item name="android:shadowColor">@color/md_blue_500_50</item>-->
+    <!--    </style>-->
     <style name="ItemSeparate">
         <item name="android:background">@color/md_blue_500</item>
     </style>
@@ -232,31 +235,30 @@
     </style>
 
 
-<style name="QRRescanner">
+    <style name="QRRescanner">
         <item name="android:backgroundTint">@color/md_cyan_500</item>
     </style>
 
 
-
     <style name="AddInputTextHint" parent="Base.Widget.MaterialComponents.TextInputLayout">
-        <item name="android:backgroundTint">@color/md_cyan_500</item>
+        <item name="android:backgroundTint">@color/md_green_A400</item>
         <item name="materialThemeOverlay">
             @style/ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox
         </item>
-        <item name="android:textColorHint"> @color/md_grey_400</item>
-        <item name="startIconTint">@color/md_cyan_400</item>
+        <item name="android:textColorHint">@color/md_grey_400</item>
+        <item name="startIconTint">@color/md_green_A400</item>
         <item name="helperTextTextColor">@color/md_red_500</item>
-        <item name="hintTextColor">@color/md_blue_600</item>
+        <item name="hintTextColor">@color/md_green_600</item>
+        <item name="android:textSize">10dp</item>
     </style>
 
 
     <style name="AddInputTextHintLine" parent="Base.Widget.MaterialComponents.TextInputLayout">
-        <item name="android:backgroundTint">@color/md_cyan_500</item>
-
-        <item name="android:textColorHint"> @color/md_grey_400</item>
-        <item name="startIconTint">@color/md_cyan_400</item>
+        <item name="android:backgroundTint">@color/md_green_A400</item>
+        <item name="android:textColorHint">@color/md_grey_400</item>
+        <item name="startIconTint">@color/md_green_A400</item>
         <item name="helperTextTextColor">@color/md_red_500</item>
-        <item name="hintTextColor">@color/md_blue_600</item>
+        <item name="hintTextColor">@color/md_green_600</item>
 
 
         <item name="boxBackgroundMode">filled</item>
@@ -268,21 +270,22 @@
 
 
     <style name="AddInputText">
-    <item name="android:drawableTintMode">add</item>
-    <item name="android:ems">10</item>
-    <item name="android:textColor">@color/md_blue_500</item>
-    <item name="android:textColorHighlight">@color/md_grey_400</item>
-    <item name="android:textColorHint">@color/md_blue_A400</item>
+        <item name="android:drawableTintMode">add</item>
+        <item name="android:ems">10</item>
+        <item name="android:textColor">@color/md_green_500</item>
+        <item name="android:textColorHighlight">@color/md_grey_400</item>
+        <item name="android:textColorHint">@color/md_green_A400</item>
         <item name="android:textColorLink">@color/md_red_400</item>
-    <item name="android:textStyle">bold</item>
-    <item name="helperTextEnabled">false</item>
-</style>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14dp</item>
+        <item name="helperTextEnabled">false</item>
+    </style>
 
     <style name="AddInputTextInfo">
         <item name="android:layout_alignParentTop">true</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_marginTop">63dp</item>
-        <item name="android:textColor">@color/md_light_blue_500</item>
+        <item name="android:textColor">@color/md_light_green_400</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">right</item>
     </style>
@@ -292,39 +295,49 @@
             @style/ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox
         </item>
         <item name="boxBackgroundMode">outline</item>
-        <item name="boxBackgroundColor">@color/md_white_1000_screen_Fond</item>
-        <item name="endIconTint">@color/mtrl_filled_icon_tint</item>
-        <item name="boxStrokeColor">@color/mtrl_filled_stroke_color</item>
-        <item name="android:backgroundTint">@color/md_cyan_500</item>
-        <item name="android:textColorHint"> @color/md_grey_400</item>
-        <item name="startIconTint">@color/md_cyan_400</item>
+<!--        <item name="boxBackgroundColor">@color/md_green_100</item>-->
+        <item name="endIconTint">@color/md_green_200</item>
+        <item name="boxStrokeColor">@color/md_green_200</item>
+        <item name="android:backgroundTint">@color/md_green_500</item>
+        <item name="android:textColorHint">@color/md_grey_600</item>
+        <item name="startIconTint">@color/md_green_400</item>
         <item name="helperTextTextColor">@color/md_red_500</item>
-        <item name="hintTextColor">@color/md_blue_600</item>
+        <item name="hintTextColor">@color/md_green_600</item>
     </style>
 
     <style name="AddBackgroundfonticons">
         <item name="android:background">@color/md_grey_200</item>
     </style>
+
     <style name="AddBackgroundCameraImagesFond">
-        <item name="android:background">@color/md_white_1000_screen_Fond</item>
-        <item name="android:textColor">@color/md_grey_400</item>
+        <item name="android:background">@color/md_green_50</item>
+        <item name="android:textColor">@color/md_grey_500</item>
     </style>
 
     <style name="AddBackgroundImageFolder">
         <item name="android:background">@color/md_white_1000_screen_Fond</item>
-        <item name="android:textColor">@color/md_blue_500</item>
-        <item name="android:drawableTint">@color/md_blue_500</item>
+        <item name="android:textColor">@color/md_green_500</item>
+        <item name="android:drawableTint">@color/md_green_500</item>
     </style>
 
     <style name="AddCheckBox">
-        <item name="android:buttonTint">@color/md_blue_A400</item>
+        <item name="android:buttonTint">@color/md_green_A400</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="AddButtom">
         <item name="android:drawableTint">@color/md_white_1000</item>
-        <item name="android:background">@color/md_blue_500_75</item>
+        <item name="android:background">@color/md_green_400</item>
         <item name="android:textColor">@color/md_white_1000</item>
     </style>
+
+    <style name="Theme.FinalProductos.Fullscreen.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.FinalProductos.Fullscreen.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.FinalProductos.Fullscreen.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

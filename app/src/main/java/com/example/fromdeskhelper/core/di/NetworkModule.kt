@@ -9,11 +9,11 @@ import android.util.Log
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.network.okHttpClient
 import com.example.fromdeskhelper.core.AuthorizationInterceptor
-import com.example.fromdeskhelper.core.onOnIntercept
+import com.example.fromdeskhelper.core.static.AppConst
 import com.example.fromdeskhelper.data.LocalNetwork.WifiApiClient
 import com.example.fromdeskhelper.data.Network.LoginApiClient
 import com.example.fromdeskhelper.domain.CameraUseCase
-import com.example.fromdeskhelper.ui.View.activity.MainActivity
+import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -24,10 +24,10 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
 import java.net.ConnectException
 import java.util.concurrent.TimeUnit
 import javax.annotation.Nullable
+import javax.inject.Named
 import javax.inject.Singleton
 
 
@@ -38,37 +38,39 @@ object NetworkModule {
     var gson = GsonBuilder()
         .setLenient()
         .create()
+    var PROVIDER_INTERNAL_INTERCEPTOR = "INTERNAL_CONECTION"
 
     @Singleton
     @Provides
     @Nullable
+    @Named("Server")
     fun providerRetrofit():Retrofit?{
-
         var rester = OkHttpClient().
         newBuilder().readTimeout(200,TimeUnit.SECONDS).
         connectTimeout(200,TimeUnit.SECONDS).
         retryOnConnectionFailure(true).addInterceptor(object: Interceptor {
                 override fun intercept(chain: Interceptor.Chain): Response {
                     try{
+                        Log.i(PROVIDER_INTERNAL_INTERCEPTOR,"CONECTTUNEL")
                         return chain.proceed(chain.request());
                     }catch(e:Exception){
-                        Log.i("RETROFIT","SIN CONEXION")
+                        Log.i(PROVIDER_INTERNAL_INTERCEPTOR,e.toString())
                         return Response.Builder()
                             .request(chain.request())
                             .protocol(Protocol.HTTP_1_1)
                             .code(999)
-                            .message("Sin respuesta")
+                            .message("UNDEFINED")
                             .body(ResponseBody.create(null, "{${e}}")).build()
                     }
                 }
-
             }).build()
         try {
-            Log.i("RETROFIT","INICIANDO CONEXION")
+            Log.i(PROVIDER_INTERNAL_INTERCEPTOR,"Connectig SERVER LOCAL")
             return Retrofit.Builder()
-                .baseUrl("http://192.168.0.17:2016/").client(rester).
+                .baseUrl(AppConst.BASE_URL_SERVER).client(rester).
                 addConverterFactory(GsonConverterFactory.create(gson)).build()
         }catch (ex:Exception){
+            Log.i(PROVIDER_INTERNAL_INTERCEPTOR,ex.message.toString())
             return null
         }
     }
@@ -78,22 +80,26 @@ object NetworkModule {
 //    @Singleton
 //    @Provides
 //    fun providesApiKeyInterceptor(): Interceptor = AuthorizationInterceptor()
+    var PROVIDER_INTERNAL = "INTERNAL_CONECTION"
 
     @Singleton
     @Provides
     @Nullable
-
     fun provederOkHttpClient  (authorizationInterceptor: AuthorizationInterceptor):OkHttpClient?{
         try {
             return OkHttpClient.Builder()
                 .addInterceptor(authorizationInterceptor)
                 .build()
         }catch (ex:Exception){
+            Log.e(PROVIDER_INTERNAL,ex.message.toString())
             return null
         }
-
     }
 
+
+    var PROVIDER_GRAPQL = "GRAPQL_SHOWING"
+
+    //Esta es la clase que maneja todas las solicitudes
     @Singleton
     @Provides
     @Nullable
@@ -101,19 +107,18 @@ object NetworkModule {
 //
 //        val okHttpClient = OkHttpClient.Builder()
 //            .build()
-
         try {
             if(Cliente!=null){
-                return ApolloClient.Builder().serverUrl("http://192.168.0.17:2016/graphql")
+                return ApolloClient.Builder().serverUrl(AppConst.BASE_URL_GRAPHQL)
                     .okHttpClient(Cliente)
                     .build()
             }else{
                 return null
             }
         }catch (ex:Exception){
+            Log.e(PROVIDER_GRAPQL,ex.message.toString())
             return null
         }
-
     }
 
     @Provides
@@ -124,7 +129,7 @@ object NetworkModule {
     @Singleton
     @Provides
     @Nullable
-    fun providerApiClientLogin(retrofit: Retrofit?):LoginApiClient?{
+    fun providerApiClientLogin(@Named("Server") retrofit: Retrofit?):LoginApiClient?{
         try {
             return retrofit?.create(LoginApiClient::class.java)
         }catch (ex:ConnectException){
@@ -135,7 +140,7 @@ object NetworkModule {
     @Singleton
     @Provides
     @Nullable
-    fun providerQuoteApiClient(retrofit: Retrofit?):WifiApiClient?{
+    fun providerQuoteApiClient(@Named("Server") retrofit: Retrofit?):WifiApiClient?{
         return retrofit?.create(WifiApiClient::class.java)
     }
 
@@ -156,7 +161,6 @@ object NetworkModule {
     @Singleton
     @Provides
     fun providerWifiP2PChanel(@ApplicationContext appContext: Context,wifiP2pManager: WifiP2pManager):WifiP2pManager.Channel{
-        Log.i("MODULENETWORK","SE LLAMO A P2P")
         return wifiP2pManager.initialize(appContext, Looper.getMainLooper(),null)
     }
 
@@ -174,9 +178,15 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideBaseActivity( activity: Activity): MainActivity {
-        check(activity is MainActivity) { "Every Activity is expected to extend BaseActivity" }
-        return activity as MainActivity
+    fun provideBaseActivity( activity: Activity): EmployedMainActivity {
+        check(activity is EmployedMainActivity) { "Every Activity is expected to extend BaseActivity" }
+        return activity as EmployedMainActivity
+    }
+
+    @Singleton
+    @Provides
+    fun getContext(@ApplicationContext appContext: Context):Context{
+        return appContext
     }
 //    @Singleton
 //    @Provides

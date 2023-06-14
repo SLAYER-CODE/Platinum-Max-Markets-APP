@@ -1,6 +1,5 @@
 package com.example.fromdeskhelper.domain
 
-import Data.ClientList
 import Data.ImagenesNew
 import Data.Producto
 import android.graphics.Bitmap
@@ -8,10 +7,7 @@ import android.net.Uri
 import android.provider.MediaStore
 import com.example.fromdeskhelper.ExifUtil
 import com.example.fromdeskhelper.data.model.Controller.SavedProductController
-import com.example.fromdeskhelper.ui.View.activity.MainActivity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import java.io.ByteArrayOutputStream
 import java.util.*
 import javax.inject.Inject
@@ -64,7 +60,7 @@ class CallsAddProductStorageUseCase @Inject constructor(private val ProductContr
         }
     }
     suspend fun SaveImageProduct(
-        mutableList: MutableList<Uri>,user:Int,baseActivity:MainActivity
+        mutableList: MutableList<Uri>,user:Int,baseActivity:EmployedMainActivity
     ){
         if(mutableList.isNotEmpty()) {
             for (path:Uri in mutableList){

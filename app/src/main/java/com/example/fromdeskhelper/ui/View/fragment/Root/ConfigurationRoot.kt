@@ -1,26 +1,19 @@
 package com.example.fromdeskhelper.ui.View.fragment.Root
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.net.wifi.p2p.WifiP2pDevice
 import android.net.wifi.p2p.WifiP2pManager
 import android.os.Bundle
-import android.provider.Settings
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.databinding.FragmentClientesConfigBinding
-import com.example.fromdeskhelper.databinding.FragmentClientsRootBinding
 import com.example.fromdeskhelper.ui.View.ViewModel.Root.ClientsRootViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.WifiVIewModel
-import com.example.fromdeskhelper.ui.View.activity.MainActivity
+import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import com.example.fromdeskhelper.ui.View.adapter.P2pClientAdapter
 
 // TODO: Rename parameter arguments, choose names that match
@@ -43,7 +36,7 @@ class ConfigurationRoot : Fragment() {
     private lateinit var viewModel: ClientsRootViewModel
     private var _binding: FragmentClientesConfigBinding? = null
     private val binding get() = _binding!!
-    protected lateinit var baseActivity: MainActivity
+    protected lateinit var baseActivity: EmployedMainActivity
     protected lateinit var contextFragment: Context
     private val wifiViewModel: WifiVIewModel by viewModels(ownerProducer = {requireActivity()})
     public lateinit var Listener: WifiP2pManager.PeerListListener;
@@ -83,7 +76,7 @@ class ConfigurationRoot : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MainActivity) {
+        if (context is EmployedMainActivity) {
             this.baseActivity = context
         }
         this.contextFragment = context

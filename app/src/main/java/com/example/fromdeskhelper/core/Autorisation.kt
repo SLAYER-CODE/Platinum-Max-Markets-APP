@@ -24,10 +24,20 @@ class AuthorizationInterceptor @Inject constructor (): Interceptor {
         val request = chain.request().newBuilder()
             .addHeader("Authorization",  sessionToken)
             .build()
-
         return chain.proceed(request)
     }
 }
+
+
+@Singleton
+class SockInterceptor @Inject constructor (): Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val request = chain.request().newBuilder()
+            .build()
+        return chain.proceed(request)
+    }
+}
+
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)

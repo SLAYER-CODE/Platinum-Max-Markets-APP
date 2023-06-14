@@ -18,14 +18,18 @@ import androidx.viewpager.widget.ViewPager
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.databinding.ActivityInitPrecentationBinding
+import com.example.fromdeskhelper.databinding.FragmentDosPrecentacionBinding
+import com.example.fromdeskhelper.databinding.FragmentTresPresentacionBinding
+import com.example.fromdeskhelper.databinding.FragmentUnoPrecentacionBinding
 import com.example.fromdeskhelper.ui.View.Presentations.UnoPresentacionFragment
 import com.example.fromdeskhelper.ui.View.adapter.ViewPagerPresentation
 import dagger.hilt.android.AndroidEntryPoint
 import eightbitlab.com.blurview.BlurView
 import eightbitlab.com.blurview.RenderScriptBlur
-import kotlinx.android.synthetic.main.fragment_dos_precentacion.view.*
-import kotlinx.android.synthetic.main.fragment_tres_presentacion.view.*
-import kotlinx.android.synthetic.main.fragment_uno_precentacion.view.*
+
+//import kotlinx.android.synthetic.main.fragment_dos_precentacion.view.*
+//import kotlinx.android.synthetic.main.fragment_tres_presentacion.view.*
+//import kotlinx.android.synthetic.main.fragment_uno_precentacion.view.*
 
 
 @AndroidEntryPoint
@@ -65,9 +69,10 @@ class PresenatationActivity : AppCompatActivity() {
                 or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
 
         val layoutInflater = LayoutInflater.from(this)
-        val view1: View = layoutInflater.inflate(R.layout.fragment_uno_precentacion, null)
-        val view2: View = layoutInflater.inflate(R.layout.fragment_dos_precentacion, null)
-        val view3: View = layoutInflater.inflate(R.layout.fragment_tres_presentacion, null)
+        val view1: FragmentUnoPrecentacionBinding = FragmentUnoPrecentacionBinding.inflate(layoutInflater,binding.root,false)
+        val view2: FragmentDosPrecentacionBinding = FragmentDosPrecentacionBinding.inflate(layoutInflater,binding.root,false)
+//        val view3: FragmentTresPresentacionBinding = layoutInflater.inflate(R.layout.fragment_tres_presentacion, null)
+        val view3: FragmentTresPresentacionBinding = FragmentTresPresentacionBinding.inflate(layoutInflater,binding.root,false)
         val radius = 5f
         val decorView: View =  window!!.decorView
         val rootView = decorView.findViewById<View>(android.R.id.content) as ViewGroup
@@ -100,9 +105,9 @@ class PresenatationActivity : AppCompatActivity() {
 
 //        view1.textViewUnoe.text="sss"
 //        view2.textViewdow.text="sasass"
-        myViewList.add(view1)
-        myViewList.add(view2)
-        myViewList.add(view3)
+        myViewList.add(view1.root)
+        myViewList.add(view2.root)
+        myViewList.add(view3.root)
 
 
         val adapter = ViewPagerPresentation(myViewList)

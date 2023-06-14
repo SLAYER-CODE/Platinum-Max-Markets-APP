@@ -11,9 +11,14 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fromdeskhelper.R
+import com.example.fromdeskhelper.databinding.ItemProductoBinding
+import com.example.fromdeskhelper.databinding.ItemProductoGridviewBinding
+import com.example.fromdeskhelper.databinding.ItemProductoListviewBinding
+import com.example.fromdeskhelper.databinding.ItemProductoNotimageBinding
+import com.example.fromdeskhelper.databinding.ItemProductoReverseBinding
 import com.example.fromdeskhelper.ui.View.ViewModel.ShowMainViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.UtilsShowMainViewModels
-import kotlinx.android.synthetic.main.item_producto.view.*
+//import kotlinx.android.synthetic.main.item_producto.view.*
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import kotlin.random.Random
@@ -28,7 +33,7 @@ class ProductoAdapter(
     var MyImage: List<listInventarioProductos>,
     var ViewModelCall: ShowMainViewModel?,var visualise:Int,var util:UtilsShowMainViewModels?=null
 ) :
-    RecyclerView.Adapter<ProductoAdapter.ImageHolder>(),Filterable {
+    RecyclerView.Adapter< RecyclerView.ViewHolder >(),Filterable {
     private var ProductList:List<listInventarioProductos>
     public  var onItemListener: OnItemListener? = null
     var id = 0
@@ -49,7 +54,139 @@ class ProductoAdapter(
             return true
         }
     }
-    inner class ImageHolder(val view: View) : RecyclerView.ViewHolder(view) {
+
+
+    inner class ImageHolderReverse(val view: ItemProductoReverseBinding): RecyclerView.ViewHolder(view.root){
+
+        fun render(ProductoAndImage: listInventarioProductos){
+            view.TNombre.isSelected = true;
+            view.TNombre.text = ProductoAndImage.nombre
+            view.TEPrecio.text = "$\\${ProductoAndImage.precioC}"
+            view.TEPrecioU.text = "$\\${ProductoAndImage.precioU}"
+            val options = BitmapFactory.Options().apply {
+                inJustDecodeBounds = false
+                outWidth = 200
+                outHeight = 200
+            }
+//            val theimagen = BitmapFactory.decodeStream(imagenStream,Rect(0,0,200,200),options)
+            val imagenStream = ByteArrayInputStream(ProductoAndImage.imageBit)
+            val theimagen = BitmapFactory.decodeStream(imagenStream)
+            val flujo = ByteArrayOutputStream()
+            theimagen?.compress(Bitmap.CompressFormat.JPEG, 10, flujo);
+            val newimage = flujo.toByteArray()
+            val imagen = BitmapFactory.decodeByteArray(newimage, 0, newimage.size)
+//            view.ratingBar.rating = ((Random.nextFloat() * (view.ratingBar.numStars - 1)))
+            view.IVimagenItem.transitionName = (ProductoAndImage.uid.toString())
+            view.IVimagenItem.setImageBitmap(imagen)
+            view.SaveStorage.setOnClickListener {
+                check(true)
+                ViewModelCall?.AddResponse(ProductoAndImage)
+            }
+            view.BSincronise.setOnClickListener {
+                check(true)
+
+            }
+            view.BSLocal.setOnClickListener {
+                check(true)
+            }
+        }
+    }
+
+    inner class ImageHolderNotImage(val view: ItemProductoNotimageBinding): RecyclerView.ViewHolder(view.root){
+        fun render(ProductoAndImage: listInventarioProductos){
+            view.TNombre.isSelected = true;
+            view.TNombre.text = ProductoAndImage.nombre
+            view.TEPrecio.text = "$\\${ProductoAndImage.precioC}"
+
+            view.SaveStorage.setOnClickListener {
+                check(true)
+                ViewModelCall?.AddResponse(ProductoAndImage)
+            }
+            view.BSincronise.setOnClickListener {
+                check(true)
+
+            }
+            view.BSLocal.setOnClickListener {
+                check(true)
+            }
+        }
+    }
+
+    inner class ImageHolderListView(val view: ItemProductoListviewBinding): RecyclerView.ViewHolder(view.root){
+        fun render(ProductoAndImage: listInventarioProductos) {
+
+            view.TNombre.isSelected = true;
+            view.TNombre.text = ProductoAndImage.nombre
+            view.TEPrecio.text = "$\\${ProductoAndImage.precioC}"
+            view.TEPrecioU.text = "$\\${ProductoAndImage.precioU}"
+            val options = BitmapFactory.Options().apply {
+                inJustDecodeBounds = false
+                outWidth = 200
+                outHeight = 200
+            }
+//            val theimagen = BitmapFactory.decodeStream(imagenStream,Rect(0,0,200,200),options)
+            val imagenStream = ByteArrayInputStream(ProductoAndImage.imageBit)
+            val theimagen = BitmapFactory.decodeStream(imagenStream)
+            val flujo = ByteArrayOutputStream()
+            theimagen?.compress(Bitmap.CompressFormat.JPEG, 10, flujo);
+            val newimage = flujo.toByteArray()
+            val imagen = BitmapFactory.decodeByteArray(newimage, 0, newimage.size)
+//            view.ratingBar.rating = ((Random.nextFloat() * (view.ratingBar.numStars - 1)))
+            view.IVimagenItem.transitionName = (ProductoAndImage.uid.toString())
+            view.IVimagenItem.setImageBitmap(imagen)
+            view.SaveStorage.setOnClickListener {
+                check(true)
+                ViewModelCall?.AddResponse(ProductoAndImage)
+            }
+            view.BSincronise.setOnClickListener {
+                check(true)
+
+            }
+            view.BSLocal.setOnClickListener {
+                check(true)
+            }
+
+        }
+    }
+
+
+    inner class ImageHolderGridView(val view: ItemProductoGridviewBinding): RecyclerView.ViewHolder(view.root){
+        fun render(ProductoAndImage: listInventarioProductos){
+
+            view.TNombre.isSelected = true;
+            view.TNombre.text = ProductoAndImage.nombre
+            view.TEPrecio.text = "$\\${ProductoAndImage.precioC}"
+            view.TEPrecioU.text = "$\\${ProductoAndImage.precioU}"
+            val options = BitmapFactory.Options().apply {
+                inJustDecodeBounds = false
+                outWidth = 200
+                outHeight = 200
+            }
+//            val theimagen = BitmapFactory.decodeStream(imagenStream,Rect(0,0,200,200),options)
+            val imagenStream = ByteArrayInputStream(ProductoAndImage.imageBit)
+            val theimagen = BitmapFactory.decodeStream(imagenStream)
+            val flujo = ByteArrayOutputStream()
+            theimagen?.compress(Bitmap.CompressFormat.JPEG, 10, flujo);
+            val newimage = flujo.toByteArray()
+            val imagen = BitmapFactory.decodeByteArray(newimage, 0, newimage.size)
+//            view.ratingBar.rating = ((Random.nextFloat() * (view.ratingBar.numStars - 1)))
+            view.IVimagenItem.transitionName = (ProductoAndImage.uid.toString())
+            view.IVimagenItem.setImageBitmap(imagen)
+            view.SaveStorage.setOnClickListener {
+                check(true)
+                ViewModelCall?.AddResponse(ProductoAndImage)
+            }
+            view.BSincronise.setOnClickListener {
+                check(true)
+
+            }
+            view.BSLocal.setOnClickListener {
+                check(true)
+            }
+        }
+    }
+
+    inner class ImageHolder(val view: ItemProductoBinding) : RecyclerView.ViewHolder(view.root) {
 
         fun render(ProductoAndImage: listInventarioProductos) {
 
@@ -90,53 +227,53 @@ class ProductoAdapter(
 //            }
         }
 
-        fun renderNotImagen(ProductoAndImage: listInventarioProductos) {
-            view.TNombre.isSelected = true;
-            view.TNombre.text = ProductoAndImage.nombre
-            view.TEPrecio.text = "$\\${ProductoAndImage.precioC}"
-
-            view.SaveStorage.setOnClickListener {
-                check(true)
-                ViewModelCall?.AddResponse(ProductoAndImage)
-            }
-            view.BSincronise.setOnClickListener {
-                check(true)
-
-            }
-            view.BSLocal.setOnClickListener {
-                check(true)
-            }
-        }
-
-        fun renderListView(ProductoAndImage: listInventarioProductos) {
-            view.TNombre.isSelected = true;
-            view.TNombre.text = ProductoAndImage.nombre
-            view.TEPrecio.text = "$\\${ProductoAndImage.precioC}"
-
-            val imagenStream = ByteArrayInputStream(ProductoAndImage.imageBit)
-            val theimagen = BitmapFactory.decodeStream(imagenStream)
-            val flujo = ByteArrayOutputStream()
-            theimagen?.compress(Bitmap.CompressFormat.JPEG, 10, flujo);
-            val newimage = flujo.toByteArray()
-            val imagen = BitmapFactory.decodeByteArray(newimage, 0, newimage.size)
-            view.ratingBar.rating = ((Random.nextFloat() * (view.ratingBar.numStars - 1)))
-            view.IVimagenItem.transitionName = (ProductoAndImage.uid.toString())
-            view.IVimagenItem.setImageBitmap(imagen)
-
-            view.SaveStorage.setOnClickListener {
-                check(true)
-                Log.i("SE CLICLEO","Item")
-                ViewModelCall?.AddResponse(ProductoAndImage)
-            }
-            view.BSincronise.setOnClickListener {
-                check(true)
-
-            }
-            view.BSLocal.setOnClickListener {
-                check(true)
-            }
-
-        }
+//        fun renderNotImagen(ProductoAndImage: listInventarioProductos) {
+//            view.TNombre.isSelected = true;
+//            view.TNombre.text = ProductoAndImage.nombre
+//            view.TEPrecio.text = "$\\${ProductoAndImage.precioC}"
+//
+//            view.SaveStorage.setOnClickListener {
+//                check(true)
+//                ViewModelCall?.AddResponse(ProductoAndImage)
+//            }
+//            view.BSincronise.setOnClickListener {
+//                check(true)
+//
+//            }
+//            view.BSLocal.setOnClickListener {
+//                check(true)
+//            }
+//        }
+//
+//        fun renderListView(ProductoAndImage: listInventarioProductos) {
+//            view.TNombre.isSelected = true;
+//            view.TNombre.text = ProductoAndImage.nombre
+//            view.TEPrecio.text = "$\\${ProductoAndImage.precioC}"
+//
+//            val imagenStream = ByteArrayInputStream(ProductoAndImage.imageBit)
+//            val theimagen = BitmapFactory.decodeStream(imagenStream)
+//            val flujo = ByteArrayOutputStream()
+//            theimagen?.compress(Bitmap.CompressFormat.JPEG, 10, flujo);
+//            val newimage = flujo.toByteArray()
+//            val imagen = BitmapFactory.decodeByteArray(newimage, 0, newimage.size)
+//            view.ratingBar.rating = ((Random.nextFloat() * (view.ratingBar.numStars - 1)))
+//            view.IVimagenItem.transitionName = (ProductoAndImage.uid.toString())
+//            view.IVimagenItem.setImageBitmap(imagen)
+//
+//            view.SaveStorage.setOnClickListener {
+//                check(true)
+//                Log.i("SE CLICLEO","Item")
+//                ViewModelCall?.AddResponse(ProductoAndImage)
+//            }
+//            view.BSincronise.setOnClickListener {
+//                check(true)
+//
+//            }
+//            view.BSLocal.setOnClickListener {
+//                check(true)
+//            }
+//
+//        }
 
     }
 
@@ -155,61 +292,92 @@ class ProductoAdapter(
         return visualise
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):  RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-//        var ItemView: ImageHolder = ImageHolder(
+        var ItemView: RecyclerView.ViewHolder = ImageHolder(ItemProductoBinding.inflate(layoutInflater,parent,false))
+//            ImageHolder(
 //            layoutInflater.inflate(
 //                R.layout.item_producto_reverse,
 //                parent,
 //                false
 //            )
 //        )
-        var ItemView: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_producto_reverse, parent,false)
-
-        Log.i("primeroo",viewType.toString())
+//        var ItemView: View = LayoutInflater.from(parent.context)
+//            .inflate(R.layout.item_producto_reverse, parent,false)
+//
+//        Log.i("primeroo",viewType.toString())
+//        ItemView = ImageHolderReverse(ItemProductoReverseBinding.inflate(layoutInflater,parent,false))
         if (viewType == 2) {
-            ItemView =
-                layoutInflater.inflate(
-                    R.layout.item_producto_notimage,
-                    parent,
-                    false
-            )
+//            ItemView =
+//                layoutInflater.inflate(
+//                    R.layout.item_producto_notimage,
+//                    parent,
+//                    false
+//            )
+            ItemView=ImageHolderNotImage(ItemProductoNotimageBinding.inflate(layoutInflater,parent,false))
         } else if (viewType == 1) {
             if (reverse) {
                 reverse = false;
-                ItemView =
-                    layoutInflater.inflate(R.layout.item_producto, parent, false)
+//                ItemView =
+//                    layoutInflater.inflate(R.layout.item_producto, parent, false)
+                ItemView=ImageHolder(ItemProductoBinding.inflate(layoutInflater,parent,false))
             } else {
                 reverse = true;
-                ItemView =
-                    layoutInflater.inflate(
-                        R.layout.item_producto_reverse,
-                        parent,
-                        false
-                )
+//                ItemView =
+//                    layoutInflater.inflate(
+//                        R.layout.item_producto_reverse,
+//                        parent,
+//                        false
+//                )
+                ItemView=ImageHolderReverse(ItemProductoReverseBinding.inflate(layoutInflater,parent,false))
             }
         } else if (viewType == 3) {
-            ItemView = layoutInflater.inflate(R.layout.item_producto_listview, parent, false)
+//            ItemView = layoutInflater.inflate(R.layout.item_producto_listview, parent, false)
+            ItemView=ImageHolderListView(ItemProductoListviewBinding.inflate(layoutInflater,parent,false))
 
         }else if(viewType == 4){
-            ItemView = layoutInflater.inflate(R.layout.item_producto_gridview, parent, false)
+//            ItemView = layoutInflater.inflate(R.layout.item_producto_gridview, parent, false)
+            ItemView=ImageHolderGridView(ItemProductoGridviewBinding.inflate(layoutInflater,parent,false))
+
         }
 
-        ItemView.id=id
+        ItemView.itemView.id=id
         id++
-        ItemView.setOnClickListener(RV_ItemListener());
-        ItemView.setOnLongClickListener(RV_ItemListener());
-        return ImageHolder(ItemView)
+        ItemView.itemView.setOnClickListener(RV_ItemListener());
+        ItemView.itemView.setOnLongClickListener(RV_ItemListener());
+//        return ImageHolder(ItemView)
+        return ItemView
     }
 
 
-    override fun onBindViewHolder(holder: ImageHolder, position: Int) {
-        if (MyImage[position].imageBit != null) {
-            holder.render(MyImage[position])
-        } else {
-            holder.renderNotImagen(MyImage[position])
+    override fun onBindViewHolder(holder:  RecyclerView.ViewHolder, position: Int) {
+        when(holder.itemViewType){
+            0->{
+                (holder as ProductoAdapter.ImageHolderReverse).render(MyImage[position])
+            }
+            1->{
+                if(MyImage[position].imageBit?.size!=0) {
+                    (holder as ProductoAdapter.ImageHolder).render(MyImage[position])
+                }else{
+                    (holder as ProductoAdapter.ImageHolderNotImage).render(MyImage[position])
+                }
+            }
+            2->{
+                (holder as ProductoAdapter.ImageHolderNotImage).render(MyImage[position])
+            }
+            3->{
+                (holder as ProductoAdapter.ImageHolderListView).render(MyImage[position])
+            }
+            4->{
+                (holder as ProductoAdapter.ImageHolderGridView).render(MyImage[position])
+            }
         }
+
+//        if (MyImage[position].imageBit != null) {
+//            holder.render(MyImage[position])
+//        } else {
+//            holder.renderNotImagen(MyImage[position])
+//        }
 
     }
 

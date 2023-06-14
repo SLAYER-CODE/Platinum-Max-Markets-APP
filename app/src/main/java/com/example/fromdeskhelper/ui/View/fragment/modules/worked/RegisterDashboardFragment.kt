@@ -25,6 +25,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.core.view.children
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.*
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
@@ -43,7 +44,9 @@ import com.example.fromdeskhelper.data.model.Types.CameraTypes
 import com.example.fromdeskhelper.data.model.base.CallBackItemTouch
 import com.example.fromdeskhelper.data.model.objects.Constants.Images.REQUEST_CODE_PICKER
 import com.example.fromdeskhelper.data.model.objects.Constants.Images.SELECT_FILE_IMAGE_CODE
-import com.example.fromdeskhelper.databinding.FragmentAgregateProductsBinding
+import com.example.fromdeskhelper.data.model.objects.Upload
+import com.example.fromdeskhelper.databinding.FragmentRegisterDashboardBinding
+import com.example.fromdeskhelper.databinding.ImageNewNewBinding
 import com.example.fromdeskhelper.type.BrandsInput
 import com.example.fromdeskhelper.type.CategoriesInput
 import com.example.fromdeskhelper.ui.View.ViewModel.AgregateProductViewModel
@@ -60,7 +63,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.image_new_new.view.*
+//import kotlinx.android.synthetic.main.image_new_new.view.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import java.io.File
@@ -77,7 +80,7 @@ private const val ARG_PARAM2 = "param2"
 
 
 @AndroidEntryPoint
-class AgregateProducts : Fragment(), CallBackItemTouch {
+class RegisterDashboardFragment : Fragment(), CallBackItemTouch {
 
     companion object {
         /**
@@ -91,7 +94,7 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            AgregateProducts().apply {
+            RegisterDashboardFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
@@ -104,7 +107,7 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
     private var param1: String? = null
     private var param2: String? = null
     private var parametro: String? = null;
-    private var _binding: FragmentAgregateProductsBinding? = null
+    private var _binding: FragmentRegisterDashboardBinding? = null
     private val binding get() = _binding!!
     protected lateinit var baseActivity: EmployedMainActivity
     protected lateinit var contextFragment: Context
@@ -123,7 +126,6 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
     //    Variables que definen la posicion con la ultima vista que se seleciono del RecyclerView
     private lateinit var viewHold: View;
     private var position: Int = 0;
-
 
     //    Funciones para la selecion multiple de las imagenes
     private lateinit var imagenUri: Uri;
@@ -145,12 +147,13 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
     private var recycleviewWidth: Int = -1;
 
     private val CameraView: CameraViewModel by viewModels()
-    private val AgregateProductsState: AgregateProductViewModel by viewModels();
+    private val AgregateProductsState: AgregateProductViewModel by viewModels(ownerProducer = { requireActivity()});
 
     private var CamClick: CameraTypes = CameraTypes.NULL;
     private var CamScannerStatus: Boolean = false;
     private var CategoryAdapter: MutableList<String> = mutableListOf();
 
+    private var buttonDisable:Boolean=false;
 
     override fun onStart() {
 //        baseActivity.binding.appBarMain.collapsingToolbar?.isTitleEnabled=false
@@ -162,11 +165,11 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
 
         Log.i(LOGFRAGMENT, "Se Inicio onStart [*]")
 //        (activity as MainActivity).functionFabRefresh(::clearItems);
-        baseActivity.binding.appBarMain.refreshFab.setOnClickListener {
-            clearItems()
-        }
+//        baseActivity.binding.appBarMain.refreshFab.setOnClickListener {
+//            clearItems()
+//        }
 //        baseActivity.binding.appBarMain.BIShowP.visibility = View.INVISIBLE
-        baseActivity.binding.appBarMain.refreshFab.setImageResource(R.drawable.ic_baseline_clear_all_24)
+//        baseActivity.binding.appBarMain.refreshFab.setImageResource(R.drawable.ic_baseline_clear_all_24)
 
 
         super.onStart()
@@ -275,7 +278,7 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
 //        })
         lifecycleScope.launch {
             AgregateProductsState.sharedFlow.collect { url ->
-                Log.i("VIEWMODELADDPRODUCT", "SE APLICO" + url.toString())
+//                Log.i("VIEWMODELADDPRODUCT", "SE APLICO" + url.toString())
                 if (url != null) {
                     runBlocking {
                         adapter.addImage(url);
@@ -374,22 +377,42 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
                 binding.TVpreciodisconut.text = (precio - descuento).toString()
             }
         })
-
+        fun configButtonSend(){
+            if(binding.TENombre.text.toString()!="" && binding.TEPrecio.text.toString()!="") binding.BAgregate.isEnabled = (binding.CSaveStorage.isChecked or binding.CSaveLocal.isChecked or binding.CSaveServer.isChecked)
+        }
         binding.TENombre.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 //Cuando preciona la tecla para la ejecucion de los datos
+                configButtonSend()
                 if (s.toString() != "") {
+
                     activity?.setTitle(s.toString() + " (Borrador N° $parametro)")
                 } else {
+
                     activity?.setTitle("Agregar Producto [$parametro]")
                 }
+
+
             }
 
             override fun afterTextChanged(p0: Editable?) {
             }
+        })
+
+        binding.TEPrecio.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                configButtonSend()
+
+            }
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
         })
 
         AgregateProductsState.CategoriesGetApp()
@@ -403,7 +426,7 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
             addChipToGroup(
                 selected,
                 binding.chipGroup2!!,
-                R.color.md_green_500,
+                R.color.md_blue_500,
                 R.drawable.ic_baseline_spellcheck_24
             )
         }
@@ -417,13 +440,13 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
                     if (binding.TECategoria.text.toString() in CategoryAdapter) {
                         addChipToGroup(
                             binding.TECategoria.text.toString(), binding.chipGroup2!!,
-                            R.color.md_green_600, R.drawable.ic_baseline_recommend_addproducto
+                            R.color.md_blue_500, R.drawable.ic_baseline_recommend_addproducto
                         )
                     } else {
                         addChipToGroup(
                             binding.TECategoria.text.toString(),
                             binding.chipGroup2!!,
-                            R.color.md_green_500_75_overlay,
+                            R.color.md_red_200,
                             R.drawable.ic_baseline_close_24
                         )
                     }
@@ -442,13 +465,13 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
                     if (binding.TEMarca.text.toString() in CategoryAdapter) {
                         addChipToGroup(
                             binding.TEMarca.text.toString(), binding.ChipGroupMarca!!,
-                            R.color.md_green_600, R.drawable.ic_baseline_recommend_addproducto
+                            R.color.md_blue_500, R.drawable.ic_baseline_recommend_addproducto
                         )
                     } else {
                         addChipToGroup(
                             binding.TEMarca.text.toString(),
                             binding.ChipGroupMarca!!,
-                            R.color.md_green_500_75_overlay,
+                            R.color.md_red_200,
                             R.drawable.ic_baseline_close_24
                         )
                     }
@@ -547,19 +570,18 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
             }
 
         }
-        AgregateProductsState.AgregateState.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer {
-                MessageSnackBar(view, text = "Agregado '${binding.TENombre.text}'", Color.GREEN)
-            })
-        binding.CSaveStorage?.setOnCheckedChangeListener { buttonView, isChecked ->
 
+
+
+//        var CheckListener = object :
+        binding.CSaveStorage?.setOnCheckedChangeListener { buttonView, isChecked ->
+            configButtonSend()
         }
         binding.CSaveLocal?.setOnCheckedChangeListener { buttonView, isChecked ->
-
+            configButtonSend()
         }
         binding.CSaveServer?.setOnCheckedChangeListener { buttonView, isChecked ->
-
+            configButtonSend()
         }
 
         AgregateProductsState.ButtonAgregateState.observe(
@@ -679,18 +701,18 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
                 ft.replace(R.id.FragmentCamera, CameraQrFragment());
                 ft.commitAllowingStateLoss()
                 if (baseActivity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    (baseActivity.binding.appBarMain.fab.layoutParams as ViewGroup.MarginLayoutParams).setMargins(
-                        0,
-                        0,
-                        dpToPx(360),
-                        dpToPx(20)
-                    )
-                    (baseActivity.binding.appBarMain.toolbarParent?.layoutParams as ViewGroup.MarginLayoutParams).setMargins(
-                        0,
-                        0,
-                        dpToPx(340),
-                        dpToPx(0)
-                    )
+//                    (baseActivity.binding.appBarMain.fab.layoutParams as ViewGroup.MarginLayoutParams).setMargins(
+//                        0,
+//                        0,
+//                        dpToPx(360),
+//                        dpToPx(20)
+//                    )
+//                    (baseActivity.binding.appBarMain.toolbarParent?.layoutParams as ViewGroup.MarginLayoutParams).setMargins(
+//                        0,
+//                        0,
+//                        dpToPx(340),
+//                        dpToPx(0)
+//                    )
                 } else {
                     if(CamClick==CameraTypes.NULL) DesplazeAnimation.start()
                 }
@@ -731,18 +753,18 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
 //            ft.setReorderingAllowed(true)
             ft.commitAllowingStateLoss()
             if (baseActivity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                (baseActivity.binding.appBarMain.fab.layoutParams as ViewGroup.MarginLayoutParams).setMargins(
-                    0,
-                    0,
-                    dpToPx(360),
-                    dpToPx(20)
-                )
-                (baseActivity.binding.appBarMain.toolbarParent?.layoutParams as ViewGroup.MarginLayoutParams).setMargins(
-                    0,
-                    0,
-                    dpToPx(340),
-                    dpToPx(0)
-                )
+//                (baseActivity.binding.appBarMain.fab.layoutParams as ViewGroup.MarginLayoutParams).setMargins(
+//                    0,
+//                    0,
+//                    dpToPx(360),
+//                    dpToPx(20)
+//                )
+//                (baseActivity.binding.appBarMain.toolbarParent?.layoutParams as ViewGroup.MarginLayoutParams).setMargins(
+//                    0,
+//                    0,
+//                    dpToPx(340),
+//                    dpToPx(0)
+//                )
             } else {
                 if(CamClick==CameraTypes.NULL) DesplazeAnimation.start()
             }
@@ -806,7 +828,8 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
 
     override fun prepareViews(views: Boolean, viewholds: RecyclerView.ViewHolder?) {
         if (viewholds != null) {
-            viewHold = viewholds.itemView.viewParent
+//            image_new_new
+            viewHold = ImageNewNewBinding.bind(viewholds.itemView).viewParent
             position = viewholds.absoluteAdapterPosition
             offsetViewBounds = Rect()
             binding.DeleteDrag.getDrawingRect(offsetViewBounds);
@@ -830,22 +853,22 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
                 LinearLayout.LayoutParams.MATCH_PARENT
             )
             binding.DeletAndSaveParent.layoutParams = lp
-            binding.LEandI.layoutParams = lp
+//            binding.LEandI.layoutParams = lp
         } else {
             val lp = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 0
             )
             binding.DeletAndSaveParent.layoutParams = lp
-            val lpDat = LinearLayout.LayoutParams(
-                0,
-                0
-            )
-            binding.LEandI.layoutParams = lpDat
+//            val lpDat = LinearLayout.LayoutParams(
+//                0,
+//                0
+//            )
+//            binding.LEandI.layoutParams = lpDat
         }
 
         TransitionManager.beginDelayedTransition(binding.linearConstraitButton, transtion)
-//        binding.DeletAndSaveParent.requestLayout()
+        binding.DeletAndSaveParent.requestLayout()
     }
 
     override fun isItemSelected(posX: Float, posY: Float): Int {
@@ -928,25 +951,25 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
         if (TABCalc && offsetViewBounds.left - pwd <= MMDImagenY && offsetViewBounds.right - pwd >= MMDImagenY) {
             binding.DeleteDrag.setTextColor(Color.RED)
             binding.DeleteDrag.setShadowLayer(40f, -6f, 0f, Color.RED)
-            binding.DeleteDrag.compoundDrawables[2].colorFilter =
-                PorterDuffColorFilter(Color.RED, PorterDuff.Mode.SRC_IN)
-            binding.DeleteDrag.compoundDrawables[2].bounds = Rect(0, 0, 100, 100)
+//            binding.DeleteDrag.compoundDrawables[2].colorFilter =
+//                PorterDuffColorFilter(Color.RED, PorterDuff.Mode.SRC_IN)
+//            binding.DeleteDrag.compoundDrawables[2].bounds = Rect(0, 0, 100, 100)
         } else {
-            binding.DeleteDrag.compoundDrawables[2].bounds = Rect(0, 0, 70, 70)
-            binding.DeleteDrag.compoundDrawables[2].colorFilter =
-                PorterDuffColorFilter(ColorDelete, PorterDuff.Mode.SRC_IN)
+//            binding.DeleteDrag.compoundDrawables[2].bounds = Rect(0, 0, 70, 70)
+//            binding.DeleteDrag.compoundDrawables[2].colorFilter =
+//                PorterDuffColorFilter(ColorDelete, PorterDuff.Mode.SRC_IN)
             binding.DeleteDrag.setTextColor(ColorDelete)
         }
         if (TABCalc && offsetViewItemTwo.left - pwd <= MMDImagenY && offsetViewItemTwo.right - pwd >= MMDImagenY) {
             binding.SaveDrag.setTextColor(Color.CYAN)
             binding.SaveDrag.setShadowLayer(40f, -6f, 0f, Color.CYAN)
-            binding.SaveDrag.compoundDrawables[0].colorFilter =
-                PorterDuffColorFilter(Color.CYAN, PorterDuff.Mode.SRC_IN)
-            binding.SaveDrag.compoundDrawables[0].bounds = Rect(0, 0, 100, 100)
+//            binding.SaveDrag.compoundDrawables[0].colorFilter =
+//                PorterDuffColorFilter(Color.CYAN, PorterDuff.Mode.SRC_IN)
+//            binding.SaveDrag.compoundDrawables[0].bounds = Rect(0, 0, 100, 100)
         } else {
-            binding.SaveDrag.compoundDrawables[0].bounds = Rect(0, 0, 70, 70)
-            binding.SaveDrag.compoundDrawables[0].colorFilter =
-                PorterDuffColorFilter(ColorSave, PorterDuff.Mode.SRC_IN)
+//            binding.SaveDrag.compoundDrawables[0].bounds = Rect(0, 0, 70, 70)
+//            binding.SaveDrag.compoundDrawables[0].colorFilter =
+//                PorterDuffColorFilter(ColorSave, PorterDuff.Mode.SRC_IN)
             binding.SaveDrag.setTextColor(ColorSave)
         }
     }
@@ -1024,12 +1047,15 @@ class AgregateProducts : Fragment(), CallBackItemTouch {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentAgregateProductsBinding.inflate(inflater, container, false)
+        _binding = FragmentRegisterDashboardBinding.inflate(inflater, container, false)
         activity?.setTitle("Agregar Producto [$parametro]")
 
         val navcontroller =findNavController()
         val appbarlayout= AppBarConfiguration(navcontroller.graph)
-        binding.toolbar?.setupWithNavController(navcontroller,appbarlayout)
+        binding.Toolbar?.setupWithNavController(navcontroller,appbarlayout)
+//        baseActivity.setSupportActionBar(binding.Toolbar)
+        Log.i("Añandiendo instrucciones","se Cambio la barra")
+
         return binding.root
     }
 

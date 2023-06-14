@@ -2,166 +2,323 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cordinatorRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipToPadding="false"
     android:clipChildren="false"
-    android:fitsSystemWindows="true"
     android:clipToOutline="false"
-    android:id="@+id/cordinatorRoot"
-    tools:context=".ui.View.activity.MainActivity">
+    android:clipToPadding="false"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.View.activity.EmployedMainActivity">
 
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_anchor="@id/toolbarParent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:id="@+id/include"
-            layout="@layout/content_main"
-            />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/refreshFab"
-        android:layout_width="73dp"
-        app:layout_behavior=".ui.animation.FloatingHideBehavior"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|start"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="10dp"
-        style="@style/ButtonFloatLayout"
-        app:srcCompat="@drawable/ic_baseline_autorenew_24" />
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/toolbarParentClient"
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_main"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_anchor="@id/toolbarParent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/refreshFab"-->
+<!--        style="@style/ButtonFloatLayout"-->
+<!--        android:layout_width="73dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom|start"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        android:layout_marginBottom="10dp"-->
+<!--        app:layout_behavior=".ui.animation.FloatingHideBehavior"-->
+<!--        app:srcCompat="@drawable/ic_baseline_autorenew_24" />-->
+
+<!--    <com.google.android.material.appbar.AppBarLayout-->
+<!--        android:id="@+id/toolbarParentClient"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:foregroundTintMode="screen"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        tools:visibility="gone">-->
+
+<!--        <androidx.appcompat.widget.Toolbar-->
+<!--            android:id="@+id/toolbarClient"-->
+<!--            style="@style/BarActiveToolBar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="?attr/actionBarSize"-->
+<!--            android:title=""-->
+<!--            app:popupTheme="@style/Theme.Productos.PopupOverlay"-->
+<!--            app:title=""-->
+<!--            app:titleTextColor="@color/md_red_500">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/TitleClient"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:text=""-->
+<!--                android:textColor="@color/md_white_1000"-->
+<!--                android:textSize="20dp"></TextView>-->
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/BIShowPClient"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="right"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:visibility="visible">-->
+
+<!--                <androidx.appcompat.widget.SearchView-->
+<!--                    android:id="@+id/SVProductsClient"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_gravity="left"-->
+<!--                    android:layout_weight="2"-->
+<!--                    android:backgroundTint="@color/md_green_400"-->
+<!--                    android:foregroundGravity="right"-->
+<!--                    android:foregroundTint="@color/md_green_400"-->
+<!--                    android:gravity="left"-->
+<!--                    app:searchIcon="@drawable/ic_baseline_image_search_showproduct" />-->
+
+<!--                <androidx.appcompat.widget.AppCompatButton-->
+<!--                    android:id="@+id/BQRScannerClient"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:background="@drawable/ic_baseline_qr_code_scanner_showproduct"-->
+<!--                    android:minWidth="50dp"></androidx.appcompat.widget.AppCompatButton>-->
+<!--            </LinearLayout>-->
+<!--        </androidx.appcompat.widget.Toolbar>-->
+
+<!--        <ProgressBar-->
+<!--            android:id="@+id/PBbarListClient"-->
+<!--            style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="5dp"-->
+<!--            android:background="#000000"-->
+<!--            android:hapticFeedbackEnabled="true"-->
+<!--            android:indeterminate="true"-->
+<!--            android:indeterminateOnly="true"-->
+<!--            android:indeterminateTint="#11FF00"-->
+<!--            android:indeterminateTintMode="src_atop"-->
+<!--            android:progressBackgroundTint="#000000"-->
+<!--            android:progressTint="#000000"-->
+<!--            android:requiresFadingEdge="horizontal"-->
+<!--            android:secondaryProgressTint="#000000"-->
+<!--            android:soundEffectsEnabled="true"-->
+<!--            android:visibility="gone" />-->
+
+<!--    </com.google.android.material.appbar.AppBarLayout>-->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/CVLStorage"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="10dp"
+        android:layout_gravity="top|right"
+        android:layout_marginTop="75dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:foregroundTintMode="screen"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="gone">
+        android:visibility="invisible"
+        tools:visibility="visible">
+        <TextView
+            android:fontFamily="@font/lilitaoe_regular"
+            android:background="@color/md_green_A400"
+            android:padding="10dp"
+            android:text="Agregado Correctamente [STORAGE]"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TextView>
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/CVLFaildStorage"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="10dp"
+        android:layout_gravity="top|right"
+        android:layout_marginTop="75dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        tools:visibility="visible">
+        <TextView
+            android:fontFamily="@font/lilitaoe_regular"
+            android:background="@color/md_red_A400"
+            android:padding="10dp"
+            android:text="Ubo un error al guardar ... [STORAGE]"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TextView>
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/CVLServer"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="10dp"
+        android:layout_gravity="top|right"
+        android:layout_marginTop="120dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        tools:visibility="visible">
+        <TextView
+            android:fontFamily="@font/lilitaoe_regular"
+            android:background="@color/md_green_A400"
+            android:padding="10dp"
+            android:text="Agregado correctamente [SERVIDOR]"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TextView>
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/CVLFaildServer"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="10dp"
+        android:layout_gravity="top|right"
+        android:layout_marginTop="120dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        tools:visibility="visible">
+        <TextView
+            android:fontFamily="@font/lilitaoe_regular"
+            android:background="@color/md_red_A400"
+            android:padding="10dp"
+            android:text="Ubo un error al guardar .. [SERVIDOR]"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TextView>
+    </androidx.cardview.widget.CardView>
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbarClient"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:title=""
-            style="@style/BarActiveToolBar"
-            app:popupTheme="@style/Theme.Productos.PopupOverlay"
-            app:title=""
-            app:titleTextColor="@color/md_red_500">
 
-            <TextView
-                android:id="@+id/TitleClient"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text=""
-                android:textColor="@color/md_white_1000"
-                android:textSize="20dp"></TextView>
-
-            <LinearLayout
-                android:id="@+id/BIShowPClient"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:orientation="horizontal"
-                android:visibility="visible">
-
-                <androidx.appcompat.widget.SearchView
-                    android:id="@+id/SVProductsClient"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="left"
-                    android:layout_weight="2"
-                    android:backgroundTint="@color/md_green_400"
-                    android:foregroundGravity="right"
-                    android:foregroundTint="@color/md_green_400"
-                    android:gravity="left"
-                    app:searchIcon="@drawable/ic_baseline_image_search_showproduct" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/BQRScannerClient"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:background="@drawable/ic_baseline_qr_code_scanner_showproduct"
-                    android:minWidth="50dp"></androidx.appcompat.widget.AppCompatButton>
-            </LinearLayout>
-        </androidx.appcompat.widget.Toolbar>
-
-        <ProgressBar
-            android:id="@+id/PBbarListClient"
-            style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="#000000"
-            android:hapticFeedbackEnabled="true"
-            android:indeterminate="true"
-            android:indeterminateOnly="true"
-            android:indeterminateTint="#11FF00"
-            android:indeterminateTintMode="src_atop"
-            android:progressBackgroundTint="#000000"
-            android:progressTint="#000000"
-            android:requiresFadingEdge="horizontal"
-            android:secondaryProgressTint="#000000"
-            android:soundEffectsEnabled="true"
-            android:visibility="gone" />
-
-    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/CVLCorrectLocal"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="10dp"
+        android:layout_gravity="top|right"
+        android:layout_marginTop="205dp"
+        android:layout_width="wrap_content"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        android:layout_height="wrap_content">
+        <TextView
+            android:fontFamily="@font/lilitaoe_regular"
+            android:background="@color/md_green_A400"
+            android:padding="10dp"
+            android:text="Agregado correctamente [LOCAL]"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TextView>
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/CVLFaildLocal"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="10dp"
+        android:layout_gravity="top|right"
+        android:layout_marginTop="205dp"
+        android:layout_width="wrap_content"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        android:layout_height="wrap_content">
+        <TextView
+            android:fontFamily="@font/lilitaoe_regular"
+            android:background="@color/md_red_A400"
+            android:padding="10dp"
+            android:text="Error al guardar [LOCAL]"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TextView>
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/CVLWaringLocal"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="10dp"
+        android:layout_gravity="top|right"
+        android:layout_marginTop="165dp"
+        android:layout_width="wrap_content"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        android:layout_height="wrap_content">
+        <TextView
+            android:fontFamily="@font/lilitaoe_regular"
+            android:background="@color/md_yellow_A400"
+            android:padding="10dp"
+            android:text="Base de datos directa... [LOCAL]"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TextView>
+    </androidx.cardview.widget.CardView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="350dp"
-            android:minHeight="350dp"
-            android:visibility="invisible"
+        android:clipChildren="false"
+        android:clipToOutline="false"
+        android:clipToPadding="false"
+        android:animateLayoutChanges="true"
+        android:id="@+id/constraintLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="250dp"
+        android:minHeight="250dp"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginBottom="30dp"
+            android:layout_marginRight="30dp"
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <FrameLayout
-                android:id="@+id/FragmentCamera"
-                android:layout_width="wrap_content"
+                android:id="@+id/FLragmentCamera"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHeight_max="350dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_max="350dp"
-                tools:layout_height="350dp"
-                tools:layout_width="350dp"></FrameLayout>
+                android:background="@color/md_black_1000"
+                app:layout_constraintHeight_max="250dp"
+                app:layout_constraintWidth_max="250dp"
+                tools:layout_height="250dp"
+                tools:layout_width="250dp" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/MoveCamera"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/moved_camera_main"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0"></androidx.appcompat.widget.AppCompatButton>
+
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/ResizeCamera"
                 android:layout_width="50dp"
+                android:backgroundTint="@color/md_blue_A700"
                 android:layout_height="50dp"
-                android:background="@drawable/resize_camera_main"
+                android:layout_gravity="bottom|left"
+                android:rotation="180"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0"></androidx.appcompat.widget.AppCompatButton>
+                android:background="@drawable/baseline_arrow_outward_24" />
+
+        </androidx.cardview.widget.CardView>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/MoveCamera"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|right"
+            android:background="@drawable/moved_camera_main"
+            android:clipToOutline="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+        </androidx.appcompat.widget.AppCompatButton>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <!--    <fragment-->
     <!--        android:id="@+id/nav_host_fragment"-->
     <!--        android:name="androidx.navigation.fragment.NavHostFragment"-->
@@ -170,86 +327,85 @@
     <!--        app:defaultNavHost="true"-->
     <!--        app:navGraph="@navigation/nav_agregate" />-->
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="73dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        style="@style/ButtonFloatLayout"
-        app:srcCompat="@drawable/ic_baseline_add_shopping_cart_24" />
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/fab"-->
+<!--        style="@style/ButtonFloatLayout"-->
+<!--        android:layout_width="73dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom|end"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        android:layout_marginBottom="10dp"-->
+<!--        app:srcCompat="@drawable/ic_baseline_add_shopping_cart_24" />-->
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:visibility="gone"
-        tools:visibility="visible"
-        android:id="@+id/cordinaterClient"
-        android:layout_width="130dp"
-        app:layout_dodgeInsetEdges="bottom"
-        android:layout_gravity="bottom|end"
-        android:layout_height="130dp"
-        android:clipToPadding="false"
-        android:clipChildren="false"
-        android:clipToOutline="false"
-        >
+<!--    <androidx.coordinatorlayout.widget.CoordinatorLayout-->
+<!--        android:id="@+id/cordinaterClient"-->
+<!--        android:layout_width="130dp"-->
+<!--        android:layout_height="130dp"-->
+<!--        android:layout_gravity="bottom|end"-->
+<!--        android:clipChildren="false"-->
+<!--        android:clipToOutline="false"-->
+<!--        android:clipToPadding="false"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_dodgeInsetEdges="bottom"-->
+<!--        tools:visibility="visible">-->
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/itemconstraint"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            android:clipToPadding="false"
-            android:clipChildren="false"
-            android:clipToOutline="false"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:id="@+id/itemconstraint"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:clipChildren="false"-->
+<!--            android:clipToOutline="false"-->
+<!--            android:clipToPadding="false">-->
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/addclientitems"
-                android:clipToPadding="false"
-                android:clipChildren="false"
-                android:overScrollMode="never"
-                android:clipToOutline="false"
-                android:nestedScrollingEnabled="false"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:backgroundTintMode="src_atop"
-                android:foregroundTintMode="screen"
-                android:rotation="45"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/addclientitems"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:backgroundTintMode="src_atop"-->
+<!--                android:clipChildren="false"-->
+<!--                android:clipToOutline="false"-->
+<!--                android:clipToPadding="false"-->
+<!--                android:foregroundTintMode="screen"-->
+<!--                android:nestedScrollingEnabled="false"-->
+<!--                android:overScrollMode="never"-->
+<!--                android:rotation="45"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent">-->
 
-            </androidx.recyclerview.widget.RecyclerView>
+<!--            </androidx.recyclerview.widget.RecyclerView>-->
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+<!--    </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabClient"
-        android:layout_width="73dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:visibility="gone"
-        style="@style/ButtonFloatLayout"
-        app:srcCompat="@drawable/ic_baseline_broadcast_on_personal_24" />
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/fabClient"-->
+<!--        style="@style/ButtonFloatLayout"-->
+<!--        android:layout_width="73dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom|end"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        android:layout_marginBottom="10dp"-->
+<!--        android:visibility="gone"-->
+<!--        app:srcCompat="@drawable/ic_baseline_broadcast_on_personal_24" />-->
 
-    <FrameLayout
-        tools:visibility="visible"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        android:id="@+id/ClientFragmnetShow"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="30dp"
-        android:elevation="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/fragment_client_item_show"></FrameLayout>
+<!--    <FrameLayout-->
+<!--        android:id="@+id/ClientFragmnetShow"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_margin="30dp"-->
+<!--        android:elevation="20dp"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        tools:layout="@layout/fragment_client_item_show"-->
+<!--        tools:visibility="visible" />-->
 
 </FrameLayout>

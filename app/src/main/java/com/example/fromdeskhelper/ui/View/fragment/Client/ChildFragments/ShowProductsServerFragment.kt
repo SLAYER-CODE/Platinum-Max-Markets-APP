@@ -9,13 +9,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.fromdeskhelper.R
-import com.example.fromdeskhelper.databinding.FragmentPaymentsClientBinding
 import com.example.fromdeskhelper.databinding.FragmentShowProductsServer2Binding
 import com.example.fromdeskhelper.ui.View.ViewModel.ShowServerViewModel
-import com.example.fromdeskhelper.ui.View.activity.MainActivity
+import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import com.example.fromdeskhelper.ui.View.adapter.Client.ProductoP2PAdapter
-import com.example.fromdeskhelper.ui.View.adapter.ServerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Rename parameter arguments, choose names that match
@@ -37,7 +34,7 @@ class ShowProductsServerFragment : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentShowProductsServer2Binding? = null
     private val binding get() = _binding!!
-    protected lateinit var baseActivity: MainActivity
+    protected lateinit var baseActivity: EmployedMainActivity
     protected lateinit var contextFragment: Context
 //    Server Model
     private val ServerModel: ShowServerViewModel by viewModels()
@@ -90,7 +87,7 @@ class ShowProductsServerFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MainActivity) {
+        if (context is EmployedMainActivity) {
             this.baseActivity = context
         }
         this.contextFragment = context

@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
-import kotlinx.android.synthetic.main.item_image_detalles.view.*
+import com.example.fromdeskhelper.databinding.ItemImageDetallesBinding
+//import kotlinx.android.synthetic.main.item_image_detalles.view.*
 import java.io.ByteArrayInputStream
 
 
@@ -21,7 +22,7 @@ class DetallesAdapterImagen (private val mContext: Context,var MyImage:List<Imag
 //        notifyDataSetChanged()
 //    }
 
-    class ImageHolder(val view: View):RecyclerView.ViewHolder(view){
+    class ImageHolder(val view: ItemImageDetallesBinding):RecyclerView.ViewHolder(view.root){
 
         fun render(superImage:ImagenesNew){
 

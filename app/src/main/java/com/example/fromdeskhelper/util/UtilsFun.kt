@@ -73,6 +73,11 @@ fun isConnected(context: Context): Boolean {
 }
 
 
+fun isConnectServer(context: Context):Boolean{
+    return true
+}
+
+
 class TabletPageTransformer : ViewPager2.PageTransformer {
     override fun transformPage(page: View, pos: Float) {
         val width = page.width.toFloat()

@@ -23,8 +23,6 @@ class CallsClientUseCase @Inject constructor(private val ProductController: Clie
         return ProductController.productsGetClient(GetClinet)
     }
 
-
-
     suspend fun productsRemoveClient(GetClinet:Int,Product:Int){
         return ProductController.productsRemoveClient(GetClinet,Product)
     }

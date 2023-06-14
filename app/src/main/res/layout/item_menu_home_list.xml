@@ -2,21 +2,16 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="4dp"
-        app:cardUseCompatPadding="true"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    <androidx.constraintlayout.widget.ConstraintLayout
+        app:cardCornerRadius="6dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_gravity="fill"
+        android:layout_columnWeight="1"
+        android:layout_rowWeight="1"
+        android:layout_margin="5dp"
+        android:layout_height="180dp">
+
 
         <com.airbnb.lottie.LottieAnimationView
-            android:background="@color/md_blue_500"
             android:id="@+id/lottieAnimationView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -24,33 +19,40 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/park">
+            app:lottie_autoPlay="false"
+            android:paddingRight="40dp"
+            android:paddingBottom="40dp"
+            android:paddingLeft="40dp"
+            android:paddingTop="20dp"
+            app:lottie_renderMode="hardware"
+            app:lottie_loop="true">
 
 
         </com.airbnb.lottie.LottieAnimationView>
 
         <TextView
-            android:textStyle="bold"
+            android:fontFamily="@font/cherry_regular"
             android:textSize="15dp"
             android:gravity="center"
             android:maxLines="1"
             android:id="@+id/TTitle"
-            android:background="@color/md_black_1000_25"
+            android:background="@color/md_black_1000_50"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Titulo"
+            android:text=""
+            tools:text="Titulo"
             android:textColor="@color/md_white_1000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
+            android:layout_gravity="bottom"
             android:padding="5dp"
+            android:fontFamily="@font/lobster_regular"
             android:maxLines="5"
-            android:layout_margin="9dp"
-            android:background="@color/md_black_1000_10"
+            android:layout_margin="6dp"
+            android:background="@color/md_black_1000_25"
             android:id="@+id/TDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,6 +63,16 @@
             app:layout_constraintStart_toStartOf="parent">
 
         </TextView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatButton
 
+            android:background="@drawable/baseline_not_started_24"
+            android:id="@+id/go"
+            android:backgroundTint="@color/md_red_500"
+            android:layout_gravity="left|top"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="5dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp">
+
+        </androidx.appcompat.widget.AppCompatButton>
 </androidx.cardview.widget.CardView>

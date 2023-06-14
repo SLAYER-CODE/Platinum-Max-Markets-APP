@@ -2,18 +2,14 @@ package com.example.fromdeskhelper.ui.View.fragment
 
 import Data.ClientList
 import Data.ClientListGet
-import Data.Producto
 import Data.listInventarioProductos
 import android.animation.TimeInterpolator
 import android.content.Context
-import android.graphics.Color
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -25,22 +21,18 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.databinding.FragmentShowProductsBinding
-import com.example.fromdeskhelper.ui.View.ViewModel.CameraViewModel
+import com.example.fromdeskhelper.databinding.ItemProductoBinding
 import com.example.fromdeskhelper.ui.View.ViewModel.ClientLocalViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.SendItems.SendProductsStoreViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.ShowLocalViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.UitlsMainShowViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.UtilsShowMainViewModels
-import com.example.fromdeskhelper.ui.View.activity.MainActivity
+import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import com.example.fromdeskhelper.ui.View.adapter.ProductoAdapter
-import com.example.fromdeskhelper.ui.View.fragment.Client.ChildFragments.affectOnItemClicks
-import com.example.fromdeskhelper.util.listener.RecyclerViewItemClickListener
-import com.example.fromdeskhelper.util.listener.recyclerItemClickListener
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.item_producto.view.*
+//import kotlinx.android.synthetic.main.item_producto.view.*
 import kotlinx.coroutines.launch
 
 //@JvmOverloads
@@ -55,7 +47,7 @@ class ShowProducts : Fragment() {
     private val binding get() = _binding!!
     private var listaProductos = emptyList<listInventarioProductos>()
     private var listaClientes = emptyList<ClientList>()
-    private lateinit var baseActivity: MainActivity
+    private lateinit var baseActivity: EmployedMainActivity
     private lateinit var contextFragment: Context
     var currentPage: Int = 6
     var itemfinal: Boolean = false;
@@ -108,7 +100,7 @@ class ShowProducts : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MainActivity) {
+        if (context is EmployedMainActivity) {
             this.baseActivity = context
         }
         this.contextFragment = context
@@ -144,6 +136,7 @@ class ShowProducts : Fragment() {
 
     fun setFunction(value: Boolean, client: ClientListGet?) {
         Log.i("SE APRETO LONG","FINALITEM")
+
         adapter.setOnItemListenerListener(object:ProductoAdapter.OnItemListener{
             override fun OnItemClickListener(view: View?, position: Int) {
                 if (findNavController().currentDestination?.id == R.id.FirstFragment) {
@@ -156,8 +149,8 @@ class ShowProducts : Fragment() {
                     bundle.putInt("uid", listaProductos[position].uid)
                     var animation = 0
                     var extras: FragmentNavigator.Extras = FragmentNavigatorExtras()
-
-                    if (view?.IVimagenItem != null) {
+                    //main.item_producto
+                    if ((view as ItemProductoBinding)?.IVimagenItem != null) {
                         animation = 1
                         extras = FragmentNavigatorExtras(view.IVimagenItem to "image_big")
                     }
@@ -185,7 +178,7 @@ class ShowProducts : Fragment() {
                         .setInterpolator(decayingSineWave)
                         .setDuration(200).withEndAction {
                             val ViewDrawable =
-                                DrawableCompat.wrap(view.ItemBackground.background);
+                                DrawableCompat.wrap((view as ItemProductoBinding).ItemBackground.background);
                             DrawableCompat.setTint(ViewDrawable.mutate(), client.color)
                         }
 

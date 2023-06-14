@@ -78,12 +78,19 @@
     <style name="TextTitle" parent="@android:style/TextAppearance">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">30dp</item>
-        <item name="android:shadowRadius">2</item>
-        <item name="android:shadowColor">@color/md_white_1000</item>
-        <item name="android:shadowDy">3</item>
-        <item name="android:shadowDx">3</item>
+        <item name="android:shadowRadius">1</item>
+        <item name="android:shadowColor">@color/md_cyan_A400</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowDx">1</item>
     </style>
-
+    <style name="TextTitleRegister" parent="@android:style/TextAppearance">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">30dp</item>
+        <item name="android:shadowRadius">1</item>
+        <item name="android:shadowColor">@color/md_cyan_A400</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowDx">1</item>
+    </style>
 
 
 </resources>

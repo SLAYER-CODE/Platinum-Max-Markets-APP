@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="23dp"
-    tools:context=".ui.View.fragment.HomeFragment">
+    tools:context=".ui.View.fragment.User.home.HomeUserFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/toolbarParent"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
         android:backgroundTint="@color/md_white_1000_screen"
         style="@style/BarLayout">
 
@@ -29,40 +29,12 @@
             app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
             >
 
-
-            <com.airbnb.lottie.LottieAnimationView
-                app:lottie_renderMode="software"
-                android:fitsSystemWindows="true"
-                android:id="@+id/lottieAnimationView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:lottie_autoPlay="true"
-                app:lottie_speed="0.3"
-                app:lottie_loop="false"
-                app:lottie_rawRes="@raw/employed"/>
-
-            <TextView
-
-                android:textStyle="bold"
-                android:textSize="17dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_gravity="bottom|right"
-                android:text="Empleado"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            </TextView>
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 app:title="Edwin Paz"
                 app:titleTextColor="@color/md_blue_500"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="80dp"
                 android:contentInsetStart="0dp"
                 android:contentInsetStartWithNavigation="0dp"
                 app:layout_collapseMode="pin"
@@ -72,11 +44,10 @@
                 style="@style/BarActiveToolBar">
 
                 <LinearLayout
-
                     android:id="@+id/BIShowP"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
+                    android:layout_gravity="right|top"
                     android:orientation="horizontal"
                     android:visibility="visible">
 
@@ -90,21 +61,24 @@
                         android:foregroundGravity="right"
                         android:gravity="left"
                         android:theme="@style/ButonActionBar"
-                        app:searchIcon="@drawable/ic_baseline_image_search_showproduct" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/BQRScanner"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        style="@style/ButonActionBar"
-                        android:background="@drawable/ic_baseline_qr_code_scanner_showproduct"
-                        android:minWidth="50dp"/>
-
+                        app:searchIcon="@drawable/baseline_search_24" />
 
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:drawableLeft="@drawable/baseline_location_on_24"
+                android:drawableRight="@drawable/baseline_keyboard_arrow_right_24"
+                android:layout_gravity="left|bottom"
+                android:textStyle="normal"
+                android:textSize="10dp"
+                android:background="@color/md_statusbar_translucent"
+                android:layout_width="wrap_content"
+                android:text="@string/ubication_add_user"
+                android:layout_margin="10dp"
+                android:layout_height="20dp">
+
+            </androidx.appcompat.widget.AppCompatButton>
             <ProgressBar
                 android:id="@+id/PBbarList"
                 style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
@@ -133,16 +107,156 @@
         android:layout_width="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_height="match_parent">
-        <com.github.rubensousa.gravitysnaphelper.GravitySnapRecyclerView
-            android:id="@+id/RVMenuHome"
-            app:snapGravity="top"
-            app:snapLastItem="true"
-            app:snapToPadding="true"
+
+        <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+        <com.github.rubensousa.gravitysnaphelper.GravitySnapRecyclerView
+            android:orientation="horizontal"
+            app:snapGravity="center"
+            app:snapEnabled="true"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"/>
+        <androidx.cardview.widget.CardView
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        </com.github.rubensousa.gravitysnaphelper.GravitySnapRecyclerView>
+            <LinearLayout
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-</androidx.core.widget.NestedScrollView>
+            <TextView
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingStart="0dp"
+                android:drawableTint="@color/md_green_A700"
+                android:textColor="@color/md_green_A700"
+                android:drawableLeft="@drawable/baseline_shopping_cart_checkout_24"
+                android:text="@string/send_user_fre"
+                android:layout_width="match_parent"
+                android:textSize="10dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginStart="5dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingStart="0dp"
+                android:text="@string/send_commno"
+                android:layout_width="match_parent"
+                android:textSize="10dp"
+                android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_margin="10dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                app:cardElevation="5dp"
+                app:cardCornerRadius="5dp"
+                android:layout_height="100dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </ImageView>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                app:cardElevation="6dp"
+                app:cardCornerRadius="5dp"
+                android:layout_height="600dp">
+                <LinearLayout
+
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_margin="10dp"
+                        android:layout_weight="0"
+                        android:text="@string/add_user_ofertas"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_weight="0"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </androidx.recyclerview.widget.RecyclerView>
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_weight="0"
+                        android:drawableRight="@drawable/baseline_keyboard_arrow_right_24"
+                        android:layout_width="match_parent"
+                        android:text="@string/add_user_ver_all"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_blue_A400"
+                        android:drawableTint="@color/md_blue_A400"
+                        android:layout_height="50dp">
+
+                    </androidx.appcompat.widget.AppCompatButton>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                app:cardElevation="6dp"
+                app:cardCornerRadius="5dp"
+                android:layout_height="600dp">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_margin="10dp"
+                        android:text="@string/add_user_category"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </androidx.recyclerview.widget.RecyclerView>
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:drawableRight="@drawable/baseline_keyboard_arrow_right_24"
+                        android:layout_width="match_parent"
+                        android:text="@string/add_user_ver_all_category"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_blue_A400"
+                        android:drawableTint="@color/md_blue_A400"
+                        android:layout_height="50dp">
+
+                    </androidx.appcompat.widget.AppCompatButton>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

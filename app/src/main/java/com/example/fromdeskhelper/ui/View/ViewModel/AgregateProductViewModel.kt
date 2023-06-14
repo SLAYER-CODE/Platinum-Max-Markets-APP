@@ -1,6 +1,5 @@
 package com.example.fromdeskhelper.ui.View.ViewModel
 
-import Data.Producto
 import android.app.Application
 import android.net.Uri
 import android.util.Log
@@ -9,13 +8,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.fromdeskhelper.CategoriasQuery
-import com.example.fromdeskhelper.data.model.Types.CameraTypes
+import com.example.fromdeskhelper.data.model.objects.ResponseAdd
+import com.example.fromdeskhelper.data.model.objects.Upload
 import com.example.fromdeskhelper.domain.CallsAddProductStorageUseCase
 import com.example.fromdeskhelper.domain.CallsAddProductsUseCase
 import com.example.fromdeskhelper.domain.Root.LocalConnectUseCase
 import com.example.fromdeskhelper.type.BrandsInput
 import com.example.fromdeskhelper.type.CategoriesInput
-import com.example.fromdeskhelper.ui.View.activity.MainActivity
+import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -39,7 +39,7 @@ class AgregateProductViewModel @Inject constructor(
     val ClearFragment: MutableLiveData<Boolean> = MutableLiveData()
     val RecivImageItem: MutableLiveData<String> = MutableLiveData();
     val ButtonAgregateState: MutableLiveData<Boolean> = MutableLiveData();
-    val AgregateState: MutableLiveData<Boolean> = MutableLiveData();
+    val AgregateState: MutableLiveData<ResponseAdd> = MutableLiveData();
 
     val data: LiveData<MutableList<Uri>>
         get() = _data
@@ -85,7 +85,7 @@ class AgregateProductViewModel @Inject constructor(
         stockcantidad: String,
         stockunidad: String,
         qr: String,
-        mutableList: MutableList<Uri>, baseActivity: MainActivity
+        mutableList: MutableList<Uri>, baseActivity: EmployedMainActivity
     ) {
         viewModelScope.launch {
             var user = UseCaseLocal.SaveProductLocal(
@@ -97,7 +97,7 @@ class AgregateProductViewModel @Inject constructor(
                     mutableList,
                     user, baseActivity
                 )
-                AgregateState.postValue(true)
+                AgregateState.postValue(ResponseAdd(Upload.STORAGE,true))
             }
         }
     }
@@ -114,10 +114,10 @@ class AgregateProductViewModel @Inject constructor(
         stockcantidad: String,
         stockunidad: String,
         qr: String,
-        mutableList: MutableList<Uri>, baseActivity: MainActivity
+        mutableList: MutableList<Uri>, baseActivity: EmployedMainActivity
     ) {
         viewModelScope.launch {
-            UseCaseServer.AgregateProduct(
+            var retorned = UseCaseServer.AgregateProduct(
                 ListCategoria.toList(),
                 LittMarca.toList(),
                 name,
@@ -131,6 +131,15 @@ class AgregateProductViewModel @Inject constructor(
                 qr,
                 mutableList, baseActivity
             )
+            if(retorned!=null){
+                if(retorned.createproduct.product_name == name){
+                    AgregateState.postValue(ResponseAdd(Upload.SERVER,true))
+                }else{
+                    AgregateState.postValue(ResponseAdd(Upload.SERVER,false))
+                }
+            }else{
+                AgregateState.postValue(ResponseAdd(Upload.SERVER,false))
+            }
         }
     }
 
@@ -146,10 +155,11 @@ class AgregateProductViewModel @Inject constructor(
         stockcantidad: String,
         stockunidad: String,
         qr: String,
-        mutableList: MutableList<Uri>, baseActivity: MainActivity
-    ) {
+        mutableList: MutableList<Uri>, baseActivity: EmployedMainActivity
+    ){
         viewModelScope.launch {
-            UseCaseLL.AddProductOne(
+            //Dos formas!! SERVIDOR GENERAL
+            var item = UseCaseLL.AddProductOne(
                 ListCategoria,
                 LittMarca,
                 name,
@@ -161,8 +171,32 @@ class AgregateProductViewModel @Inject constructor(
                 stockcantidad,
                 stockunidad,
                 qr,
-                mutableList, baseActivity
+                mutableList, baseActivity,Upload.SERVER_LOCAL
             )
+            if(item){
+                AgregateState.postValue(ResponseAdd(Upload.SERVER_LOCAL,true))
+            }else{
+                AgregateState.postValue(ResponseAdd(Upload.SERVER_LOCAL,false))
+                var itemResolver = UseCaseLL.AddProductOne(
+                    ListCategoria,
+                    LittMarca,
+                    name,
+                    precio,
+                    precioU,
+                    marca,
+                    detalles,
+                    categoria,
+                    stockcantidad,
+                    stockunidad,
+                    qr,
+                    mutableList, baseActivity,Upload.SERVER_LOCAL_DATABASE
+                )
+                if(itemResolver){
+                    AgregateState.postValue(ResponseAdd(Upload.SERVER_LOCAL_DATABASE,true))
+                }else{
+                    AgregateState.postValue(ResponseAdd(Upload.SERVER_LOCAL_DATABASE,false))
+                }
+            }
         }
     }
 

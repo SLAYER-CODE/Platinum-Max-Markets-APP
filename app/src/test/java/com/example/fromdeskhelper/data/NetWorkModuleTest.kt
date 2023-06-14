@@ -1,4 +1,15 @@
 package com.example.fromdeskhelper.data
 
-class NetWorkModule {
+import com.apollographql.apollo3.ApolloClient
+import dagger.hilt.android.testing.HiltAndroidTest
+import org.junit.Before
+import javax.inject.Inject
+
+var LOG_CLASS="Network Modulue Conection"
+
+@HiltAndroidTest
+class NetWorkModuleTest {
+    @Inject
+    lateinit var apollo: ApolloClient
+
 }

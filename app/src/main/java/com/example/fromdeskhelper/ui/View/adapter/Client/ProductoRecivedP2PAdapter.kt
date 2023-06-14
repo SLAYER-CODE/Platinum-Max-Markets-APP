@@ -7,14 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fromdeskhelper.R
+import com.example.fromdeskhelper.databinding.ItemProductoP2pBinding
 import com.example.fromdeskhelper.ui.View.ViewModel.ShowMainViewModel
-import kotlinx.android.synthetic.main.item_producto.view.*
-import kotlinx.android.synthetic.main.item_producto.view.IVimagenItem
-import kotlinx.android.synthetic.main.item_producto.view.TEPrecio
-import kotlinx.android.synthetic.main.item_producto.view.TEPrecioU
-import kotlinx.android.synthetic.main.item_producto.view.TNombre
-import kotlinx.android.synthetic.main.item_producto.view.ratingBar
-import kotlinx.android.synthetic.main.item_producto_p2p.view.*
+//import kotlinx.android.synthetic.main.item_producto.view.*
+//import kotlinx.android.synthetic.main.item_producto.view.IVimagenItem
+//import kotlinx.android.synthetic.main.item_producto.view.TEPrecio
+//import kotlinx.android.synthetic.main.item_producto.view.TEPrecioU
+//import kotlinx.android.synthetic.main.item_producto.view.TNombre
+//import kotlinx.android.synthetic.main.item_producto.view.ratingBar
+//import kotlinx.android.synthetic.main.item_producto_p2p.view.*
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import kotlin.random.Random
@@ -29,7 +30,7 @@ private var reverse:Boolean=false;
 class ProductoRecivedP2PAdapter (var MyImage:List<listInventarioProductos>,var ViewModelCall:ShowMainViewModel?):
     RecyclerView.Adapter<ProductoRecivedP2PAdapter.ImageHolder>() {
 
-    inner class ImageHolder(val view: View): RecyclerView.ViewHolder(view){
+    inner class ImageHolder(val view: ItemProductoP2pBinding): RecyclerView.ViewHolder(view.root){
 
         fun render(ProductoAndImage:listInventarioProductos){
 
@@ -62,7 +63,8 @@ class ProductoRecivedP2PAdapter (var MyImage:List<listInventarioProductos>,var V
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return ImageHolder(layoutInflater.inflate(R.layout.item_producto_p2p, parent, false))
+        return ImageHolder(ItemProductoP2pBinding.inflate(layoutInflater,parent,false))
+//        return ImageHolder(layoutInflater.inflate(R.layout.item_producto_p2p, parent, false))
     }
 
     override fun onBindViewHolder(holder: ImageHolder, position: Int) {

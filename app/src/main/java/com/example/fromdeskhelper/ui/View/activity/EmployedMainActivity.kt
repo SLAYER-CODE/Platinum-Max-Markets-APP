@@ -1,6 +1,12 @@
 package com.example.fromdeskhelper.ui.View.activity
 
 
+//import kotlinx.android.synthetic.main.activity_main.*
+//import kotlinx.android.synthetic.main.activity_main.view.*
+//import kotlinx.android.synthetic.main.app_bar_main.view.*
+//import kotlinx.android.synthetic.main.nav_header_main.view.*
+
+
 import Data.ClientList
 import Data.ClientListGet
 import Data.listInventarioProductos
@@ -8,7 +14,6 @@ import android.animation.TimeInterpolator
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
-import android.app.Dialog
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
@@ -24,14 +29,14 @@ import android.provider.Settings
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.util.Log
-import android.view.LayoutInflater
+import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.view.WindowManager
 import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.view.animation.ScaleAnimation
 import android.widget.Filter
 import androidx.activity.result.contract.ActivityResultContracts
@@ -40,19 +45,18 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import androidx.core.os.bundleOf
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
-import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.Fade
+import androidx.transition.Transition
 import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.data.model.Types.CameraTypes
+import com.example.fromdeskhelper.data.model.objects.Upload
 import com.example.fromdeskhelper.databinding.ActivityMainBinding
 import com.example.fromdeskhelper.databinding.NavHeaderMainBinding
 import com.example.fromdeskhelper.domain.WifiDirectBroadcastReceived
@@ -70,31 +74,23 @@ import com.example.fromdeskhelper.ui.View.adapter.LocalAdapter
 import com.example.fromdeskhelper.ui.View.adapter.P2pClientAdapter
 import com.example.fromdeskhelper.ui.View.adapter.ProductoAdapter
 import com.example.fromdeskhelper.ui.View.adapter.ServerAdapter
-import com.example.fromdeskhelper.ui.View.fragment.CameraQrFragment
-import com.example.fromdeskhelper.ui.View.fragment.Root.Clients.ClientItemShowFragment
-import com.example.fromdeskhelper.ui.View.fragment.ShowProducts
+import com.example.fromdeskhelper.ui.View.fragment.CameraQrFastFragment
 import com.example.fromdeskhelper.util.MessageSnackBar
-import com.example.fromdeskhelper.util.listener.RecyclerViewItemClickListener
 import com.example.fromdeskhelper.util.listener.TouchListenerResize
 import com.example.fromdeskhelper.util.listener.TouchlistenerMove
 import com.google.firebase.auth.FirebaseAuth
-import com.leochuan.CenterSnapHelper
 import com.leochuan.CircleLayoutManager
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import eightbitlab.com.blurview.BlurView
 import eightbitlab.com.blurview.RenderScriptBlur
-import jp.wasabeef.picasso.transformations.CropCircleTransformation
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.android.synthetic.main.app_bar_main.view.*
-import kotlinx.android.synthetic.main.nav_header_main.view.*
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 import java.net.InetAddress
 import java.util.Date
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class EmployedMainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     public lateinit var binding: ActivityMainBinding
@@ -165,18 +161,20 @@ class MainActivity : AppCompatActivity() {
     )
 
 
-    fun setRefreshMain() {
-        binding.appBarMain.refreshFab.setOnClickListener {
-            MessageSnackBar(
-                binding.appBarMain.cordinatorRoot,
-                "Se refrezcaron todas las vistas",
-                Color.LTGRAY
-            )
-            LocalModel.GetAllProducts()
-            ServerModel.GetProductsAllPreview()
-            StoreSendViewModel.sendAdapterItems(adapterProduct)
-        }
-    }
+//    fun setRefreshMain() {
+//        binding.appBarMain.refreshFab.setOnClickListener {
+//            MessageSnackBar(
+//                binding.appBarMain.cordinatorRoot,
+//                "Se refrezcaron todas las vistas",
+//                Color.LTGRAY
+//            )
+//            LocalModel.GetAllProducts()
+//            ServerModel.GetProductsAllPreview()
+//            StoreSendViewModel.sendAdapterItems(adapterProduct)
+//        }
+//    }
+
+
 //    fun functionFabRefresh(func:()->(Unit)){
 //        binding.appBarMain.refreshFab.setOnClickListener {
 //            func()
@@ -211,6 +209,11 @@ class MainActivity : AppCompatActivity() {
     private val LocalSendViewModel: SendProductsLocalViewModel by viewModels()
     private val StoreSendViewModel: SendProductsStoreViewModel by viewModels()
     private val ShowMainClientModel : ShowMainClientViewModel by viewModels()
+    private val AutenticationModel: AuthenticationUserViewModel by viewModels()
+
+
+    private val AgregateProductsState: AgregateProductViewModel by viewModels();
+
 
     private var adapterProduct: ProductoAdapter = ProductoAdapter(listOf(), null, 1);
     private var adapterSever: ServerAdapter = ServerAdapter(listOf(), 1);
@@ -222,15 +225,16 @@ class MainActivity : AppCompatActivity() {
     private val ClienModel:ClientAddShortViewModel by viewModels()
     var clientcount:Int=1;
     private var contadorImagen = 1;
-
     private val ClienLocalModel: ClientLocalViewModel by viewModels()
-    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
-        return super.onCreateView(name, context, attrs)
-    }
 
-
+    //Camer
+    private var CamScannerStatus: Boolean = false;
+    private val CameraView: CameraViewModel by viewModels()
     private var ItemsSend: MutableList<listInventarioProductos> = mutableListOf()
     private var permissons:Boolean=false
+    private var orientation:Int=0;
+
+
     fun createAleatorieList(): ClientList {
         val NewClient = ClientList(
             fecha = Date(),
@@ -260,22 +264,130 @@ class MainActivity : AppCompatActivity() {
         val raw = Math.sin(FREQ * input * 2 * Math.PI)
         (raw * Math.exp((-input * DECAY).toDouble())).toFloat()
     }
-    @SuppressLint("ClickableViewAccessibility")
+
+    @SuppressLint("ClickableViewAccessibility", "HardwareIds")
     override fun onCreate(savedInstanceState: Bundle?) {
-
-
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        val header = NavHeaderMainBinding.bind(binding.navView.getHeaderView(0))
 
+        setContentView(binding.root)
+        setSupportActionBar(binding.appBarMain.toolbar)
+
+//        setRefreshMain()
+//        println("SE CREO INICIO")
+//        val drawerLayout: DrawerLayout = binding.drawerLayout
+//        val navView: NavigationView = binding.navView
+
+//        binding.drawerLayout.MoveCamera.setOnTouchListener(TouchDropListenerAction())
+
+//        navController = findNavController(R.id.nav_host_fragment_content_mains)
+//        appBarConfiguration = AppBarConfiguration(
+//            setOf(
+//                R.id.FirstFragment,
+//                R.id.clientsRoot,
+//                R.id.analiticRoot,
+//                R.id.empleadosRoot,
+//                R.id.notificationsRoot,
+//                R.id.showproductsClient,
+//                R.id.locationClient,
+//                R.id.ordersClient,
+//                R.id.favoriteClient,
+//                R.id.paymentsClient
+//            ), drawerLayout
+//        )
+
+//        appBarConfiguration = AppBarConfiguration.Builder(
+//            R.id.HomeFragmnet,
+//            R.id.clientsRoot,
+//            R.id.analiticRoot,
+//            R.id.empleadosRoot,
+//            R.id.notificationsRoot,
+//            R.id.showproductsClient,
+//            R.id.locationClient,
+//            R.id.ordersClient,
+//            R.id.favoriteClient,
+//            R.id.paymentsClient
+//        ). setDrawerLayout(binding.drawerLayout).build()
+
+//        appBarConfiguration = AppBarConfiguration(navController.graph)
+//        setupActionBarWithNavController(navController, appBarConfiguration)
+
+
+        Log.i("Añandiendo instrucciones","Se insertola barra")
+//        binding.drawerLayout.nav_view.setupWithNavController(navController)
+//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
+//        NavigationUI.setupWithNavController(binding.drawerLayout.nav_view, navController)
+//        navView.setupWithNavController(navController)
+
+
+//        database = AppDatabase.getDataBase(this)
+
+        LocalModel.ConnectServer()
+        AgregateProductsState.AgregateState.observe(
+            this
+        ) {
+            var x = AnimationUtils.loadAnimation(baseContext,R.anim.alphaitem)
+            if (it.trafic == Upload.STORAGE) {
+                if (it.state) {
+                    binding.appBarMain.CVLStorage?.startAnimation(x)
+                } else {
+                    binding.appBarMain.CVLFaildStorage?.startAnimation(x)
+                }
+            } else if (it.trafic == Upload.SERVER) {
+                if (it.state) {
+                    binding.appBarMain.CVLServer?.startAnimation(x)
+                } else {
+                    binding.appBarMain.CVLFaildServer?.startAnimation(x)
+                }
+            } else if (it.trafic == Upload.SERVER_LOCAL) {
+                if (it.state) {
+                    binding.appBarMain.CVLCorrectLocal?.startAnimation(x)
+                } else {
+                    binding.appBarMain.CVLWaringLocal?.startAnimation(x)
+                }
+            } else if (it.trafic == Upload.SERVER_LOCAL_DATABASE) {
+                if (it.state) {
+                    binding.appBarMain.CVLCorrectLocal?.startAnimation(x)
+                } else {
+                    binding.appBarMain.CVLFaildLocal?.startAnimation(x)
+                }
+            }
+        }
+
+        LocalModel.AdapterConnection.observe(this,Observer {
+
+//            if (ActivityCompat.
+//                checkSelfPermission(this, Manifest.permission.READ_SMS) !=
+//                PackageManager.PERMISSION_GRANTED &&
+//                ActivityCompat.
+//                checkSelfPermission(this, Manifest.permission.READ_PHONE_NUMBERS) !=
+//                PackageManager.PERMISSION_GRANTED &&
+//                ActivityCompat.
+//                checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) !=
+//                PackageManager.PERMISSION_GRANTED
+//            ) {
+//                ActivityCompat.requestPermissions(
+//                    this,
+//                    arrayOf(Manifest.permission.READ_PHONE_STATE),
+//                    101
+//                )
+//            }
+//            val telephonyManager = (getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager)
+            LocalModel.Register()
+        })
+
+        AutenticationModel.setCUser( intent.extras?.getInt("IN"))
+
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         window.decorView.systemUiVisibility = (
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-                or View.SYSTEM_UI_FLAG_IMMERSIVE)
-        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+                        or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                        or View.SYSTEM_UI_FLAG_IMMERSIVE)
 
+
+        orientation = this.resources.configuration.orientation
 
         if (baseContext.resources.configuration
                 .orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -338,9 +450,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-
-
-
         StrictMode.setThreadPolicy(policy)
 
         var jander: Handler = Handler(object : Handler.Callback {
@@ -384,136 +493,130 @@ class MainActivity : AppCompatActivity() {
         sistem.maxVisibleItemCount=5
         sistem.infinite=true
 
+        CameraView.ScanerEnable.observe(this, Observer {
+//            binding.appBarMain.constraintLayout.visibility = View.VISIBLE
+            val transition: Transition = Fade()
+            transition.setDuration(1500)
+            transition.addTarget( binding.appBarMain.constraintLayout)
 
-
-        binding.appBarMain.addclientitems?.layoutManager = sistem
-        CenterSnapHelper().attachToRecyclerView(binding.appBarMain.addclientitems)
-                //LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
-            //ArcClientLayout(context = this,)
-
-
-
-
-        binding.appBarMain.fabClient?.setOnClickListener {
-            var createClient=createAleatorieList()
-            ClienModel.agregateItem(createClient)
-        }
-
-        binding.appBarMain.fabClient?.setOnLongClickListener {
-            true
-        }
-        adapterClient= ClientAdapter(mutableListOf())
-        binding.appBarMain.addclientitems?.adapter=adapterClient
-        ClienModel.getItemClients().observe(this, Observer {
-            adapterClient.Clients=it.reversed().toMutableList()
-            adapterClient.notifyItemInserted(0)
-            binding.appBarMain.addclientitems?.scrollToPosition(0);
+//            TransitionManager.beginDelayedTransition(binding.appBarMain.constraintLayout, transition)
+            binding.appBarMain.constraintLayout.visibility = View.VISIBLE
         })
-        binding.appBarMain.addclientitems?.addOnItemTouchListener(RecyclerViewItemClickListener(
-            baseContext,binding.appBarMain.addclientitems!!,object : ShowProducts.ClickListener {
-                override fun onClick(view: View?, position: Int) {
-                    //val ViewDrawable=DrawableCompat.wrap(binding.TLMain.background);
-                    //DrawableCompat.setTint(ViewDrawable,client.color)
-                    var client= adapterClient.Clients[position]
 
-                    Log.i("SETOCO",position.toString())
 
-                    for (x in 0.. adapterClient.Clients.size){
+        CameraView.CameraActivate.observe(this, Observer {
+            if (it == CameraTypes.SCANER) {
+                //                MainView.RestoreCamera()
+                val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+//                ft.setCustomAnimations(
+//                    android.R.anim.fade_in,
+//                    android.R.anim.fade_out,
+//                    android.R.anim.slide_in_left,
+//                    android.R.anim.slide_out_right
+//                )
+                ft.replace(R.id.FLragmentCamera , CameraQrFastFragment());
+//                ft.setReorderingAllowed(true)
+                ft.commit()
 
-                        if(x == position){
-                            scaleView(view!!,1f,1.2f)
-                        }else{
-                            binding.appBarMain.addclientitems?.adapter?.notifyItemChanged(x)
-                        }
-                    }
-                    ClienLocalModel.SendselectItem(client)
-                    Log.i("SETOCOFINAL",adapterClient.toString())
+                binding.appBarMain.BQRScanner?.setBackgroundResource(R.drawable.ic_baseline_close_24_showproduct)
+                binding.appBarMain.BQRScannerClient?.setBackgroundResource(R.drawable.ic_baseline_close_24_showproduct)
+
+
+            } else {
+
+                binding.appBarMain.BQRScanner?.setBackgroundResource(R.drawable.ic_baseline_qr_code_scanner_showproduct)
+                binding.appBarMain.BQRScannerClient?.setBackgroundResource(R.drawable.ic_baseline_qr_code_scanner_showproduct)
+                if (this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    binding.appBarMain.constraintLayout.visibility = View.GONE
+                } else {
+                    binding.appBarMain.constraintLayout.visibility = View.INVISIBLE
                 }
-                override fun onLongClick(view: View?, position: Int) {
-                    if (view != null) {
-                        view?.animate()
-                            .yBy(-60f).xBy(-20f)
-                            .setInterpolator(decayingSineWave)
-                            .setDuration(200)
-                            .start();
-
-                        var dialog:Dialog = Dialog(this@MainActivity,R.style.MyDialogTheme)
-
-
-                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                        dialog.setContentView(R.layout.fragment_client_item_show)
-                        dialog.show()
-
-                       /* val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
-                        ft.setCustomAnimations(
-                            android.R.anim.fade_in,
-                            android.R.anim.fade_out,
-                        )
-                        var bundle=Bundle()
-                        bundle.putInt("uid", adapterClient.Clients[position].uid)
-                        ft.replace(R.id.ClientFragmnetShow, ClientItemShowFragment()::class.java,bundle,"");
-                        ft.setReorderingAllowed(true)
-                        ft.commit()
-                        binding.appBarMain.ClientFragmnetShow?.visibility = View.VISIBLE*/
-                    }
-                }
+                CamScannerStatus = false
             }
-        ))
-        ClienLocalModel.closeView.observe(this, Observer {
-            binding.appBarMain.ClientFragmnetShow?.visibility = View.GONE
         })
+//        binding.appBarMain.addclientitems?.layoutManager = sistem
+//        CenterSnapHelper().attachToRecyclerView(binding.appBarMain.addclientitems)
+//                //LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
+//            //ArcClientLayout(context = this,)
+//
+//
+//
+//
+//        binding.appBarMain.fabClient?.setOnClickListener {
+//            var createClient=createAleatorieList()
+//            ClienModel.agregateItem(createClient)
+//        }
+//
+//        binding.appBarMain.fabClient?.setOnLongClickListener {
+//            true
+//        }
+//        adapterClient= ClientAdapter(mutableListOf())
+//        binding.appBarMain.addclientitems?.adapter=adapterClient
+//        ClienModel.getItemClients().observe(this, Observer {
+//            adapterClient.Clients=it.reversed().toMutableList()
+//            adapterClient.notifyItemInserted(0)
+//            binding.appBarMain.addclientitems?.scrollToPosition(0);
+//        })
+//        binding.appBarMain.addclientitems?.addOnItemTouchListener(RecyclerViewItemClickListener(
+//            baseContext,binding.appBarMain.addclientitems!!,object : ShowProducts.ClickListener {
+//                override fun onClick(view: View?, position: Int) {
+//                    //val ViewDrawable=DrawableCompat.wrap(binding.TLMain.background);
+//                    //DrawableCompat.setTint(ViewDrawable,client.color)
+//                    var client= adapterClient.Clients[position]
+//
+//                    Log.i("SETOCO",position.toString())
+//
+//                    for (x in 0.. adapterClient.Clients.size){
+//
+//                        if(x == position){
+//                            scaleView(view!!,1f,1.2f)
+//                        }else{
+//                            binding.appBarMain.addclientitems?.adapter?.notifyItemChanged(x)
+//                        }
+//                    }
+//                    ClienLocalModel.SendselectItem(client)
+//                    Log.i("SETOCOFINAL",adapterClient.toString())
+//                }
+//                override fun onLongClick(view: View?, position: Int) {
+//                    if (view != null) {
+//                        view.animate()
+//                            .yBy(-60f).xBy(-20f)
+//                            .setInterpolator(decayingSineWave)
+//                            .setDuration(200)
+//                            .start();
+//
+//                        var dialog:Dialog = Dialog(this@EmployedMainActivity,R.style.MyDialogTheme)
+//
+//
+//                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//                        dialog.setContentView(R.layout.fragment_client_item_show)
+//                        dialog.show()
+//
+//                       /* val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+//                        ft.setCustomAnimations(
+//                            android.R.anim.fade_in,
+//                            android.R.anim.fade_out,
+//                        )
+//                        var bundle=Bundle()
+//                        bundle.putInt("uid", adapterClient.Clients[position].uid)
+//                        ft.replace(R.id.ClientFragmnetShow, ClientItemShowFragment()::class.java,bundle,"");
+//                        ft.setReorderingAllowed(true)
+//                        ft.commit()
+//                        binding.appBarMain.ClientFragmnetShow?.visibility = View.VISIBLE*/
+//                    }
+//                }
+//            }
+//        ))
 
+
+//        ClienLocalModel.closeView.observe(this, Observer {
+//            binding.appBarMain.ClientFragmnetShow?.visibility = View.GONE
+//        })
+//
 
         //Finalizando la insertacio nde dcodidwqd
 
 
-
-        setSupportActionBar(binding.appBarMain.toolbar)
-        setContentView(binding.root)
-        setRefreshMain()
-//        println("SE CREO INICIO")
-//        val drawerLayout: DrawerLayout = binding.drawerLayout
-//        val navView: NavigationView = binding.navView
-
-//        binding.drawerLayout.MoveCamera.setOnTouchListener(TouchDropListenerAction())
-
-        navController = findNavController(R.id.nav_host_fragment_content_mains)
-//        appBarConfiguration = AppBarConfiguration(
-//            setOf(
-//                R.id.FirstFragment,
-//                R.id.clientsRoot,
-//                R.id.analiticRoot,
-//                R.id.empleadosRoot,
-//                R.id.notificationsRoot,
-//                R.id.showproductsClient,
-//                R.id.locationClient,
-//                R.id.ordersClient,
-//                R.id.favoriteClient,
-//                R.id.paymentsClient
-//            ), drawerLayout
-//        )
-        appBarConfiguration = AppBarConfiguration.Builder(
-            R.id.HomeFragmnet,
-            R.id.clientsRoot,
-            R.id.analiticRoot,
-            R.id.empleadosRoot,
-            R.id.notificationsRoot,
-            R.id.showproductsClient,
-            R.id.locationClient,
-            R.id.ordersClient,
-            R.id.favoriteClient,
-            R.id.paymentsClient
-        ).setDrawerLayout(binding.drawerLayout).build()
-
-//        appBarConfiguration = AppBarConfiguration(navController.graph)
-//        setupActionBarWithNavController(navController, appBarConfiguration)
-//        binding.drawerLayout.nav_view.setupWithNavController(navController)
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
-        NavigationUI.setupWithNavController(binding.drawerLayout.nav_view, navController)
-//        navView.setupWithNavController(navController)
-
-
-//        database = AppDatabase.getDataBase(this)
 
 
         //SE COMENSO LA CONECTIVIDAD P2P
@@ -571,14 +674,17 @@ class MainActivity : AppCompatActivity() {
             }
         MainModel.GetImageResource()
 
+        val header = NavHeaderMainBinding.bind(binding.navView.getHeaderView(0))
+
         MainModel.ImageReturn.observe(this, Observer {
 //            Log.i("image",it.toString())
             if (it.toString() != "null" && it.toString() != null) {
 //                val transformation: Transformation = RoundedCornersTransformation(radius, margin)
-
+                val radius = 20
+                val margin = 5
                 Picasso.get()
                     .load("https://lh3.googleusercontent.com/a-/AOh14GjsFbwZhd41PQPxQoljtFkB92WkNfa6P5LTjAo_WQ=s96-c").fit()
-                    .transform(CropCircleTransformation())
+                    .transform( RoundedCornersTransformation(radius, margin))
 //                    .into(binding.drawerLayout.nav_view.getHeaderView(0).findViewById(R.id.ImageUserPresentation) as ImageView)
                     .into(header.ImageUserPresentation)
             }
@@ -686,29 +792,37 @@ class MainActivity : AppCompatActivity() {
         mReceiver = wifiViewModel.getregisterBroadcast(perrListener, listenerConection)
 
 
+        val displayMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(displayMetrics)
+        val height = displayMetrics.heightPixels
+        val width = displayMetrics.widthPixels
 
-
-        binding.drawerLayout.MoveCamera.setOnTouchListener(
-            TouchlistenerMove(binding.drawerLayout.constraintLayout, MainView::SavePointMoveCamera)
+        binding.appBarMain.MoveCamera.setOnTouchListener(
+            TouchlistenerMove(binding.appBarMain.constraintLayout,binding.appBarMain.MoveCamera, MainView::SavePointMoveCamera,height.toFloat(),width.toFloat() )
         )
-        binding.drawerLayout.ResizeCamera.setOnTouchListener(
+
+        binding.appBarMain.ResizeCamera.setOnTouchListener(
             TouchListenerResize(
-                binding.drawerLayout.constraintLayout,
+                binding.appBarMain.constraintLayout,
                 MainView::SavePointScaleCamera
             )
         )
-
+        val r = resources
+        val px = Math.round(
+            TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 30f, r.displayMetrics
+            )
+        )
         MainView.OpenCamera.observe(this, Observer { Values ->
-
-            if (this.resources.configuration.orientation != Configuration.ORIENTATION_LANDSCAPE) {
-
-                if (!(Values.movex == -1f && Values.movey == -1f)) {
-                    binding.drawerLayout.constraintLayout.x = Values.movex
-                    binding.drawerLayout.constraintLayout.y = Values.movey
-                }
-                binding.drawerLayout.constraintLayout.scaleX = Values.scalex
-                binding.drawerLayout.constraintLayout.scaleY = Values.scaley
+            if( this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE)
+            {
+                binding.appBarMain.constraintLayout.x = Values.movex-  ( ((binding.appBarMain.constraintLayout.width)/2)*Values.scaley)+(px/2)
+            }else{
+                binding.appBarMain.constraintLayout.x = Values.movex
             }
+            binding.appBarMain.constraintLayout.y = Values.movey
+            binding.appBarMain.constraintLayout.scaleX = Values.scalex
+            binding.appBarMain.constraintLayout.scaleY = Values.scaley
         })
 
         var resultLauncher =
@@ -753,18 +867,18 @@ class MainActivity : AppCompatActivity() {
         if (wifiViewModel.VerifyWifi()) {
             wifiViewModel.DiscoveryActivate(this)
         }
-
+        if (28 != android.os.Build.VERSION.SDK_INT) {
+            binding.appBarMain.toolbar?.setBackgroundDrawable(
+                ContextCompat.getDrawable(
+                    baseContext,
+                    R.drawable.background_bar
+                )
+            );
+        }
         //COnfigurando la barra por si existe , si o si tiene que existir lo que hace el primer fragmento
         wifiViewModel.WifiActivateBroadcast.observe(this, Observer {
             Log.i("P2PDesing", "Se decidio" + android.os.Build.VERSION.SDK_INT)
-            if (28 != android.os.Build.VERSION.SDK_INT) {
-                binding.appBarMain.toolbar?.setBackgroundDrawable(
-                    ContextCompat.getDrawable(
-                        baseContext,
-                        R.drawable.background_bar
-                    )
-                );
-            }
+
 
             val currentNightMode =
                 resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
@@ -783,10 +897,10 @@ class MainActivity : AppCompatActivity() {
                 } // Night mode is not active, we're using the light theme
                 Configuration.UI_MODE_NIGHT_NO -> {
                     if (it) {
-                        DrawableCompat.setTint(ViewDrawable, Color.CYAN)
+                        DrawableCompat.setTint(ViewDrawable,  Color.rgb(0,79,160))
                         binding.appBarMain.toolbar?.background = ViewDrawable
                     } else {
-                        DrawableCompat.setTint(ViewDrawable, Color.GRAY)
+                        DrawableCompat.setTint(ViewDrawable, Color.rgb(150,150,190))
                         binding.appBarMain.toolbar?.background = ViewDrawable
                     }
                 } // Night mode is active, we're using dark theme
@@ -797,7 +911,7 @@ class MainActivity : AppCompatActivity() {
         //blurbackground(binding.BlurVIewDrawable)
 
 
-        val navigationMenuView = nav_view.getChildAt(0)
+        val navigationMenuView = binding.navView.getChildAt(0)
         if (navigationMenuView != null) {
             navigationMenuView.isVerticalScrollBarEnabled = true
         }
@@ -815,58 +929,58 @@ class MainActivity : AppCompatActivity() {
                 override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                     super.onDrawerSlide(drawerView, slideOffset)
                     val slideX = (drawerView.width * (slideOffset / 5f))
-                    app_bar_main.setTranslationX(slideX)
-                    app_bar_main.setScaleX(1 - (slideOffset / 7f));
-                    app_bar_main.setScaleY(1 - (slideOffset / 7f));
+                    binding.appBarMain.cordinatorRoot.setTranslationX(slideX)
+                    binding.appBarMain.cordinatorRoot.setScaleX(1 - (slideOffset / 7f));
+                    binding.appBarMain.cordinatorRoot.setScaleY(1 - (slideOffset / 7f));
                 }
             }
 
 
 
         binding.drawerLayout.addDrawerListener(actionBarDrawerToggle)
-        binding.appBarMain.fab.setOnLongClickListener {
-            binding.appBarMain.cordinaterClient?.visibility=View.VISIBLE
-            binding.appBarMain.fab.visibility = View.GONE
-            binding.appBarMain.fabClient?.visibility=View.VISIBLE
-            true
+//        binding.appBarMain.fab.setOnLongClickListener {
+//            binding.appBarMain.cordinaterClient?.visibility=View.VISIBLE
+//            binding.appBarMain.fab.visibility = View.GONE
+//            binding.appBarMain.fabClient?.visibility=View.VISIBLE
+//            true
+//
+//        }
+//
+//        binding.appBarMain.fabClient?.setOnLongClickListener {
+//            binding.appBarMain.cordinaterClient?.visibility=View.GONE
+//            binding.appBarMain.fabClient?.visibility = View.GONE
+//            binding.appBarMain.fab.visibility=View.VISIBLE
+//
+//            true
+//        }
 
-        }
-
-        binding.appBarMain.fabClient?.setOnLongClickListener {
-            binding.appBarMain.cordinaterClient?.visibility=View.GONE
-            binding.appBarMain.fabClient?.visibility = View.GONE
-            binding.appBarMain.fab.visibility=View.VISIBLE
-
-            true
-        }
-
-        binding.appBarMain.fab.setOnClickListener {
-//            findNavController(0).navigate(R.id.action_agregateProducts3_to_FirstFragment)
-
-            datasize += 1
-
-            val bundle = bundleOf("titlenumber" to datasize.toString())
-            val navBuilder = NavOptions.Builder()
-            navBuilder.setEnterAnim(R.anim.slide_in_right).setExitAnim(android.R.anim.fade_out)
-             .setPopExitAnim(R.anim.slide_out_left)
-            navController.navigate(R.id.agregateProducts3, bundle, navBuilder.build())
-
-//            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
-//            Snackbar.make(view, "Funciona El boton", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
-//            .navigate(R.id.action_FirstFragment_to_SecondFragment)
-//            val actividad = Intent(this,AddProductos::class.java)
-//            startActivity(actividad)
-//            findNavController(0).navigate(R.id.agregateProducts2)
-//            findNavController(0).navigateUp()
-//            findNavController(0).navigate(R.id.agregateProducts)
-
-//            val intent = Intent(this, AgregateProducts::class.java)
-//            startActivity(intent)
-
-//              navController.navigate(R.id.agregateProducts);
-
-        }
+//        binding.appBarMain.fab.setOnClickListener {
+////            findNavController(0).navigate(R.id.action_agregateProducts3_to_FirstFragment)
+//
+//            datasize += 1
+//
+//            val bundle = bundleOf("titlenumber" to datasize.toString())
+//            val navBuilder = NavOptions.Builder()
+//            navBuilder.setEnterAnim(R.anim.slide_in_right).setExitAnim(android.R.anim.fade_out)
+//             .setPopExitAnim(R.anim.slide_out_left)
+//            navController.navigate(R.id.agregateProducts3, bundle, navBuilder.build())
+//
+////            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+////            Snackbar.make(view, "Funciona El boton", Snackbar.LENGTH_LONG)
+////                .setAction("Action", null).show()
+////            .navigate(R.id.action_FirstFragment_to_SecondFragment)
+////            val actividad = Intent(this,AddProductos::class.java)
+////            startActivity(actividad)
+////            findNavController(0).navigate(R.id.agregateProducts2)
+////            findNavController(0).navigateUp()
+////            findNavController(0).navigate(R.id.agregateProducts)
+//
+////            val intent = Intent(this, AgregateProducts::class.java)
+////            startActivity(intent)
+//
+////              navController.navigate(R.id.agregateProducts);
+//
+//        }
 
 
 //Imagen
@@ -937,7 +1051,7 @@ class MainActivity : AppCompatActivity() {
         //ServerList
 
         //Esta funcion se encarga de pedir los productos al inicio de la aplicacion
-        ServerModel.GetProductsAllPreview()
+        //ServerModel.GetProductsAllPreview()
 
         ServerModel.ProductsAllPreview.observe(this, Observer {
             adapterSever = ServerAdapter(it?.productos!!.reversed(), 1, UtilsMainModel)
@@ -1128,17 +1242,54 @@ class MainActivity : AppCompatActivity() {
 
         return super.onOptionsItemSelected(item)
     }
+
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-
-        // Checks the orientation of the screen
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        if(orientation==newConfig.orientation) {
+            Log.i("ORIENTATION","P"+orientation.toString()+"S"+newConfig.orientation.toString())
+            MainView.RestoreCamera()
+        }else{
+            MainView.RestoreCameraLand()
         }
+//        if(newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE){
+
+//        }
+//
+//        // Checks the orientation of the screen
+//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//            window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+//            Log.i("CHANGE",binding.appBarMain.constraintLayout.x.toString())
+//            Log.i("CHANGE",binding.appBarMain.constraintLayout.y.toString())
+//            var h = binding.appBarMain.constraintLayout.y
+//            var w = binding.appBarMain.constraintLayout.x
+//
+//            var th = binding.appBarMain.cordinatorRoot.width
+//            var tw = binding.appBarMain.cordinatorRoot.height
+//            binding.appBarMain.constraintLayout.y = (h * tw)/th
+//            binding.appBarMain.constraintLayout.x = (w * tw)/th
+////
+////            binding.appBarMain.constraintLayout.x=Yref-((binding.appBarMain.constraintLayout.width * binding.appBarMain.constraintLayout.scaleX)/2)
+////            binding.appBarMain.constraintLayout.y=Xref-((binding.appBarMain.constraintLayout.height * binding.appBarMain.constraintLayout.scaleY))
+//
+//        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+//            window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+//            var h = binding.appBarMain.constraintLayout.y
+//            var w = binding.appBarMain.constraintLayout.x
+//
+//            var th = binding.appBarMain.cordinatorRoot.width
+//            var tw = binding.appBarMain.cordinatorRoot.height
+//            binding.appBarMain.constraintLayout.y = (h * tw)/th
+//            binding.appBarMain.constraintLayout.x = (w * tw)/th
+//        }
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_mains)
         return navController.navigateUp(appBarConfiguration)

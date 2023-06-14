@@ -136,6 +136,17 @@
                             android:textColor="#000000"
                             android:textSize="15sp"
                             tools:text="Apodo: SSla33" />
+
+                        <TextView
+                            android:layout_weight="0"
+                            android:id="@+id/TDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="left"
+                            android:text="Apodo: S3301"
+                            android:textColor="#000000"
+                            android:textSize="15sp"
+                            tools:text="Apodo: SSla33" />
                     </LinearLayout>
 
 

@@ -11,8 +11,7 @@ import androidx.core.content.ContextCompat
 import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.databinding.FragmentEmpleadosRootBinding
 import com.example.fromdeskhelper.ui.View.ViewModel.Root.EmpleadosRootViewModel
-import com.example.fromdeskhelper.ui.View.activity.MainActivity
-import com.example.fromdeskhelper.ui.View.adapter.ViewPagerRootClientAdapter
+import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import com.example.fromdeskhelper.ui.View.adapter.ViewPagerRootEmpleadosAdapter
 import com.example.fromdeskhelper.util.TabletPageTransformer
 import com.google.android.material.badge.BadgeDrawable
@@ -30,7 +29,7 @@ class EmpleadosRoot : Fragment() {
     private lateinit var viewModel: EmpleadosRootViewModel
     private var _binding: FragmentEmpleadosRootBinding? = null
     private val binding get() = _binding!!
-    protected lateinit var baseActivity: MainActivity
+    protected lateinit var baseActivity: EmployedMainActivity
     protected lateinit var contextFragment: Context
 
 
@@ -90,19 +89,19 @@ class EmpleadosRoot : Fragment() {
         if(baseActivity.binding.appBarMain.toolbarParent?.visibility==View.GONE){
             baseActivity.binding.appBarMain.toolbarParent?.visibility=View.VISIBLE
         }
-        if(baseActivity.binding.appBarMain.fab.visibility==View.GONE){
-            baseActivity.binding.appBarMain.fab.visibility=View.VISIBLE
-        }
-        if(baseActivity.binding.appBarMain.refreshFab.visibility==View.GONE){
-            baseActivity.binding.appBarMain.refreshFab.visibility=View.VISIBLE
-        }
+//        if(baseActivity.binding.appBarMain.fab.visibility==View.GONE){
+//            baseActivity.binding.appBarMain.fab.visibility=View.VISIBLE
+//        }
+//        if(baseActivity.binding.appBarMain.refreshFab.visibility==View.GONE){
+//            baseActivity.binding.appBarMain.refreshFab.visibility=View.VISIBLE
+//        }
         super.onStart()
     }
 
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MainActivity) {
+        if (context is EmployedMainActivity) {
             this.baseActivity = context
         }
         this.contextFragment = context

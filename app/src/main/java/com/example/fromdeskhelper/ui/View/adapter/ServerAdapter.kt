@@ -11,9 +11,14 @@ import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fromdeskhelper.ProductsPreviewQuery
 import com.example.fromdeskhelper.R
+import com.example.fromdeskhelper.databinding.ItemProductoBinding
+import com.example.fromdeskhelper.databinding.ItemProductoGridviewBinding
+import com.example.fromdeskhelper.databinding.ItemProductoListviewBinding
+import com.example.fromdeskhelper.databinding.ItemProductoNotimageBinding
+import com.example.fromdeskhelper.databinding.ItemProductoReverseBinding
 import com.example.fromdeskhelper.ui.View.ViewModel.UtilsShowMainViewModels
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_producto.view.*
+//import kotlinx.android.synthetic.main.item_producto.view.*
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 
@@ -23,12 +28,12 @@ import java.io.ByteArrayOutputStream
 private var reverse: Boolean = false;
 
 class ServerAdapter(var producto: List<ProductsPreviewQuery.Producto>,var itemLayout:Int,var util: UtilsShowMainViewModels?=null) :
-    RecyclerView.Adapter<ServerAdapter.ImageHolder>(),Filterable {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>(),Filterable {
     private var ProductList:List<ProductsPreviewQuery.Producto>
     init {
         ProductList= producto
     }
-    inner class ImageHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    inner class ImageHolder(val view: ItemProductoBinding) : RecyclerView.ViewHolder(view.root) {
 
         fun render(ProductoAndImage: ProductsPreviewQuery.Producto) {
 
@@ -72,7 +77,54 @@ class ServerAdapter(var producto: List<ProductsPreviewQuery.Producto>,var itemLa
         }
 
     }
+    inner class ImageHolderReverse(val view: ItemProductoReverseBinding): RecyclerView.ViewHolder(view.root){
 
+        fun render(ProductoAndImage: ProductsPreviewQuery.Producto){
+            view.TNombre.isSelected = true;
+            view.TNombre.text = ProductoAndImage.product_name
+            view.TEPrecio.text = "$\\${ProductoAndImage.price_cantidad}"
+            Picasso.get()
+                .load("http://192.168.0.17:2016/uploads/" + ProductoAndImage.image_realation!![0].image_name)
+                .fit()
+                .centerCrop()
+                .into(view.IVimagenItem)
+        }
+    }
+
+    inner class ImageHolderNotImage(val view: ItemProductoNotimageBinding): RecyclerView.ViewHolder(view.root){
+        fun render(ProductoAndImage: ProductsPreviewQuery.Producto){
+            view.TNombre.isSelected = true;
+            view.TNombre.text = ProductoAndImage.product_name
+            view.TEPrecio.text = "$\\${ProductoAndImage.price_cantidad}"
+        }
+    }
+
+    inner class ImageHolderListView(val view: ItemProductoListviewBinding): RecyclerView.ViewHolder(view.root){
+        fun render(ProductoAndImage: ProductsPreviewQuery.Producto) {
+            view.TNombre.isSelected = true;
+            view.TNombre.text = ProductoAndImage.product_name
+            view.TEPrecio.text = "$\\${ProductoAndImage.price_cantidad}"
+            Picasso.get()
+                .load("http://192.168.0.17:2016/uploads/" + ProductoAndImage.image_realation!![0].image_name)
+                .fit()
+                .centerCrop()
+                .into(view.IVimagenItem)
+        }
+    }
+
+
+    inner class ImageHolderGridView(val view: ItemProductoGridviewBinding): RecyclerView.ViewHolder(view.root){
+        fun render(ProductoAndImage: ProductsPreviewQuery.Producto){
+            view.TNombre.isSelected = true;
+            view.TNombre.text = ProductoAndImage.product_name
+            view.TEPrecio.text = "$\\${ProductoAndImage.price_cantidad}"
+            Picasso.get()
+                .load("http://192.168.0.17:2016/uploads/" + ProductoAndImage.image_realation!![0].image_name)
+                .fit()
+                .centerCrop()
+                .into(view.IVimagenItem)
+        }
+    }
 
     override fun getItemViewType(position: Int): Int {
         if (producto[position].image_realation?.size == 0) {
@@ -84,19 +136,22 @@ class ServerAdapter(var producto: List<ProductsPreviewQuery.Producto>,var itemLa
         itemLayout=inte
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        var ItemView: ServerAdapter.ImageHolder = ImageHolder(
-            layoutInflater.inflate(
-                R.layout.item_producto,
-                parent,
-                false
-            )
-        )
+//        var ItemView: ServerAdapter.ImageHolder = ImageHolder(
+//            layoutInflater.inflate(
+//                R.layout.item_producto,
+//                parent,
+//                false
+//            )
+//        )
+        var ItemView:RecyclerView.ViewHolder =ImageHolder(ItemProductoBinding.inflate(layoutInflater,parent,false))
         if (viewType == 1) {
 //            if (reverse) {
-                reverse = false;
-                ItemView= ImageHolder(layoutInflater.inflate(R.layout.item_producto, parent, false))
+            reverse = false;
+//                ItemView= ImageHolder(layoutInflater.inflate(R.layout.item_producto, parent, false))
+            ItemView=ImageHolder(ItemProductoBinding.inflate(layoutInflater,parent,false))
+
 //            } else {
 //                reverse = true;
 //                ItemView= ImageHolder(
@@ -108,37 +163,66 @@ class ServerAdapter(var producto: List<ProductsPreviewQuery.Producto>,var itemLa
 //                )
 //            }
         } else if (viewType == 2) {
-            ItemView=ImageHolder(
-                layoutInflater.inflate(
-                    R.layout.item_producto_notimage,
-                    parent,
-                    false
-                )
-            )
+//            ItemView=ImageHolder(
+//                layoutInflater.inflate(
+//                    R.layout.item_producto_notimage,
+//                    parent,
+//                    false
+//                )
+//            )
+            ItemView=ImageHolderNotImage(ItemProductoNotimageBinding.inflate(layoutInflater,parent,false))
+
         }else if(viewType==3){
-            ItemView=ImageHolder(
-                layoutInflater.inflate(
-                    R.layout.item_producto_listview,
-                    parent,
-                    false
-                )
-            )
+//            ItemView=ImageHolder(
+//                layoutInflater.inflate(
+//                    R.layout.item_producto_listview,
+//                    parent,
+//                    false
+//                )
+//            )
+            ItemView=ImageHolderListView(ItemProductoListviewBinding.inflate(layoutInflater,parent,false))
         }else if(viewType == 4){
-            ItemView = ImageHolder(layoutInflater.inflate(R.layout.item_producto_gridview, parent, false))
+//            ItemView = ImageHolder(layoutInflater.inflate(R.layout.item_producto_gridview, parent, false))
+            ItemView=ImageHolderGridView(ItemProductoGridviewBinding.inflate(layoutInflater,parent,false))
         }
         return ItemView
     }
 
 
-    override fun onBindViewHolder(holder: ImageHolder, position: Int) {
-        if (producto[position].image_realation?.size != 0) {
-            holder.render(producto[position])
-        } else {
-            holder.renderNotImagen(producto[position])
-        }
-        holder.view.setOnClickListener {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
+        when(holder.itemViewType){
+            0->{
+                (holder as ServerAdapter.ImageHolderReverse).render(producto[position])
+            }
+            1->{
+                if(producto[position].image_realation?.size != 0) {
+                    (holder as ServerAdapter.ImageHolder).render(producto[position])
+                }else{
+                    (holder as ServerAdapter.ImageHolderNotImage).render(producto[position])
+                }
+            }
+            2->{
+                (holder as ServerAdapter.ImageHolderNotImage).render(producto[position])
+            }
+            3->{
+                (holder as ServerAdapter.ImageHolderListView).render(producto[position])
+            }
+            4->{
+                (holder as ServerAdapter.ImageHolderGridView).render(producto[position])
+            }
         }
+
+//
+//        if (producto[position].image_realation?.size != 0) {
+//            holder.render(producto[position])
+//        } else {
+//            holder.renderNotImagen(producto[position])
+//        }
+//
+//        holder.view.setOnClickListener {
+//        }
+//
     }
 
 //    fun addNewListCurrent(newlist: List<listInventarioProductos>){

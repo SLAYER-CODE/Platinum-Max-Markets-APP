@@ -2,55 +2,90 @@ package com.example.fromdeskhelper.ui.View.fragment
 
 import Data.HomeListClient
 import android.content.Context
+import android.content.res.Configuration
+import android.location.GnssAntennaInfo.Listener
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.fromdeskhelper.GetRolesAdminQuery
 import com.example.fromdeskhelper.R
-import com.example.fromdeskhelper.databinding.FragmentDetallesProductsBinding
+import com.example.fromdeskhelper.data.model.Types.CameraTypes
+import com.example.fromdeskhelper.data.model.objects.User
 import com.example.fromdeskhelper.databinding.FragmentHomeBinding
-import com.example.fromdeskhelper.databinding.FragmentLoginBinding
-import com.example.fromdeskhelper.ui.View.activity.MainActivity
+import com.example.fromdeskhelper.databinding.ItemMenuHomeListBinding
+import com.example.fromdeskhelper.ui.View.ViewModel.AuthenticationUserViewModel
+import com.example.fromdeskhelper.ui.View.ViewModel.CameraViewModel
+import com.example.fromdeskhelper.ui.View.ViewModel.MainActiviyViewModel
+import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import com.example.fromdeskhelper.ui.View.adapter.Home.HomeAdapter
 import com.example.fromdeskhelper.ui.View.adapter.ProductoAdapter
+import com.squareup.picasso.Picasso
+import jp.wasabeef.picasso.transformations.CropCircleTransformation
+import kotlinx.coroutines.launch
+//import kotlinx.android.synthetic.main.item_menu_home_list.view.lottieAnimationView
+import java.util.Objects
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+
 
 /**
  * A simple [Fragment] subclass.
  * Use the [HomeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+
+var LOG_FRAGMENT_HOME = "FragmentHome"
+
 class HomeFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private lateinit var baseActivity: MainActivity
+    private var param1: Int? = null
+
+    //    private var param2: String? = null
+    private lateinit var baseActivity: EmployedMainActivity
     private lateinit var contextFragment: Context
     private var _binding: FragmentHomeBinding? = null
+    private val AutenticationModel: AuthenticationUserViewModel by viewModels(ownerProducer = { requireActivity()});
+
     private val binding get() = _binding!!
-    var adapter: HomeAdapter = HomeAdapter(mutableListOf())
+    var adapter_admin: HomeAdapter = HomeAdapter(mutableListOf(), null)
+    var adapter_anonime: HomeAdapter = HomeAdapter(mutableListOf(), null)
+    private val MainView: MainActiviyViewModel by viewModels(ownerProducer = { requireActivity() })
+    private var CamScannerStatus: Boolean = false;
+    private val CameraView: CameraViewModel by viewModels(ownerProducer = {
+        requireActivity()
+    })
+    private lateinit var appBarConfiguration: AppBarConfiguration
+
+
+    //Camera
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MainActivity) {
+        if (context is EmployedMainActivity) {
             this.baseActivity = context
         }
         this.contextFragment = context
@@ -62,34 +97,201 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        val navcontroller = findNavController()
+        appBarConfiguration = AppBarConfiguration(navcontroller.graph)
+        binding.toolbar.setupWithNavController(navcontroller, appBarConfiguration)
+        baseActivity.setSupportActionBar(binding.toolbar)
+//        var navController = baseActivity.findNavController(R.id.nav_host_fragment_content_mains)
+//        appBarConfiguration = AppBarConfiguration.Builder(
+//            R.id.HomeFragmnet,
+//            R.id.clientsRoot,
+//            R.id.analiticRoot,
+//            R.id.empleadosRoot,
+//            R.id.notificationsRoot,
+//            R.id.showproductsClient,
+//            R.id.locationClient,
+//            R.id.ordersClient,
+//            R.id.favoriteClient,
+//            R.id.paymentsClient
+//        ). setDrawerLayout(baseActivity?.binding?.drawerLayout).build()
+//        baseActivity.setupActionBarWithNavController(navController,appBarConfiguration)
+        Log.i("Añandiendo instrucciones", "se realizo un tolbar a la barra")
 
-        val navcontroller =findNavController()
-        val appbarlayout= AppBarConfiguration(navcontroller.graph)
-        binding.toolbar?.setupWithNavController(navcontroller,appbarlayout)
+//        appBarConfiguration =AppBarConfiguration.Builder(
+//            R.id.HomeFragmnet,
+//            R.id.clientsRoot,
+//            R.id.analiticRoot,
+//            R.id.empleadosRoot,
+//            R.id.notificationsRoot,
+//            R.id.showproductsClient,
+//            R.id.locationClient,
+//            R.id.ordersClient,
+//            R.id.favoriteClient,
+//            R.id.paymentsClient
+//        ). setDrawerLayout(baseActivity.binding.drawerLayout).build()
 
-        adapter= HomeAdapter(mutableListOf<HomeListClient>(HomeListClient("Registrar un producto","Inserte la informacion de su producto, si este fue registrado sera notificado")))
-        binding.RVMenuHome.adapter=adapter
-        binding.RVMenuHome.layoutManager = GridLayoutManager(baseActivity,2, LinearLayoutManager.VERTICAL, false)
+//        navcontroller = findNavController(R.id.nav_host_fragment_content_mains)
+
+//        appBarConfiguration = AppBarConfiguration(navController.graph).
+
+//        AutenticationModel.getCUser()
+        //Listener camara de indentado
+
+        var ListenerAnimation = object : HomeAdapter.OnItemListener {
+            override fun OnItemTouch(view: View?, motion: MotionEvent?): Boolean {
+                when (motion?.action) {
+                    MotionEvent.ACTION_DOWN -> {
+//                        item_menu_home_list
+                        if (!ItemMenuHomeListBinding.bind(view!!).lottieAnimationView.isAnimating) {
+                            ItemMenuHomeListBinding.bind(view!!).lottieAnimationView.playAnimation()
+                        }
+                        return true
+                    }
+                }
+                return true
+            }
+        }
+
+
+
+        AutenticationModel.CConnection.observe(viewLifecycleOwner, Observer {
+            Toast.makeText(
+                baseActivity,
+                R.string.splash_connect_pending, Toast.LENGTH_SHORT
+            ).show()
+        })
+
+
+        AutenticationModel.CDataAsociate.observe(viewLifecycleOwner, Observer {
+            binding.RoleSuper.text = getString(R.string.titleAdmin)
+            binding.RoleSeudo.text = getString(R.string.titleAdminSeudo)
+            binding.TVNick.text = "(" + it.getDataAsociate.user_id.email + ")"
+//            binding.toolbar.title=it.getDataAsociate.nik
+//            baseActivity.setTitle("pwd")
+
+            if (it.getDataAsociate.user_id.photo != null) {
+                Picasso.get()
+                    .load(it.getDataAsociate.user_id.photo).fit()
+                    .transform(CropCircleTransformation())
+//                    .into(binding.drawerLayout.nav_view.getHeaderView(0).findViewById(R.id.ImageUserPresentation) as ImageView)
+                    .into(binding.IVLogo)
+            }
+        })
+
+        lifecycleScope.launch{
+            AutenticationModel.CObject.collect{it->
+                Log.i("CALLBACKSTACK","SE LLAMO OTRA VEZ")
+                if (it == User.ADMIN) {
+                    binding.lottieAnimationView.setAnimation(R.raw.administracion)
+                    AutenticationModel.getDataUser()
+                } else if (it == User.EMPLOYED) {
+                    binding.lottieAnimationView.setAnimation(R.raw.employed)
+                } else {
+                    binding.lottieAnimationView.setAnimation(R.raw.dashboard)
+                }
+                AutenticationModel.getFunctions()
+            }
+        }
+
+//        AutenticationModel.CObject.observe(viewLifecycleOwner, Observer {
+//
+//        })
+
+
+        AutenticationModel.CFuctionsAnonime.observe(viewLifecycleOwner, Observer {
+            Log.i("Añandiendo instrucciones", "se inserto nuevamanete el adaptardo")
+            var adapter = HomeAdapter(it, context)
+            adapter.setOnItemListenerListener(ListenerAnimation)
+            binding.RVMenuHomeAnoime.adapter = adapter
+            binding.RVMenuHomeAnoime.layoutManager =
+                GridLayoutManager(baseActivity, 2, LinearLayoutManager.VERTICAL, false)
+        })
+        binding.RVMenuUser.layoutManager =
+            GridLayoutManager(baseActivity, 2, LinearLayoutManager.VERTICAL, false)
+        binding.RVMenuHomeAnoime.layoutManager =
+            GridLayoutManager(baseActivity, 2, LinearLayoutManager.VERTICAL, false)
+        binding.RVMenuHome.layoutManager =
+            GridLayoutManager(baseActivity, 2, LinearLayoutManager.VERTICAL, false)
+
+        AutenticationModel.CFuctions.observe(viewLifecycleOwner, Observer {
+            var admin_functions = mutableListOf<GetRolesAdminQuery.Fuction>()
+            var user_functions = mutableListOf<GetRolesAdminQuery.Fuction>()
+            var faste_or_anonime = mutableListOf<GetRolesAdminQuery.Fuction>()
+            if (it != null) {
+                binding.LLError.visibility = View.GONE
+                binding.LAError.cancelAnimation()
+                binding.BRlogin.isEnabled = true
+
+                binding.CVPrimary.visibility = View.VISIBLE
+
+                for (fc in it.getRoles.fuctions) {
+                    if (!fc.anonime_acces) {
+                        if (fc.user_acces) {
+                            user_functions.add(fc)
+                        } else {
+                            admin_functions.add(fc)
+                        }
+                    } else {
+                        faste_or_anonime.add(fc)
+                    }
+                }
+                if (it.getRoles.user) {
+                    var adapter_user: HomeAdapter = HomeAdapter(user_functions, context)
+                    binding.TVUserSecond.visibility = View.VISIBLE
+                    binding.RVMenuUser.visibility = View.VISIBLE
+                    binding.CVSecondary.visibility = View.VISIBLE
+//                    it.getRoles.fuctions
+                    adapter_user.setOnItemListenerListener(ListenerAnimation)
+                    binding.RVMenuUser.adapter = adapter_user
+
+                }
+
+                adapter_admin = HomeAdapter(admin_functions, context)
+                adapter_anonime = HomeAdapter(faste_or_anonime, context)
+                adapter_admin.setOnItemListenerListener(ListenerAnimation)
+                adapter_anonime.setOnItemListenerListener(ListenerAnimation)
+                binding.RVMenuHomeAnoime.adapter = adapter_anonime
+
+
+                binding.RVMenuHome.adapter = adapter_admin
+
+                binding.SFChangeFuctions.stopShimmer()
+                binding.SFChangeFuctions.visibility = View.GONE
+            } else {
+                //Ubo un error en a la hora de pedir lso filtros
+                binding.BRlogin.isEnabled = true
+                binding.LLError.visibility = View.VISIBLE
+            }
+        })
+
+        binding.BQRScanner.setOnClickListener {
+
+            if (!CamScannerStatus) {
+                //ENABLE CAMERA
+                MainView.RestoreCamera()
+                CameraView.CloseInFragment(false)
+                CameraView.CamaraStatus(CameraTypes.SCANER, true)
+                CamScannerStatus = true;
+            } else {
+                //CLOSE CAMERA
+                CameraView.CloseInFragment(true)
+                CameraView.CamaraStatus(CameraTypes.NULL, true)
+                CamScannerStatus = false;
+            }
+        }
+        //Asignando
+
+        binding.BRlogin.setOnClickListener {
+            AutenticationModel.getFunctions()
+            binding.LAError.playAnimation()
+            binding.BRlogin.isEnabled = false
+        }
+
+        binding.Testing.setOnClickListener {
+            findNavController().navigate(R.id.action_HomeFragmnet_to_agregateProducts3)
+
+        }
         return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

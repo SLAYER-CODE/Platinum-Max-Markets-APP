@@ -20,6 +20,7 @@ import com.example.fromdeskhelper.domain.PermissionsUseCase
 import com.google.common.util.concurrent.ListenableFuture
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.concurrent.ExecutionException
@@ -75,6 +76,17 @@ class CameraViewModel @Inject constructor(
     val CloseCamera: MutableLiveData<Boolean> = MutableLiveData();
     val CloseCameraChildren: MutableLiveData<Boolean> = MutableLiveData();
     val QRBindig: MutableLiveData<String> = MutableLiveData();
+
+
+    //Se conculyo el seteo correctamente
+    val ScanerEnable:MutableLiveData<Boolean> = MutableLiveData();
+
+    fun CorrectEnableCamera(){
+//        viewModelScope.launch {
+//            delay(100)
+            ScanerEnable.postValue(true)
+//        }
+    }
 
     fun CamaraStatus(type: CameraTypes,focus:Boolean){
         ScanerStatus.postValue(focus);

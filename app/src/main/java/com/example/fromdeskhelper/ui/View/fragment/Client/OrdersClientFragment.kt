@@ -6,10 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.databinding.FragmentOrdersClientBinding
-import com.example.fromdeskhelper.databinding.FragmentPaymentsClientBinding
-import com.example.fromdeskhelper.ui.View.activity.MainActivity
+import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Rename parameter arguments, choose names that match
@@ -31,7 +29,7 @@ class OrdersClientFragment : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentOrdersClientBinding? = null
     private val binding get() = _binding!!
-    protected lateinit var baseActivity: MainActivity
+    protected lateinit var baseActivity: EmployedMainActivity
     protected lateinit var contextFragment: Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,12 +44,12 @@ class OrdersClientFragment : Fragment() {
         if(baseActivity.binding.appBarMain.toolbarParent?.visibility==View.VISIBLE){
             baseActivity.binding.appBarMain.toolbarParent?.visibility=View.GONE
         }
-        if(baseActivity.binding.appBarMain.fab.visibility==View.VISIBLE){
-            baseActivity.binding.appBarMain.fab.visibility=View.GONE
-        }
-        if(baseActivity.binding.appBarMain.refreshFab.visibility==View.VISIBLE){
-            baseActivity.binding.appBarMain.refreshFab.visibility=View.GONE
-        }
+//        if(baseActivity.binding.appBarMain.fab.visibility==View.VISIBLE){
+//            baseActivity.binding.appBarMain.fab.visibility=View.GONE
+//        }
+//        if(baseActivity.binding.appBarMain.refreshFab.visibility==View.VISIBLE){
+//            baseActivity.binding.appBarMain.refreshFab.visibility=View.GONE
+//        }
 
         if(baseActivity.binding.appBarMain.toolbarParentClient!!.visibility==View.GONE){
             baseActivity.binding.appBarMain.toolbarParentClient!!.visibility=View.VISIBLE
@@ -70,7 +68,7 @@ class OrdersClientFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MainActivity) {
+        if (context is EmployedMainActivity) {
             this.baseActivity = context
         }
         this.contextFragment = context

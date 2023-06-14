@@ -10,7 +10,8 @@ import com.example.fromdeskhelper.core.AuthorizationInterceptor
 import com.example.fromdeskhelper.core.di.NetworkModule
 import com.example.fromdeskhelper.data.PreferencesManager
 import com.example.fromdeskhelper.data.model.LoginIntProvider
-import com.example.fromdeskhelper.domain.ComprobationUserUseCase
+import com.example.fromdeskhelper.data.model.objects.UserLogin
+import com.example.fromdeskhelper.domain.ComprobationUseCase
 import com.example.fromdeskhelper.util.isConnected
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GetTokenResult
@@ -29,11 +30,11 @@ var LOG_CLASS = "SPLASH_VIEWMODEL"
 
 @HiltViewModel
 class SplashScreenViewModel @Inject constructor(
-    private val loginApollo: ComprobationUserUseCase,
+    private val loginApollo: ComprobationUseCase ,
     private val loginPreferences: PreferencesManager,
     private val authorizationInterceptor: AuthorizationInterceptor,
 ) : AndroidViewModel(Application()) {
-    val initLogOperator = MutableLiveData<Boolean>()
+    val initLogOperator = MutableLiveData<UserLogin>()
     val initLogMessage = MutableLiveData<String>()
     val initPrecentation = MutableLiveData<Boolean>()
     val initLogin = MutableLiveData<Boolean>()
@@ -52,7 +53,6 @@ class SplashScreenViewModel @Inject constructor(
                             Log.i(LOG_CLASS, "El usuario no pudo verificar si esta registrado")
                             initPrecentation.postValue(true);
                         } else if (!it.loginInit) {
-
                             var usuario = FirebaseAuth.getInstance().currentUser?.uid
                             if (usuario == null) {
                                 Log.i(LOG_CLASS, "El usuario falta por registrarse")
@@ -65,13 +65,61 @@ class SplashScreenViewModel @Inject constructor(
                                             //Este bloque de codigo muestra que fue correcta la autenticacion en el servidor de firebase
                                             viewModelScope.launch {
                                                 authorizationInterceptor.setSessionToken(token.result.token.toString())
-//                                    var resultado = loginApollo(token.result.token.toString())
-                                                initLogOperator.postValue(true)
+                                                //Agregando el valor de usuarios
+                                                //Restulado tiene las funciones y el rol que cumple en caso de que no sea usuario
+
+                                                if(loginApollo.connected()!=null){
+                                                    var resultado = loginApollo()
+
+                                                    if(resultado==null){
+                                                        //Sin conexion hacia el servidor O no es empleado
+                                                        //Comprobar si es usuario >:
+
+                                                        initLogOperator.postValue(UserLogin(false,null, false,false,true))
+                                                    }else{
+                                                        //ROOT->ADMIN->EMPLOYED
+//                                                        if(resultado){
+                                                            //Si es empleado
+                                                            var Admin = loginApollo.Cadmin()
+                                                            if(Admin!=null){
+                                                                Log.i(LOG_CLASS, "Entro como admin")
+                                                                initLogOperator.postValue(UserLogin(null,null, false,true,null))
+                                                                //Iniciame con todos los modulos de usuario y empleado
+                                                            }else{
+                                                                Log.i(LOG_CLASS, "Admin es igual a null")
+                                                                //Si no es compruebame si tiene un rol definido
+                                                                var Empleado = (loginApollo.Cemployed())
+                                                                if(Empleado!=null){
+                                                                    //Iniciamos como empleado
+                                                                    initLogOperator.postValue(UserLogin(true,null, false,false,null))
+                                                                }else{
+                                                                    Log.i(LOG_CLASS, "NO ubo una interaccion clara con el servidor")
+
+                                                                    //NO ubo conexion o hay un error
+                                                                    //Mensaje de reintento o iniciar como Anonimo
+                                                                    initLogOperator.postValue(UserLogin(false,null, false,false,true))
+                                                                }
+                                                            }
+                                                            //Significa que es trabajador de la empresa (Empleado,Jefe,Admin,etc..)
+
+//                                                        }else{
+                                                            //Este bloque no deberia utilizarse pero si no es entonces deberia ser Anonimo!
+                                                            //Significa que es usuario
+
+//                                                        }
+                                                    }
+                                                }else{
+                                                    //No hay conexion al servidor pero si logor conectar a firebase
+                                                    Log.i(LOG_CLASS, "Quiere iniciar como operador")
+                                                    initLogOperator.postValue(UserLogin(false,true, false,false,null))
+                                                }
                                             }
                                         } else {
+                                            Log.i(LOG_CLASS, "Quiere iniciar como operador")
+                                            //No hay una validacion con firebase o no se logor ingresar
                                            //Este otro bloque de codigo muestra si esa conexion fue desecha y se intenta validar nuevamente, es decir si se cambia la contraseña
                                            //en uso de la aplicacion entonces retornara este error (Lo mandara nuevamente al inicio de session)
-                                            initLogOperator.postValue(false)
+                                            initLogOperator.postValue(UserLogin(false,null, false,false,null))
                                         }
                                     }
                             }
@@ -79,12 +127,12 @@ class SplashScreenViewModel @Inject constructor(
                     }
                     break
                 }else{
+                    Log.i(LOG_CLASS, "Sin internet")
                     initLogMessage.postValue("Sin acceso a internet")
-                    delay(100)
-                    initLoginAnonime.postValue(true)
+                    delay(1000)
+                    initLogOperator.postValue(UserLogin(false,null, false,false,null))
                     break
                 }
-                delay(1000)
             }
         }
     }

@@ -11,7 +11,7 @@ import com.example.fromdeskhelper.data.model.User
 //import com.example.finalproductos.data.model.Productos
 //import com.example.finalproductos.data.model.User
 
-import com.example.fromdeskhelper.ui.View.activity.MainActivity
+import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import java.sql.*
 import java.sql.Connection
 import java.util.Date
@@ -29,17 +29,17 @@ class ConnectionController {
         val new = newComprobation.getInt(1)
         if(new == 1){
             //return hashMapOf<Intent,String>(Intent(baseContext,MainCliente::class.java) to "Bienvenido!")
-            return hashMapOf<Intent,String>(Intent(baseContext,MainActivity::class.java) to "Bienvenido!")
+            return hashMapOf<Intent,String>(Intent(baseContext,EmployedMainActivity::class.java) to "Bienvenido!")
         }else if(new==2){
             //return hashMapOf<Intent,String>(Intent(baseContext,VendedorActivity::class.java) to "")
-            return hashMapOf<Intent,String>(Intent(baseContext,MainActivity::class.java) to "")
+            return hashMapOf<Intent,String>(Intent(baseContext,EmployedMainActivity::class.java) to "")
         }else{
-            return hashMapOf<Intent,String>(Intent(baseContext,MainActivity::class.java) to "Inicie session nuevamente!")
+            return hashMapOf<Intent,String>(Intent(baseContext,EmployedMainActivity::class.java) to "Inicie session nuevamente!")
         }
     }
 
     fun activity(baseContext: Context):Intent{
-        return Intent(baseContext,MainActivity::class.java)
+        return Intent(baseContext,EmployedMainActivity::class.java)
     }
 
     fun productos(cox:Connection?):List<Producto>{

@@ -1,61 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/containerloginroot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/containerloginroot"
     tools:context=".ui.View.activity.LoginActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <include
-            layout="@layout/content_login_main"
-            android:background="#BF2222"
-            tools:layout_editor_absoluteY="56dp" />
+    <include
+        layout="@layout/content_login_main"
+        android:background="#BF2222"
+        tools:layout_editor_absoluteY="56dp" />
 
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@color/zxing_transparent"
-            android:foregroundGravity="center"
-            android:gravity="center"
-            android:theme="@style/Theme.Productos.AppBarOverlay"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-            <eightbitlab.com.blurview.BlurView
-                android:id="@+id/ToolBarBlurLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:popupTheme="@style/Theme.Productos.PopupOverlay"
-                style="@style/ToolBarLogin"
-                app:titleMarginStart="0.8in">
-
-            </androidx.appcompat.widget.Toolbar>
-            </eightbitlab.com.blurview.BlurView>
-        </com.google.android.material.appbar.AppBarLayout>
-
-
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <!--    <fragment-->
-    <!--        android:id="@+id/nav_host_fragment"-->
-    <!--        android:name="androidx.navigation.fragment.NavHostFragment"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        app:defaultNavHost="true"-->
-    <!--        app:navGraph="@navigation/nav_agregate" />-->
-</FrameLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

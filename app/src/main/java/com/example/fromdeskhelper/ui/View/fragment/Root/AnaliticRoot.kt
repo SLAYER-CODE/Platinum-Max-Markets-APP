@@ -11,14 +11,12 @@ import androidx.core.content.ContextCompat
 import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.databinding.FragmentAnaliticRootBinding
 import com.example.fromdeskhelper.ui.View.ViewModel.Root.AnaliticViewModel
-import com.example.fromdeskhelper.ui.View.activity.MainActivity
+import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import com.example.fromdeskhelper.ui.View.adapter.ViewPagerRootAnaliticAdapter
-import com.example.fromdeskhelper.ui.View.adapter.ViewPagerRootClientAdapter
 import com.example.fromdeskhelper.util.TabletPageTransformer
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.app_bar_main.*
 
 private const val LOGFRAGMENT: String = "AnaliticFragmentRoot"
 @AndroidEntryPoint
@@ -31,7 +29,7 @@ class AnaliticRoot : Fragment() {
     private lateinit var viewModel: AnaliticViewModel
     private var _binding: FragmentAnaliticRootBinding? = null
     private val binding get() = _binding!!
-    protected lateinit var baseActivity: MainActivity
+    protected lateinit var baseActivity: EmployedMainActivity
     protected lateinit var contextFragment: Context
 
     override fun onStart() {
@@ -41,12 +39,12 @@ class AnaliticRoot : Fragment() {
         if(baseActivity.binding.appBarMain.toolbarParent?.visibility==View.GONE){
             baseActivity.binding.appBarMain.toolbarParent?.visibility=View.VISIBLE
         }
-        if(baseActivity.binding.appBarMain.fab.visibility==View.GONE){
-            baseActivity.binding.appBarMain.fab.visibility=View.VISIBLE
-        }
-        if(baseActivity.binding.appBarMain.refreshFab.visibility==View.GONE){
-            baseActivity.binding.appBarMain.refreshFab.visibility=View.VISIBLE
-        }
+//        if(baseActivity.binding.appBarMain.fab.visibility==View.GONE){
+//            baseActivity.binding.appBarMain.fab.visibility=View.VISIBLE
+//        }
+//        if(baseActivity.binding.appBarMain.refreshFab.visibility==View.GONE){
+//            baseActivity.binding.appBarMain.refreshFab.visibility=View.VISIBLE
+//        }
         super.onStart()
     }
 
@@ -92,7 +90,7 @@ class AnaliticRoot : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MainActivity) {
+        if (context is EmployedMainActivity) {
             this.baseActivity = context
         }
         this.contextFragment = context

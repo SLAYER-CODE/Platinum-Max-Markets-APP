@@ -1,17 +1,11 @@
 package com.example.fromdeskhelper.ui.View.fragment.Root
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.content.res.Configuration
 import android.graphics.Color
 import android.net.wifi.p2p.WifiP2pDevice
-import android.net.wifi.p2p.WifiP2pDeviceList
 import android.net.wifi.p2p.WifiP2pManager
-import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import android.view.*
 import android.widget.AdapterView
@@ -22,29 +16,18 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.databinding.FragmentClientsRootBinding
-import com.example.fromdeskhelper.domain.WifiDirectBroadcastReceived
 import com.example.fromdeskhelper.ui.View.ViewModel.Root.ClientsRootViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.WifiVIewModel
-import com.example.fromdeskhelper.ui.View.activity.MainActivity
+import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import com.example.fromdeskhelper.ui.View.adapter.P2pClientAdapter
-import com.example.fromdeskhelper.ui.View.adapter.ProductoAdapter
-import com.example.fromdeskhelper.ui.View.adapter.ViewPagerMainAdapter
 import com.example.fromdeskhelper.ui.View.adapter.ViewPagerRootClientAdapter
 import com.example.fromdeskhelper.util.MessageSnackBar
 import com.example.fromdeskhelper.util.TabletPageTransformer
-import com.example.fromdeskhelper.util.listener.recyclerItemClickListener
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.app_bar_main.*
-import kotlinx.android.synthetic.main.fragment_clients_root.view.*
-import kotlinx.android.synthetic.main.item_client_list.view.*
-import kotlinx.android.synthetic.main.item_device.view.*
-import java.util.jar.Manifest
 
 
 private const val LOGFRAGMENT: String = "ClientsFragmentRoot"
@@ -58,7 +41,7 @@ class ClientesRoot : Fragment() {
     private lateinit var viewModel: ClientsRootViewModel
     private var _binding: FragmentClientsRootBinding? = null
     private val binding get() = _binding!!
-    protected lateinit var baseActivity: MainActivity
+    protected lateinit var baseActivity: EmployedMainActivity
     protected lateinit var contextFragment: Context
     private val wifiViewModel:WifiVIewModel by viewModels(ownerProducer = {requireActivity()})
     public lateinit var Listener:WifiP2pManager.PeerListListener;
@@ -209,21 +192,21 @@ class ClientesRoot : Fragment() {
         if(baseActivity.binding.appBarMain.toolbarParent?.visibility==View.GONE){
             baseActivity.binding.appBarMain.toolbarParent?.visibility=View.VISIBLE
         }
-        if(baseActivity.binding.appBarMain.fab.visibility==View.GONE){
-            baseActivity.binding.appBarMain.fab.visibility=View.VISIBLE
-        }
-        if(baseActivity.binding.appBarMain.refreshFab.visibility==View.GONE){
-            baseActivity.binding.appBarMain.refreshFab.visibility=View.VISIBLE
-        }
-        baseActivity.binding.appBarMain.refreshFab.setOnClickListener {
-            wifiViewModel.onCreate()
-        }
+//        if(baseActivity.binding.appBarMain.fab.visibility==View.GONE){
+//            baseActivity.binding.appBarMain.fab.visibility=View.VISIBLE
+//        }
+//        if(baseActivity.binding.appBarMain.refreshFab.visibility==View.GONE){
+//            baseActivity.binding.appBarMain.refreshFab.visibility=View.VISIBLE
+//        }
+//        baseActivity.binding.appBarMain.refreshFab.setOnClickListener {
+//            wifiViewModel.onCreate()
+//        }
         super.onStart()
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MainActivity) {
+        if (context is EmployedMainActivity) {
             this.baseActivity = context
         }
         this.contextFragment = context

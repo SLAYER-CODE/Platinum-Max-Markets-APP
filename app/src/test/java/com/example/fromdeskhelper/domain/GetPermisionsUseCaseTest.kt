@@ -22,7 +22,7 @@ class GetPermisionsUseCaseTest{
     @Before
     fun onBefore(){
         MockKAnnotations.init(this)
-        getPermisionsUseCase= GetPermisionsUseCase(loginRepositoy)
+        getPermisionsUseCase= GetPermisionsUseCase(loginRepositoy,null)
     }
 
     @Test
@@ -36,11 +36,14 @@ class GetPermisionsUseCaseTest{
     @Test
     fun `Comprueba token`()= runBlocking{
         //given
+        var Logger = "TOKEN_TEST"
         coEvery { loginRepositoy.comprobate("New") } returns Privilegies.NULL
         //whe
         val resultado = getPermisionsUseCase("New")
         if(resultado==Privilegies.NULL) {
-            Log.i("Debug","Devolvio Null")
+            Log.d(Logger,"Devolvio Null")
+        }else{
+            Log.d(Logger,"Se implanto una respuesta")
         }
         //then
         coVerify(exactly = 1){loginRepositoy.comprobate("New")}

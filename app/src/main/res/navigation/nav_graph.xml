@@ -13,7 +13,18 @@
 
         <action
             android:id="@+id/action_HomeFragmnet_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            app:destination="@id/FirstFragment"
+            app:enterAnim="@anim/fade_intro"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_intro"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_HomeFragmnet_to_agregateProducts3"
+            app:enterAnim="@anim/fade_intro"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_intro"
+            app:popExitAnim="@anim/fade_out"
+            app:destination="@id/agregateProducts3" />
     </fragment>
 
 
@@ -55,8 +66,8 @@
 
     <fragment
         android:id="@+id/agregateProducts3"
-        android:name="com.example.fromdeskhelper.AgregateProducts"
-        tools:layout="@layout/fragment_agregate_products"
+        android:name="com.example.fromdeskhelper.RegisterDashboardFragment"
+        tools:layout="@layout/fragment_register_dashboard"
         >
 
         <action

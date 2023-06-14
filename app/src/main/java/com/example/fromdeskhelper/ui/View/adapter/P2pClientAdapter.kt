@@ -12,10 +12,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fromdeskhelper.R
-import kotlinx.android.synthetic.main.image_new_new.view.*
-import kotlinx.android.synthetic.main.item_client_list.view.*
-import kotlinx.android.synthetic.main.item_device.view.*
-import kotlinx.android.synthetic.main.item_producto.view.*
+import com.example.fromdeskhelper.databinding.ItemDeviceBinding
+//import kotlinx.android.synthetic.main.image_new_new.view.*
+//import kotlinx.android.synthetic.main.item_client_list.view.*
+//import kotlinx.android.synthetic.main.item_device.view.*
+//import kotlinx.android.synthetic.main.item_producto.view.*
 import java.lang.reflect.Method
 
 class P2pClientAdapter (
@@ -43,14 +44,14 @@ class P2pClientAdapter (
         return
     }
 
-    inner class ClientP2PHolder(val view: View): RecyclerView.ViewHolder(view){
+    inner class ClientP2PHolder(val view: ItemDeviceBinding): RecyclerView.ViewHolder(view.root){
         @SuppressLint("MissingPermission")
         fun render(ProductoAndImage: WifiP2pDevice){
 
 //            val bmp = BitmapFactory.decodeByteArray(superImage, 0, superImage.size)
 //            val bmp = assetsToBitmap("purpleFlower.png")
 //            view.ImagenOrder.setImageBitmap(bmp)
-            view
+//            view
             view.NombreText.text=ProductoAndImage.deviceName
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 if(ProductoAndImage.wfdInfo!=null){
@@ -79,7 +80,7 @@ class P2pClientAdapter (
                     Log.i("P2PRECONECT","VISTA SE PRODUJO")
                     view.LContetDetails.visibility=View.GONE
                 }
-                view.requestLayout()
+                view.root.requestLayout()
             }
             view.BConnect.setOnClickListener {
                 var device =  ProductoAndImage
@@ -118,13 +119,15 @@ class P2pClientAdapter (
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClientP2PHolder {
         Log.i("P2PRECONECT","SE AGREGO!! SE CREOOOO")
         val layoutInflater = LayoutInflater.from(parent.context)
-        return ClientP2PHolder(
-            layoutInflater.inflate(
-                R.layout.item_device,
-                parent,
-                false
-        )
-        )
+//        return ClientP2PHolder(
+//            layoutInflater.inflate(
+//                R.layout.item_device,
+//                parent,
+//                false
+//        )
+//        )
+
+        return ClientP2PHolder(ItemDeviceBinding.inflate(layoutInflater,parent,false))
     }
 
 

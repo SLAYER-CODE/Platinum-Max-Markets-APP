@@ -84,7 +84,7 @@
     </style>
 
     <style name="ButtonFloatLayout">
-        <item name="android:backgroundTint">@color/md_blue_500</item>
+        <item name="android:backgroundTint">@color/md_green_600</item>
     </style>
 
     <style name="IconItems">

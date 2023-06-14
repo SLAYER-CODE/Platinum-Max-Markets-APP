@@ -6,3 +6,9 @@ object Constrains {
     const val REQUEST_CODE_PERMISSIONS=123
     val REQUIERED_PERMISSIONS = arrayOf(android.Manifest.permission.CAMERA)
 }
+
+object ZoomCamer {
+    const val SMALL=0
+    const val NORMAL=100
+    const val large=200
+}

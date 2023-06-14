@@ -1,4 +1,5 @@
 package com.example.fromdeskhelper.ui.View.activity
+import com.example.fromdeskhelper.R
 
 import android.os.Bundle
 import android.view.Menu
@@ -12,7 +13,9 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.fromdeskhelper.databinding.ActivityUserMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class UserMainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration

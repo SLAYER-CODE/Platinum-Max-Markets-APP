@@ -18,7 +18,7 @@ import com.example.fromdeskhelper.databinding.FragmentClientItemShowBinding
 import com.example.fromdeskhelper.ui.View.ViewModel.ClientLocalViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.ShowMainViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.WifiVIewModel
-import com.example.fromdeskhelper.ui.View.activity.MainActivity
+import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import com.example.fromdeskhelper.ui.View.adapter.ShopingProductAdapter
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -41,7 +41,7 @@ private const val LOGFRAGMENT: String = "CLIENTOPENITEM"
 class ClientItemShowFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
-    protected lateinit var baseActivity: MainActivity
+    protected lateinit var baseActivity: EmployedMainActivity
     protected lateinit var contextFragment: Context
     private var _binding: FragmentClientItemShowBinding? = null
     private val binding get() = _binding!!
@@ -66,7 +66,7 @@ class ClientItemShowFragment : Fragment() {
     }
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MainActivity) {
+        if (context is EmployedMainActivity) {
             this.baseActivity = context
         }
         this.contextFragment = context

@@ -1,7 +1,6 @@
 package com.example.fromdeskhelper.ui.View.fragment
 
 import com.example.fromdeskhelper.ui.View.adapter.DetallesAdapterImagen
-import com.example.fromdeskhelper.data.db.AppDatabase
 import Data.ImagenesNew
 import Data.InventarioProducts
 import Data.Producto
@@ -9,7 +8,6 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.transition.TransitionInflater
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -22,7 +20,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.databinding.FragmentDetallesProductsBinding
 import com.example.fromdeskhelper.ui.View.ViewModel.ShowMainViewModel
-import com.example.fromdeskhelper.ui.View.activity.MainActivity
+import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import com.example.fromdeskhelper.util.MessageSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
@@ -41,7 +39,7 @@ class DetallesProducto : Fragment() {
 //    private lateinit var database: AppDatabase;
     private lateinit var producto:Producto;
     private lateinit var imagenes:List<ImagenesNew>
-    private lateinit var baseActivity: MainActivity
+    private lateinit var baseActivity: EmployedMainActivity
     private lateinit var contextFragment: Context
     private var _binding: FragmentDetallesProductsBinding? = null
     private  lateinit var productoLiveData:LiveData<InventarioProducts>;
@@ -208,7 +206,7 @@ class DetallesProducto : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MainActivity) {
+        if (context is EmployedMainActivity) {
             this.baseActivity = context
         }
         this.contextFragment = context
@@ -267,7 +265,7 @@ class DetallesProducto : Fragment() {
     }
 
     override fun onStart() {
-        baseActivity.binding.appBarMain.refreshFab.visibility=View.GONE
+//        baseActivity.binding.appBarMain.refreshFab.visibility=View.GONE
         super.onStart()
     }
 

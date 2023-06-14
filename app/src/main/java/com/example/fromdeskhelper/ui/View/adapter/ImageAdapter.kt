@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fromdeskhelper.R
-import kotlinx.android.synthetic.main.image_new_new.view.*
+//import kotlinx.android.synthetic.main.image_new_new.view.*
 
 import android.net.Uri
 import android.util.Log
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
+import com.example.fromdeskhelper.databinding.ImageNewAddBinding
+import com.example.fromdeskhelper.databinding.ImageNewNewBinding
 import okhttp3.internal.notify
 
 
@@ -53,8 +55,8 @@ class ImageAdapter (var MyImage:MutableList<Uri>):
         var viewF:RelativeLayout;
         var viewB:RelativeLayout;
         var viewParent:FrameLayout;
-        var view:View;
-        constructor(itemView: View) : super(itemView){
+        var view:ImageNewNewBinding;
+        constructor(itemView: ImageNewNewBinding) : super(itemView.root){
             viewF=itemView.relativeDos
             viewB=itemView.relativeUno
             viewParent=itemView.viewParent
@@ -86,7 +88,8 @@ class ImageAdapter (var MyImage:MutableList<Uri>):
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return ImageHolder(layoutInflater.inflate(R.layout.image_new_new,parent,false))
+        return ImageHolder(ImageNewNewBinding.inflate(layoutInflater,parent,false))
+//        return ImageHolder(layoutInflater.inflate(R.layout.image_new_new,parent,false))
     }
 
     override fun onBindViewHolder(holder: ImageHolder, position: Int) {

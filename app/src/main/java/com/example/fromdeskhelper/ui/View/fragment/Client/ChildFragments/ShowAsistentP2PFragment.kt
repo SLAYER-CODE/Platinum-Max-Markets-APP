@@ -11,13 +11,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fromdeskhelper.R
-import com.example.fromdeskhelper.databinding.FragmentPaymentsClientBinding
 import com.example.fromdeskhelper.databinding.FragmentShowAsistentP2PBinding
 import com.example.fromdeskhelper.ui.View.ViewModel.WifiVIewModel
-import com.example.fromdeskhelper.ui.View.activity.MainActivity
+import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import com.example.fromdeskhelper.ui.View.adapter.Client.P2pClientConectedAdapter
-import com.example.fromdeskhelper.ui.View.adapter.P2pClientAdapter
 import com.example.fromdeskhelper.util.listener.recyclerItemClickListener
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -51,7 +48,7 @@ class ShowAsistentP2PFragment : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentShowAsistentP2PBinding? = null
     private val binding get() = _binding!!
-    protected lateinit var baseActivity: MainActivity
+    protected lateinit var baseActivity: EmployedMainActivity
     protected lateinit var contextFragment: Context
 
 
@@ -106,7 +103,7 @@ class ShowAsistentP2PFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MainActivity) {
+        if (context is EmployedMainActivity) {
             this.baseActivity = context
         }
         this.contextFragment = context

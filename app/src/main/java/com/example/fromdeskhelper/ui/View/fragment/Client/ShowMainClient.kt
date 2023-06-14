@@ -2,15 +2,12 @@ package com.example.fromdeskhelper.ui.View.fragment.Client
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
-import android.widget.ArrayAdapter
-import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -19,10 +16,9 @@ import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.databinding.FragmentShowMainClientBinding
 import com.example.fromdeskhelper.ui.View.ViewModel.Client.FactureProduct
 import com.example.fromdeskhelper.ui.View.ViewModel.Client.ShowMainClientViewModel
-import com.example.fromdeskhelper.ui.View.activity.MainActivity
+import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import com.example.fromdeskhelper.ui.View.adapter.MessageAdapter
 import com.example.fromdeskhelper.ui.View.adapter.ShopingContrateProductAdapter
-import com.example.fromdeskhelper.ui.View.adapter.ViewPagerMainAdapter
 import com.example.fromdeskhelper.ui.View.adapter.ViewPagerMainAdapterClient
 import com.example.fromdeskhelper.ui.View.fragment.Client.ChildFragments.affectOnItemClicks
 import com.google.android.material.badge.BadgeDrawable
@@ -51,7 +47,7 @@ class ShowMainClient : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentShowMainClientBinding? = null
     private val binding get() = _binding!!
-    protected lateinit var baseActivity: MainActivity
+    protected lateinit var baseActivity: EmployedMainActivity
     protected lateinit var contextFragment: Context
     private val ShowMainClientModel : ShowMainClientViewModel by viewModels(ownerProducer = {requireActivity()})
     private var OpenItem:Boolean=true
@@ -68,12 +64,12 @@ class ShowMainClient : Fragment() {
         if(baseActivity.binding.appBarMain.toolbarParent?.visibility==View.VISIBLE){
             baseActivity.binding.appBarMain.toolbarParent?.visibility=View.GONE
         }
-        if(baseActivity.binding.appBarMain.fab.visibility==View.VISIBLE){
-            baseActivity.binding.appBarMain.fab.visibility=View.GONE
-        }
-        if(baseActivity.binding.appBarMain.refreshFab.visibility==View.VISIBLE){
-            baseActivity.binding.appBarMain.refreshFab.visibility=View.GONE
-        }
+//        if(baseActivity.binding.appBarMain.fab.visibility==View.VISIBLE){
+//            baseActivity.binding.appBarMain.fab.visibility=View.GONE
+//        }
+//        if(baseActivity.binding.appBarMain.refreshFab.visibility==View.VISIBLE){
+//            baseActivity.binding.appBarMain.refreshFab.visibility=View.GONE
+//        }
 
         if(baseActivity.binding.appBarMain.toolbarParentClient!!.visibility==View.GONE){
             baseActivity.binding.appBarMain.toolbarParentClient!!.visibility=View.VISIBLE
@@ -181,7 +177,7 @@ class ShowMainClient : Fragment() {
     }
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is MainActivity) {
+        if (context is EmployedMainActivity) {
             this.baseActivity = context
         }
         this.contextFragment = context
