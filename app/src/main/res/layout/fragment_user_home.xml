@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="23dp"
     tools:context=".ui.View.fragment.User.home.HomeUserFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/toolbarParent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/md_white_1000_screen"
+        android:background="@color/md_yellow_A400"
         style="@style/BarLayout">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -72,7 +71,7 @@
                 android:layout_gravity="left|bottom"
                 android:textStyle="normal"
                 android:textSize="10dp"
-                android:background="@color/md_statusbar_translucent"
+                android:background="@color/zxing_transparent"
                 android:layout_width="wrap_content"
                 android:text="@string/ubication_add_user"
                 android:layout_margin="10dp"
@@ -112,12 +111,15 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
         <com.github.rubensousa.gravitysnaphelper.GravitySnapRecyclerView
+            android:id="@+id/PreviewView"
             android:orientation="horizontal"
             app:snapGravity="center"
             app:snapEnabled="true"
             android:layout_width="match_parent"
             android:layout_height="150dp"/>
+
         <androidx.cardview.widget.CardView
             android:layout_margin="10dp"
             android:layout_width="match_parent"
@@ -194,7 +196,7 @@
                         android:layout_weight="0"
                         android:text="@string/add_user_ofertas"
                         android:textStyle="bold"
-                        android:textSize="20sp"
+                        android:textSize="16sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 

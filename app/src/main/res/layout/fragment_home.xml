@@ -130,14 +130,7 @@
                         android:gravity="left"
                         android:theme="@style/ButonActionBar"
                         app:searchIcon="@drawable/ic_baseline_image_search_showproduct" />
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/Testing"
-                        style="@style/ButonActionBar"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:background="@drawable/ic_baseline_qr_code_scanner_showproduct"
-                        android:minWidth="50dp" />
+
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/BQRScanner"
                         style="@style/ButonActionBar"

@@ -5,6 +5,7 @@ package com.example.fromdeskhelper.ui.View.fragment
 
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -15,7 +16,9 @@ import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -28,11 +31,16 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.data.Providers
 import com.example.fromdeskhelper.data.Result
+import com.example.fromdeskhelper.data.model.objects.ErrorUser
+import com.example.fromdeskhelper.data.model.objects.User
 import com.example.fromdeskhelper.databinding.FragmentLoginBinding
+import com.example.fromdeskhelper.ui.View.ViewModel.AuthenticationUserViewModel
 import com.example.fromdeskhelper.ui.View.activity.LoginActivity
 import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import com.example.fromdeskhelper.ui.login.LoggedInUserView
 import com.example.fromdeskhelper.ui.View.ViewModel.LoginViewModel
+import com.example.fromdeskhelper.ui.View.ViewModel.SplashScreenViewModel
+import com.example.fromdeskhelper.ui.View.activity.UserMainActivity
 import com.example.fromdeskhelper.util.MessageSnackBar
 //import com.example.fromdeskhelper.ui.login.LoginViewModelFactory
 import com.facebook.*
@@ -65,6 +73,9 @@ class LoginFragment : Fragment() {
 
     private val GOOGLE_SIN_IN = 100
     private val loginViewModel: LoginViewModel by viewModels();
+    private val SplashModel : SplashScreenViewModel by viewModels();
+    private val AutenticationModel: AuthenticationUserViewModel by viewModels();
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
@@ -457,6 +468,100 @@ class LoginFragment : Fragment() {
 //            disableitems(true)
 //        }
 
+        loginViewModel.initLogin.observe(viewLifecycleOwner,Observer{
+
+            SplashModel(baseActivity);
+//            var initLoginActiviti: Intent = Intent(baseActivity, EmployedMainActivity::class.java)
+//            startActivity(initLoginActiviti)
+//            Animatoo.animateZoom(baseActivity);
+//            baseActivity.finish()
+        })
+
+        SplashModel.initLogOperator.observe(viewLifecycleOwner, Observer {
+            AutenticationModel.setCUser(it)
+            var EmployedIntent=Intent(baseActivity, EmployedMainActivity::class.java)
+
+            if(it.admin==true) {
+                //Iniciar como admin "Todas las funciones"
+                var parm= Bundle();
+                parm.putInt("IN", User.ADMIN)
+                EmployedIntent.putExtras(parm)
+                startActivity(EmployedIntent)
+                Animatoo.animateZoom(baseActivity);
+                baseActivity.finish()
+            }
+            else if(it.employed==true){
+                startActivity(EmployedIntent)
+                Animatoo.animateZoom(baseActivity);
+                baseActivity.finish()
+
+            }else if(it.user_acces==true){
+                startActivity(Intent(baseActivity, UserMainActivity::class.java))
+                Animatoo.animateZoom(baseActivity);
+                baseActivity.finish()
+                //Iniciame como usuario con las opcioens que se nos otorgen
+            }else{
+                val builder = AlertDialog.Builder(baseActivity)
+                val positiveButtonClick = { dialog: DialogInterface, which: Int ->
+
+                    SplashModel(baseActivity);
+//                   binding.PBSS.isEnabled=true
+//                   binding.PBSS.isIndeterminate=true
+
+                    Toast.makeText(baseActivity,
+                        R.string.splash_connect_pending, Toast.LENGTH_SHORT).show()
+
+                }
+
+                val items = arrayOf(
+                    ErrorUser.ANONIMO,
+                    ErrorUser.INICIAR,
+                    ErrorUser.REGISTRARSE,
+                    ErrorUser.INICIAR_USER,
+                    ErrorUser.EXIT)
+                if(it.anonime==null && it.user_acces==null){
+                    //Error en firebase
+                    binding.TEerror.text = "Error al iniciar Session";
+                    binding.TEerror.visibility=View.VISIBLE
+
+                }
+                if(it.anonime==true && it.user_acces==null){
+                    //No encontro el servidor pero si valido al usuario en firebase
+                    binding.TEerror.text = "Error en el servidor...";
+                    binding.TEerror.visibility=View.VISIBLE
+                }
+
+                builder.setTitle("Hubo un error")
+                builder.setItems(items){dialog,with->
+                    if(items[with] == ErrorUser.ANONIMO){
+                        startActivity(Intent(baseActivity, EmployedMainActivity::class.java))
+                        Animatoo.animateShrink(baseActivity);
+                        baseActivity.finish()
+                    }else if(items[with] == ErrorUser.INICIAR){
+                        startActivity(Intent(baseActivity, LoginActivity::class.java))
+                        Animatoo.animateFade(baseActivity);
+                        baseActivity.finish()
+                    }else if(items[with] == ErrorUser.REGISTRARSE) {
+                        startActivity(Intent(baseActivity, LoginActivity::class.java))
+                        Animatoo.animateSlideDown(baseActivity);
+                        baseActivity.finish()
+                    }else if(items[with] == ErrorUser.INICIAR_USER){
+                        startActivity(Intent(baseActivity, UserMainActivity::class.java))
+                        Animatoo.animateShrink(baseActivity);
+                        baseActivity.finish()
+                    }else{
+                        Animatoo.animateZoom(baseActivity);
+                        baseActivity.finish()
+                    }
+                }
+                builder.setPositiveButton("REINTENTAR", positiveButtonClick)
+                builder.show()
+//               binding.PBSS.isEnabled=false
+//               binding.PBSS.isIndeterminate=false
+
+
+            }
+        })
 
     }
 
@@ -473,10 +578,6 @@ class LoginFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             loginViewModel.initFirebaseToken()
-            var initLoginActiviti: Intent = Intent(baseActivity, EmployedMainActivity::class.java)
-            startActivity(initLoginActiviti)
-            Animatoo.animateZoom(baseActivity);
-            baseActivity.finish()
         }
         binding.loading.visibility = View.INVISIBLE
 //        Toast.makeText(context, "${email}", Toast.LENGTH_SHORT).show()

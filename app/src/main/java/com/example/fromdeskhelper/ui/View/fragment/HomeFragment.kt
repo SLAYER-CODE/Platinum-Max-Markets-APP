@@ -287,10 +287,9 @@ class HomeFragment : Fragment() {
             binding.BRlogin.isEnabled = false
         }
 
-        binding.Testing.setOnClickListener {
-            findNavController().navigate(R.id.action_HomeFragmnet_to_agregateProducts3)
-
-        }
+//        binding.Testing.setOnClickListener {
+//            findNavController().navigate(R.id.action_HomeFragmnet_to_agregateProducts3)
+//        }
         return binding.root
     }
 

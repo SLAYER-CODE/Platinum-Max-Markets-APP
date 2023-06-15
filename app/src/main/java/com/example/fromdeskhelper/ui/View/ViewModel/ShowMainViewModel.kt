@@ -24,13 +24,20 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class ShowMainViewModel @Inject constructor(private val Utils: UtilsController,private val Products:ProductsController) :AndroidViewModel(
+class ShowMainViewModel @Inject constructor(
+    private val Utils: UtilsController,
+    private val Products:ProductsController,
+    private val loginPreferences: PreferencesManager,
+
+    ) :AndroidViewModel(
 Application()
 ) {
     val ItemsRouterTransmited: MutableLiveData<MutableList<listInventarioProductos>> = MutableLiveData();
     public val Items:MutableList<listInventarioProductos> = mutableListOf()
     public val ResT=MutableLiveData<listInventarioProductos>()
+    public val Unlogot=MutableLiveData<Boolean>()
     public val ResTFacture=MutableLiveData<MutableList<Producto>>()
+    val UserPreferences = loginPreferences.preferencesUserFlow
 
     val ImageReturn: MutableLiveData<String?> = MutableLiveData();
 
@@ -66,6 +73,13 @@ Application()
         }
     }
 
+    fun Unlogin(){
+        viewModelScope.launch {
+            FirebaseAuth.getInstance().signOut()
+//            UserPreferences.
+            Unlogot.postValue(true)
+        }
+    }
 
     fun GetCount():LiveData<Int>{
         return Utils.GetCountItems()

@@ -52,6 +52,9 @@ class LoginViewModel @Inject constructor(
     val usuarioLoginProviderError: MutableLiveData<Result<Exception>> = MutableLiveData();
 
     val UserPreferences = loginPreferences.preferencesUserFlow
+
+    val initLogin = MutableLiveData<Boolean>()
+
     operator fun invoke(){
         Log.i(LOG_PRESENATION,"Se esta cambiando la presentacion")
         viewModelScope.launch {
@@ -61,6 +64,7 @@ class LoginViewModel @Inject constructor(
     suspend fun initFirebaseToken(){
         FirebaseAuth.getInstance().getAccessToken(true).addOnCompleteListener { token ->
             authorizationInterceptor.setSessionToken(token.result.token.toString())
+            initLogin.postValue(true)
         }
     }
 

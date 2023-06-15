@@ -54,6 +54,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.Fade
 import androidx.transition.Transition
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.data.model.Types.CameraTypes
 import com.example.fromdeskhelper.data.model.objects.Upload
@@ -689,6 +690,14 @@ class EmployedMainActivity : AppCompatActivity() {
                     .into(header.ImageUserPresentation)
             }
         })
+        MainModel.Unlogot.observe(this,Observer {
+            startActivity(Intent(baseContext,LoginActivity::class.java))
+            Animatoo.animateZoom(this);
+            finish()
+        })
+        header.logoutView.setOnClickListener {
+            MainModel.Unlogin()
+        }
 
         header.TNameEmail?.text=(FirebaseAuth.getInstance().currentUser?.email?:R.string.anonyme).toString()
         header.TName?.text=(FirebaseAuth.getInstance().currentUser?.displayName?:R.string.nav_header_title).toString()

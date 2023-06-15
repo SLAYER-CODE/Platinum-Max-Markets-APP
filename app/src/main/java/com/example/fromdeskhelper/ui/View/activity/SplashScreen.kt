@@ -145,7 +145,6 @@ class SplashScreen : AppCompatActivity() {
             finish()
         })
 
-
         SplashModel.initLogOperator.observe(this, Observer {
             AutenticationModel.setCUser(it)
             var EmployedIntent=Intent(baseContext, EmployedMainActivity::class.java)
