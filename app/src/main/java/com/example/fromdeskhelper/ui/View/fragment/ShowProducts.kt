@@ -52,7 +52,7 @@ class ShowProducts : Fragment() {
     var currentPage: Int = 6
     var itemfinal: Boolean = false;
     var clientcount: Int = 1;
-    var adapter:ProductoAdapter= ProductoAdapter(mutableListOf(),null,0,null)
+    var adapter: ProductoAdapter = ProductoAdapter(mutableListOf(), null, 0, null)
 
     //    lateinit var daoNew:AppDatabase
 //    private val MainModel: ShowMainViewModel by viewModels(ownerProducer = { requireActivity() });
@@ -74,8 +74,6 @@ class ShowProducts : Fragment() {
     private val LocalModel: ShowLocalViewModel by viewModels(ownerProducer = {
         requireActivity()
     })
-
-
 
 
     interface ClickListener {
@@ -135,9 +133,7 @@ class ShowProducts : Fragment() {
 
 
     fun setFunction(value: Boolean, client: ClientListGet?) {
-        Log.i("SE APRETO LONG","FINALITEM")
-
-        adapter.setOnItemListenerListener(object:ProductoAdapter.OnItemListener{
+        adapter.setOnItemListenerListener(object : ProductoAdapter.OnItemListener {
             override fun OnItemClickListener(view: View?, position: Int) {
                 if (findNavController().currentDestination?.id == R.id.FirstFragment) {
                     val bundle = Bundle()
@@ -145,14 +141,16 @@ class ShowProducts : Fragment() {
                     navBuilder.setEnterAnim(android.R.anim.fade_in)
                         .setExitAnim(android.R.anim.fade_out)
                         .setPopExitAnim(android.R.anim.fade_out)
-                    Log.i("POSICION",position.toString())
+                    Log.i("POSICION", position.toString())
                     bundle.putInt("uid", listaProductos[position].uid)
                     var animation = 0
                     var extras: FragmentNavigator.Extras = FragmentNavigatorExtras()
                     //main.item_producto
-                    if ((view as ItemProductoBinding)?.IVimagenItem != null) {
-                        animation = 1
-                        extras = FragmentNavigatorExtras(view.IVimagenItem to "image_big")
+                    if(view!=null) {
+                        if (listaProductos[position].imageBit != null) {
+                            animation = 1
+                            extras = FragmentNavigatorExtras(ItemProductoBinding.bind(view).IVimagenItem to "image_big")
+                        }
                     }
 
                     bundle.putInt("animation", animation)
@@ -166,25 +164,26 @@ class ShowProducts : Fragment() {
             }
 
             override fun OnItemLongClickListener(view: View?, position: Int) {
-                if (view!=null&&value && client != null) {
+                if (view != null && value && client != null) {
 
 
                     ClienLocalModel.setRelationSelect(
                         client.uid,
                         listaProductos[position].uid
                     )
-                    view.animate()
-                        .yBy(-50f).xBy(-25f)
-                        .setInterpolator(decayingSineWave)
-                        .setDuration(200).withEndAction {
-                            val ViewDrawable =
-                                DrawableCompat.wrap((view as ItemProductoBinding).ItemBackground.background);
-                            DrawableCompat.setTint(ViewDrawable.mutate(), client.color)
-                        }
+//                    view.animate()
+//                        .yBy(-50f).xBy(-25f)
+//                        .setInterpolator(decayingSineWave)
+//                        .setDuration(200).withEndAction {
+//                            val ViewDrawable =
+//                                DrawableCompat.wrap((view as ItemProductoBinding).ItemBackground.background);
+//                            DrawableCompat.setTint(ViewDrawable.mutate(), client.color)
+//                        }
+//
+//                        .start();
 
-                        .start();
-
-                }            }
+                }
+            }
 
         })
 
@@ -241,9 +240,7 @@ class ShowProducts : Fragment() {
 //        })
 
 
-
 //        Configuraciones de la barra personalizada
-
 
 
         ClienLocalModel.itemClientItem.observe(viewLifecycleOwner, Observer {
@@ -253,12 +250,12 @@ class ShowProducts : Fragment() {
         StoreSendViewModel.Items.observe(viewLifecycleOwner, Observer {
             listaProductos = it.MyImage
             adapter = it
-            setFunction(false,null)
+            setFunction(false, null)
             comprobateList(it.itemCount)
 
 
             lifecycleScope.launch {
-                binding.LVMylist.adapter=adapter
+                binding.LVMylist.adapter = adapter
                 adapter.notifyDataSetChanged()
                 binding.LVMylist.startLayoutAnimation()
             }
@@ -268,7 +265,7 @@ class ShowProducts : Fragment() {
 
         binding.swipe.setOnRefreshListener {
             binding.LVMylist.startLayoutAnimation()
-            binding.swipe.isRefreshing=false
+            binding.swipe.isRefreshing = false
         }
 //        UtilsViewProduct.RequestLayoutItem.observe(viewLifecycleOwner, Observer {
 //            binding.LVMylist.adapter = listaProductos

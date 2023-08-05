@@ -1,10 +1,7 @@
 package com.example.fromdeskhelper.data.model.Controller
 
-import Data.ImagenesNew
-import Data.Producto
-import com.apollographql.apollo3.ApolloClient
+import Data.ImagenesProduct
 import com.example.fromdeskhelper.data.model.base.ProductoData
-import com.example.fromdeskhelper.type.Products
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -20,8 +17,14 @@ class SavedProductController @Inject constructor(
        }
 
 
+       suspend fun saveProductALl(Producter:Data.Producto):Int{
+              return withContext(Dispatchers.IO) {
+                     return@withContext DaoProduct.insertProductAndImages(Producter)
+              }
+       }
 
-       suspend fun saveImage(Imager: ImagenesNew){
+
+       suspend fun saveImage(Imager: ImagenesProduct){
               val resultKeys= withContext(Dispatchers.IO){
                      DaoProduct.insertAllImages(Imager)
               }

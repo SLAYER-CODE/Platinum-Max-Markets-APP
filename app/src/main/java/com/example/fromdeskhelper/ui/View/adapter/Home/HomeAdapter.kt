@@ -6,12 +6,15 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.appcompat.view.menu.MenuView.ItemView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fromdeskhelper.GetRolesAdminQuery
 import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.data.model.objects.Function
+import com.example.fromdeskhelper.data.model.objects.mongod.ProductsModelAdapter
 import com.example.fromdeskhelper.databinding.ItemMenuHomeListBinding
 import com.example.fromdeskhelper.ui.View.adapter.ProductoAdapter
 
@@ -22,11 +25,15 @@ import com.example.fromdeskhelper.ui.View.adapter.ProductoAdapter
 
 
 var LOG_ADAPTER="HomeAdapter"
-class HomeAdapter(var Clients:MutableList<GetRolesAdminQuery.Fuction>,var context:Context?):RecyclerView.Adapter<HomeAdapter.HolderClient>() {
+class HomeAdapter(var Clients:MutableList<GetRolesAdminQuery.Fuction>,
+                  var context:Context?,var scanner: () -> Unit={}):RecyclerView.Adapter<HomeAdapter.HolderClient>(),
+    Filterable {
 
+    private var homeMenu:MutableList<GetRolesAdminQuery.Fuction>
 
     public  var onItemListener: HomeAdapter.OnItemListener? = null
     init {
+        homeMenu= Clients
         onItemListener=null
     }
     internal inner class RV_ItemListener :
@@ -36,6 +43,39 @@ class HomeAdapter(var Clients:MutableList<GetRolesAdminQuery.Fuction>,var contex
             return true
         }
     }
+
+    override fun getFilter(): Filter {
+        return EvenFilter
+    }
+
+    private var EvenFilter: Filter = object : Filter(){
+        override fun performFiltering(constraint: CharSequence?): FilterResults {
+            var Filter:MutableList<GetRolesAdminQuery.Fuction> = mutableListOf();
+            if(constraint==null ||  constraint?.length == 0){
+                Filter.addAll(homeMenu)
+            }else{
+                var filterPatter=constraint.toString().lowercase().trim()
+                for (item: GetRolesAdminQuery.Fuction in homeMenu){
+                    if(item.name.lowercase().contains(filterPatter) || item.name.toString().contains(filterPatter) ){
+                        Filter.add(item)
+                    }
+                }
+            }
+            var Result: FilterResults = FilterResults()
+            Result.values=Filter
+            return Result
+        }
+
+        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+            Clients= mutableListOf()
+            Clients =(results?.values as MutableList<GetRolesAdminQuery.Fuction>)
+            notifyDataSetChanged()
+//            util?.GetLocalCount(producto.size)
+
+        }
+
+    }
+
     fun setOnItemListenerListener(listener: HomeAdapter.OnItemListener) {
         onItemListener = listener
     }
@@ -114,13 +154,10 @@ class HomeAdapter(var Clients:MutableList<GetRolesAdminQuery.Fuction>,var contex
                 view.lottieAnimationView.setAnimation(R.raw.dashboard_register)
                 view.TTitle.text=context?.getString(R.string.home_register_panel_title)
                 view.TDetails.text=context?.getString(R.string.home_register_panel_details)
-                view.go.setOnClickListener(object: View.OnClickListener {
-                    override fun onClick(p0: View?) {
-                        Log.i("NAVIGATION","Se iso click")
-                        Navigation.findNavController(view.root).navigate(R.id.action_HomeFragmnet_to_agregateProducts3)
-                        true
-                    }
-                })
+                view.go.setOnClickListener {
+                    Navigation.findNavController(view.root)
+                        .navigate(R.id.action_HomeFragmnet_to_agregateProducts3)
+                }
             }else if(id==Function.sync){
                 view.lottieAnimationView.setBackgroundResource(R.color.md_blue_500)
                 view.lottieAnimationView.setAnimation(R.raw.dashboard_sincronize)
@@ -166,6 +203,9 @@ class HomeAdapter(var Clients:MutableList<GetRolesAdminQuery.Fuction>,var contex
                 view.lottieAnimationView.setAnimation(R.raw.dashboard_escaneo)
                 view.TTitle.text=context?.getString(R.string.home_fast_qr_panel_title)
                 view.TDetails.text=context?.getString(R.string.home_fast_qr_panel_details)
+                view.go.setOnClickListener {
+                    scanner()
+                }
             }
             //News (31-05)
             else if(id==Function.Purchase){
@@ -173,11 +213,19 @@ class HomeAdapter(var Clients:MutableList<GetRolesAdminQuery.Fuction>,var contex
                 view.lottieAnimationView.setAnimation(R.raw.dashboard_user_compra)
                 view.TTitle.text=context?.getString(R.string.home_user_shoping_local_qr_panel_title)
                 view.TDetails.text=context?.getString(R.string.home_user_shoping_local_qr_panel_details)
+                view.go.setOnClickListener {
+                    Navigation.findNavController(view.root)
+                        .navigate(R.id.action_HomeFragmnet_to_FastBuyDashboard)
+                }
             }else if(id==Function.Products){
                 view.lottieAnimationView.setBackgroundResource(R.color.md_purple_A100)
                 view.lottieAnimationView.setAnimation(R.raw.dashboard_user_product)
                 view.TTitle.text=context?.getString(R.string.home_user_products_panel_title)
                 view.TDetails.text=context?.getString(R.string.home_user_products_panel_details)
+                view.go.setOnClickListener {
+                    Navigation.findNavController(view.root)
+                        .navigate(R.id.action_HomeFragmnet_to_FirstFragment)
+                }
             }else if(id==Function.Stores){
                 view.lottieAnimationView.setBackgroundResource(R.color.md_deep_orange_100)
                 view.lottieAnimationView.setAnimation(R.raw.dashboard_user_tienda)

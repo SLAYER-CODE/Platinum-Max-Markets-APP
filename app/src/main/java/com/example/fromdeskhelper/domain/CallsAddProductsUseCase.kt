@@ -1,5 +1,6 @@
 package com.example.fromdeskhelper.domain
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
@@ -15,12 +16,16 @@ import com.example.fromdeskhelper.data.Network.ServicesGraph
 import com.example.fromdeskhelper.type.*
 import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import java.io.ByteArrayOutputStream
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.*
 import javax.inject.Inject
 
 class CallsAddProductsUseCase @Inject constructor(
-    private val cliente: ServicesGraph?
-) {
+    private val cliente: ServicesGraph?,
+    private val context: Context,
+
+    ) {
     private var LOG_INFO = "USECASEEXTRATADDPRODUCT";
     suspend fun ReturnCategories(): CategoriasQuery.Data {
         try{
@@ -44,28 +49,67 @@ class CallsAddProductsUseCase @Inject constructor(
 //    public val update_product: Optional<Any?> = Optional.Absent,
 
     suspend fun AgregateProduct(
-        ListCategoria: List<CategoriesInput>,
-        LittMarca: List<BrandsInput>,
         name: String,
         precio: String,
-        precioU: String,
-        marca: String,
-        detalles: String,
-        categoria: String,
+        precioNeto: String,
+        disconut: String,
         stockcantidad: String,
-        stockunidad: String,
+        stockC_attr: Int,
+
+
+        stockU: String,
+        stockU_attr: Int,
+
+        peso: String,
+        peso_attr: Int,
+
+        stock_attr: Int,
+        detalles: String,
+
         qr: String,
-        mutableList: MutableList<Uri>, baseActivity: EmployedMainActivity
-    ): AgregateProductMutation.Data? {
-        val name = name
-        val precio: Double = precio.toDouble()
-        val precioU: Double? = if (precioU.isEmpty()) 0.0 else precioU.toDouble()
-        val marca: String = marca
-        val detalles: String = detalles
-        val categoria: String = categoria
-        val stock: Int = if (stockcantidad.isEmpty()) 1 else stockcantidad.toInt()
-        val stockU: Int = if (stockunidad.isEmpty()) 0 else stockunidad.toInt()
-        val qr: String = qr
+
+        available_shipment: Boolean,
+        available_now: Boolean,
+        available_date: LocalDateTime?,
+
+        uuid: String,
+
+        categoria: MutableList<CategoriesInput>,
+        marca: MutableList<BrandsInput>,
+        mutableList: MutableList<Uri>,
+
+        ): AgregateProductMutation.Data? {
+
+        val _name:String = name
+        val _precio: Double = precio.toDouble()
+        val _precioNeto: Double? = if (precioNeto.isEmpty()) null else precioNeto.toDouble()
+        val _disconut: Double? = if (disconut.isEmpty()) null else disconut.toDouble()
+
+        //Cantidad Unidades o paquete , caja ,
+        val _stock: Int? = if (stockcantidad.isEmpty()) null else stockcantidad.toInt()
+        val _stockC_attr: Int? = if (stockcantidad.isEmpty()) null else stockC_attr
+
+        //Contenido , unida, litro
+        val _stockU: Int? = if (stockU.isEmpty()) null else stockU.toInt()
+        val _stockU_attr: Int? = if (stockU.isEmpty()) null else stockU_attr
+
+        val _peso:Double? = if(peso.isEmpty()) null else peso.toDouble()
+        val _peso_attr:Int? = if(peso.isEmpty()) null else peso_attr
+
+        val _stock_attr:Int? = if(stockcantidad.isEmpty()) null else stock_attr
+
+        val _qr: String? = if (qr=="") null else qr
+
+
+        val _available_shipment:Boolean = available_shipment
+        val _available_now:Boolean = available_now
+        val _available_date:Date? = if(available_date==null) null else Date.from(available_date.atZone(
+            ZoneId.systemDefault()).toInstant())
+
+        val _uuid:String=uuid
+
+        val _detalles: String? = if (detalles=="") null else detalles
+
         val imagenes= mutableListOf<ImageProductInput>()
         val uploadImagenes = mutableListOf<Upload>()
 
@@ -74,7 +118,7 @@ class CallsAddProductsUseCase @Inject constructor(
             imagenes.add(ImageProductInput(
                 image_description=Optional.presentIfNotNull<String>(""),
                 image_name =  UUID.randomUUID().toString()+".png" ))
-            val imagen = MediaStore.Images.Media.getBitmap(baseActivity.contentResolver, x)
+            val imagen = MediaStore.Images.Media.getBitmap(context.contentResolver, x)
 ////                            println(path.path)
             val orientedBitmap: Bitmap = ExifUtil.rotateBitmap(x.path!!, imagen)
 
@@ -86,22 +130,31 @@ class CallsAddProductsUseCase @Inject constructor(
         }
 
 
-        Log.i("SECARGOOOOOIMAGEN",imagenes.toString())
+        Log.i("SECARGOOOOOIMAGEN",uploadImagenes.toString())
 
 
         var sendProduct = ProductsInput(
-            LittMarca,
-            ListCategoria,
-            Optional.presentIfNotNull(detalles),
-            imagenes,
-            precio,
-            precio,
-            Optional.presentIfNotNull<Double>(precioU),
-            name,
-            Optional.presentIfNotNull<String>(qr),
-            Optional.presentIfNotNull<Double>(stock.toDouble()),
-            Optional.presentIfNotNull<Double>(stockU.toDouble()),
-            Optional.presentIfNotNull(Date().toString())
+            Optional.presentIfNotNull(_available_date),
+            Optional.presentIfNotNull(_available_now),
+            Optional.presentIfNotNull(_available_shipment),
+            Optional.presentIfNotNull(marca.toList()),
+            Optional.presentIfNotNull(categoria.toList()),
+            Optional.presentIfNotNull(_detalles),
+            Optional.presentIfNotNull(_disconut),
+            Optional.presentIfNotNull(imagenes.toList()),
+            Optional.presentIfNotNull(_peso),
+            Optional.presentIfNotNull(_peso_attr),
+            _precio,
+            Optional.presentIfNotNull(_precioNeto),
+            _name,
+            Optional.presentIfNotNull(_qr),
+            Optional.presentIfNotNull(_stock?.toDouble()),
+            Optional.presentIfNotNull(_stockU?.toDouble()),
+            Optional.presentIfNotNull(_stockC_attr?.toDouble()),
+            Optional.presentIfNotNull(_stockU_attr?.toDouble()),
+            Optional.presentIfNotNull(_stock_attr),
+            _uuid,
+            Optional.presentIfNotNull(Date()),
         )
 
 

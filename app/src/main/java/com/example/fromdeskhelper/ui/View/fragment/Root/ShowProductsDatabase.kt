@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fromdeskhelper.databinding.FragmentShowProductsDatabaseBinding
 import com.example.fromdeskhelper.ui.View.ViewModel.SendItems.SendProductsLocalViewModel
+import com.example.fromdeskhelper.ui.View.ViewModel.ShowLocalViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.UitlsMainShowViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.UtilsShowMainViewModels
 import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
@@ -49,6 +50,10 @@ class ShowProductsDatabase : Fragment() {
         requireActivity()
     });
 
+    private val LocalModel: ShowLocalViewModel by viewModels(ownerProducer = {
+        requireActivity()
+    });
+
 //    override fun onResume() {
 ////        baseActivity.binding.appBarMain.refreshFab.setOnClickListener {
 ////            binding.LVMylist.startLayoutAnimation()
@@ -71,21 +76,21 @@ class ShowProductsDatabase : Fragment() {
 //        super.onResume()
 //    }
 
-    override fun onStart() {
-        if(baseActivity.binding.appBarMain.toolbarParentClient!!.visibility==View.VISIBLE){
-            baseActivity.binding.appBarMain.toolbarParentClient!!.visibility=View.GONE
-        }
-        if(baseActivity.binding.appBarMain.toolbarParent?.visibility==View.GONE){
-            baseActivity.binding.appBarMain.toolbarParent?.visibility=View.VISIBLE
-        }
+//    override fun onStart() {
+//        if(baseActivity.binding.appBarMain.toolbarParentClient!!.visibility==View.VISIBLE){
+//            baseActivity.binding.appBarMain.toolbarParentClient!!.visibility=View.GONE
+//        }
+//        if(baseActivity.binding.appBarMain.toolbarParent?.visibility==View.GONE){
+//            baseActivity.binding.appBarMain.toolbarParent?.visibility=View.VISIBLE
+//        }
 //        if(baseActivity.binding.appBarMain.fab.visibility==View.GONE){
 //            baseActivity.binding.appBarMain.fab.visibility=View.VISIBLE
 //        }
 //        if(baseActivity.binding.appBarMain.refreshFab.visibility==View.GONE){
 //            baseActivity.binding.appBarMain.refreshFab.visibility=View.VISIBLE
 //        }
-        super.onStart()
-    }
+//        super.onStart()
+//    }
     fun comprobateList(Size:Int){
         if(Size==0) {
             binding.TNotItems.visibility=View.VISIBLE
@@ -134,6 +139,8 @@ class ShowProductsDatabase : Fragment() {
                     startLayoutAnimation()
                 }
             }
+            binding.swipe.isRefreshing = false
+            binding.LVMylist.startLayoutAnimation()
         })
     UtilsViewMain.LocalCountObserver.observe(viewLifecycleOwner, Observer {
         comprobateList(it?.toInt()?:0)
@@ -187,8 +194,11 @@ class ShowProductsDatabase : Fragment() {
 //                binding.LVMylist.adapter = adapter
 //            }
 //        })
+        binding.swipe.setOnRefreshListener {
+            LocalModel.GetAllProducts()
+        }
 
-        super.onViewCreated(view, savedInstanceState)
+    super.onViewCreated(view, savedInstanceState)
     }
     override fun onAttach(context: Context) {
         super.onAttach(context)

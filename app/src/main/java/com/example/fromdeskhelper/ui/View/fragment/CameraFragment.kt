@@ -24,7 +24,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.example.fromdeskhelper.afterMeasure
+import com.example.fromdeskhelper.ui.View.fragment.modules.worked.afterMeasure
 import com.example.fromdeskhelper.data.model.objects.Constrains
 import com.example.fromdeskhelper.data.model.Types.CameraTypes
 import com.example.fromdeskhelper.databinding.FragmentCameraBinding
@@ -66,7 +66,7 @@ class CameraFragment : Fragment() {
     //    Variables de inicialisacion para la camara y sus movimientos respectivos
     private lateinit var cameraProvider: ProcessCameraProvider;
     private lateinit var imageCapture: ImageCapture;
-    private var imageCap: ImageCapture? = null
+//    private var imageCap: ImageCapture? = null
     private var cameraExecutor: ExecutorService = Executors.newSingleThreadScheduledExecutor()
     private var CamStatus: CameraTypes = CameraTypes.NULL;
     private var CamClick: CameraTypes = CameraTypes.NULL;
@@ -98,9 +98,11 @@ class CameraFragment : Fragment() {
     //Instancias de View Model
     private val CameraView: CameraViewModel by viewModels(
         ownerProducer = {  requireParentFragment() }
+//        ownerProducer = {  requireActivity() }
     )
     private val AgregateProductsState : AgregateProductViewModel by viewModels(
-        ownerProducer = { requireParentFragment() }
+//        ownerProducer = { requireParentFragment() }
+        ownerProducer = { requireActivity() }
     );
 
 
@@ -128,7 +130,8 @@ class CameraFragment : Fragment() {
 
                 if (CamClick == CameraTypes.CAMERA) {
                     binding.LayoutCamera.visibility = View.VISIBLE
-                        startCamera(cameraProvider)
+                    startCamera(cameraProvider)
+
                 }
                 Log.i(LOGFRAGMENT, "Permisos de camera")
 
@@ -242,17 +245,20 @@ class CameraFragment : Fragment() {
 
         var contadorImagen = 1
         binding.BcaptureImage.setOnClickListener {
-
             val imageFile = File.createTempFile("anImage", ".jpg")
             binding.BcaptureImage.animate().rotation(60F * (contadorImagen++)).setDuration(400)
                 .start()
 
             val outputFileOptions = ImageCapture.OutputFileOptions.Builder(imageFile).build()
+
+//            Log.w(LOGFRAGMENT, "Tomando captura")
+//            Log.w(LOGFRAGMENT,imageCapture.toString())
+
             imageCapture.takePicture(outputFileOptions, cameraExecutor,
                 object : ImageCapture.OnImageSavedCallback {
-
                     override fun onError(error: ImageCaptureException) {
-                        // insert your code here.
+
+                    // insert your code here.
 //                            baseActivity.runOnUiThread {
 //                            Toast.makeText(context,"Ubo un error intentelo denuevo ${error}",Toast.LENGTH_SHORT).show()
 //                            }
@@ -264,16 +270,20 @@ class CameraFragment : Fragment() {
 //                        Api de envio para el parent de la imagen Capturada()
 
 //                            baseActivity.runOnUiThread {
+
+
+                        Log.e(LOGFRAGMENT, "Sin errores")
+
                         AgregateProductsState.sendImageCapture(outputFileResults.savedUri)
 //                            adapter.addImage(outputFileResults.savedUri.toString())
 //                            binding.RVCaptureImages.scrollToPosition(0);
 //                            comprobateItem()
 ////                                cameraProvider.unbindAll()
 //                        }
+
                     }
-                })
-
-
+                }
+            )
         }
         view.doOnPreDraw {
             startPostponedEnterTransition()
@@ -317,6 +327,7 @@ class CameraFragment : Fragment() {
 
 
     private fun startCamera(cameraProvider: ProcessCameraProvider) {
+//        Log.i("Start Camera","Se inicio camara")
         val preview = Preview.Builder().build().also { mPreview ->
             mPreview.setSurfaceProvider(
                 binding.PVCmain.surfaceProvider
@@ -329,7 +340,9 @@ class CameraFragment : Fragment() {
         try {
             // Unbind use cases before rebinding
             cameraProvider.unbindAll()
+
             //ImageCapture
+
             imageCapture = ImageCapture.Builder()
                 .setTargetResolution(
                     Size(
@@ -441,7 +454,6 @@ class CameraFragment : Fragment() {
 
             binding.PVCmain.setOnTouchListener { _: View, event ->
                 scaleGestureDetector.onTouchEvent(event)
-
                 when (event.action) {
 
                     MotionEvent.ACTION_MOVE -> {

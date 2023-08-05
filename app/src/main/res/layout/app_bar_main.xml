@@ -272,6 +272,7 @@
         <androidx.cardview.widget.CardView
             android:layout_marginBottom="30dp"
             android:layout_marginRight="30dp"
+            app:cardUseCompatPadding="true"
             android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

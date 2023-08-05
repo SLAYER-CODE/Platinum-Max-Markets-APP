@@ -63,9 +63,10 @@ class HomeFragment : Fragment() {
     private lateinit var baseActivity: EmployedMainActivity
     private lateinit var contextFragment: Context
     private var _binding: FragmentHomeBinding? = null
-    private val AutenticationModel: AuthenticationUserViewModel by viewModels(ownerProducer = { requireActivity()});
+    private val AutenticationModel: AuthenticationUserViewModel by viewModels(ownerProducer = { requireActivity() });
 
     private val binding get() = _binding!!
+    var adapter_user: HomeAdapter = HomeAdapter(mutableListOf(), null)
     var adapter_admin: HomeAdapter = HomeAdapter(mutableListOf(), null)
     var adapter_anonime: HomeAdapter = HomeAdapter(mutableListOf(), null)
     private val MainView: MainActiviyViewModel by viewModels(ownerProducer = { requireActivity() })
@@ -134,8 +135,24 @@ class HomeFragment : Fragment() {
 
 //        appBarConfiguration = AppBarConfiguration(navController.graph).
 
-//        AutenticationModel.getCUser()
+        //        AutenticationModel.getCUser()
         //Listener camara de indentado
+        fun toogleCamer() {
+            if (!CamScannerStatus) {
+                //ENABLE CAMERA
+                MainView.RestoreCamera()
+                CameraView.CloseInFragment(false)
+                CameraView.CamaraStatus(CameraTypes.SCANER, true)
+                CamScannerStatus = true;
+            } else {
+                //CLOSE CAMERA
+                CameraView.CloseInFragment(true)
+                CameraView.CamaraStatus(CameraTypes.NULL, true)
+                CamScannerStatus = false;
+            }
+        }
+
+
 
         var ListenerAnimation = object : HomeAdapter.OnItemListener {
             override fun OnItemTouch(view: View?, motion: MotionEvent?): Boolean {
@@ -178,9 +195,9 @@ class HomeFragment : Fragment() {
             }
         })
 
-        lifecycleScope.launch{
-            AutenticationModel.CObject.collect{it->
-                Log.i("CALLBACKSTACK","SE LLAMO OTRA VEZ")
+        lifecycleScope.launch {
+            AutenticationModel.CObject.collect { it ->
+                Log.i("CALLBACKSTACK", "SE LLAMO OTRA VEZ")
                 if (it == User.ADMIN) {
                     binding.lottieAnimationView.setAnimation(R.raw.administracion)
                     AutenticationModel.getDataUser()
@@ -200,7 +217,7 @@ class HomeFragment : Fragment() {
 
         AutenticationModel.CFuctionsAnonime.observe(viewLifecycleOwner, Observer {
             Log.i("Añandiendo instrucciones", "se inserto nuevamanete el adaptardo")
-            var adapter = HomeAdapter(it, context)
+            var adapter = HomeAdapter(it, context,::toogleCamer)
             adapter.setOnItemListenerListener(ListenerAnimation)
             binding.RVMenuHomeAnoime.adapter = adapter
             binding.RVMenuHomeAnoime.layoutManager =
@@ -236,7 +253,7 @@ class HomeFragment : Fragment() {
                     }
                 }
                 if (it.getRoles.user) {
-                    var adapter_user: HomeAdapter = HomeAdapter(user_functions, context)
+                    adapter_user = HomeAdapter(user_functions, context,::toogleCamer)
                     binding.TVUserSecond.visibility = View.VISIBLE
                     binding.RVMenuUser.visibility = View.VISIBLE
                     binding.CVSecondary.visibility = View.VISIBLE
@@ -246,8 +263,8 @@ class HomeFragment : Fragment() {
 
                 }
 
-                adapter_admin = HomeAdapter(admin_functions, context)
-                adapter_anonime = HomeAdapter(faste_or_anonime, context)
+                adapter_admin = HomeAdapter(admin_functions, context,::toogleCamer)
+                adapter_anonime = HomeAdapter(faste_or_anonime, context,::toogleCamer)
                 adapter_admin.setOnItemListenerListener(ListenerAnimation)
                 adapter_anonime.setOnItemListenerListener(ListenerAnimation)
                 binding.RVMenuHomeAnoime.adapter = adapter_anonime
@@ -264,20 +281,41 @@ class HomeFragment : Fragment() {
             }
         })
 
-        binding.BQRScanner.setOnClickListener {
+        CameraView.CameraActivate.observe(viewLifecycleOwner, Observer {
+            if (it == CameraTypes.SCANER) {
+                //                MainView.RestoreCamera()
+//                val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+//                ft.setCustomAnimations(
+//                    android.R.anim.fade_in,
+//                    android.R.anim.fade_out,
+//                    android.R.anim.slide_in_left,
+//                    android.R.anim.slide_out_right
+//                )
+//                ft.replace(R.id.FLragmentCamera , CameraQrFastFragment());
+//                ft.setReorderingAllowed(true)
+//                ft.commit()
 
-            if (!CamScannerStatus) {
-                //ENABLE CAMERA
-                MainView.RestoreCamera()
-                CameraView.CloseInFragment(false)
-                CameraView.CamaraStatus(CameraTypes.SCANER, true)
-                CamScannerStatus = true;
+                binding.BQRScanner?.setBackgroundResource(R.drawable.ic_baseline_close_24_showproduct)
+//                binding.BQRScannerClient?.setBackgroundResource(R.drawable.ic_baseline_close_24_showproduct)
+
+
             } else {
-                //CLOSE CAMERA
-                CameraView.CloseInFragment(true)
-                CameraView.CamaraStatus(CameraTypes.NULL, true)
-                CamScannerStatus = false;
+
+                binding.BQRScanner?.setBackgroundResource(R.drawable.ic_baseline_qr_code_scanner_showproduct)
+//                binding.BQRScannerClient?.setBackgroundResource(R.drawable.ic_baseline_qr_code_scanner_showproduct)
+//                if (this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//                    binding.constraintLayout.visibility = View.GONE
+//                } else {
+//                    binding.constraintLayout.visibility = View.INVISIBLE
+//                }
+                CamScannerStatus = false
             }
+        })
+
+
+
+        binding.BQRScanner.setOnClickListener {
+            toogleCamer()
         }
         //Asignando
 
@@ -290,6 +328,21 @@ class HomeFragment : Fragment() {
 //        binding.Testing.setOnClickListener {
 //            findNavController().navigate(R.id.action_HomeFragmnet_to_agregateProducts3)
 //        }
+
+
+        binding.SVProducts.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter_admin.filter.filter(newText)
+                adapter_anonime.filter.filter(newText)
+                adapter_user.filter.filter(newText)
+                return false
+            }
+        })
         return binding.root
     }
 

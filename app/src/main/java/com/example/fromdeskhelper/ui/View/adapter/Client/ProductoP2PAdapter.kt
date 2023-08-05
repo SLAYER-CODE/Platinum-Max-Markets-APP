@@ -33,7 +33,7 @@ class ProductoP2PAdapter (var producto:List<ProductsPreviewQuery.Producto>):
 
             binding.TNombre.text=ProductoAndImage.product_name
 
-            binding.TEPrecio.text="$\\${ProductoAndImage.price_cantidad}"
+            binding.TEPrecio.text="$\\${ProductoAndImage.price}"
 
 
             //FUNCION QUE APLICA LA IMAGEN DENTRO DE TVIMAGENITEM
@@ -59,7 +59,7 @@ class ProductoP2PAdapter (var producto:List<ProductsPreviewQuery.Producto>):
         fun renderNotImagen(ProductoAndImage: ProductsPreviewQuery.Producto){
             binding.TNombre.isSelected=true;
             binding.TNombre.text=ProductoAndImage.product_name
-            binding.TEPrecio.text="$\\${ProductoAndImage.price_cantidad}"
+            binding.TEPrecio.text="$\\${ProductoAndImage.price}"
 
         }
 

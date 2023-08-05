@@ -25,6 +25,9 @@
             app:popEnterAnim="@anim/fade_intro"
             app:popExitAnim="@anim/fade_out"
             app:destination="@id/agregateProducts3" />
+        <action
+            android:id="@+id/action_HomeFragmnet_to_FastBuyDashboard"
+            app:destination="@id/FastBuyDashboard" />
     </fragment>
 
 
@@ -55,7 +58,10 @@
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
-
+    <fragment
+        android:id="@+id/FastBuyDashboard"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.modules.combine.BuyFastDashboardFragment"
+        tools:layout="@layout/fragment_buy_fast_dashboard"/>
     <!--        android:label="{title}({state})"-->
     <!--        <argument-->
     <!--            android:name="state"-->
@@ -66,7 +72,7 @@
 
     <fragment
         android:id="@+id/agregateProducts3"
-        android:name="com.example.fromdeskhelper.RegisterDashboardFragment"
+        android:name="com.example.fromdeskhelper.ui.View.fragment.modules.worked.RegisterDashboardFragment"
         tools:layout="@layout/fragment_register_dashboard"
         >
 

@@ -1,6 +1,5 @@
 package com.example.fromdeskhelper.data.model.Controller
 
-import Data.ImagenesNew
 import Data.InventarioProducts
 import Data.Producto
 import Data.listInventarioProductos

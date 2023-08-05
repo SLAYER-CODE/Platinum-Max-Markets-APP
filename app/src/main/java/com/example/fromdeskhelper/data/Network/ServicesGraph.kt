@@ -1,5 +1,6 @@
 package com.example.fromdeskhelper.data.Network
 
+import android.util.Log
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.ApolloResponse
 import com.apollographql.apollo3.api.DefaultUpload
@@ -16,8 +17,11 @@ import com.example.fromdeskhelper.ComprobationRootQuery
 import com.example.fromdeskhelper.ComprobationWorkedQuery
 import com.example.fromdeskhelper.GetDataAsociateQuery
 import com.example.fromdeskhelper.GetRolesAdminQuery
+import com.example.fromdeskhelper.ProductsPreviewOffertsQuery
 import com.example.fromdeskhelper.ProductsPreviewQuery
+import com.example.fromdeskhelper.SloganImagesGetQuery
 import com.example.fromdeskhelper.type.ProductsInput
+import com.example.fromdeskhelper.type.SloganImages
 import com.example.fromdeskhelper.type.Upload
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -25,6 +29,25 @@ import java.util.*
 import javax.inject.Inject
 
 class ServicesGraph @Inject constructor(private val grapql: ApolloClient?) {
+
+    suspend fun GetSloganRroles():ApolloResponse<SloganImagesGetQuery.Data>?{
+        return withContext(Dispatchers.IO) {
+            grapql?.query(SloganImagesGetQuery())?.execute();
+        }
+    }
+    suspend fun GetOffertsProducts():ApolloResponse<ProductsPreviewOffertsQuery.Data>?{
+        return withContext(Dispatchers.IO) {
+            grapql?.query(ProductsPreviewOffertsQuery())?.execute();
+        }
+    }
+
+    suspend fun GetBrands():ApolloResponse<BrandsQuery.Data>?{
+        return withContext(Dispatchers.IO) {
+            grapql?.query(BrandsQuery())?.execute();
+        }
+    }
+
+
     suspend fun ComprobateConect():ApolloResponse<ComprobationConnectionQuery.Data>?{
         return withContext(Dispatchers.IO) {
             grapql?.query(ComprobationConnectionQuery())?.execute();
@@ -71,12 +94,7 @@ class ServicesGraph @Inject constructor(private val grapql: ApolloClient?) {
 
     suspend fun GetProductsPreviewAll():ApolloResponse<ProductsPreviewQuery.Data>?{
         return withContext(Dispatchers.IO){
-            try{
-                var res = grapql?.query<ProductsPreviewQuery.Data>(ProductsPreviewQuery())?.execute()
-                res
-            }catch (ex:Exception){
-                return@withContext null
-            }
+                grapql?.query(ProductsPreviewQuery())?.execute()
         }
     }
 
@@ -148,8 +166,12 @@ class ServicesGraph @Inject constructor(private val grapql: ApolloClient?) {
 //                Optional.presentIfNotNull(Date().toString())
 //            )
 
-
-            grapql?.mutation(AgregateProductMutation(myval = product, list ))?.execute()
+            try {
+                return@withContext grapql?.mutation(AgregateProductMutation(myval = product, list))?.execute()
+            }catch (err:Exception){
+                Log.e("Ubo un error",err.toString())
+                return@withContext null
+            }
 //            grapql.mutation(AgregateProductMutation(myval = testing)).execute()
         }
     }

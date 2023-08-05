@@ -11,7 +11,7 @@
     android:clipToPadding="false"
     android:foregroundGravity="bottom"
     android:background="@color/md_black_1000"
-    tools:context=".RegisterDashboardFragment">
+    tools:context=".ui.View.fragment.modules.worked.RegisterDashboardFragment">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/SVAPNew"

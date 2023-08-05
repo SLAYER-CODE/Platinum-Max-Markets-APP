@@ -57,7 +57,7 @@
 
         <com.github.rubensousa.gravitysnaphelper.GravitySnapRecyclerView
             app:snapGravity="top"
-            app:snapLastItem="true"
+            app:snapLastItem="false"
             app:snapToPadding="true"
             android:id="@+id/LVMylist"
             android:layout_width="match_parent"
@@ -70,7 +70,7 @@
             android:layout_marginEnd="0dp"
             android:clipToPadding="false"
             android:layoutAnimation="@anim/layout_animation_right_to_left"
-            android:paddingBottom="85dp"
+            android:paddingBottom="10dp"
             app:layout_constraintBottom_toBottomOf="@+id/TNotItems"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"

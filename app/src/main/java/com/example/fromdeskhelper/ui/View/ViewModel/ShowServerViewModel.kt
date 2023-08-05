@@ -26,17 +26,12 @@ class ShowServerViewModel @Inject constructor(private val UseCaseServer: CallsPr
     fun GetProductsAllPreview() {
         viewModelScope.launch {
             try {
-                var resource = UseCaseServer.PreviewCallUser()
-                ProductsAllPreview.postValue(resource)
-            }catch (ex:ApolloException){
+                var product = UseCaseServer.PreviewCallUser()
+                ProductsAllPreview.postValue(product)
+            }catch (ex: ApolloException){
                 ex.printStackTrace()
-                Log.e("SHOWSERVERVIEWMODDL","No hay conexion: "+ex.toString())
+                Log.e("SHOWPRODUCTSVIEWMODEL","ERROR: "+ex.toString())
             }
         }
     }
-
-
-
-
-
 }

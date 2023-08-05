@@ -97,7 +97,7 @@ class ClientItemShowFragment : Fragment() {
     fun update(){
         var Count: Double = 0.0
         for (a in adapter.producto) {
-            Count += a.precioC
+            Count += a.precioNeto ?: 0.0
         }
         binding.TEPrecioTotal.text=Count.toString()
         binding.TEPrecio.setText(Count.toString())

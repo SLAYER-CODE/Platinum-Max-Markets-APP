@@ -7,15 +7,22 @@
     android:layout_height="match_parent"
     android:background="@color/md_white_1000"
     android:foregroundGravity="bottom"
-    tools:context=".RegisterDashboardFragment">
+    tools:context=".ui.View.fragment.modules.worked.RegisterDashboardFragment">
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/ChangeAnimation"
+        app:shimmer_auto_start="true"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/ABLAgregate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/md_green_500"
-        android:paddingTop="25dp"
-        android:clipToPadding="true">
+        android:clipToPadding="true"
+        android:paddingTop="25dp">
 
 
         <androidx.appcompat.widget.Toolbar
@@ -98,14 +105,22 @@
         app:cardCornerRadius="5dp"
         app:cardElevation="5dp"
         app:cardUseCompatPadding="true">
+        <LinearLayout
+            android:id="@+id/contentButtonAddLinear"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
 
         <Button
-            android:enabled="false"
-            android:backgroundTint="@color/md_green_300"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:id="@+id/BAgregate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/md_green_300"
             android:drawableLeft="@drawable/ic_baseline_dashboard_agregateproduct"
+            android:enabled="false"
             android:foregroundGravity="center"
             android:gravity="center"
             android:padding="10dp"
@@ -113,16 +128,63 @@
             android:text="@string/addProductButton"
             android:textSize="15dp"
             android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/LLDAvalide"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+
+                <Button
+                    tools:layout_width="match_parent"
+                    tools:layout_height="wrap_content"
+
+                    android:layout_margin="15px"
+                    android:layout_weight="1"
+                    android:id="@+id/BAgregateNewProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/md_blue_500"
+                    android:drawableTint="@color/md_blue_100"
+                    android:drawableLeft="@drawable/ic_baseline_add_24"
+                    android:enabled="true"
+                    android:foregroundGravity="center"
+                    android:gravity="center"
+                    android:paddingStart="5dp"
+                    android:text="@string/addNewProduct"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:layout_margin="15px"
+                    android:layout_weight="1"
+                    android:id="@+id/BEditOldProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/md_orange_500"
+                    android:drawableTint="@color/md_yellow_100"
+                    android:drawableLeft="@drawable/ic_baseline_edit_24"
+                    android:enabled="true"
+                    android:foregroundGravity="center"
+                    android:gravity="center"
+                    android:paddingStart="10dp"
+                    android:text="@string/addEditarUltimo"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        
     </androidx.cardview.widget.CardView>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/SVAPNew"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="13dp"
+        android:layout_marginBottom="10dp"
         android:fillViewport="true"
         android:overScrollMode="never"
-        android:paddingBottom="50dp"
+        android:paddingBottom="60dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -170,20 +232,23 @@
                         android:paddingTop="20dp">
 
                         <TextView
-                            android:padding="5dp"
                             android:id="@+id/textView3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/lilitaoe_regular"
+                            android:padding="5dp"
                             android:text="@string/agregate_product_separate_o"
                             android:textColor="@color/md_green_600"
                             android:textSize="15dp" />
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/nameHelper"
                             style="@style/AddInputTextHint"
+
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:helperText="@string/agregate_product_require"
+
                             app:startIconDrawable="@drawable/ic_baseline_name_addproduct">
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -201,6 +266,7 @@
                             android:layout_height="wrap_content">
 
                             <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/priceHelper"
                                 style="@style/AddInputTextHint"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -318,10 +384,127 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_marginTop="10dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingTop="10dp">
+
+                            <TextView
+                                android:id="@+id/textViewSeparate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lilitaoe_regular"
+                                android:text="@string/agregate_product_actual"
+                                android:textColor="@color/md_green_A700"
+                                android:textSize="15dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_marginTop="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <CheckBox
+                                    android:id="@+id/CEnvios"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:buttonTint="@color/md_blue_500"
+                                    android:text="@string/agregate_product_check_available_shipment" />
+
+                                <CheckBox
+                                    android:checked="false"
+                                    android:id="@+id/CAhora"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:buttonTint="@color/md_blue_500"
+                                    android:text="@string/agregate_product_check_available_now"
+                                   />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <CheckBox
+
+                                    android:id="@+id/CDespues"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:buttonTint="@color/md_red_500"
+                                    android:text="@string/agregate_product_check_available_despues"
+                                     />
+
+                                <EditText
+                                    android:gravity="center"
+                                    android:enabled="false"
+                                    android:id="@+id/etPlannedDate"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:clickable="true"
+                                    android:focusable="false"
+                                    android:text="@string/agregate_product_check_available_fecha"
+                                    android:inputType="date"
+                                    android:maxLines="1"
+                                    android:textSize="14dp" />
+
+                                <TextView
+                                    android:text="a las"
+
+                                    android:textSize="14dp"
+                                    android:gravity="center"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent">
+
+                                </TextView>
+                                <EditText
+                                    android:layout_marginRight="5dp"
+                                    android:layout_marginLeft="3dp"
+                                    android:gravity="center"
+                                    android:enabled="false"
+                                    android:id="@+id/etTimePicker"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:clickable="true"
+                                    android:text="@string/agregate_product_check_available_time"
+                                    android:focusable="false"
+                                    android:inputType="datetime"
+                                    android:maxLines="1"
+                                    android:textSize="14dp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
                             android:orientation="horizontal">
+
                             <com.google.android.material.textfield.TextInputLayout
                                 style="@style/AddInputTextHint"
                                 android:layout_width="match_parent"
@@ -335,11 +518,11 @@
                                     style="@style/AddInputText"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:inputType="number"
-                                    />
+                                    android:inputType="number" />
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <Spinner
+
                                 android:id="@+id/SPCantidad"
                                 style="@android:style/Widget.Holo.Spinner"
                                 android:layout_width="wrap_content"
@@ -352,50 +535,11 @@
                                 android:popupBackground="@color/md_blue_grey_100"
                                 android:spinnerMode="dropdown" />
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:orientation="horizontal">
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                style="@style/AddInputTextHint"
-                                android:layout_width="match_parent"
-                                android:layout_height="60dp"
-                                android:layout_weight="1"
-                                android:hint="Peso"
-                                app:startIconDrawable="@drawable/ic_baseline_format_peso_addproduct">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/TECantidadU"
-                                    style="@style/AddInputText"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="numberDecimal">
-
-                                </com.google.android.material.textfield.TextInputEditText>
-                            </com.google.android.material.textfield.TextInputLayout>
-
-
-                            <Spinner
-                                android:id="@+id/SPpeso"
-                                style="@android:style/Widget.Holo.Spinner"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:layout_weight="0"
-                                android:ems="10"
-                                android:foregroundGravity="center"
-                                android:gravity="center"
-                                android:popupBackground="@color/md_blue_grey_100"
-                                android:spinnerMode="dropdown" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_marginTop="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
                             <com.google.android.material.textfield.TextInputLayout
@@ -404,7 +548,7 @@
                                 android:layout_height="60dp"
                                 android:layout_weight="1"
                                 android:hint="Contenido"
-                                app:startIconDrawable="@drawable/ic_baseline_storage_addproduct">
+                                app:startIconDrawable="@drawable/baseline_markunread_mailbox_24">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/TEContenido"
@@ -435,29 +579,54 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:orientation="horizontal">
+
                             <com.google.android.material.textfield.TextInputLayout
                                 style="@style/AddInputTextHint"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="60dp"
                                 android:layout_weight="1"
-                                android:hint="Actual"
+                                android:hint="Peso"
                                 app:startIconDrawable="@drawable/ic_baseline_format_peso_addproduct">
 
                                 <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/TEItemSolid"
+                                    android:id="@+id/TePeso"
+                                    style="@style/AddInputText"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:inputType="numberDecimal"
-                                    >
+                                    android:inputType="numberDecimal">
 
                                 </com.google.android.material.textfield.TextInputEditText>
                             </com.google.android.material.textfield.TextInputLayout>
 
 
                             <Spinner
-                                android:id="@+id/SPCActual"
+                                android:id="@+id/SPpeso"
                                 style="@android:style/Widget.Holo.Spinner"
                                 android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_weight="0"
+                                android:ems="10"
+                                android:foregroundGravity="center"
+                                android:gravity="center"
+                                android:popupBackground="@color/md_blue_grey_100"
+                                android:spinnerMode="dropdown" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+                            <Spinner
+
+                                android:id="@+id/SPCActual"
+                                style="@android:style/Widget.Holo.Spinner"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
                                 android:layout_weight="0"
@@ -486,11 +655,11 @@
                         android:paddingTop="20dp">
 
                         <TextView
-                            android:padding="5dp"
                             android:id="@+id/TVDInfo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/lilitaoe_regular"
+                            android:padding="5dp"
                             android:text="@string/agregate_product_separate_details"
                             android:textColor="@color/md_green_600"
                             android:textSize="15dp" />
@@ -547,12 +716,12 @@
 
                             <com.google.android.material.textfield.TextInputLayout
                                 style="@style/AddInputTextHintLine"
-                                app:helperTextTextColor="@color/md_grey_500"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:hint="Categorias"
                                 app:helperText="@string/addproduct_continue_categoria"
+                                app:helperTextTextColor="@color/md_grey_500"
                                 app:hintAnimationEnabled="true"
                                 app:startIconDrawable="@drawable/ic_baseline_category_addproduct">
 
@@ -569,12 +738,12 @@
 
                             <com.google.android.material.textfield.TextInputLayout
                                 style="@style/AddInputTextHintLine"
-                                app:helperTextTextColor="@color/md_grey_500"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:hint="Marca"
                                 app:helperText="@string/addproduct_continue_marca"
+                                app:helperTextTextColor="@color/md_grey_500"
                                 app:startIconDrawable="@drawable/ic_baseline_bookmark_addproduct">
 
                                 <androidx.appcompat.widget.AppCompatAutoCompleteTextView
@@ -588,6 +757,7 @@
                                 </androidx.appcompat.widget.AppCompatAutoCompleteTextView>
                             </com.google.android.material.textfield.TextInputLayout>
                         </LinearLayout>
+
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
@@ -615,7 +785,6 @@
                 </androidx.cardview.widget.CardView>
 
 
-
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -630,11 +799,11 @@
                         android:paddingTop="20dp">
 
                         <TextView
-                            android:padding="5dp"
                             android:id="@+id/TVDInfoCamera"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/lilitaoe_regular"
+                            android:padding="5dp"
                             android:text="@string/agregate_product_separate_capture"
                             android:textColor="@color/md_green_600"
                             android:textSize="15dp" />
@@ -843,8 +1012,9 @@
                                 <LinearLayout
                                     android:id="@+id/CapturaLayout"
                                     android:layout_width="115dp"
-                                    android:layout_height="115dp"
+                                    android:layout_height="match_parent"
                                     android:layout_gravity="center"
+                                    android:gravity="center"
                                     android:layout_weight="0"
                                     android:background="@color/md_grey_200"
                                     android:clipChildren="true"
@@ -898,11 +1068,11 @@
                                     </androidx.recyclerview.widget.RecyclerView>
 
                                     <TextView
-                                        android:elevation="6dp"
                                         android:id="@+id/TNotItems"
                                         style="@style/AddBackgroundCameraImagesFond"
                                         android:layout_width="0dp"
                                         android:layout_height="0dp"
+                                        android:elevation="6dp"
                                         android:fontFamily="@font/lilitaoe_regular"
                                         android:gravity="center"
                                         android:padding="10dp"
@@ -929,15 +1099,19 @@
                                 android:textAllCaps="false"
                                 android:textSize="15sp"
                                 android:textStyle="bold" />
+
                             <TextView
-                                android:layout_marginTop="6dp"
-                                android:paddingTop="5dp"
-                                android:id="@+id/textView3S"
+                                tools:visibility="visible"
+                                android:visibility="gone"
+                                android:id="@+id/ValidateCheck"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:paddingTop="5dp"
                                 android:text="@string/agregate_product_separate_r"
                                 android:textColor="@color/md_red_500"
                                 android:textSize="13dp" />
+
                             <androidx.appcompat.widget.LinearLayoutCompat
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -946,37 +1120,38 @@
 
                                 <CheckBox
                                     android:id="@+id/CSaveStorage"
-                                    android:buttonTint="@color/md_green_600"
-                                    android:textStyle="bold"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
+                                    android:buttonTint="@color/md_green_600"
                                     android:checked="true"
                                     android:gravity="center"
-                                    android:text="Storage" />
+                                    android:text="Storage"
+                                    android:textStyle="bold" />
 
                                 <CheckBox
                                     android:id="@+id/CSaveServer"
-                                    android:buttonTint="@color/md_blue_500"
-                                    android:textStyle="bold"                                    android:layout_width="wrap_content"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_marginLeft="30dp"
                                     android:layout_marginRight="30dp"
                                     android:layout_weight="1"
-                                    android:text="Server" />
+                                    android:buttonTint="@color/md_blue_500"
+                                    android:text="Server"
+                                    android:textStyle="bold" />
 
                                 <CheckBox
-                                    android:buttonTint="@color/md_red_500"
-                                    android:textStyle="bold"
                                     android:id="@+id/CSaveLocal"
                                     style="@style/AddCheckBox"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
-                                    android:text="Local" />
+                                    android:buttonTint="@color/md_red_500"
+                                    android:text="Local"
+                                    android:textStyle="bold" />
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
 

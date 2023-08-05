@@ -1,6 +1,7 @@
 package com.example.fromdeskhelper.ui.View.adapter
 
 import Data.listInventarioProductos
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
@@ -25,9 +26,9 @@ import java.io.ByteArrayOutputStream
 //import com.example.productos.databinding.ItemProductoBinding
 
 
-private var reverse: Boolean = false;
+private var reverse: Boolean = true;
 
-class ServerAdapter(var producto: List<ProductsPreviewQuery.Producto>,var itemLayout:Int,var util: UtilsShowMainViewModels?=null) :
+class ServerAdapter(var producto: List<ProductsPreviewQuery.Producto>,var itemLayout:Int,var util: UtilsShowMainViewModels?=null,  var Context: Context?=null) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(),Filterable {
     private var ProductList:List<ProductsPreviewQuery.Producto>
     init {
@@ -35,35 +36,82 @@ class ServerAdapter(var producto: List<ProductsPreviewQuery.Producto>,var itemLa
     }
     inner class ImageHolder(val view: ItemProductoBinding) : RecyclerView.ViewHolder(view.root) {
 
-        fun render(ProductoAndImage: ProductsPreviewQuery.Producto) {
-
-//            val bmp = BitmapFactory.decodeByteArray(superImage, 0, superImage.size)
-//            val bmp = assetsToBitmap("purpleFlower.png")
-//            view.ImagenOrder.setImageBitmap(bmp)
+        fun render(Product: ProductsPreviewQuery.Producto){
             view.TNombre.isSelected = true;
+            view.TNombre.text = Product.product_name
+            view.TEPrecio.text = "$.${Product.price}"
+//            if(Product.)
+            var PriceVent=Product.price
+            if(Product.discount!=null){
+                PriceVent=-Product.discount
+            }
+            if(Product.available_now!=null){
+                view.TVDisponsedNow.text=if(Product.available_now) "Si" else "No"
+            }
 
-            view.TNombre.text = ProductoAndImage.product_name
+            if(Product.available_date!=null){
+                view.TVNewStock.text= Product.available_date.toString()
+            }
 
-            view.TEPrecio.text = "$\\${ProductoAndImage.price_cantidad}"
+            if(Product.available_shipment!=null){
+                view.TESend.text= if(Product.available_shipment) "Si" else "No"
+            }
 
+            if(Product.discount!=null){
+                view.TEDiscount.text = Product.discount.toString()
+            }
 
-            //FUNCION QUE APLICA LA IMAGEN DENTRO DE TVIMAGENITEM
-//            val options = BitmapFactory.Options().apply {
-//                inJustDecodeBounds = false
-//                outWidth=200
-//                outHeight=200
-//            }
-//            val imagenStream=ByteArrayInputStream(ProductoAndImage.imageBit)
-//            val theimagen = BitmapFactory.decodeStream(imagenStream)
-//            val flujo = ByteArrayOutputStream()
-//            theimagen?.compress(Bitmap.CompressFormat.JPEG, 10,flujo);
-//            val newimage = flujo.toByteArray()
-//            val imagen = BitmapFactory.decodeByteArray(newimage,0,newimage.size)
-//
-//            view.IVimagenItem.transitionName=(ProductoAndImage.uid.toString())
-//            view.IVimagenItem.setImageBitmap(imagen)
+            if(Product.price_neto!=null){
+                view.TEPriceNeto.text=Product.price_neto.toString()
+                view.TEGanacia.text=(Product.price_neto-PriceVent).toString()
+            }
+            if(Product.qr!=null){
+                view.TEQR.text=Product.qr
+            }
+            if(Product.description!=null){
+                view.TEDetails.text = Product.description
+            }
+
+            if(Product.quantity_cantidad!=null){
+                view.TECantidad.text=Product.quantity_cantidad.toString()
+                if(Context!=null && Product.stockC_attr !=null){
+                    view.TECantidadAttr.text=Context!!.resources.getStringArray(R.array.dlagsCantidad)[Product.stockC_attr]
+                }
+            }
+
+            if(Product.quantity_unity!=null){
+                view.TECantidadU.text=Product.quantity_unity.toString()
+                if(Context!=null && Product.stockU_attr !=null){
+                    view.TECantidadUAttr.text=Context!!.resources.getStringArray(R.array.dlagsType)[Product.stockU_attr]
+                }
+            }
+
+            if(Product.peso!=null){
+                view.TEPeso.text=Product.peso.toString()
+                if(Context!=null && Product.peso_attr!=null){
+                    view.TEPesoAttr.text=Context!!.resources.getStringArray(R.array.dlagsPeso)[Product.peso_attr]
+                }
+            }
+
+            if(Product.stock_attr!=null && Context !=null){
+                view.TEPesoAttr.text=Context!!.resources.getStringArray(R.array.dlagsParts)[Product.stock_attr]
+            }
+
+            view.TEPriceVent.text = "$PriceVent"
+
+            view.SaveStorage.setOnClickListener {
+                check(true)
+//                ViewModelCall?.AddResponse(Product)
+            }
+            view.BSincronise.setOnClickListener {
+                check(true)
+
+            }
+            view.BSLocal.setOnClickListener {
+                check(true)
+            }
             Picasso.get()
-                .load("http://192.168.0.17:2016/uploads/" + ProductoAndImage.image_realation!![0].image_name)
+                .load("http://192.168.0.17:2016/uploads/" + Product.image_realation!![0].image_name)
                 .fit()
                 .centerCrop()
                 .into(view.IVimagenItem)
@@ -72,19 +120,89 @@ class ServerAdapter(var producto: List<ProductsPreviewQuery.Producto>,var itemLa
         fun renderNotImagen(ProductoAndImage: ProductsPreviewQuery.Producto) {
             view.TNombre.isSelected = true;
             view.TNombre.text = ProductoAndImage.product_name
-            view.TEPrecio.text = "$\\${ProductoAndImage.price_cantidad}"
+            view.TEPrecio.text = "$\\${ProductoAndImage.price}"
 
         }
 
     }
     inner class ImageHolderReverse(val view: ItemProductoReverseBinding): RecyclerView.ViewHolder(view.root){
 
-        fun render(ProductoAndImage: ProductsPreviewQuery.Producto){
+        fun render(Product: ProductsPreviewQuery.Producto){
             view.TNombre.isSelected = true;
-            view.TNombre.text = ProductoAndImage.product_name
-            view.TEPrecio.text = "$\\${ProductoAndImage.price_cantidad}"
+            view.TNombre.text = Product.product_name
+            view.TEPrecio.text = "$.${Product.price}"
+//            if(Product.)
+            var PriceVent=Product.price
+            if(Product.discount!=null){
+                PriceVent=-Product.discount
+            }
+            if(Product.available_now!=null){
+                view.TVDisponsedNow.text=if(Product.available_now) "Si" else "No"
+            }
+
+            if(Product.available_date!=null){
+                view.TVNewStock.text= Product.available_date.toString()
+            }
+
+            if(Product.available_shipment!=null){
+                view.TESend.text= if(Product.available_shipment) "Si" else "No"
+            }
+
+            if(Product.discount!=null){
+                view.TEDiscount.text = Product.discount.toString()
+            }
+
+            if(Product.price_neto!=null){
+                view.TEPriceNeto.text=Product.price_neto.toString()
+                view.TEGanacia.text=(Product.price_neto-PriceVent).toString()
+            }
+            if(Product.qr!=null){
+                view.TEQR.text=Product.qr
+            }
+            if(Product.description!=null){
+                view.TEDetails.text = Product.description
+            }
+
+            if(Product.quantity_cantidad!=null){
+                view.TECantidad.text=Product.quantity_cantidad.toString()
+                if(Context!=null && Product.stockC_attr !=null){
+                    view.TECantidadAttr.text=Context!!.resources.getStringArray(R.array.dlagsCantidad)[Product.stockC_attr]
+                }
+            }
+
+            if(Product.quantity_unity!=null){
+                view.TECantidadU.text=Product.quantity_unity.toString()
+                if(Context!=null && Product.stockU_attr !=null){
+                    view.TECantidadUAttr.text=Context!!.resources.getStringArray(R.array.dlagsType)[Product.stockU_attr]
+                }
+            }
+
+            if(Product.peso!=null){
+                view.TEPeso.text=Product.peso.toString()
+                if(Context!=null && Product.peso_attr!=null){
+                    view.TEPesoAttr.text=Context!!.resources.getStringArray(R.array.dlagsPeso)[Product.peso_attr]
+                }
+            }
+
+            if(Product.stock_attr!=null && Context !=null){
+                view.TEPesoAttr.text=Context!!.resources.getStringArray(R.array.dlagsParts)[Product.stock_attr]
+            }
+
+            view.TEPriceVent.text = "$PriceVent"
+
+            view.SaveStorage.setOnClickListener {
+                check(true)
+//                ViewModelCall?.AddResponse(Product)
+            }
+            view.BSincronise.setOnClickListener {
+                check(true)
+
+            }
+            view.BSLocal.setOnClickListener {
+                check(true)
+            }
             Picasso.get()
-                .load("http://192.168.0.17:2016/uploads/" + ProductoAndImage.image_realation!![0].image_name)
+                .load("http://192.168.0.17:2016/uploads/" + Product.image_realation!![0].image_name)
                 .fit()
                 .centerCrop()
                 .into(view.IVimagenItem)
@@ -92,10 +210,81 @@ class ServerAdapter(var producto: List<ProductsPreviewQuery.Producto>,var itemLa
     }
 
     inner class ImageHolderNotImage(val view: ItemProductoNotimageBinding): RecyclerView.ViewHolder(view.root){
-        fun render(ProductoAndImage: ProductsPreviewQuery.Producto){
+        fun render(Product: ProductsPreviewQuery.Producto){
             view.TNombre.isSelected = true;
-            view.TNombre.text = ProductoAndImage.product_name
-            view.TEPrecio.text = "$\\${ProductoAndImage.price_cantidad}"
+            view.TNombre.text = Product.product_name
+            view.TEPrecio.text = "$.${Product.price}"
+//            if(Product.)
+            var PriceVent=Product.price
+            if(Product.discount!=null){
+                PriceVent=-Product.discount
+            }
+            if(Product.available_now!=null){
+                view.TVDisponsedNow.text=if(Product.available_now) "Si" else "No"
+            }
+
+            if(Product.available_date!=null){
+                view.TVNewStock.text= Product.available_date.toString()
+            }
+
+            if(Product.available_shipment!=null){
+                view.TESend.text= if(Product.available_shipment) "Si" else "No"
+            }
+
+            if(Product.discount!=null){
+                view.TEDiscount.text = Product.discount.toString()
+            }
+
+            if(Product.price_neto!=null){
+                view.TEPriceNeto.text=Product.price_neto.toString()
+                view.TEGanacia.text=(Product.price_neto-PriceVent).toString()
+            }
+            if(Product.qr!=null){
+                view.TEQR.text=Product.qr
+            }
+            if(Product.description!=null){
+                view.TEDetails.text = Product.description
+            }
+
+            if(Product.quantity_cantidad!=null){
+                view.TECantidad.text=Product.quantity_cantidad.toString()
+                if(Context!=null && Product.stockC_attr !=null){
+                    view.TECantidadAttr.text=Context!!.resources.getStringArray(R.array.dlagsCantidad)[Product.stockC_attr]
+                }
+            }
+
+            if(Product.quantity_unity!=null){
+                view.TECantidadU.text=Product.quantity_unity.toString()
+                if(Context!=null && Product.stockU_attr !=null){
+                    view.TECantidadUAttr.text=Context!!.resources.getStringArray(R.array.dlagsType)[Product.stockU_attr]
+                }
+            }
+
+            if(Product.peso!=null){
+                view.TEPeso.text=Product.peso.toString()
+                if(Context!=null && Product.peso_attr!=null){
+                    view.TEPesoAttr.text=Context!!.resources.getStringArray(R.array.dlagsPeso)[Product.peso_attr]
+                }
+            }
+
+            if(Product.stock_attr!=null && Context !=null){
+                view.TEPesoAttr.text=Context!!.resources.getStringArray(R.array.dlagsParts)[Product.stock_attr]
+            }
+
+            view.TEPriceVent.text = "$PriceVent"
+
+            view.SaveStorage.setOnClickListener {
+                check(true)
+//                ViewModelCall?.AddResponse(Product)
+            }
+            view.BSincronise.setOnClickListener {
+                check(true)
+
+            }
+            view.BSLocal.setOnClickListener {
+                check(true)
+            }
+
         }
     }
 
@@ -103,12 +292,14 @@ class ServerAdapter(var producto: List<ProductsPreviewQuery.Producto>,var itemLa
         fun render(ProductoAndImage: ProductsPreviewQuery.Producto) {
             view.TNombre.isSelected = true;
             view.TNombre.text = ProductoAndImage.product_name
-            view.TEPrecio.text = "$\\${ProductoAndImage.price_cantidad}"
+            view.TEPrecio.text = "$\\${ProductoAndImage.price}"
+            if(ProductoAndImage.image_realation!=null && ProductoAndImage.image_realation.isNotEmpty()){
             Picasso.get()
                 .load("http://192.168.0.17:2016/uploads/" + ProductoAndImage.image_realation!![0].image_name)
                 .fit()
                 .centerCrop()
                 .into(view.IVimagenItem)
+            }
         }
     }
 
@@ -117,7 +308,7 @@ class ServerAdapter(var producto: List<ProductsPreviewQuery.Producto>,var itemLa
         fun render(ProductoAndImage: ProductsPreviewQuery.Producto){
             view.TNombre.isSelected = true;
             view.TNombre.text = ProductoAndImage.product_name
-            view.TEPrecio.text = "$\\${ProductoAndImage.price_cantidad}"
+            view.TEPrecio.text = "$\\${ProductoAndImage.price}"
             Picasso.get()
                 .load("http://192.168.0.17:2016/uploads/" + ProductoAndImage.image_realation!![0].image_name)
                 .fit()
@@ -128,8 +319,13 @@ class ServerAdapter(var producto: List<ProductsPreviewQuery.Producto>,var itemLa
 
     override fun getItemViewType(position: Int): Int {
         if (producto[position].image_realation?.size == 0) {
-            return 3
+            return 2
         }
+        if(reverse){
+            reverse=false
+            return 0
+        }
+        reverse = true
         return  itemLayout
     }
     fun setItem(inte:Int){
@@ -138,52 +334,20 @@ class ServerAdapter(var producto: List<ProductsPreviewQuery.Producto>,var itemLa
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-//        var ItemView: ServerAdapter.ImageHolder = ImageHolder(
-//            layoutInflater.inflate(
-//                R.layout.item_producto,
-//                parent,
-//                false
-//            )
-//        )
         var ItemView:RecyclerView.ViewHolder =ImageHolder(ItemProductoBinding.inflate(layoutInflater,parent,false))
-        if (viewType == 1) {
-//            if (reverse) {
-            reverse = false;
-//                ItemView= ImageHolder(layoutInflater.inflate(R.layout.item_producto, parent, false))
-            ItemView=ImageHolder(ItemProductoBinding.inflate(layoutInflater,parent,false))
-
-//            } else {
-//                reverse = true;
-//                ItemView= ImageHolder(
-//                    layoutInflater.inflate(
-//                        R.layout.item_producto,
-//                        parent,
-//                        false
-//                    )
-//                )
-//            }
-        } else if (viewType == 2) {
-//            ItemView=ImageHolder(
-//                layoutInflater.inflate(
-//                    R.layout.item_producto_notimage,
-//                    parent,
-//                    false
-//                )
-//            )
-            ItemView=ImageHolderNotImage(ItemProductoNotimageBinding.inflate(layoutInflater,parent,false))
-
-        }else if(viewType==3){
-//            ItemView=ImageHolder(
-//                layoutInflater.inflate(
-//                    R.layout.item_producto_listview,
-//                    parent,
-//                    false
-//                )
-//            )
-            ItemView=ImageHolderListView(ItemProductoListviewBinding.inflate(layoutInflater,parent,false))
-        }else if(viewType == 4){
-//            ItemView = ImageHolder(layoutInflater.inflate(R.layout.item_producto_gridview, parent, false))
-            ItemView=ImageHolderGridView(ItemProductoGridviewBinding.inflate(layoutInflater,parent,false))
+        when (viewType) {
+            1 -> {
+                ItemView=ImageHolderReverse(ItemProductoReverseBinding.inflate(layoutInflater,parent,false))
+            }
+            2 -> {
+                ItemView=ImageHolderNotImage(ItemProductoNotimageBinding.inflate(layoutInflater,parent,false))
+            }
+            3 -> {
+                ItemView=ImageHolderListView(ItemProductoListviewBinding.inflate(layoutInflater,parent,false))
+            }
+            4 -> {
+                ItemView=ImageHolderGridView(ItemProductoGridviewBinding.inflate(layoutInflater,parent,false))
+            }
         }
         return ItemView
     }
@@ -192,24 +356,27 @@ class ServerAdapter(var producto: List<ProductsPreviewQuery.Producto>,var itemLa
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         when(holder.itemViewType){
-            0->{
+            1->{
                 (holder as ServerAdapter.ImageHolderReverse).render(producto[position])
             }
-            1->{
+            2->{
                 if(producto[position].image_realation?.size != 0) {
                     (holder as ServerAdapter.ImageHolder).render(producto[position])
                 }else{
                     (holder as ServerAdapter.ImageHolderNotImage).render(producto[position])
                 }
             }
-            2->{
+            3->{
                 (holder as ServerAdapter.ImageHolderNotImage).render(producto[position])
             }
-            3->{
+            4->{
                 (holder as ServerAdapter.ImageHolderListView).render(producto[position])
             }
-            4->{
+            5->{
                 (holder as ServerAdapter.ImageHolderGridView).render(producto[position])
+            }
+            else->{
+                (holder as ServerAdapter.ImageHolder).render(producto[position])
             }
         }
 

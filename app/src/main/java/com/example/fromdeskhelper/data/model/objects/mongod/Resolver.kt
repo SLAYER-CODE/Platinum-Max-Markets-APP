@@ -1,5 +1,8 @@
 package com.example.fromdeskhelper.data.model.objects.mongod
 
+import bolts.Bolts
+import com.example.fromdeskhelper.type.BrandsInput
+import com.example.fromdeskhelper.type.CategoriesInput
 import com.google.gson.annotations.SerializedName
 import org.bson.Document
 
@@ -8,32 +11,63 @@ object Resolver {
 
 
 data class ProductsLocalImput(
-    @SerializedName("brands_products") public val brands_products: List<String>,
-    @SerializedName("category_products")public val category_products: List<String>,
-    @SerializedName("description")public val description: String?,
+
+    @SerializedName("product_name") val product_name: String,
+    @SerializedName("price")  val price: Double,
+    @SerializedName("price_neto") val price_neto: Double?,
+    @SerializedName("discount")  val discount: Double?,
+    @SerializedName("quantity_cantidad") val quantity_cantidad: Int?,
+    @SerializedName("stockC_attr") val stockC_attr: Int?,
+    @SerializedName("quantity_unity") val quantity_unity: Int?,
+    @SerializedName("stockU_attr") val stockU_attr: Int?,
+    @SerializedName("peso") val peso: Double?,
+    @SerializedName("peso_attr") val peso_attr: Int?,
+    @SerializedName("stock_attr") val stock_attr: Int?,
+    @SerializedName("qr") val qr: String?,
+    @SerializedName("description") val description: String?,
+    @SerializedName("available_date") val available_date: String?,
+    @SerializedName("available_now") val available_now: Boolean?,
+    @SerializedName("available_shipment") val available_shipment: Boolean?,
+    @SerializedName("update_product") val update_product: String?,
+    @SerializedName("uniqueid") val unique: String,
+    @SerializedName("brands_products") public val brands_products: MutableList<BrandsInput>,
+    @SerializedName("category_products")public val category_products: MutableList<CategoriesInput>,
     @SerializedName("image_realation")public val image_realation: MutableList<Document>,
-    @SerializedName("old_price")public val old_price: Double?,
-    @SerializedName("price_cantidad")public val price_cantidad: Double?,
-    @SerializedName("price_unity")public val price_unity: Double?,
-    @SerializedName("product_name")public val product_name: String,
-    @SerializedName("qr")public val qr: String?,
-    @SerializedName("quantity_cantidad")public val quantity_cantidad: Int?,
-    @SerializedName("quantity_unity")public val quantity_unity: Int?,
-    @SerializedName("update_product")public val update_product: String?,
 )
 
 
 data class ProductsModelAdapter(
-    @SerializedName("brands_products") val brands_products: List<String>,
-    @SerializedName("category_products")  val category_products: List<String>,
-    @SerializedName("description") val description: String?,
-    @SerializedName("image_realation") val image_realation: MutableList<Pair<String,ByteArray>>,
-    @SerializedName("old_price") val old_price: Double?,
-    @SerializedName("price_cantidad")  val price_cantidad: Double?,
-    @SerializedName("price_unity")  val price_unity: Double?,
     @SerializedName("product_name") val product_name: String,
-    @SerializedName("qr") val qr: String?,
+    @SerializedName("price")  val price: Double,
+    @SerializedName("price_neto") val price_neto: Double?,
+    @SerializedName("discount")  val discount: Double?,
+
+
     @SerializedName("quantity_cantidad") val quantity_cantidad: Int?,
+
+    @SerializedName("stockC_attr") val stockC_attr: Int?,
+
     @SerializedName("quantity_unity") val quantity_unity: Int?,
+
+    @SerializedName("stockU_attr") val stockU_attr: Int?,
+
+    @SerializedName("peso") val peso: Double?,
+    @SerializedName("peso_attr") val peso_attr: Int?,
+
+    @SerializedName("stock_attr") val stock_attr: Int?,
+
+    @SerializedName("qr") val qr: String?,
+    @SerializedName("description") val description: String?,
+
+    @SerializedName("available_date") val available_date: String?,
+    @SerializedName("available_now") val available_now: Boolean?,
+    @SerializedName("available_shipment") val available_shipment: Boolean?,
     @SerializedName("update_product") val update_product: String?,
-)
+
+    @SerializedName("uniqueid") val unique: String,
+
+    @SerializedName("brands_products") public val brands_products: MutableList<BrandsInput>,
+    @SerializedName("category_products")public val category_products: MutableList<CategoriesInput>,
+    @SerializedName("image_realation") val image_realation: MutableList<Pair<String,ByteArray>>,
+
+    )

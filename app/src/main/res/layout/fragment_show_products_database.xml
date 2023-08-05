@@ -7,10 +7,14 @@
     tools:context=".ui.View.fragment.Root.ShowProductsServer">
 
     <!-- TODO: Update blank fragment layout -->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe"
 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <com.github.rubensousa.gravitysnaphelper.GravitySnapRecyclerView
         app:snapGravity="top"
-        app:snapLastItem="true"
+        app:snapLastItem="false"
         app:snapToPadding="true"
         android:id="@+id/LVMylist"
         android:layout_width="match_parent"
@@ -21,13 +25,12 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
-        android:paddingTop="70dp"
         android:layoutAnimation="@anim/layout_animation_right_to_left"
-        android:paddingBottom="80dp"
+        android:paddingBottom="10dp"
         android:clipToPadding="false"
         android:foregroundGravity="center_vertical|center">
     </com.github.rubensousa.gravitysnaphelper.GravitySnapRecyclerView>
-
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     <LinearLayout
         android:scrollbars="vertical"
         android:id="@+id/TNotItems"

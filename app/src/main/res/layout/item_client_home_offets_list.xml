@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_gravity="fill"
+    android:layout_columnWeight="1"
+    android:layout_rowWeight="1"
+    android:layout_margin="5dp"
+    android:layout_height="300dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <ImageView
+            android:src="@drawable/ic_baseline_price_add_product"
+            android:scaleType="centerCrop"
+            android:id="@+id/IVImage"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </ImageView>
+
+        <LinearLayout
+            android:padding="6dp"
+            android:orientation="vertical"
+            android:layout_weight="0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_gravity="top"
+                android:gravity="top"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                    tools:visibility="visible"
+                    android:visibility="gone"
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/TVOldPrice"
+                    android:text="S/139"
+                    android:textSize="13dp"
+                    android:textColor="@color/md_grey_600"
+                    android:fontFamily="@font/cherry_regular"
+                    android:layout_gravity="top"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                </TextView>
+                <TextView
+                    android:id="@+id/TVPrice"
+                    android:text="S/ 139"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/lilitaoe_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+                <TextView
+                    android:id="@+id/TVPriceDouble"
+                    android:layout_marginLeft="4dp"
+                    android:textSize="13dp"
+                    android:text="93"
+                    android:layout_gravity="top"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                </TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                    tools:visibility="visible"
+                    android:visibility="invisible"
+                    android:id="@+id/TVPorcentajeDiscount"
+                    android:text="33%"
+                    android:textSize="15dp"
+                    android:textColor="@color/md_green_A700"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </TextView>
+                <TextView
+                    android:text="OFF"
+                    android:textSize="15dp"
+                    android:textColor="@color/md_green_A700"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </TextView>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/TVNameDetails"
+                    android:textColor="@color/md_grey_700"
+                    android:text="Zapatillas adidas mujer Galaxy 6 WGGw38421E12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                tools:visibility="visible"
+                android:visibility="gone"
+                android:id="@+id/sendProduct"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textStyle="bold"
+                    android:text="Envio gratis"
+                    android:textSize="15dp"
+                    android:textColor="@color/md_green_A700"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </TextView>
+            </LinearLayout>
+            <LinearLayout
+                tools:visibility="visible"
+                android:visibility="gone"
+                android:id="@+id/LLDNow"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textStyle="bold"
+                    android:text="Disponible ahora en"
+                    android:textSize="15dp"
+                    android:textColor="@color/md_blue_500"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+            </LinearLayout>
+            <TextView
+                tools:visibility="visible"
+                android:visibility="gone"
+                android:id="@+id/TVUbication"
+                android:layout_marginLeft="10dp"
+                android:text="(Claro J° arequipa 230)"
+                android:textSize="15dp"
+                android:textColor="@color/md_green_A700"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+            <LinearLayout
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </LinearLayout>
+
+            <LinearLayout
+                tools:visibility="visible"
+                android:visibility="gone"
+                android:id="@+id/LLDDate"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textStyle="bold"
+                    android:text="Nuevo stock para el"
+                    android:textSize="15dp"
+                    android:textColor="@color/md_red_500"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginLeft="10dp"
+                tools:visibility="visible"
+                android:visibility="gone"
+                android:id="@+id/LLDDateT"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/TVDate"
+                    android:layout_marginLeft="5dp"
+                    android:text="(25/06/23)"
+                    android:textSize="15dp"
+                    android:textColor="@color/md_green_A700"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+<!--                <TextView-->
+<!--                    android:id="@+id/TVHora"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:layout_marginLeft="5dp"-->
+<!--                    android:text="5:30"-->
+<!--                    android:textSize="15dp"-->
+<!--                    android:textColor="@color/md_green_A700"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content">-->
+<!--                </TextView>-->
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/CVCantidad"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_gravity="right|top"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:cardCornerRadius="35dp"
+            app:cardUseCompatPadding="true"
+            app:elevation="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/TVStockText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/lobster_regular"
+                    android:lines="1"
+                    android:text="20"
+                    android:textAlignment="center"
+                    android:textColor="@color/md_black_1000"
+                    android:textSize="20dp" />
+
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:textSize="12dp"
+            android:elevation="2dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:fontFamily="@font/lilitaoe_regular"
+            android:gravity="center"
+            android:text=" Disponible"
+            android:textColor="@color/md_orange_500"
+            app:layout_constraintBottom_toBottomOf="@+id/CVCantidad"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"></TextView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

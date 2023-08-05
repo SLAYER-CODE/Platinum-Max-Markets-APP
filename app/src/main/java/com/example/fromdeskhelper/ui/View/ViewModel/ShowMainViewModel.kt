@@ -9,6 +9,7 @@ import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.fromdeskhelper.ProductsPreviewQuery
+import com.example.fromdeskhelper.core.AuthorizationInterceptor
 import com.example.fromdeskhelper.data.PreferencesManager
 import com.example.fromdeskhelper.data.model.Controller.ProductsController
 import com.example.fromdeskhelper.data.model.Controller.UtilsController
@@ -28,6 +29,7 @@ class ShowMainViewModel @Inject constructor(
     private val Utils: UtilsController,
     private val Products:ProductsController,
     private val loginPreferences: PreferencesManager,
+    private val authorizationInterceptor: AuthorizationInterceptor
 
     ) :AndroidViewModel(
 Application()
@@ -76,7 +78,7 @@ Application()
     fun Unlogin(){
         viewModelScope.launch {
             FirebaseAuth.getInstance().signOut()
-//            UserPreferences.
+            authorizationInterceptor.setSessionToken("")
             Unlogot.postValue(true)
         }
     }

@@ -1,6 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-
+    <style name="SearchAutoCompleteTextView" parent="Widget.AppCompat.Light.AutoCompleteTextView">
+        <item name="android:textColor">@color/md_white_1000</item>
+        <item name="android:textColorHint">@color/md_grey_600</item>
+    </style>
     <style name="Theme.FinalProductos.NoActionBar">
+        <item name="autoCompleteTextViewStyle">@style/SearchAutoCompleteTextView</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="snackbarStyle">@style/MySnackBarStyle</item>
@@ -84,7 +88,7 @@
     </style>
 
     <style name="ButtonFloatLayout">
-        <item name="android:backgroundTint">@color/md_green_600</item>
+        <item name="android:backgroundTint">@color/md_blue_100</item>
     </style>
 
     <style name="IconItems">
@@ -161,6 +165,7 @@
         <item name="android:shadowColor">@color/md_black_1000_75</item>
         <item name="android:fontWeight">500</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:layout_margin">5dp</item>
     </style>
     <style name="carView">
         <item name="cardBackgroundColor">@color/md_blue_100</item>

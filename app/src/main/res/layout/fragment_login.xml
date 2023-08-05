@@ -43,7 +43,7 @@
                 app:cardUseCompatPadding="true">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/BQRScannerAnonime"
+                    android:id="@+id/BRAnonime"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -82,6 +82,7 @@
 
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/CardLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="14dp"
@@ -303,6 +304,27 @@
         </androidx.cardview.widget.CardView>
 
         <Button
+            android:id="@+id/LoginUserAnonime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_weight="1"
+            android:backgroundTint="@color/md_grey_500"
+            android:enabled="true"
+            android:fontFamily="@font/cherry_regular"
+            android:shadowColor="@color/md_black_1000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="2"
+            android:text="@string/login_text_user_anonime"
+            android:textColor="#F3F3F3"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/CardLogin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login"/>
+        <Button
             android:id="@+id/login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -323,6 +345,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ImageGIF" />
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -129,7 +129,7 @@
                         android:foregroundGravity="right"
                         android:gravity="left"
                         android:theme="@style/ButonActionBar"
-                        app:searchIcon="@drawable/ic_baseline_image_search_showproduct" />
+                        app:searchIcon="@drawable/baseline_manage_search_24" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/BQRScanner"

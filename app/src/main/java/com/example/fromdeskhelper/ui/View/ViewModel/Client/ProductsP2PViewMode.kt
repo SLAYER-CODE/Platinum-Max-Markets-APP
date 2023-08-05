@@ -1,6 +1,7 @@
 package com.example.fromdeskhelper.ui.View.ViewModel.Client
 
 import Data.listInventarioProductos
+import Data.listInventarioProductosP2P
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
@@ -18,10 +19,10 @@ class ProductsP2PViewMode @Inject constructor():
     AndroidViewModel(
         Application()
     ) {
-    val ItemsRecivedTransmited: MutableLiveData<MutableList<listInventarioProductos>> = MutableLiveData();
-    public val Items:MutableList<listInventarioProductos> = mutableListOf()
+    val ItemsRecivedTransmited: MutableLiveData<MutableList<listInventarioProductosP2P>> = MutableLiveData();
+    public val Items:MutableList<listInventarioProductosP2P> = mutableListOf()
 
-    fun ComprobateList(Products: listInventarioProductos):Boolean{
+    fun ComprobateList(Products: listInventarioProductosP2P):Boolean{
         for (x in Items){
             if(x.uid==Products.uid){
                 return true
@@ -42,11 +43,11 @@ class ProductsP2PViewMode @Inject constructor():
             if(ItemZerialice[4]!="null"){
                 qr=ItemZerialice[4]
             }
-            var NewProduct = listInventarioProductos(
+            var NewProduct = listInventarioProductosP2P(
                 ItemZerialice[0].toInt(),
                 nombre = ItemZerialice[1],
-                precioU = ItemZerialice[3].toDouble(),
-                precioC = ItemZerialice[2].toDouble(),
+                precioC = ItemZerialice[3].toDouble(),
+                precioNeto = ItemZerialice[2].toDouble(),
                 imageBit = imagenBity,
                 qr=qr
             )
@@ -63,7 +64,7 @@ class ProductsP2PViewMode @Inject constructor():
             ItemsRecivedTransmited.postValue(Items)
         }
     }
-    fun RequestItemFunc():MutableList<listInventarioProductos>{
+    fun RequestItemFunc():MutableList<listInventarioProductosP2P>{
         return Items
     }
 

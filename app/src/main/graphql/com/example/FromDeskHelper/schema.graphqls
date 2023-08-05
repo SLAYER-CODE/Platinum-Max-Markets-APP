@@ -8,7 +8,7 @@ schema {
 type Associate {
     age: String
     dni: String!
-    home_direction: String!
+    home_direction: String
     id: ID!
     lastname: String!
     local_id: Establishments!
@@ -56,6 +56,7 @@ type Establishments {
     mall_id: Mall!
     name: String!
     position: Int!
+    products_id: [Products!]
     web: String!
 }
 
@@ -118,18 +119,28 @@ type ProductImages {
 }
 
 type Products {
+    available_date: DateTime
+    available_now: Boolean
+    available_shipment: Boolean
     brands_products: [Brands!]
     category_products: [Categories!]
-    description: String!
+    description: String
+    discount: Float
+    estableshment_relation: Establishments
     image_realation: [ProductImages!]
-    old_price: Float
-    price_cantidad: Float!
-    price_unity: Float
+    peso: Float
+    peso_attr: Int
+    price: Float!
+    price_neto: Float
     product_id: ID!
     product_name: String!
     qr: String
     quantity_cantidad: Int
     quantity_unity: Int
+    stockC_attr: Int
+    stockU_attr: Int
+    stock_attr: Int
+    uniqueid: String!
     update_product: DateTime!
     user_relation: Users
 }
@@ -139,7 +150,9 @@ type Query {
     Categories: [Categories!]!
     Products: [Products!]!
     ProductsCount: Int!
+    ProductsOfferts: [Products!]!
     Sessiones: [Users!]!
+    SloganImagesGet: [SloganImages!]!
     comprobation: Boolean!
     comprobationAdmin: Boolean!
     comprobationConnection: Boolean!
@@ -148,6 +161,7 @@ type Query {
     comprobationUser(token: String!): Boolean!
     comprobationWorked: Boolean!
     getDataAsociate: Associate!
+    getDataAsociateContent: Associate!
     getDataEmployed: UserWorkedGet!
     getRoles: RoleGet!
     getRolesEmployed: [Boolean!]!
@@ -186,7 +200,7 @@ type Users {
     email_verify: Boolean
     lastToken: String!
     phone_id: Phone
-    photo: String!
+    photo: String
     random_code: Int
     shoppingCardt_id: ShoppingCart
     uid: String!
@@ -218,17 +232,26 @@ input ImageProductInput {
 }
 
 input ProductsInput {
-    brands_products: [BrandsInput!]!
-    category_products: [CategoriesInput!]!
+    available_date: DateTime
+    available_now: Boolean
+    available_shipment: Boolean
+    brands_products: [BrandsInput!]
+    category_products: [CategoriesInput!]
     description: String
-    image_realation: [ImageProductInput!]!
-    old_price: Float!
-    price_cantidad: Float!
-    price_unity: Float
+    discount: Float
+    image_realation: [ImageProductInput!]
+    peso: Float
+    peso_attr: Int
+    price: Float!
+    price_neto: Float
     product_name: String!
     qr: String
     quantity_cantidad: Float
     quantity_unity: Float
+    stockC_attr: Float
+    stockU_attr: Float
+    stock_attr: Int
+    uniqueid: String!
     update_product: DateTime
 }
 

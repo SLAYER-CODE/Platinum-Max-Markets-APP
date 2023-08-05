@@ -1,8 +1,10 @@
 package com.example.fromdeskhelper.ui.View.activity
+import android.content.Intent
 import com.example.fromdeskhelper.R
 
 import android.os.Bundle
 import android.view.Menu
+import androidx.activity.viewModels
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -12,7 +14,12 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.example.fromdeskhelper.databinding.ActivityUserMainBinding
+import com.example.fromdeskhelper.databinding.NavHeaderMainBinding
+import com.example.fromdeskhelper.databinding.NavHeaderUserMainBinding
+import com.example.fromdeskhelper.ui.View.ViewModel.ShowMainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,6 +27,7 @@ class UserMainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityUserMainBinding
+    private val MainModel: ShowMainViewModel by viewModels();
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +42,19 @@ class UserMainActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
         val drawerLayout: DrawerLayout = binding.drawerLayout
-        val navView: NavigationView = binding.navView
+        val header = NavHeaderUserMainBinding.bind(binding.navView.getHeaderView(0))
+        header.logoutView.setOnClickListener {
+            MainModel.Unlogin()
+        }
+
+        MainModel.Unlogot.observe(this,Observer {
+            startActivity(Intent(baseContext,LoginActivity::class.java))
+            Animatoo.animateZoom(this);
+            finish()
+        })
+//        val navView: NavigationView = binding.navView.logoutView
+
+
 //        val navController = findNavController(R.id.nav_host_fragment_content_user_main)
 //        // Passing each menu ID as a set of Ids because each
 //        // menu should be considered as top level destinations.

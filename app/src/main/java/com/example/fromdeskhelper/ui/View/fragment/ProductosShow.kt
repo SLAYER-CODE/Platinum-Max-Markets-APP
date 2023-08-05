@@ -8,6 +8,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -27,6 +29,10 @@ import com.example.fromdeskhelper.data.db.AppDatabase
 import com.example.fromdeskhelper.data.model.Types.CameraTypes
 import com.example.fromdeskhelper.databinding.FragmentProductosShowBinding
 import com.example.fromdeskhelper.ui.View.ViewModel.*
+import com.example.fromdeskhelper.ui.View.ViewModel.Client.ShowMainClientViewModel
+import com.example.fromdeskhelper.ui.View.ViewModel.SendItems.SendProductsLocalViewModel
+import com.example.fromdeskhelper.ui.View.ViewModel.SendItems.SendProductsServerViewModel
+import com.example.fromdeskhelper.ui.View.ViewModel.SendItems.SendProductsStoreViewModel
 import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import com.example.fromdeskhelper.ui.View.adapter.*
 import com.example.fromdeskhelper.util.TabletPageTransformer
@@ -94,13 +100,16 @@ class ProductosShow : Fragment() {
     lateinit var daoNew: AppDatabase
 
     var currentPage:Int=6
+
+    private var LocalcountProduct:Int = 0
+    private var ServercountProduct:Int = 0
+    private var StoragecountProduct:Int = 0
     var itemfinal:Boolean=false;
     private var listaProductos = emptyList<listInventarioProductos>()
 //    var adaptador: ProductoAdapter = ProductoAdapter(listOf());
     private val UtilsMainModel:UtilsShowMainViewModels by viewModels(ownerProducer = {requireActivity()})
 
     //Item Productos
-    private val MainModel : ShowMainViewModel by viewModels(ownerProducer = {requireActivity()});
 
     //ADD action bar base activity config
     private val CameraView: CameraViewModel by viewModels(ownerProducer = {
@@ -110,6 +119,29 @@ class ProductosShow : Fragment() {
     private var CamScannerStatus: Boolean = false;
     private val MainView: MainActiviyViewModel by viewModels()
 
+    private val MainModel : ShowMainViewModel by viewModels(ownerProducer = {requireActivity()});
+
+    private val ServerModel: ShowServerViewModel by viewModels(ownerProducer = {
+        requireActivity()
+    });
+
+    private val LocalModel: ShowLocalViewModel by viewModels(ownerProducer = {
+        requireActivity()
+    });
+
+    private var adapterProduct: ProductoAdapter = ProductoAdapter(listOf(), null, 1);
+    private var adapterSever: ServerAdapter = ServerAdapter(listOf(), 1);
+    private var adapterLocal: LocalAdapter = LocalAdapter(listOf(), 1)
+
+    private val ServerSendViewModel: SendProductsServerViewModel by viewModels(ownerProducer = {
+        requireActivity()
+    })
+    private val LocalSendViewModel: SendProductsLocalViewModel by viewModels(ownerProducer = {
+        requireActivity()
+    })
+    private val StoreSendViewModel: SendProductsStoreViewModel by viewModels(ownerProducer = {
+        requireActivity()
+    })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -130,9 +162,9 @@ class ProductosShow : Fragment() {
     }
     override fun onStart() {
         super.onStart()
-        if(baseActivity.binding.appBarMain.toolbarParentClient!!.visibility==View.VISIBLE){
-            baseActivity.binding.appBarMain.toolbarParentClient!!.visibility=View.GONE
-        }
+//        if(baseActivity.binding.appBarMain.toolbarParentClient!!.visibility==View.VISIBLE){
+//            baseActivity.binding.appBarMain.toolbarParentClient!!.visibility=View.GONE
+//        }
      /*   if(binding.toolbarParent.visibility==View.GONE){
            binding.toolbarParent.visibility=View.VISIBLE
         }*/
@@ -223,30 +255,25 @@ class ProductosShow : Fragment() {
 
 
 
-
-        var Listener = View.OnClickListener {
+        fun toogleCamer() {
             if (!CamScannerStatus) {
+                //ENABLE CAMERA
                 MainView.RestoreCamera()
-                val ft: FragmentTransaction =  parentFragmentManager.beginTransaction()
-                ft.setCustomAnimations(
-                    android.R.anim.fade_in,
-                    android.R.anim.fade_out,
-                    android.R.anim.slide_in_left,
-                    android.R.anim.slide_out_right
-                )
                 CameraView.CloseInFragment(false)
                 CameraView.CamaraStatus(CameraTypes.SCANER, true)
-                ft.replace(R.id.FragmentCamera, CameraQrFragment());
-                ft.setReorderingAllowed(true)
-                ft.commit()
                 CamScannerStatus = true;
             } else {
+                //CLOSE CAMERA
                 CameraView.CloseInFragment(true)
                 CameraView.CamaraStatus(CameraTypes.NULL, true)
                 CamScannerStatus = false;
             }
         }
-        binding.BQRScanner.setOnClickListener(Listener)
+
+
+        binding.BQRScanner.setOnClickListener{
+            toogleCamer()
+        }
 //        baseActivity.binding.appBarMain.BQRScannerClient.setOnClickListener(Listener)
 
 
@@ -360,14 +387,21 @@ class ProductosShow : Fragment() {
                     }
                 }
         })
+        fun setCountProduct(){
+            binding.collapsingToolbar.title="${getString(R.string.titleProuctos)} (${LocalcountProduct+StoragecountProduct+ServercountProduct})"
+        }
 
         tablayoutnavigator.attach()
         UtilsMainModel.GetCountItemsServer()
         UtilsMainModel.LocalCountObserver.observe(viewLifecycleOwner, Observer {
+            var item = binding.TLMain.getTabAt(2)?.badge
             if(it!=null){
-                var item = binding.TLMain.getTabAt(2)?.badge
                 item?.number = it
                 item?.isVisible=true
+                LocalcountProduct=it
+                setCountProduct()
+            }else{
+                item?.isVisible=false
             }
         })
 //        UtilsMainModel.GetStorageCount().observe(viewLifecycleOwner, onChanged =  {
@@ -383,6 +417,8 @@ class ProductosShow : Fragment() {
                 var item = binding.TLMain.getTabAt(0)?.badge
                 item?.number = it
                 item?.isVisible=true
+                StoragecountProduct=it
+                setCountProduct()
             }
         })
 
@@ -392,9 +428,81 @@ class ProductosShow : Fragment() {
                 var item = binding.TLMain.getTabAt(1)?.badge
                 item?.number = it
                 item?.isVisible=true
+                ServercountProduct=it
+                setCountProduct()
             }
         })
 
+
+
+        MainModel.AllProducts().observe(viewLifecycleOwner, Observer {
+//            Log.i("Segundo", "CLaro que si")
+//            Log.i("Segundo", binding.appBarMain.SVProducts?.query.toString())
+
+            adapterProduct = ProductoAdapter(it, MainModel, 1, UtilsMainModel,context)
+            adapterProduct.filter.filter(binding.SVProducts.query,
+                object : Filter.FilterListener {
+                    override fun onFilterComplete(count: Int) {
+                        StoreSendViewModel.sendAdapterItems(adapterProduct)
+                    }
+                })
+
+//            binding.LVMylist.adapter = adaptador
+//            comprobateList(it.size)
+        })
+
+
+        //LocalList
+        LocalModel.GetAllProducts()
+        LocalModel.AdapterSend.observe(viewLifecycleOwner, Observer {
+            adapterLocal = LocalAdapter(it.reversed(), 1, UtilsMainModel,context)
+            adapterLocal.filter.filter(binding.SVProducts.query,
+                object : Filter.FilterListener {
+                    override fun onFilterComplete(count: Int) {
+                        LocalSendViewModel.sendAdapterItems(adapterLocal)
+                    }
+                })
+
+//            binding.LVMylist.adapter=adapter
+//            comprobateList(it.size)
+//            MessageSnackBar(view,"Se actualizo!",Color.CYAN)
+//            binding.LVMylist.startLayoutAnimation()
+        })
+        //ServerList
+
+        //Esta funcion se encarga de pedir los productos al inicio de la aplicacion
+
+        ServerModel.GetProductsAllPreview()
+        ServerModel.ProductsAllPreview.observe(viewLifecycleOwner, Observer {
+            if(it!=null) {
+                adapterSever = ServerAdapter(it.productos.reversed(), 1, UtilsMainModel,context)
+            }
+            adapterSever.filter.filter(binding.SVProducts.query,
+                object : Filter.FilterListener {
+                    override fun onFilterComplete(count: Int) {
+                        ServerSendViewModel.sendAdapterItems(adapterSever)
+                    }
+                })
+
+//            binding.LVMylist.adapter=adaptador
+//            comprobateList(it?.productos.size)
+//            binding.LVMylist.startLayoutAnimation()
+        })
+
+
+        binding.SVProducts.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapterLocal.filter.filter(newText)
+                adapterProduct.filter.filter(newText)
+                adapterSever.filter.filter(newText)
+                return false
+            }
+        })
 
 
         return binding.root

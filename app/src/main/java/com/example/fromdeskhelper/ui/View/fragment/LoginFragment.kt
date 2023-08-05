@@ -562,7 +562,17 @@ class LoginFragment : Fragment() {
 
             }
         })
-
+        //Desarollo del boton para iniciar anonimanete como cliente
+        binding.LoginUserAnonime?.setOnClickListener {
+            startActivity(Intent(baseActivity, UserMainActivity::class.java))
+            Animatoo.animateShrink(baseActivity);
+            baseActivity.finish()
+        }
+        binding.BRAnonime?.setOnClickListener {
+            startActivity(Intent(baseActivity, EmployedMainActivity::class.java))
+            Animatoo.animateShrink(baseActivity);
+            baseActivity.finish()
+        }
     }
 
 //    private fun showAlert(value: String) {

@@ -1,6 +1,6 @@
 package com.example.fromdeskhelper.data.model.Controller
 
-import Data.ImagenesNew
+import Data.ImagenesProduct
 import androidx.lifecycle.LiveData
 import com.example.fromdeskhelper.data.model.base.ProductoData
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +13,7 @@ class UtilsController @Inject constructor(
         return DaoProduct.getCount()
     }
 
-    suspend fun saveImage(Imager: ImagenesNew){
+    suspend fun saveImage(Imager: ImagenesProduct){
         val resultKeys= withContext(Dispatchers.Main){
             DaoProduct.insertAllImages(Imager)
         }

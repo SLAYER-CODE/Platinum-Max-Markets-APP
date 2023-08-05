@@ -1,6 +1,6 @@
 package com.example.fromdeskhelper.ui.View.adapter
 
-import Data.ImagenesNew
+import Data.ImagenesProduct
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.view.View
@@ -14,7 +14,7 @@ import java.io.ByteArrayInputStream
 
 
 private var primero:Boolean=true;
-class DetallesAdapterImagen (private val mContext: Context,var MyImage:List<ImagenesNew>):
+class DetallesAdapterImagen (private val mContext: Context,var MyImage:List<ImagenesProduct>):
     PagerAdapter( ) {
 
 //    fun addImage()
@@ -24,7 +24,7 @@ class DetallesAdapterImagen (private val mContext: Context,var MyImage:List<Imag
 
     class ImageHolder(val view: ItemImageDetallesBinding):RecyclerView.ViewHolder(view.root){
 
-        fun render(superImage:ImagenesNew){
+        fun render(superImage:ImagenesProduct){
 
 //            val bmp = BitmapFactory.decodeByteArray(superImage, 0, superImage.size)
 //            val bmp = assetsToBitmap("purpleFlower.png")
@@ -32,6 +32,7 @@ class DetallesAdapterImagen (private val mContext: Context,var MyImage:List<Imag
             val imagenStream= ByteArrayInputStream(superImage.imageBit)
             val theimagen = BitmapFactory.decodeStream(imagenStream)
             view.IVimagen.setImageBitmap(theimagen)
+            view.IVimagen.scaleType=ImageView.ScaleType.CENTER_CROP
 //            if(primero){
 //                view.transitionName="transtionexit"
 //            }
@@ -69,6 +70,7 @@ class DetallesAdapterImagen (private val mContext: Context,var MyImage:List<Imag
         val theimagen = BitmapFactory.decodeStream(imagenStream)
         val imageView:ImageView=ImageView(mContext)
         imageView.setImageBitmap(theimagen)
+        imageView.scaleType=ImageView.ScaleType.CENTER_CROP
         container.addView(imageView)
 
         if(position==0){

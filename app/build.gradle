@@ -19,7 +19,14 @@ apply plugin: 'kotlinx-serialization'
 apollo {
     packageName.set("com.example.fromdeskhelper")
     generateTestBuilders.set(true)
-    mapScalarToUpload("Upload")
+//    mapScalarToUpload("Upload")
+//    mapScalarToUpload("DateTime")
+//    mapScalarToKotlinString("Date")
+//
+    customTypeMapping=[
+            "DateTime" : "java.util.Date",
+            "Upload": "com.apollographql.apollo3.api.Upload"]
+//    customTypeMapping['DateTime'] = "java.util.Date"
 }
 
 android {
@@ -137,6 +144,7 @@ dependencies {
     implementation("com.apollographql.apollo3:apollo-api:3.2.1")
 
     implementation("com.apollographql.apollo3:apollo-idling-resource:3.2.1")
+    implementation("com.apollographql.apollo3:apollo-adapters:3.2.1")
 
     //Listas
     implementation 'com.facebook.shimmer:shimmer:0.5.0'

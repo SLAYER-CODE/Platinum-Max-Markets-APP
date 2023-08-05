@@ -21,6 +21,7 @@ import android.os.Build
 
 import android.annotation.TargetApi
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Color
@@ -34,6 +35,7 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.example.fromdeskhelper.ui.View.ViewModel.LoginViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.Util.ShowConnectedViewModel
 import com.example.fromdeskhelper.util.MessageSnackBar
@@ -142,7 +144,9 @@ private val ORDERED_DENSITY_DP_N: IntArray? = intArrayOf(
             Snackbar.LENGTH_INDEFINITE
         ).setAction("Ir", object :View.OnClickListener{
             override fun onClick(p0: View?) {
-
+                startActivity(Intent(baseContext, EmployedMainActivity::class.java))
+                Animatoo.animateShrink(baseContext);
+                finish()
             }
         })
 
@@ -154,6 +158,8 @@ private val ORDERED_DENSITY_DP_N: IntArray? = intArrayOf(
                 reconect.show()
             }
         })
+
+
 
 //        navController = findNavController(R.id.nav_host_fragment_content_login)
 //        appBarConfiguration = AppBarConfiguration(navController.graph)

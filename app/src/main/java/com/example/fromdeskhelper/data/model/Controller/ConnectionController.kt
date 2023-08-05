@@ -63,23 +63,23 @@ class ConnectionController {
                     secondimage = ""
                 }
 
-                proc.add(
-                    Producto(
-                        uid = id,
-                        nombre = nombre,
-                        precioC = precio,
-                        detalles = descripcion,
-                        categoria = null,
-                        marca = null,
-                        precioU = precio.toDouble(),
-                        qr = null,
-                        stockC = null,
-                        stockU = null,
-                        update = Date()
+//                proc.add(
+//                    Producto(
+//                        uid = id,
+//                        nombre = nombre,
+//                        precioC = precio,
+//                        detalles = descripcion,
+//                        categoria = null,
+//                        marca = null,
+//                        precioNeto = precio.toDouble(),
+//                        qr = null,
+//                        stockC = null,
+//                        stockU = null,
+//                        update = Date()
 //                        image,
 //                        secondimage
-                    )
-                )
+//                    )
+//                )
             }
         }catch (e:SQLException){
             println("Ubo un error "+e.errorCode+e.toString())

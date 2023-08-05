@@ -1,5 +1,6 @@
 package com.example.fromdeskhelper.ui.View.adapter.Client
 import Data.listInventarioProductos
+import Data.listInventarioProductosP2P
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
@@ -27,16 +28,16 @@ import kotlin.random.Random
 
 
 private var reverse:Boolean=false;
-class ProductoRecivedP2PAdapter (var MyImage:List<listInventarioProductos>,var ViewModelCall:ShowMainViewModel?):
+class ProductoRecivedP2PAdapter (var MyImage:List<listInventarioProductosP2P>,var ViewModelCall:ShowMainViewModel?):
     RecyclerView.Adapter<ProductoRecivedP2PAdapter.ImageHolder>() {
 
     inner class ImageHolder(val view: ItemProductoP2pBinding): RecyclerView.ViewHolder(view.root){
 
-        fun render(ProductoAndImage:listInventarioProductos){
+        fun render(ProductoAndImage:listInventarioProductosP2P){
 
             view.TNombre.text=ProductoAndImage.nombre
             view.TEPrecio.text="$\\${ProductoAndImage.precioC}"
-            view.TEPrecioU.text="$\\${ProductoAndImage.precioU}"
+            view.TEPrecioU.text="$\\${ProductoAndImage.precioNeto}"
             view.ratingBar.rating=((Random.nextFloat()*(view.ratingBar.numStars-1)))
             view.TNQR.text = ProductoAndImage.qr
 

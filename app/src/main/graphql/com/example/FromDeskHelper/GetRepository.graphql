@@ -4,6 +4,7 @@ query Categorias {
             category_id
     }
 }
+
 query Brands{
     brands:Brands {
         brand_name
@@ -44,15 +45,65 @@ query ProductsPreview{
     productos:Products {
         product_id
         product_name
+        price
+        price_neto
+
+        discount
         description
-        price_cantidad
-        price_unity
+        peso
+        peso_attr
+        stock_attr
+        stockC_attr
+        stockU_attr
+        quantity_cantidad
+        quantity_unity
+
+        available_now
+        available_date
+        available_shipment
         qr
+
         image_realation {
             image_name
         }
     }
 }
+
+
+query ProductsPreviewOfferts{
+    productos:ProductsOfferts {
+        product_id
+        product_name
+        price
+        discount
+        description
+        stock_attr
+        stockC_attr
+        stockU_attr
+        quantity_cantidad
+        quantity_unity
+
+        available_now
+        available_date
+        available_shipment
+
+        estableshment_relation {
+            name
+            mall_id {
+                direction_id {
+                    avenide
+                }
+            }
+            image_relation {
+                image_name
+            }
+        }
+        image_realation {
+            image_name
+        }
+    }
+}
+
 
 query CountProducts{
     countproduct:ProductsCount
@@ -94,8 +145,12 @@ query Comprobation{
     comprobation:comprobation
 }
 
-
-
 query ComprobateUser($token:String!){
     comprabationUser:comprobationUser(token: $token)
+}
+
+query SloganImagesGet{
+    sloganImagesGet:SloganImagesGet {
+        image_name
+    }
 }

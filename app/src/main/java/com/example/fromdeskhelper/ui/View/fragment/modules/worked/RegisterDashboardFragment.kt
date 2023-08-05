@@ -1,32 +1,43 @@
-package com.example.fromdeskhelper
+package com.example.fromdeskhelper.ui.View.fragment.modules.worked
 
-//import android.R
-//import androidx.vectordrawable.R
-
-//import com.github.dhaval2404.imagepicker.ImagePicker
-
+import DatePickerFragment
 import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
-import android.graphics.*
+import android.graphics.Color
+import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
-import android.transition.*
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import android.util.Log
-import android.view.*
-import android.widget.*
+import android.view.KeyEvent
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.core.view.children
-import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.*
+import androidx.core.view.setMargins
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
@@ -38,24 +49,26 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import com.android.ex.chips.BaseRecipientAdapter
 import com.esafirm.imagepicker.features.ImagePicker
+import com.example.fromdeskhelper.R
 import com.example.fromdeskhelper.data.model.Controller.imagenController
 import com.example.fromdeskhelper.data.model.Helper.MyItemTouchHelperCallback
 import com.example.fromdeskhelper.data.model.Types.CameraTypes
 import com.example.fromdeskhelper.data.model.base.CallBackItemTouch
 import com.example.fromdeskhelper.data.model.objects.Constants.Images.REQUEST_CODE_PICKER
 import com.example.fromdeskhelper.data.model.objects.Constants.Images.SELECT_FILE_IMAGE_CODE
-import com.example.fromdeskhelper.data.model.objects.Upload
+import com.example.fromdeskhelper.data.model.objects.Form
 import com.example.fromdeskhelper.databinding.FragmentRegisterDashboardBinding
 import com.example.fromdeskhelper.databinding.ImageNewNewBinding
 import com.example.fromdeskhelper.type.BrandsInput
 import com.example.fromdeskhelper.type.CategoriesInput
 import com.example.fromdeskhelper.ui.View.ViewModel.AgregateProductViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.CameraViewModel
+import com.example.fromdeskhelper.ui.View.ViewModel.LOG_VIEWMODE
 import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import com.example.fromdeskhelper.ui.View.adapter.ImageAdapter
 import com.example.fromdeskhelper.ui.View.fragment.CameraFragment
 import com.example.fromdeskhelper.ui.View.fragment.CameraQrFragment
-import com.example.fromdeskhelper.util.MessageSnackBar
+import com.example.fromdeskhelper.ui.View.fragment.Client.TimePickerFragment
 import com.example.fromdeskhelper.util.hideKeyboard
 import com.example.fromdeskhelper.util.listener.DragAndDropListenerActions
 import com.example.fromdeskhelper.util.listener.TouchDropListenerAction
@@ -63,11 +76,13 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-//import kotlinx.android.synthetic.main.image_new_new.view.*
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.io.File
-import java.util.*
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.UUID
 
 
 // TODO: Argumento que sirve para nombre como registro de este archivo
@@ -147,13 +162,13 @@ class RegisterDashboardFragment : Fragment(), CallBackItemTouch {
     private var recycleviewWidth: Int = -1;
 
     private val CameraView: CameraViewModel by viewModels()
-    private val AgregateProductsState: AgregateProductViewModel by viewModels(ownerProducer = { requireActivity()});
+    private val AgregateProductsState: AgregateProductViewModel by viewModels(ownerProducer = { requireActivity() });
 
     private var CamClick: CameraTypes = CameraTypes.NULL;
     private var CamScannerStatus: Boolean = false;
     private var CategoryAdapter: MutableList<String> = mutableListOf();
 
-    private var buttonDisable:Boolean=false;
+    private var buttonDisable: Boolean = false;
 
     override fun onStart() {
 //        baseActivity.binding.appBarMain.collapsingToolbar?.isTitleEnabled=false
@@ -161,7 +176,8 @@ class RegisterDashboardFragment : Fragment(), CallBackItemTouch {
 //        baseActivity.binding.appBarMain.toolbarParent?.setExpanded(false)
 
 
-        (baseActivity.binding.appBarMain.toolbarParent?.layoutParams as CoordinatorLayout.LayoutParams).behavior = null
+        (baseActivity.binding.appBarMain.toolbarParent?.layoutParams as CoordinatorLayout.LayoutParams).behavior =
+            null
 
         Log.i(LOGFRAGMENT, "Se Inicio onStart [*]")
 //        (activity as MainActivity).functionFabRefresh(::clearItems);
@@ -266,6 +282,7 @@ class RegisterDashboardFragment : Fragment(), CallBackItemTouch {
 
 
         AgregateProductsState.QRBindig.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            Log.i("SERVICIO XD", it.toString())
             binding.TEQR.setText(it);
         })
 
@@ -276,29 +293,33 @@ class RegisterDashboardFragment : Fragment(), CallBackItemTouch {
 //            binding.RVCaptureImages.adapter = adapter
 //            comprobateItem()
 //        })
+
         lifecycleScope.launch {
             AgregateProductsState.sharedFlow.collect { url ->
-//                Log.i("VIEWMODELADDPRODUCT", "SE APLICO" + url.toString())
+
+                Log.i(LOG_VIEWMODE, "IMAGECAPTURESEND" + url.toString())
+
                 if (url != null) {
                     runBlocking {
                         adapter.addImage(url);
-                        binding.RVCaptureImages.scrollToPosition(0);
+                        binding.RVCaptureImages?.scrollToPosition(0);
                         comprobateItem()
                     }
 
                 }
+                binding.RVCaptureImages.adapter = adapter
+
             }
         }
-        binding.RVCaptureImages.adapter = adapter
+
 
 
 
         AgregateProductsState.RecivImageItem.observe(
             viewLifecycleOwner,
             androidx.lifecycle.Observer {
-                Log.i("VIEWMODELADDFRAGMENT", "Se inserto ")
                 adapter.addImage(it);
-                binding.RVCaptureImages.scrollToPosition(0);
+                binding.RVCaptureImages?.scrollToPosition(0);
                 comprobateItem()
             })
 
@@ -334,6 +355,11 @@ class RegisterDashboardFragment : Fragment(), CallBackItemTouch {
             override fun afterTextChanged(s: Editable?) {
                 var descuento = 0f
                 var precio = 0f;
+                var neto = binding.TEPrecioU.text.toString()
+                if (neto == "") {
+                    neto = "0.0"
+                }
+
                 if (s != null && s.isNotEmpty()) {
                     descuento = s.toString().toFloat()
                 }
@@ -341,7 +367,10 @@ class RegisterDashboardFragment : Fragment(), CallBackItemTouch {
                 if (binding.TEPrecio.text != null && binding.TEPrecio.text!!.isNotEmpty()) {
                     precio = binding.TEPrecio.text.toString().toFloat()
                 }
-                binding.TVpreciodisconut.text = (precio - descuento).toString()
+
+                if ((precio - neto.toFloat()) >= descuento) {
+                    binding.TVpreciodisconut.text = (precio - descuento).toString()
+                }
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -353,33 +382,74 @@ class RegisterDashboardFragment : Fragment(), CallBackItemTouch {
         }
         )
 
+        binding.TEPrecioU.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
 
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                var price = binding.TEPrecio.text.toString().replace(" ","")
+                if(price!=".") {
+                    var price_neto = binding.TEPrecioU.text.toString()
+                    if (price == "") {
+                        price = "0.0"
+                    }
+                    if (price_neto == "") {
+                        price_neto = "0.0"
+                    }
+                    var ganace = price
+                        .toDouble() - price_neto.toDouble()
+                    binding.TVGanancia.text = ("Ganacia: $ganace")
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+        })
+
+        fun configButtonSend() {
+            var check = (binding.CSaveStorage.isChecked or binding.CSaveLocal.isChecked or binding.CSaveServer.isChecked)
+            binding.BAgregate.isEnabled = check  && (binding.TENombre.text.toString().replace(" ","") != "" && binding.TEPrecio.text.toString() != "" &&  binding.TEPrecio.text.toString() != "." &&  binding.TEPrecio.text.toString().toFloat().toInt().toString().length <=7 )
+            if(check){
+                binding.ValidateCheck?.visibility=View.GONE
+            }else{
+                binding.ValidateCheck?.visibility=View.VISIBLE
+            }
+        }
         binding.TEPrecio.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-//                var TPrecio=binding.TEPrecioU.text
-//                if(TPrecio==null||TPrecio.isEmpty()||TPrecio.toString()==""||TPrecio.toString()=="0"){
+                if (s.toString().replace(" ","") != "" && s.toString()!="." ) {
+                    if( (s.toString().toDouble().toInt().toString()).length<=7){
+                        binding.priceHelper?.helperText=""
+                    }else{
+                        binding.priceHelper?.helperText="El precio tiene que ser menor"
+                    }
+                } else {
+                    binding.priceHelper?.helperText="Requerido para su registro"
+                }
+                configButtonSend()
                 binding.TEPrecioU.setText(s.toString())
-//                }
             }
 
             override fun afterTextChanged(s: Editable?) {
                 var descuento = 0f
                 var precio = 0f;
-                if (s != null && s.isNotEmpty()) {
+                if (s.toString().replace(" ","") != "" && s.toString()!="." && s!=null ) {
                     precio = s.toString().toFloat()
+                    if (binding.TEDescuento.text != null && binding.TEDescuento.text!!.isNotEmpty()) {
+                        descuento = binding.TEDescuento.text.toString().toFloat()
+                    }
+                    binding.TVpreciodisconut.text = (precio - descuento).toString()
                 }
-                if (binding.TEDescuento.text != null && binding.TEDescuento.text!!.isNotEmpty()) {
-                    descuento = binding.TEDescuento.text.toString().toFloat()
-                }
-                binding.TVpreciodisconut.text = (precio - descuento).toString()
+
             }
         })
-        fun configButtonSend(){
-            if(binding.TENombre.text.toString()!="" && binding.TEPrecio.text.toString()!="") binding.BAgregate.isEnabled = (binding.CSaveStorage.isChecked or binding.CSaveLocal.isChecked or binding.CSaveServer.isChecked)
-        }
+
+
+
         binding.TENombre.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
@@ -387,12 +457,12 @@ class RegisterDashboardFragment : Fragment(), CallBackItemTouch {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 //Cuando preciona la tecla para la ejecucion de los datos
                 configButtonSend()
-                if (s.toString() != "") {
-
-                    activity?.setTitle(s.toString() + " (Borrador N° $parametro)")
+                if (s.toString().replace(" ","") != "") {
+                    binding.Toolbar?.title = "$s (Borrador)"
+                    binding.nameHelper?.helperText=""
                 } else {
-
-                    activity?.setTitle("Agregar Producto [$parametro]")
+                    binding.nameHelper?.helperText="Requerido para su registro"
+                    binding.Toolbar?.title = "Agregar Producto"
                 }
 
 
@@ -402,18 +472,7 @@ class RegisterDashboardFragment : Fragment(), CallBackItemTouch {
             }
         })
 
-        binding.TEPrecio.addTextChangedListener(object :TextWatcher{
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                configButtonSend()
-
-            }
-            override fun afterTextChanged(p0: Editable?) {
-            }
-
-        })
 
         AgregateProductsState.CategoriesGetApp()
         val baseRecipientAdapter =
@@ -494,83 +553,326 @@ class RegisterDashboardFragment : Fragment(), CallBackItemTouch {
                     android.R.layout.simple_dropdown_item_1line, CategoryAdapter
                 )
                 binding.TECategoria?.setAdapter<ArrayAdapter<String>>(adapterchip)
-            })
+            }
+        )
 
+        val formatter: DateTimeFormatter =
+            DateTimeFormatter.ofPattern("d/M/yyyy H:m") // Make sure user insert date into edittext in this format.
+
+
+        fun buttonAnimation(saved: Boolean) {
+            val transtion = AutoTransition().setDuration(350);
+            val lpHide = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                0
+            )
+
+            val lpShow = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+            )
+            if (saved) {
+
+                binding.LLDAvalide?.layoutParams = lpShow
+                binding.BAgregate.layoutParams = lpHide
+            } else {
+                binding.LLDAvalide?.layoutParams = lpHide
+                binding.BAgregate.layoutParams = lpShow
+            }
+
+            TransitionManager.beginDelayedTransition(binding.contentButtonAddLinear, transtion)
+            binding.contentButtonAddLinear?.requestLayout()
+        }
+
+        fun buttonAnimationEditEnable(edit: Boolean) {
+            val transtion = AutoTransition().setDuration(350);
+            val lpHide = LinearLayout.LayoutParams(
+                0,
+                0,
+                )
+            val lpShow = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+            )
+            lpShow.weight=1f
+            lpShow.setMargins(15)
+            if (edit) {
+
+//                binding.LLDAvalide?.layoutParams = lpShow
+                val drawable =
+                    ContextCompat.getDrawable(baseActivity, R.drawable.ic_baseline_save_24)
+                binding.BEditOldProduct?.setCompoundDrawablesWithIntrinsicBounds(
+                    drawable,
+                    null,
+                    null,
+                    null
+                )
+                binding.BEditOldProduct?.text = getText(R.string.addEditarUltimoLive)
+                binding.BAgregateNewProduct?.layoutParams = lpHide
+
+            } else {
+                val drawable =
+                    ContextCompat.getDrawable(baseActivity, R.drawable.ic_baseline_edit_24)
+                binding.BEditOldProduct?.setCompoundDrawablesWithIntrinsicBounds(
+                    drawable,
+                    null,
+                    null,
+                    null
+                )
+                binding.BEditOldProduct?.text = getText(R.string.addEditarUltimo)
+                binding.BAgregateNewProduct?.layoutParams = lpShow
+//                binding.BEditOldProduct?.layoutParams = lpShow
+            }
+
+            TransitionManager.beginDelayedTransition(binding.LLDAvalide, transtion)
+            binding.LLDAvalide?.requestLayout()
+        }
+
+
+        var count = 0
+        AgregateProductsState.AgregateState.observe(viewLifecycleOwner, Observer {
+
+            val iter =
+                (if (binding.CSaveStorage.isChecked) 1 else 0) +
+                        (if (binding.CSaveServer.isChecked) 1 else 0) +
+                        (if (binding.CSaveLocal.isChecked) 1 else 0)
+
+            count += if (it.state) 1 else 0
+            statustems(false)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            buttonAnimation(true)
+            count = 0
+        })
+
+
+        binding.BAgregateNewProduct?.setOnClickListener {
+            ObjectAnimator.ofInt(
+                binding.SVAPNew,
+                "scrollY",
+                binding.SVAPNew.scrollY, 0
+            ).setDuration(250).start().apply {
+                clearItems()
+            }
+            statustems(true)
+            buttonAnimation(false)
+        }
+
+        binding.BEditOldProduct?.setOnClickListener {
+            AgregateProductsState.editing()
+        }
+
+        AgregateProductsState.EditingState.observe(viewLifecycleOwner, Observer {
+            if(it) {
+                ObjectAnimator.ofInt(
+                    binding.SVAPNew,
+                    "scrollY",
+                    binding.SVAPNew.scrollY, 0
+                ).setDuration(250).start()
+            }
+
+            statustems(it)
+            buttonAnimationEditEnable(it)
+
+        })
+
+
+        AgregateProductsState.State.observe(viewLifecycleOwner, Observer {
+            binding.TEQR.setText(it.qr)
+            binding.TENombre.setText(it.name)
+            binding.TECantidad.setText(it.stockcantidad)
+            binding.TECaracteristicas.setText(it.detalles)
+            binding.TECategoria.setText("")
+            binding.TEMarca.setText("")
+
+            binding.TEPrecio.setText(it.precio)
+            binding.TEPrecioU.setText(it.precioNeto)
+
+
+            binding.TEDescuento.setText(it.disconut)
+            binding.CEnvios?.isChecked = it.available_shipment
+            binding.CAhora?.isChecked = it.available_now
+
+            if (it.available_date != null) {
+
+                var date = it.available_date
+                binding.etPlannedDate?.setText(date.dayOfMonth.toString() + "/" + date.month.toString() + "/" + date.year.toString())
+                binding.etTimePicker?.setText(date.hour.toString() + "/" + date.minute.toString())
+                binding.CDespues?.isChecked = true
+            }
+
+            binding.SPCantidad.setSelection(it.stockC_attr)
+            binding.TEContenido.setText(it.stockU)
+            binding.SPTipo.setSelection(it.stockU_attr)
+
+
+            binding.TePeso?.setText(it.peso)
+            binding.SPpeso.setSelection(it.peso_attr)
+
+            binding.SPCActual.setSelection(it.stock_attr)
+
+
+//        binding.BEscaner.isEnabled
+
+//        binding.BCaptura.isEnabled = status
+//        binding.BAgregateFile.isEnabled = status
+
+            binding.CSaveStorage.isChecked = it.Storage
+            binding.CSaveServer.isChecked = it.SServer
+            binding.CSaveLocal.isChecked = it.SLocal
+
+            binding.RVCaptureImages.adapter = ImageAdapter(it.mutableList)
+            comprobateItem()
+        })
+
+//        Botton que agrega los productos
         binding.BAgregate.setOnClickListener {
 
             val _name: String = binding.TENombre.text.toString()
             val _precio: String = binding.TEPrecio.text.toString()
-            val _precioU: String = binding.TEPrecioU.text.toString()
-            val _marca: String = binding.TEMarca.text.toString()
-            val _detalles: String = binding.TECaracteristicas.text.toString()
-            val _categoria: String = binding.TECategoria.text.toString()
-            val _stock: String = binding.TECantidad.text.toString()
-            val _stockU: String = binding.TECantidadU.text.toString()
-            val _qr: String = binding.TEQR.text.toString()
-//            val _image:ByteArray= ByteArray(0)
 
-            if (binding.CSaveStorage!!.isChecked) {
-                AgregateProductsState.AgregateItemStorage(
+            var _precioNeto: String = binding.TEPrecioU.text.toString()
+            var _detalles: String = binding.TECaracteristicas.text.toString()
+            var _qr: String = binding.TEQR.text.toString()
+
+            var _discount: String = binding.TEDescuento.text.toString()
+
+            var _stock: String = binding.TECantidad.text.toString()
+            var _stock_valname: Int = binding.SPCantidad.selectedItemPosition
+
+            var _stockU: String = binding.TEContenido.text.toString()
+            var _stockU_valname: Int = binding.SPTipo.selectedItemPosition
+
+            var peso: String = binding.TePeso?.text.toString()
+            var peso_valname: Int = binding.SPpeso.selectedItemPosition
+
+            var StockDiposed: Int = binding.SPCActual.selectedItemPosition
+
+
+//            Disponibilidad
+            val CEnvios: Boolean = binding.CEnvios?.isChecked == true;
+            val CAhora: Boolean = binding.CAhora?.isChecked == true;
+            val CDespues: Boolean = binding.CDespues?.isChecked == true;
+
+
+            //Formateando datos para ser enviados
+
+//            if(_precioNeto==""){
+//                _precioNeto=null
+//            }
+//            if(_detalles==""){
+//                _detalles=null
+//            }
+//
+//            if(_qr==""){
+//                _qr=null
+//            }
+//            if(_discount==""){
+//                _discount=null
+//            }
+//            if(_stock==""){
+//                _stock=null
+//            }
+//            if(_stockU==""){
+//                _stockU=null
+//            }
+//            if(peso==""){
+//                peso=null
+//            }
+
+            var formaterDate: LocalDateTime? = null
+            if (CDespues) {
+                var fechaItem = binding.etPlannedDate?.text.toString()
+                var time = binding.etTimePicker?.text.toString()
+
+                if (fechaItem == "") {
+                    formaterDate = null
+                } else {
+                    if (time == "") {
+                        time = "00:00"
+                    }
+                    formaterDate = LocalDateTime.parse((fechaItem + " " + time), formatter)
+                }
+            }
+
+            var uid = UUID.randomUUID().toString()
+
+
+//            Log.i("FORMATERADD",_discount.toString())
+//            Log.i("FORMATERADD",_stock_valname.toString())
+//            Log.i("FORMATERADD",_stockU_valname.toString())
+//            Log.i("FORMATERADD",peso.toString())
+//            Log.i("FORMATERADD",peso_valname.toString())
+
+            var caTegorys = mutableListOf<CategoriesInput>()
+            var marCas = mutableListOf<BrandsInput>()
+
+            binding.chipGroup2.children.toList().forEach {
+                caTegorys.add(CategoriesInput((it as Chip).text.toString()))
+            }
+            binding.ChipGroupMarca.children.toList().forEach {
+                marCas.add(BrandsInput((it as Chip).text.toString()))
+            }
+
+            AgregateProductsState.SaveCamp(
+                Form(
                     _name,
                     _precio,
-                    _precioU,
-                    _marca,
-                    _detalles,
-                    _categoria,
+                    _precioNeto,
+                    _discount,
+
                     _stock,
+                    _stock_valname,
+
                     _stockU,
+                    _stockU_valname,
+                    peso,
+                    peso_valname,
+
+                    StockDiposed,
+                    _detalles,
                     _qr,
+                    CEnvios,
+                    CAhora,
+                    formaterDate,
+                    uid,
+                    caTegorys,
+                    marCas,
                     adapter.MyImage,
-                    baseActivity
+                    binding.CSaveStorage.isChecked,
+                    binding.CSaveServer.isChecked,
+                    binding.CSaveLocal.isChecked
                 )
-            }
-            if (binding.CSaveServer!!.isChecked) {
-                var caTegorys = mutableListOf<CategoriesInput>()
-                var marCas = mutableListOf<BrandsInput>()
+            )
 
-                binding.chipGroup2.children.toList().forEach {
-                    caTegorys.add(CategoriesInput((it as Chip).text.toString()))
-                }
-                binding.ChipGroupMarca.children.toList().forEach {
-                    marCas.add(BrandsInput((it as Chip).text.toString()))
-                }
-                AgregateProductsState.AgregateServer(
-                    caTegorys, marCas, _name,
-                    _precio,
-                    _precioU,
-                    _marca,
-                    _detalles,
-                    _categoria,
-                    _stock,
-                    _stockU,
-                    _qr, adapter.MyImage, baseActivity
-                )
-            }
-            if (binding.CSaveLocal!!.isChecked) {
-                var caTegorys = mutableListOf<String>()
-                var marCas = mutableListOf<String>()
-
-                binding.chipGroup2.children.toList().forEach {
-                    caTegorys.add((it as Chip).text.toString())
-                }
-                binding.ChipGroupMarca.children.toList().forEach {
-                    marCas.add((it as Chip).text.toString())
-                }
-                AgregateProductsState.AgregateProductLocal(
-                    caTegorys, marCas, _name,
-                    _precio,
-                    _precioU,
-                    _marca,
-                    _detalles,
-                    _categoria,
-                    _stock,
-                    _stockU,
-                    _qr, adapter.MyImage, baseActivity
-                )
-            }
 
         }
-
 
 
 //        var CheckListener = object :
@@ -585,8 +887,7 @@ class RegisterDashboardFragment : Fragment(), CallBackItemTouch {
         }
 
         AgregateProductsState.ButtonAgregateState.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer {
+            viewLifecycleOwner, Observer {
                 binding.BAgregate.isEnabled = it
             })
 
@@ -619,17 +920,21 @@ class RegisterDashboardFragment : Fragment(), CallBackItemTouch {
         )
         binding.SPCantidad.adapter = adapterSCantidad
 
-        var adapterSType = ArrayAdapter<String>(requireContext(),
+        var adapterSType = ArrayAdapter<String>(
+            requireContext(),
             R.layout.item_spiner_peso,
-            resources.getStringArray(R.array.dlagsType))
+            resources.getStringArray(R.array.dlagsType)
+        )
 
-        binding.SPTipo.adapter=adapterSType
+        binding.SPTipo.adapter = adapterSType
 
-        var adapterSParts =ArrayAdapter<String>(requireContext(),
+        var adapterSParts = ArrayAdapter<String>(
+            requireContext(),
             R.layout.item_spiner_peso,
-            resources.getStringArray(R.array.dlagsParts))
+            resources.getStringArray(R.array.dlagsParts)
+        )
 
-        binding.SPCActual.adapter=adapterSParts
+        binding.SPCActual.adapter = adapterSParts
 
         binding.SPCantidad.onItemSelectedListener = (object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -642,9 +947,11 @@ class RegisterDashboardFragment : Fragment(), CallBackItemTouch {
                     0 -> {
                         binding.SPpeso.setSelection(5)
                     }
+
                     1 -> {
                         binding.SPpeso.setSelection(3)
                     }
+
                     2 -> {
                         binding.SPpeso.setSelection(0)
                     }
@@ -655,6 +962,7 @@ class RegisterDashboardFragment : Fragment(), CallBackItemTouch {
                 // your code here
             }
         })
+
 
 //        binding.SPCantidad.setSelection(1)
 
@@ -714,7 +1022,7 @@ class RegisterDashboardFragment : Fragment(), CallBackItemTouch {
 //                        dpToPx(0)
 //                    )
                 } else {
-                    if(CamClick==CameraTypes.NULL) DesplazeAnimation.start()
+                    if (CamClick == CameraTypes.NULL) DesplazeAnimation.start()
                 }
 //                CameraView.ActivateCamera()
 //                CamClick=CameraTypes.SCANER
@@ -724,6 +1032,50 @@ class RegisterDashboardFragment : Fragment(), CallBackItemTouch {
                 CameraView.CamaraStatus(CameraTypes.NULL, false)
                 CameraView.CloseInFragment(true)
 //                binding.CapturaLayout.visibility=View.VISIBLE
+            }
+        }
+
+
+
+        fun onDateSelected(day: Int, month: Int, year: Int) {
+            binding.etPlannedDate?.setText("$day/$month/$year")
+        }
+
+        fun showDatePickerDialog() {
+            val datePicker =
+                DatePickerFragment { day, month, year -> onDateSelected(day, month, year) }
+            datePicker.show(parentFragmentManager, "datePicker")
+        }
+
+        fun onTimeSelected(time: String) {
+            binding.etTimePicker?.setText("$time")
+        }
+
+        fun showTimePickerDialog() {
+            val timePicker = TimePickerFragment { onTimeSelected(it) }
+            timePicker.show(parentFragmentManager, "timePicker").apply {
+                showDatePickerDialog()
+            }
+        }
+        binding.CAhora?.setOnCheckedChangeListener { compoundButton, b ->
+            if (b) {
+                binding.CDespues?.text =
+                    getString(R.string.agregate_product_check_available_despues_new)
+            } else {
+                binding.CDespues?.text =
+                    getString(R.string.agregate_product_check_available_despues)
+            }
+        }
+
+        binding.CDespues?.setOnCheckedChangeListener { button, isChecked ->
+
+            if (isChecked) {
+                if (binding.etTimePicker?.text.toString() == "H:M" && binding.etPlannedDate?.text.toString() == "DD/MM/AAAA") {
+                    showTimePickerDialog()
+                }
+            } else {
+                binding.etTimePicker?.setText("H:M")
+                binding.etPlannedDate?.setText("DD/MM/AAAA")
             }
         }
 
@@ -766,7 +1118,7 @@ class RegisterDashboardFragment : Fragment(), CallBackItemTouch {
 //                    dpToPx(0)
 //                )
             } else {
-                if(CamClick==CameraTypes.NULL) DesplazeAnimation.start()
+                if (CamClick == CameraTypes.NULL) DesplazeAnimation.start()
             }
 //            CameraView.ActivateCamera()
             CamClick = CameraTypes.CAMERA
@@ -1012,6 +1364,7 @@ class RegisterDashboardFragment : Fragment(), CallBackItemTouch {
                 }
                 true
             }
+
             else -> {
                 Log.d(LOGFRAGMENT, "No se seleciono nada")
                 super.onOptionsItemSelected(item)
@@ -1050,11 +1403,11 @@ class RegisterDashboardFragment : Fragment(), CallBackItemTouch {
         _binding = FragmentRegisterDashboardBinding.inflate(inflater, container, false)
         activity?.setTitle("Agregar Producto [$parametro]")
 
-        val navcontroller =findNavController()
-        val appbarlayout= AppBarConfiguration(navcontroller.graph)
-        binding.Toolbar?.setupWithNavController(navcontroller,appbarlayout)
+        val navcontroller = findNavController()
+        val appbarlayout = AppBarConfiguration(navcontroller.graph)
+        binding.Toolbar?.setupWithNavController(navcontroller, appbarlayout)
 //        baseActivity.setSupportActionBar(binding.Toolbar)
-        Log.i("Añandiendo instrucciones","se Cambio la barra")
+        Log.i("Añandiendo instrucciones", "se Cambio la barra")
 
         return binding.root
     }
@@ -1233,15 +1586,77 @@ class RegisterDashboardFragment : Fragment(), CallBackItemTouch {
     private fun clearItems() {
         binding.TEQR.setText("")
         binding.TENombre.setText("")
-        binding.TECantidadU.setText("")
         binding.TECantidad.setText("")
         binding.TECaracteristicas.setText("")
         binding.TECategoria.setText("")
         binding.TEMarca.setText("")
-        binding.TEPrecio?.setText("")
+        binding.TEPrecio.setText("")
         binding.TEPrecioU.setText("")
+
+
+        binding.TEDescuento.setText("")
+        binding.CEnvios?.isChecked = false
+        binding.CAhora?.isChecked = false
+
+        binding.CDespues?.isChecked = false
+
+        binding.SPCantidad.setSelection(0)
+        binding.TEContenido.setText("")
+        binding.SPTipo.setSelection(0)
+
+
+        binding.TePeso?.setText("")
+        binding.SPpeso.setSelection(0)
+
+        binding.SPCActual.setSelection(0)
+//        binding.BEscaner.isEnabled
+
+//        binding.BCaptura.isEnabled = status
+//        binding.BAgregateFile.isEnabled = status
+
+        binding.CSaveStorage.isChecked = true
+        binding.CSaveServer.isChecked = false
+        binding.CSaveLocal.isChecked = false
+
+
+
+        binding.RVCaptureImages.requestLayout()
         adapter.clearimagen()
         comprobateItem()
+    }
+
+    private fun statustems(status: Boolean) {
+        binding.TEQR.isEnabled = status
+        binding.TENombre.isEnabled = status
+        binding.TECantidad.isEnabled = status
+        binding.TECaracteristicas.isEnabled = status
+        binding.TECategoria.isEnabled = status
+        binding.TEMarca.isEnabled = status
+        binding.TEPrecio.isEnabled = status
+        binding.TEPrecioU.isEnabled = status
+
+
+        binding.TEDescuento.isEnabled = status
+        binding.CEnvios?.isEnabled = status
+        binding.CAhora?.isEnabled = status
+        binding.CDespues?.isEnabled = status
+
+        binding.SPCantidad.isEnabled = status
+        binding.TEContenido.isEnabled = status
+        binding.SPTipo.isEnabled = status
+
+        binding.TePeso?.isEnabled = status
+        binding.SPpeso.isEnabled = status
+
+        binding.SPCActual.isEnabled = status
+        binding.BEscaner.isEnabled = status
+
+        binding.BCaptura.isEnabled = status
+        binding.BAgregateFile.isEnabled = status
+
+        binding.CSaveStorage.isEnabled = status
+        binding.CSaveServer.isEnabled = status
+        binding.CSaveLocal.isEnabled = status
     }
 
 

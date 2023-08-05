@@ -12,6 +12,7 @@
 
 
     <style name="SplashThemeFinal" parent="Theme.FinalProductos.NoActionBar">
+
         <item name="android:windowFullscreen">true</item>
         <item name="android:background" >@color/md_white_1000</item>
         <!--        <item name="android:background" >@mipmap/ic_launcher_logo</item>-->
@@ -21,6 +22,28 @@
         <item name="colorPrimaryDark">@color/md_blue_400</item>
         <item name="colorAccent">@color/md_black_1000</item>
         <item name="android:statusBarColor">@color/md_blue_400</item>
+    </style>
+    <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/md_green_500</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/md_green_500</item>
+    </style>
+
+
+    <style name="DatePickerTheme" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:colorAccent">@color/md_green_500</item>
+<!--        <item name="android:colorPrimary">@color/md_green_500</item>-->
+<!--        <item name="android:background">@color/md_green_500</item>-->
+        <item name="android:buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+    </style>
+
+    <style name="PickerTheme" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:colorAccent">@color/md_green_300</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.FinalProductos.NoActionBar">
@@ -77,7 +100,7 @@
 
     <style name="TextTitle" parent="@android:style/TextAppearance">
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">30dp</item>
+        <item name="android:textSize">25dp</item>
         <item name="android:shadowRadius">1</item>
         <item name="android:shadowColor">@color/md_cyan_A400</item>
         <item name="android:shadowDy">1</item>

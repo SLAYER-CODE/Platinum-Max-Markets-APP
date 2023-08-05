@@ -5,11 +5,9 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Color
-import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.view.animation.AnimationUtils
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.camera.core.*
@@ -28,7 +26,7 @@ import com.example.fromdeskhelper.ui.View.ViewModel.CameraViewModel
 import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import com.example.fromdeskhelper.util.ConNet
 import com.example.fromdeskhelper.util.ConnectToPost
-import com.example.fromdeskhelper.afterMeasure
+import com.example.fromdeskhelper.ui.View.fragment.modules.worked.afterMeasure
 import com.example.fromdeskhelper.util.MessageSnackBar
 import com.google.common.util.concurrent.ListenableFuture
 import dagger.hilt.android.AndroidEntryPoint
@@ -72,11 +70,11 @@ class CameraQrFragment : Fragment() {
 
     private val AgregateProductsState: AgregateProductViewModel by viewModels(
         ownerProducer = {
-            try {
-                requireParentFragment()
-            } catch (e: IllegalStateException) {
+//            try {
+//                requireParentFragment()
+//            } catch (e: IllegalStateException) {
                 requireActivity()
-            }
+//            }
         },
     );
 
@@ -166,6 +164,10 @@ class CameraQrFragment : Fragment() {
 //                Corutine=null;
 //            }
 
+            binding.borderqrxml.resumeAnimation()
+            binding.BRscanner.visibility = View.INVISIBLE
+
+
             imageAnalisis.setAnalyzer(
                 cameraExecutor, QrCodeAnalyzer(
                     { qrResult ->
@@ -194,8 +196,11 @@ class CameraQrFragment : Fragment() {
 //                    binding.Vqrline.clearAnimation()
 //                    binding.Vqrline.visibility=View.INVISIBLE;
 
-                            binding.BRscanner.visibility = View.INVISIBLE
-                            binding.BRscanner.playAnimation()
+                            binding.borderqrxml.pauseAnimation()
+                            binding.BRscanner.visibility = View.VISIBLE
+                            binding.BRscannerAnimation.playAnimation()
+
+
                             Corutine = GlobalScope.launch(Dispatchers.Main) {
                                 val resultKeys = withContext(Dispatchers.IO) {
                                     ConnectToPost.ConnectAndGet(qrResult.text)
@@ -277,15 +282,17 @@ class CameraQrFragment : Fragment() {
                                 binding.PVCmain.post {
                                     MessageSnackBar(
                                         view as View,
-                                        "El codigo es ${qrResult.text}",
+                                        "Capturado... ${qrResult.text}",
                                         Color.YELLOW
                                     )
                                     AgregateProductsState.AgregateQR(qrResult.text)
                                     CameraView.AgregateQR(qrResult.text)
 //                                binding.Vqrline.clearAnimation()
 //                                binding.Vqrline.visibility=View.INVISIBLE;
+                                    binding.borderqrxml.pauseAnimation()
                                     binding.BRscanner.visibility = View.VISIBLE
-                                    binding.BRscanner.playAnimation()
+                                    binding.BRscannerAnimation.playAnimation()
+
 //                            cameraProvider.unbindAll()
                                     if (ConNet.ComprobationInternet(baseActivity)) {
                                         baseActivity.binding.appBarMain.PBbarList?.visibility =

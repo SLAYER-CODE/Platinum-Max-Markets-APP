@@ -10,7 +10,6 @@
         android:layout_margin="5dp"
         android:layout_height="180dp">
 
-
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottieAnimationView"
             android:layout_width="match_parent"

@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fromdeskhelper.databinding.FragmentShowProductsServerBinding
 import com.example.fromdeskhelper.ui.View.ViewModel.SendItems.SendProductsServerViewModel
+import com.example.fromdeskhelper.ui.View.ViewModel.ShowLocalViewModel
+import com.example.fromdeskhelper.ui.View.ViewModel.ShowServerViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.UitlsMainShowViewModel
 import com.example.fromdeskhelper.ui.View.ViewModel.UtilsShowMainViewModels
 import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
@@ -44,15 +46,17 @@ class ShowProductsServer : Fragment() {
     });
 
 
-//    private val ServerModel: ShowServerViewModel by viewModels(ownerProducer = {
-//        requireActivity()
-//    })
 
     private val ServerSendViewModel: SendProductsServerViewModel by viewModels(ownerProducer = {requireActivity()})
 
     private val UtilsViewMain: UtilsShowMainViewModels by viewModels(ownerProducer = {
         requireActivity()
     });
+
+    private val ServerModel: ShowServerViewModel by viewModels(ownerProducer = {
+        requireActivity()
+    });
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,21 +90,21 @@ class ShowProductsServer : Fragment() {
 //    baseActivity.setRefreshMain()
 //    super.onResume()
 //}
-    override fun onStart() {
-        if(baseActivity.binding.appBarMain.toolbarParentClient!!.visibility==View.VISIBLE){
-            baseActivity.binding.appBarMain.toolbarParentClient!!.visibility=View.GONE
-        }
-        if(baseActivity.binding.appBarMain.toolbarParent?.visibility==View.GONE){
-            baseActivity.binding.appBarMain.toolbarParent?.visibility=View.VISIBLE
-        }
+//    override fun onStart() {
+//        if(baseActivity.binding.appBarMain.toolbarParentClient!!.visibility==View.VISIBLE){
+//            baseActivity.binding.appBarMain.toolbarParentClient!!.visibility=View.GONE
+//        }
+//        if(baseActivity.binding.appBarMain.toolbarParent?.visibility==View.GONE){
+//            baseActivity.binding.appBarMain.toolbarParent?.visibility=View.VISIBLE
+//        }
 //        if(baseActivity.binding.appBarMain.fab.visibility==View.GONE){
 //            baseActivity.binding.appBarMain.fab.visibility=View.VISIBLE
 //        }
 //        if(baseActivity.binding.appBarMain.refreshFab.visibility==View.GONE){
 //            baseActivity.binding.appBarMain.refreshFab.visibility=View.VISIBLE
 //        }
-        super.onStart()
-    }
+//        super.onStart()
+//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.LVMylist.layoutManager=
@@ -113,6 +117,8 @@ class ShowProductsServer : Fragment() {
             lifecycleScope.launch {
                 binding.LVMylist.startLayoutAnimation()
             }
+            binding.swipe.isRefreshing = false
+            binding.LVMylist.startLayoutAnimation()
         })
         UtilsView.DesingItemListVIew.observe(viewLifecycleOwner, Observer {
 //            ListViewDesingLayout
@@ -164,6 +170,10 @@ class ShowProductsServer : Fragment() {
 //                binding.LVMylist.adapter = adaptador
 //            }
 //        })
+        binding.swipe.setOnRefreshListener {
+            ServerModel.GetProductsAllPreview()
+        }
+
 
         super.onViewCreated(view, savedInstanceState)
     }

@@ -201,14 +201,12 @@ class EmployedMainActivity : AppCompatActivity() {
     private lateinit var serverClass: ServerClassP2P
     private var sendReceived: SendReceive?=null
 
-    private val MainModel: ShowMainViewModel by viewModels();
     private val PP2Pproducts: ProductsP2PViewMode by viewModels()
+
+    private val MainModel: ShowMainViewModel by viewModels();
     private val ServerModel: ShowServerViewModel by viewModels()
     private val LocalModel: ShowLocalViewModel by viewModels()
 
-    private val ServerSendViewModel: SendProductsServerViewModel by viewModels()
-    private val LocalSendViewModel: SendProductsLocalViewModel by viewModels()
-    private val StoreSendViewModel: SendProductsStoreViewModel by viewModels()
     private val ShowMainClientModel : ShowMainClientViewModel by viewModels()
     private val AutenticationModel: AuthenticationUserViewModel by viewModels()
 
@@ -508,7 +506,7 @@ class EmployedMainActivity : AppCompatActivity() {
         CameraView.CameraActivate.observe(this, Observer {
             if (it == CameraTypes.SCANER) {
                 //                MainView.RestoreCamera()
-                val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+                val ft: FragmentTransaction =  supportFragmentManager.beginTransaction()
 //                ft.setCustomAnimations(
 //                    android.R.anim.fade_in,
 //                    android.R.anim.fade_out,
@@ -519,14 +517,14 @@ class EmployedMainActivity : AppCompatActivity() {
 //                ft.setReorderingAllowed(true)
                 ft.commit()
 
-                binding.appBarMain.BQRScanner?.setBackgroundResource(R.drawable.ic_baseline_close_24_showproduct)
-                binding.appBarMain.BQRScannerClient?.setBackgroundResource(R.drawable.ic_baseline_close_24_showproduct)
+//                binding.appBarMain.BQRScanner?.setBackgroundResource(R.drawable.ic_baseline_close_24_showproduct)
+//                binding.appBarMain.BQRScannerClient?.setBackgroundResource(R.drawable.ic_baseline_close_24_showproduct)
 
 
             } else {
 
-                binding.appBarMain.BQRScanner?.setBackgroundResource(R.drawable.ic_baseline_qr_code_scanner_showproduct)
-                binding.appBarMain.BQRScannerClient?.setBackgroundResource(R.drawable.ic_baseline_qr_code_scanner_showproduct)
+//                binding.appBarMain.BQRScanner?.setBackgroundResource(R.drawable.ic_baseline_qr_code_scanner_showproduct)
+//                binding.appBarMain.BQRScannerClient?.setBackgroundResource(R.drawable.ic_baseline_qr_code_scanner_showproduct)
                 if (this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     binding.appBarMain.constraintLayout.visibility = View.GONE
                 } else {
@@ -674,7 +672,6 @@ class EmployedMainActivity : AppCompatActivity() {
                 }
             }
         MainModel.GetImageResource()
-
         val header = NavHeaderMainBinding.bind(binding.navView.getHeaderView(0))
 
         MainModel.ImageReturn.observe(this, Observer {
@@ -690,11 +687,13 @@ class EmployedMainActivity : AppCompatActivity() {
                     .into(header.ImageUserPresentation)
             }
         })
+
         MainModel.Unlogot.observe(this,Observer {
             startActivity(Intent(baseContext,LoginActivity::class.java))
             Animatoo.animateZoom(this);
             finish()
         })
+
         header.logoutView.setOnClickListener {
             MainModel.Unlogin()
         }
@@ -712,7 +711,7 @@ class EmployedMainActivity : AppCompatActivity() {
                     if(qr==null || qr==""){
                         qr="Sin qr"
                     }
-                    var res =("PROC|" + x.uid + ";" + x.nombre + ";" + x.precioC + ";" + x.precioU + ";"+qr+";"+null)
+                    var res =("PROC|" + x.uid + ";" + x.nombre + ";" + x.precioC + ";" + x.precioNeto + ";"+qr+";"+null)
                     it.write(res.toByteArray())
                     Log.i("Enviando DATOS ZERIALIZADOS",res.toString())
                 }
@@ -728,7 +727,7 @@ class EmployedMainActivity : AppCompatActivity() {
                 if(qr==null || qr==""){
                     qr="Sin qr"
                 }
-                var res =("PROC|" + x.uid + ";" + x.nombre + ";" + x.precioC + ";" + x.precioU + ";"+qr+";"+null)
+                var res =("PROC|" + x.uid + ";" + x.nombre + ";" + x.precioC + ";" + x.precioNeto + ";"+qr+";"+null)
                 sendReceived?.write(res.toByteArray())
                 Log.i("Enviando DATOS ZERIALIZADOS",res.toString())            }
         })
@@ -1009,71 +1008,22 @@ class EmployedMainActivity : AppCompatActivity() {
 //            isval.close()
 //        }
 
-        binding.appBarMain.SVProducts?.setOnQueryTextListener(object :
-            androidx.appcompat.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                adapterLocal.filter.filter(newText)
-                adapterProduct.filter.filter(newText)
-                adapterSever.filter.filter(newText)
-                return false
-            }
-        })
-
-
+//        binding.appBarMain.SVProducts?.setOnQueryTextListener(object :
+//            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(query: String?): Boolean {
+//                return false
+//            }
+//
+//            override fun onQueryTextChange(newText: String?): Boolean {
+//                adapterLocal.filter.filter(newText)
+//                adapterProduct.filter.filter(newText)
+//                adapterSever.filter.filter(newText)
+//                return false
+//            }
+//        })
 
 
-        MainModel.AllProducts().observe(this, Observer {
-            Log.i("Segundo", "CLaro que si")
-            Log.i("Segundo", binding.appBarMain.SVProducts?.query.toString())
 
-            adapterProduct = ProductoAdapter(it, MainModel, 1, UtilsMainModel)
-            adapterProduct.filter.filter(binding.appBarMain.SVProducts?.query,
-                object : Filter.FilterListener {
-                    override fun onFilterComplete(count: Int) {
-                        StoreSendViewModel.sendAdapterItems(adapterProduct)
-                    }
-                })
-//            binding.LVMylist.adapter = adaptador
-//            comprobateList(it.size)
-        })
-
-
-        //LocalList
-        LocalModel.GetAllProducts()
-        LocalModel.AdapterSend.observe(this, Observer {
-            adapterLocal = LocalAdapter(it.reversed(), 1, UtilsMainModel)
-            adapterLocal.filter.filter(binding.appBarMain.SVProducts?.query,
-                object : Filter.FilterListener {
-                    override fun onFilterComplete(count: Int) {
-                        LocalSendViewModel.sendAdapterItems(adapterLocal)
-                    }
-                })
-//            binding.LVMylist.adapter=adapter
-//            comprobateList(it.size)
-//            MessageSnackBar(view,"Se actualizo!",Color.CYAN)
-//            binding.LVMylist.startLayoutAnimation()
-        })
-        //ServerList
-
-        //Esta funcion se encarga de pedir los productos al inicio de la aplicacion
-        //ServerModel.GetProductsAllPreview()
-
-        ServerModel.ProductsAllPreview.observe(this, Observer {
-            adapterSever = ServerAdapter(it?.productos!!.reversed(), 1, UtilsMainModel)
-            adapterSever.filter.filter(binding.appBarMain.SVProducts?.query,
-                object : Filter.FilterListener {
-                    override fun onFilterComplete(count: Int) {
-                        ServerSendViewModel.sendAdapterItems(adapterSever)
-                    }
-                })
-//            binding.LVMylist.adapter=adaptador
-//            comprobateList(it?.productos.size)
-//            binding.LVMylist.startLayoutAnimation()
-        })
 
 
 //

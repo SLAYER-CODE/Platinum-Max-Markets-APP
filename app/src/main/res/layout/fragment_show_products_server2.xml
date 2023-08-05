@@ -21,8 +21,6 @@
         android:layout_marginEnd="0dp"
         android:clipToPadding="false"
         android:layoutAnimation="@anim/item_animation_layout_into"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         android:foregroundGravity="center_vertical|center">
 
     </com.github.rubensousa.gravitysnaphelper.GravitySnapRecyclerView>

@@ -12,7 +12,9 @@ import com.example.fromdeskhelper.core.AuthorizationInterceptor
 import com.example.fromdeskhelper.core.static.AppConst
 import com.example.fromdeskhelper.data.LocalNetwork.WifiApiClient
 import com.example.fromdeskhelper.data.Network.LoginApiClient
+import com.example.fromdeskhelper.data.model.objects.DateAdapter
 import com.example.fromdeskhelper.domain.CameraUseCase
+import com.example.fromdeskhelper.type.DateTime
 import com.example.fromdeskhelper.ui.View.activity.EmployedMainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.GsonBuilder
@@ -25,6 +27,7 @@ import okhttp3.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.ConnectException
+import java.util.Date
 import java.util.concurrent.TimeUnit
 import javax.annotation.Nullable
 import javax.inject.Named
@@ -99,6 +102,8 @@ object NetworkModule {
 
     var PROVIDER_GRAPQL = "GRAPQL_SHOWING"
 
+
+
     //Esta es la clase que maneja todas las solicitudes
     @Singleton
     @Provides
@@ -111,6 +116,7 @@ object NetworkModule {
             if(Cliente!=null){
                 return ApolloClient.Builder().serverUrl(AppConst.BASE_URL_GRAPHQL)
                     .okHttpClient(Cliente)
+                    .addCustomScalarAdapter(DateTime.type,DateAdapter)
                     .build()
             }else{
                 return null

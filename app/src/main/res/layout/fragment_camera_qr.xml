@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/LayoutCamera"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LayoutCamera"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:animateLayoutChanges="true"
     android:background="@color/md_black_1000"
-    tools:background="@color/md_blue_A200"
-    tools:visibility="visible"
     android:descendantFocusability="blocksDescendants"
     android:foregroundGravity="center"
-    android:layout_gravity="center"
-    android:layoutDirection="inherit">
+    android:layoutDirection="inherit"
+    tools:background="@color/md_blue_A200"
+    tools:visibility="visible">
 
     <androidx.camera.view.PreviewView
         android:id="@+id/PVCmain"
@@ -24,8 +24,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </androidx.camera.view.PreviewView>
+        app:layout_constraintTop_toTopOf="parent"></androidx.camera.view.PreviewView>
 
     <View
         android:id="@+id/punteroFocus"
@@ -35,8 +34,7 @@
         android:background="@drawable/pulse_camera"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </View>
+        app:layout_constraintTop_toTopOf="parent"></View>
 
 
     <FrameLayout
@@ -64,11 +62,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible"
-        tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/frameLayout">
+        app:layout_constraintTop_toTopOf="@+id/frameLayout"
+        tools:visibility="visible">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -82,49 +80,44 @@
             android:textColor="#FFFFFF"
             android:textSize="14sp"
             android:visibility="visible"
-            tools:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible">
 
             <com.airbnb.lottie.LottieAnimationView
-                style="@style/QRContainer"
-                app:lottie_rawRes="@raw/scanning_qr_code"
                 android:id="@+id/borderqrxml"
+                style="@style/QRContainer"
                 android:layout_width="350dp"
                 android:layout_height="330dp"
-                app:lottie_autoPlay="true"
-                app:lottie_loop="true"
                 android:cropToPadding="false"
                 android:foregroundGravity="center"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/scanning_qr_code" />
 
-<!--            <View-->
-<!--                android:id="@+id/Vqrline"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:background="@drawable/line_qr_scan"-->
-<!--                android:visibility="visible"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                 />-->
+            <!--            <View-->
+            <!--                android:id="@+id/Vqrline"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="match_parent"-->
+            <!--                android:background="@drawable/line_qr_scan"-->
+            <!--                android:visibility="visible"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                 />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <com.airbnb.lottie.LottieAnimationView
-            android:elevation="2dp"
-            app:lottie_rawRes="@raw/check_blue"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/BRscanner"
-            android:background="@color/md_blue_grey_500_25"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            app:lottie_autoPlay="false"
-            app:lottie_loop="false"
-            android:foregroundGravity="center"
+            android:layout_width="285dp"
+            android:layout_height="285dp"
             android:visibility="invisible"
             tools:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -132,54 +125,87 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-        </com.airbnb.lottie.LottieAnimationView>
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/BRscannerAnimation"
+                android:layout_width="285dp"
+                android:layout_height="285dp"
+                android:background="@color/md_blue_grey_500_50"
+                android:elevation="2dp"
+                android:foregroundGravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="false"
+                app:lottie_loop="false"
+                app:lottie_rawRes="@raw/check_blue"
+                >
+
+            </com.airbnb.lottie.LottieAnimationView>
+            <TextView
+                android:elevation="3dp"
+                android:gravity="center_vertical|center"
+                android:textColor="@color/md_white_1000"
+                android:fontFamily="@font/lilitaoe_regular"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/titleCorrecto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </TextView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
         android:foregroundGravity="left"
         android:gravity="center"
         android:orientation="horizontal"
-        android:layout_marginBottom="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
 
         <ToggleButton
-            android:backgroundTint="@color/md_grey_400"
+            android:id="@+id/BLinterna"
 
             style="@style/toggleButton_lint"
-            android:id="@+id/BLinterna"
             android:layout_width="33dp"
             android:layout_height="32dp"
             android:layout_weight="1"
-            android:checked="false"
             android:background="@drawable/ic_linterna"
+            android:backgroundTint="@color/md_grey_400"
+            android:checked="false"
             android:gravity="center" />
 
         <ToggleButton
-            android:backgroundTint="@color/md_grey_400"
+            android:id="@+id/BCalidad"
 
             style="@style/toggleButton"
-            android:id="@+id/BCalidad"
             android:layout_width="33dp"
             android:layout_height="32dp"
             android:layout_weight="1"
             android:background="@drawable/ic_baseline_hd_24"
+            android:backgroundTint="@color/md_grey_400"
             android:gravity="center" />
 
         <ToggleButton
-            android:backgroundTint="@color/md_grey_400"
+            android:id="@+id/BObjectIA"
 
             style="@style/toggleButton_lint"
-            android:id="@+id/BObjectIA"
             android:layout_width="33dp"
             android:layout_height="32dp"
             android:layout_weight="1"
             android:background="@drawable/ic_baseline_data_object_24"
+            android:backgroundTint="@color/md_grey_400"
             android:gravity="center" />
 
     </LinearLayout>

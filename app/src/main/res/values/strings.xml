@@ -42,6 +42,7 @@
     <string name="login_button_client">Iniciar como Cliente</string>
     <string name="login_button_admin">Iniciar como Empleado</string>
     <string name="login_text_coal">Iniciar session</string>
+    <string name="login_text_user_anonime">Dejalo para despues</string>
     <string name="login_not_register">El usuario no existe ¿Desea registrarse?</string>
     <string name="login_google_register">Iniciar session con gogole</string>
     <string name="login_facebook_register">Iniciar session con facebook</string>
@@ -103,6 +104,11 @@
     <string name="home_error_anonime">Continuar sin internet</string>
     <string name="home_anonime_title">Anonimo</string>
     <string name="home_anonime_fasted">Funciones (Rapidas)</string>
+    <string name="home_buy_fast">Lista de codigos</string>
+
+
+    <string name="home_shoping_buy_qr">Lista de codigos QR</string>
+
     <!-- Pestaña de inicio del usuario-->
 
     <string name="home_action_panel_title">Acciones</string>
@@ -194,10 +200,16 @@
     <string name="menu_favorites">Favoritos</string>
     <string name="menu_pagos">Pagos</string>
 
+    <string name="notasignen">No asignado</string>
+    <string name="voidasigned">Vacio</string>
+
     <!-- Del Admin -->
     <string name="titleAdmin">Asociado</string>
     <string name="titleAdminSeudo">(Jefe)</string>
     <string name="titleHomeChange">Bienvenido</string>
+    <string name="titleHomeFastBy">Escanee su producto</string>
+    <string name="titleProuctos">Vista de productos</string>
+    <string name="titleProuctoSingle">Nombre del producto</string>
     <string name="titleCorrecto">Preciona para escanear nuevamente</string>
 
     <string name="titleRegister">Registro</string>
@@ -330,6 +342,7 @@
 
     <string name="agregate_product_separate_o">Obligatorio</string>
     <string name="agregate_product_separate_opcional">Opcional</string>
+    <string name="agregate_product_actual">Disponibilidad actual</string>
     <string name="agregate_product_separate_details">Caracteristicas</string>
     <string name="agregate_product_separate_capture">Reconocimiento y guardado</string>
 
@@ -338,6 +351,14 @@
     <string name="agregate_product_capture_notfiles">Agregue una captura de su producto</string>
     <string name="agregate_product_image_files">Agregar una imagen desde el almacenamiento</string>
 
+
+    <!--    checks disponibilidad -->
+    <string name="agregate_product_check_available_shipment">Disponible para envios</string>
+    <string name="agregate_product_check_available_now">Disponible ahora</string>
+    <string name="agregate_product_check_available_despues">Disponible para el</string>
+    <string name="agregate_product_check_available_despues_new">Nuevo Stock para el</string>
+    <string name="agregate_product_check_available_fecha">DD/MM/AAAA </string>
+    <string name="agregate_product_check_available_time">H:M </string>
 
     <!--    Fin de DrawersString-->
 
@@ -378,7 +399,7 @@
     <string name="dialog_client_button_discart">Eliminar cliente</string>
     <string name="dialog_client_title">Detalles del cliente</string>
 
-<!--    scanner items fast-->
+    <!--    scanner items fast-->
     <string name="qr_fast_add_list_pending">Añadir a busqueda pendiente</string>
     <string name="qr_fast_edit">Editar Producto</string>
     <string name="qr_fast_register">Registrar Producto</string>
@@ -416,10 +437,12 @@
         <item>Caja</item>
     </string-array>
     <string-array name="dlagsParts">
-        <item>1/5</item>
-        <item>1/4</item>
-        <item>1/3</item>
-        <item>1/2</item>
+        <item>Sin stock disponible </item>
+        <item>1 Contenido completo</item>
+        <item>1/2 Del contenido total disponible</item>
+        <item>1/3 Del contenido total disponible</item>
+        <item>1/4 Del contenido total disponible</item>
+        <item>1/5 Del contenido total disponible</item>
     </string-array>
     <string-array name="dlagsType">
         <item>Unidades</item>
@@ -440,6 +463,7 @@
     <string name="add_user_ofertas">Ofertas</string>
     <string name="add_user_ver_all">Ver todas</string>
     <string name="add_user_category">Categorias</string>
+    <string name="add_user_brands">Marcas</string>
     <string name="add_user_ver_all_category">Ver todas las categorias</string>
 
     <!--Reintentando el proceso de inicio-->
@@ -447,6 +471,9 @@
     <string name="splash_connect_pending">Estableciendo conexion ...</string>
 
 
-<!--    Dashboard items-->
+    <!--    Dashboard items-->
     <string name="addProductButton">Agregar Producto</string>
+    <string name="addNewProduct">Agregar nuevo producto</string>
+    <string name="addEditarUltimo">Editar ultimo producto</string>
+    <string name="addEditarUltimoLive">Guardar Producto</string>
 </resources>
