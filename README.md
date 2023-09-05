@@ -1,4 +1,4 @@
-# Proyecto de mejora e innovación 
+# Proyecto Empresa ZLB. rubrica
 
 ## Empresa: Platinum-MaxMarkets 
 
